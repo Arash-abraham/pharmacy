@@ -101,9 +101,5 @@ Before you begin, ensure you have the following installed on your system:
 
 ---
 
-## ☎️ Contact
-
-Created by Arash Abraham - feel free to reach out!
-
-
----
+Contact 📧
+arashebi777@gmail.com !
