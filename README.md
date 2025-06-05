@@ -101,23 +101,9 @@ Before you begin, ensure you have the following installed on your system:
 
 ---
 
-## 👋 How to Contribute
+## ☎️ Contact
 
-We welcome contributions to the AnimeHub Blog project! If you'd like to help, please follow these steps:
+Created by Arash Abraham - feel free to reach out!
 
-1.  **Fork** the repository.
-2.  **Create a new branch** for your feature or bug fix:
-    ```bash
-    git checkout -b feature/your-feature-name
-    ```
-3.  **Make your changes** and commit them with clear, concise messages.
-4.  **Push your branch** to your forked repository.
-5.  **Open a Pull Request** to the `main` branch of the original repository.
-
----
-
-## 📄 License
-
-This project is open-source and licensed under the **MIT License**. See the `LICENSE` file for more details.
 
 ---
