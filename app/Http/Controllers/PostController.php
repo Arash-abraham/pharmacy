@@ -9,7 +9,8 @@ class PostController extends Controller
 {
     public function show($slug) {
         $post = Post::where('slug', $slug)->firstOrFail();
-        return view('posts.show', compact('post'));
+        $post->increment('view'); 
+        return view('app.posts.show', compact('post'));
     }
     
 }

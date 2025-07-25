@@ -5,8 +5,8 @@
         </div>
         <nav class="nav">
             <a href="/" class="nav-link">Home</a>
-            <a href="{{ route('animes.index') }}" class="nav-link">Animes</a>
-            <a href="{{ route('genres.index') }}" class="nav-link">Genres</a>
+            <a href="{{ route('animes') }}" class="nav-link">Animes</a>
+            <a href="{{ route('category.index') }}" class="nav-link">Genres</a>
         </nav>
         <div class="auth-buttons">
             @guest

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('app.layouts.master')
 
 @section('title', $post->title)
 
@@ -34,6 +34,4 @@
             </div>
         </div>
     </div>
-
-    <x-footer />
 @endsection

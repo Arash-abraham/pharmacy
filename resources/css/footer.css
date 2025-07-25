@@ -1,9 +1,21 @@
 /* Footer styles */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+main {
+    flex: 1;
+}
+
 .anime-footer {
-    background-color: #000000; 
-    padding: 1rem 0; 
+    background-color: #000000;
+    padding: 1rem 0;
+    padding-left: 60px;
     text-align: center;
-    margin-top: 0;
+    margin-top: auto;
 }
 
 .anime-footer p {
@@ -18,5 +30,5 @@
 }
 
 .social-icon:hover {
-    color: #8340ff; 
+    color: #8340ff;
 }

@@ -3,16 +3,18 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AnimeController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 
 Route::get('/', [HomeController::class , 'home'])->name('home');
+Route::get('/search', [HomeController::class, 'search'])->name('search');
+Route::get('/animes', [HomeController::class , 'animes'])->name('animes');
 
-Route::get('/animes', [AnimeController::class, 'index'])->name('animes.index');
-Route::get('/genres', [GenreController::class, 'index'])->name('genres.index');
-Route::get('/genres/{genre}', [GenreController::class, 'show'])->name('genres.show');
+Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
+Route::get('/category/{category}', [CategoryController::class, 'show'])->name('category.show');
 
 
 Route::get('/dashboard', function () {

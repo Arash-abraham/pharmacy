@@ -3,6 +3,8 @@
 @import 'featured-animes.css';
 @import 'genres.css';
 @import 'footer.css';
+@import 'category.css';
+
 
 @tailwind base;
 @tailwind components;
