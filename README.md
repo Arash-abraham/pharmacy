@@ -42,7 +42,7 @@ Before you begin, ensure you have the following installed on your system:
 
 1.  **Clone the Repository:**
     ```bash
-    git clone [https://github.com/arash-abraham/AnimeHub.git](https://github.com/arash-abraham/AnimeHub.git)
+    git clone https://github.com/arash-abraham/AnimeHub.git
     cd AnimeHub
     ```
 
@@ -84,16 +84,9 @@ Before you begin, ensure you have the following installed on your system:
     yarn install
     ```
 
-6.  **Compile Frontend Assets:**
-    ```bash
-    npm run dev
-    # OR for production build
-    # npm run build
-    ```
-
 7.  **Start the Local Development Server:**
     ```bash
-    php artisan serve
+    composer run dev
     ```
 
 8.  **Access the Application:**
