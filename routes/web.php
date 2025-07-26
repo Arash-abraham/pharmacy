@@ -29,7 +29,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/posts/{slug}', [PostController::class, 'show'])->name('posts.show');
-
-Route::resource('/comments' , CommentController::class);
+Route::post('/posts/{slug}/comments', [CommentController::class, 'store'])->name('comments.store');
 
 require __DIR__.'/auth.php';

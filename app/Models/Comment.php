@@ -17,5 +17,5 @@ class Comment extends Model
         return $this->belongsTo(Post::class);
     }
     
-    protected $fillable = ['status'];
+    protected $guarded = ['id'];
 }

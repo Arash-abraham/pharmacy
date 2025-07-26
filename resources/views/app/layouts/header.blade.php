@@ -13,7 +13,7 @@
                 <a href="{{ route('login') }}" class="auth-button login-button">Login</a>
                 <a href="{{ route('register') }}" class="auth-button signup-button">Sign Up</a>
             @else
-                <a href="{{ route('profile.edit') }}" class="profile-link">{{ auth()->user()->name }}</a>
+                <a href="{{ route('dashboard') }}" class="profile-link">{{ auth()->user()->name }}</a>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="auth-button logout-button">Logout</button>
