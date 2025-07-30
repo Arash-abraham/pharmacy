@@ -2,6 +2,10 @@
 
 @section('title', $post->title)
 
+@section('header')
+    @include('app.layouts.header')
+@endsection
+
 @section('content')
     <br><br><br>
     <div class="container mx-auto px-4 py-8 bg-gray-900 text-white">
@@ -49,7 +53,7 @@
                 @else
                     <!-- Display login prompt if user is not logged in -->
                     <div class="mb-6 text-center">
-                        <p class="text-white mb-4">Please <a href="{{ route('login') }}" class="text-blue-500 hover:underline">log in</a> to leave a comment.</p>
+                        <p class="text-white mb-4">Please <a href="{{ route('login') }}" class="text-blue-500 hover:underline">login</a> to leave a comment.</p>
                     </div>
                 @endauth
         

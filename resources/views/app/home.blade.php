@@ -2,6 +2,10 @@
 
 @section('title', 'Home')
 
+@section('header')
+    @include('app.layouts.header')
+@endsection
+
 @section('content')
     <section class="hero-section" style="background-image: url('/images/hero-bg.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
         <div class="absolute inset-0 bg-black opacity-50"></div> 

@@ -2,6 +2,10 @@
 
 @section('title', 'Category')
 
+@section('header')
+    @include('app.layouts.header')
+@endsection
+
 @section('content')
     <div class="wrapper">
         <section class="featured-section">

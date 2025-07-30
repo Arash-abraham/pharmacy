@@ -265,14 +265,18 @@ body {
 }
 
 main {
-    flex: 1;
+    padding-bottom: 60px; 
 }
 
 .anime-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
     background-color: #000000;
     padding: 1rem 0;
     text-align: center;
-    margin-top: auto;
+    z-index: 100;
 }
 
 .anime-footer p {
@@ -288,4 +292,30 @@ main {
 
 .social-icon:hover {
     color: #8340ff;
+}
+
+.alert-success {
+    background-color: #22c55e;
+    color: white;
+    padding: 16px;
+    margin-bottom: 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+.alert-success button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+.alert-success button:hover {
+    color: #e5e7eb; /* خاکستری روشن مشابه Tailwind */
+}
+.alert-success svg {
+    width: 20px;
+    height: 20px;
 }

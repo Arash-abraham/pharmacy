@@ -5,9 +5,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AnimeController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
+use App\Models\Comment;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', [HomeController::class , 'home'])->name('home');
 Route::get('/search', [HomeController::class, 'search'])->name('search');
@@ -16,10 +19,15 @@ Route::get('/animes', [HomeController::class , 'animes'])->name('animes');
 Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
 Route::get('/category/{category}', [CategoryController::class, 'show'])->name('category.show');
 
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard',[DashboardController::class , 'index'])->middleware(['auth'])->name('dashboard');
+Route::delete('/comment/{id}', function ($id) {
+    $comment = Comment::findOrFail($id);
+    if (Auth::id() !== $comment->user_id) {
+        abort(403);
+    }
+    $comment->delete();
+    return redirect()->back()->with('success', 'Comment deleted successfully.');
+})->name('comment.delete');
 
 
 Route::middleware('auth')->group(function () {
