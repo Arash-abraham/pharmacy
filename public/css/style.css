@@ -1,0 +1,32 @@
+.dir-ltr {
+    direction: ltr;
+}
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #f8fafc; }
+::-webkit-scrollbar-thumb { background: rgba(168, 85, 247, 0.7); border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: #ef4444; }
+
+.dark ::-webkit-scrollbar-track { background: #0a0a14; }
+.dark ::-webkit-scrollbar-thumb { background: rgba(168, 85, 247, 0.7); }
+/* Glassmorphism */
+.glass { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+/* Hero Background */
+.hero-bg { background: #0a0a14; }
+.light .hero-bg { background: #f8fafc; }
+html {
+    scroll-behavior: smooth;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes glow {
+    0% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.4); }
+    100% { box-shadow: 0 0 40px rgba(239, 68, 68, 0.5); }
+}
+
+section {
+    scroll-margin-top: 80px;
+}
