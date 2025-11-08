@@ -605,5 +605,6 @@
     </footer>
 
     <script src="{{ asset('js/home.js') }}"></script>
+    <script src="{{ asset('js/post.js') }}"></script>
 </body>
 </html>
