@@ -7,4 +7,4 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="{{ asset('js/head-tag.js') }}"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" />
-<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+@yield('css')

@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl" class="dark scroll-smooth">
     <head>
-        @section('title', 'Home')
 
         @include('home.layouts.head-tag')
+
+        @section('title', 'Home')
+
+        @section('css')
+            <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
     </head>
 
     <body class="bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text min-h-screen font-sans transition-all duration-500">
