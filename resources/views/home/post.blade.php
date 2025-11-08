@@ -86,21 +86,13 @@
                             در گذشته، برای ساخت یک کارت ساده باید فایل CSS جداگانه می‌نوشتم:
                         </p>
                         
-                        <pre class="text-white"><code>.card {
-        background: white;
-        border-radius: 0.5rem;
-        padding: 1.5rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        border: 1px solid #e2e8f0;
-    }</code></pre>
+                        {{-- img code --}}
                         
                         <p>
                             اما با Tailwind فقط کافی است کلاس‌ها را به المان اضافه کنم:
                         </p>
                         
-                        <pre class="text-white"><code>&lt;div class="bg-white rounded-xl p-6 shadow-lg border border-gray-200"&gt;
-        محتوای کارت
-    &lt;/div&gt;</code></pre>
+                        {{-- img code --}}
                         
                         <h2>تجربه شخصی من</h2>
                         
