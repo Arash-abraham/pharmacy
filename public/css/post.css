@@ -1,0 +1,100 @@
+.dir-ltr {
+    direction: ltr;
+}
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #f8fafc; }
+::-webkit-scrollbar-thumb { background: rgba(168, 85, 247, 0.7); border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: #ef4444; }
+
+.dark ::-webkit-scrollbar-track { background: #0a0a14; }
+.dark ::-webkit-scrollbar-thumb { background: rgba(168, 85, 247, 0.7); }
+/* Glassmorphism */
+.glass { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+/* Hero Background */
+.hero-bg { background: #0a0a14; }
+.light .hero-bg { background: #f8fafc; }
+html {
+    scroll-behavior: smooth;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes glow {
+    0% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.4); }
+    100% { box-shadow: 0 0 40px rgba(239, 68, 68, 0.5); }
+}
+
+section {
+    scroll-margin-top: 80px;
+}
+
+.post-content h2 {
+    font-size: 1.875rem;
+    font-weight: bold;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: #ef4444;
+}
+
+.post-content h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: #a855f7;
+}
+
+.post-content p {
+    margin-bottom: 1rem;
+    line-height: 1.8;
+}
+
+.post-content ul, .post-content ol {
+    margin-right: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.post-content li {
+    margin-bottom: 0.5rem;
+}
+
+.post-content code {
+    background-color: rgba(168, 85, 247, 0.1);
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.375rem;
+    font-family: monospace;
+    font-size: 0.875rem;
+}
+
+.post-content pre {
+    background-color: rgba(15, 23, 42, 0.8);
+    padding: 1rem;
+    border-radius: 0.75rem;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+}
+
+.post-content blockquote {
+    border-right: 4px solid #a855f7;
+    padding-right: 1rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+    background-color: rgba(168, 85, 247, 0.05);
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.post-content img {
+    border-radius: 0.75rem;
+    margin: 1.5rem 0;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.comment-reply {
+    margin-right: 3rem;
+    border-right: 2px solid rgba(168, 85, 247, 0.3);
+    padding-right: 1rem;
+}
