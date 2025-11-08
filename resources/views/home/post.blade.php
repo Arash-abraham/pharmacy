@@ -369,8 +369,8 @@
                 </div>
             </div>
         </section>
-
-        <script src="{{ asset('js/home.js') }}"></script>
-        <script src="{{ asset('js/post.js') }}"></script>
+        @include('home.layouts.partials.footer')
     </body>
+    <script src="{{ asset('js/home.js') }}"></script>
+    <script src="{{ asset('js/post.js') }}"></script>
 </html>
