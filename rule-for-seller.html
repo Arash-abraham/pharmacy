@@ -7,58 +7,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
+    
     <style>
-        * {
-            font-family: 'Vazirmatn', sans-serif;
-        }
-        
-        :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --secondary: #10b981;
-            --accent: #f59e0b;
-            --dark: #0f172a;
-            --darker: #020617;
-            --light: #f8fafc;
-        }
-        
-        body {
-            background-color: var(--darker);
-            color: var(--light);
-            overflow-x: hidden;
-        }
-        
-        .glass {
-            background: rgba(15, 23, 42, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .gradient-bg {
-            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 50%, #1e293b 100%);
-        }
-        
-        .primary-gradient {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-        }
-        
-        .secondary-gradient {
-            background: linear-gradient(135deg, var(--secondary) 0%, #059669 100%);
-        }
-        
-        .accent-gradient {
-            background: linear-gradient(135deg, var(--accent) 0%, #d97706 100%);
-        }
-        
-        .card-hover {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        
-        .card-hover:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-        
+
         .gradient-text {
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             -webkit-background-clip: text;
@@ -374,167 +326,327 @@
                 </div>
             </section>
 
-            <!-- بخش دوم: مراحل ثبت‌نام -->
-            <section class="mb-16">
-                <div class="flex items-center mb-8">
-                    <div class="w-12 h-12 secondary-gradient rounded-xl flex items-center justify-center ml-4">
-                        <i class="fas fa-stairs text-white text-xl"></i>
+            <section class="py-16 px-4 bg-gradient-to-br from-slate-900 via-gray-900 to-slate-950 overflow-hidden">
+                <!-- عنوان بخش -->
+                <div class="max-w-7xl mx-auto mb-16 text-center relative">
+                  <!-- دکوراسیون پس‌زمینه -->
+                  <div class="absolute -top-10 -right-10 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl"></div>
+                  <div class="absolute top-20 -left-10 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl"></div>
+                  
+                  <div class="inline-flex items-center justify-center p-3 mb-6 rounded-2xl bg-gradient-to-r from-purple-600/20 to-blue-600/20 border border-white/10 backdrop-blur-sm">
+                    <div class="w-16 h-16 bg-gradient-to-br from-purple-600 to-blue-500 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/30">
+                      <i class="fas fa-stairs text-white text-2xl"></i>
                     </div>
-                    <h2 class="text-2xl lg:text-3xl font-bold gradient-text">مراحل ثبت‌نام و تایید</h2>
+                  </div>
+                  
+                  <h2 class="text-4xl md:text-5xl font-black mb-4 bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent">
+                    مراحل ثبت‌نام و تایید
+                  </h2>
+                  <p class="text-lg text-gray-400 max-w-2xl mx-auto">
+                    در ۵ مرحله ساده به جمع فروشندگان حرفه‌ای ما بپیوندید
+                  </p>
                 </div>
-
-                <div class="timeline max-w-4xl mx-auto">
+              
+                <!-- Timeline Modern -->
+                <div class="max-w-6xl mx-auto">
+                  <!-- خط تایم‌لاین -->
+                  <div class="relative">
+                    <!-- خط اصلی -->
+                    <div class="absolute right-1/2 translate-x-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-purple-600 via-blue-500 to-cyan-500 hidden md:block"></div>
+                    
                     <!-- مرحله 1 -->
-                    <div class="timeline-item">
-                        <div class="glass rounded-2xl p-6 step-card">
-                            <div class="step-number">۱</div>
-                            <h3 class="font-bold text-xl mb-4">ثبت‌نام اولیه</h3>
-                            <ul class="text-slate-300 space-y-3 pr-4">
-                                <li class="flex items-start">
-                                    <i class="fas fa-user-plus text-indigo-400 ml-2 mt-1"></i>
-                                    تکمیل فرم درخواست عضویت
-                                </li>
-                                <li class="flex items-start">
-                                    <i class="fas fa-envelope text-indigo-400 ml-2 mt-1"></i>
-                                    تایید ایمیل و شماره موبایل
-                                </li>
-                                <li class="flex items-start">
-                                    <i class="fas fa-id-card text-indigo-400 ml-2 mt-1"></i>
-                                    ارسال تصویر کارت ملی
-                                </li>
-                                <li class="flex items-start">
-                                    <i class="fas fa-file-signature text-indigo-400 ml-2 mt-1"></i>
-                                    مطالعه و تایید قوانین
-                                </li>
-                            </ul>
-                            <div class="mt-4 text-sm text-slate-400">
-                                <i class="fas fa-clock ml-1"></i>
-                                زمان مورد نیاز: ۱۵ دقیقه
-                            </div>
+                    <div class="relative flex flex-col md:flex-row items-center mb-16 md:mb-24">
+                      <!-- عدد مرحله -->
+                      <div class="absolute right-1/2 translate-x-1/2 md:relative md:right-auto md:translate-x-0 z-10 mb-6 md:mb-0">
+                        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-purple-600 to-purple-800 flex items-center justify-center shadow-xl shadow-purple-900/50 border-4 border-slate-900 relative group">
+                          <span class="text-2xl font-black text-white">۱</span>
+                          <!-- اثر نور -->
+                          <div class="absolute inset-0 rounded-full bg-purple-400/20 blur-md group-hover:blur-xl transition-all duration-500"></div>
                         </div>
+                      </div>
+                      
+                      <!-- کارت مرحله -->
+                      <div class="md:w-1/2 md:mr-12 md:text-left text-right">
+                        <div class="bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-lg rounded-3xl p-8 border border-white/10 shadow-2xl shadow-purple-900/20 hover:shadow-purple-900/40 transition-all duration-500 hover:-translate-y-2">
+                          <!-- هدر کارت -->
+                          <div class="flex items-start mb-6">
+                            <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-600/30 to-purple-800/30 border border-purple-500/30 flex items-center justify-center ml-4">
+                              <i class="fas fa-user-plus text-purple-400 text-xl"></i>
+                            </div>
+                            <div>
+                              <h3 class="text-2xl font-bold text-white mb-2">ثبت‌نام اولیه</h3>
+                              <div class="flex items-center text-sm text-gray-400">
+                                <i class="fas fa-clock ml-1"></i>
+                                <span>زمان مورد نیاز: ۱۵ دقیقه</span>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <!-- آیتم‌ها -->
+                          <ul class="space-y-4">
+                            <li class="flex items-center p-3 rounded-xl bg-gradient-to-l from-purple-900/30 to-transparent hover:from-purple-900/50 transition-all group">
+                              <div class="w-10 h-10 rounded-lg bg-purple-900/50 flex items-center justify-center ml-3">
+                                <i class="fas fa-user-plus text-purple-400"></i>
+                              </div>
+                              <span class="text-gray-300 group-hover:text-white transition-colors">تکمیل فرم درخواست عضویت</span>
+                            </li>
+                            <li class="flex items-center p-3 rounded-xl bg-gradient-to-l from-purple-900/30 to-transparent hover:from-purple-900/50 transition-all group">
+                              <div class="w-10 h-10 rounded-lg bg-purple-900/50 flex items-center justify-center ml-3">
+                                <i class="fas fa-envelope text-purple-400"></i>
+                              </div>
+                              <span class="text-gray-300 group-hover:text-white transition-colors">تایید ایمیل و شماره موبایل</span>
+                            </li>
+                            <li class="flex items-center p-3 rounded-xl bg-gradient-to-l from-purple-900/30 to-transparent hover:from-purple-900/50 transition-all group">
+                              <div class="w-10 h-10 rounded-lg bg-purple-900/50 flex items-center justify-center ml-3">
+                                <i class="fas fa-id-card text-purple-400"></i>
+                              </div>
+                              <span class="text-gray-300 group-hover:text-white transition-colors">ارسال تصویر کارت ملی</span>
+                            </li>
+                            <li class="flex items-center p-3 rounded-xl bg-gradient-to-l from-purple-900/30 to-transparent hover:from-purple-900/50 transition-all group">
+                              <div class="w-10 h-10 rounded-lg bg-purple-900/50 flex items-center justify-center ml-3">
+                                <i class="fas fa-file-signature text-purple-400"></i>
+                              </div>
+                              <span class="text-gray-300 group-hover:text-white transition-colors">مطالعه و تایید قوانین</span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
                     </div>
-
+              
                     <!-- مرحله 2 -->
-                    <div class="timeline-item">
-                        <div class="glass rounded-2xl p-6 step-card">
-                            <div class="step-number">۲</div>
-                            <h3 class="font-bold text-xl mb-4">ارزیابی تخصصی</h3>
-                            <ul class="text-slate-300 space-y-3 pr-4">
-                                <li class="flex items-start">
-                                    <i class="fas fa-clipboard-check text-emerald-400 ml-2 mt-1"></i>
-                                    بررسی مدارک توسط تیم تایید هویت
-                                </li>
-                                <li class="flex items-start">
-                                    <i class="fas fa-brain text-emerald-400 ml-2 mt-1"></i>
-                                    مصاحبه تخصصی (در صورت نیاز)
-                                </li>
-                                <li class="flex items-start">
-                                    <i class="fas fa-tasks text-emerald-400 ml-2 mt-1"></i>
-                                    ارزیابی نمونه کارها و مهارت‌ها
-                                </li>
-                                <li class="flex items-start">
-                                    <i class="fas fa-star text-emerald-400 ml-2 mt-1"></i>
-                                    تعیین سطح اولیه فروشنده
-                                </li>
-                            </ul>
-                            <div class="mt-4 text-sm text-slate-400">
-                                <i class="fas fa-clock ml-1"></i>
-                                زمان مورد نیاز: ۱-۳ روز کاری
-                            </div>
+                    <div class="relative flex flex-col md:flex-row items-center mb-16 md:mb-24">
+                      <!-- عدد مرحله -->
+                      <div class="absolute right-1/2 translate-x-1/2 md:relative md:right-auto md:translate-x-0 z-10 mb-6 md:mb-0 order-2 md:order-1">
+                        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-emerald-600 to-emerald-800 flex items-center justify-center shadow-xl shadow-emerald-900/50 border-4 border-slate-900 relative group">
+                          <span class="text-2xl font-black text-white">۲</span>
+                          <div class="absolute inset-0 rounded-full bg-emerald-400/20 blur-md group-hover:blur-xl transition-all duration-500"></div>
                         </div>
+                      </div>
+                      
+                      <!-- کارت مرحله -->
+                      <div class="md:w-1/2 md:mr-auto md:ml-12 md:text-right text-right order-1 md:order-2">
+                        <div class="bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-lg rounded-3xl p-8 border border-white/10 shadow-2xl shadow-emerald-900/20 hover:shadow-emerald-900/40 transition-all duration-500 hover:-translate-y-2">
+                          <div class="flex items-start mb-6">
+                            <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-emerald-600/30 to-emerald-800/30 border border-emerald-500/30 flex items-center justify-center ml-4">
+                              <i class="fas fa-clipboard-check text-emerald-400 text-xl"></i>
+                            </div>
+                            <div>
+                              <h3 class="text-2xl font-bold text-white mb-2">ارزیابی تخصصی</h3>
+                              <div class="flex items-center text-sm text-gray-400">
+                                <i class="fas fa-clock ml-1"></i>
+                                <span>زمان مورد نیاز: ۱-۳ روز کاری</span>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <ul class="space-y-4">
+                            <li class="flex items-center p-3 rounded-xl bg-gradient-to-l from-emerald-900/30 to-transparent hover:from-emerald-900/50 transition-all group">
+                              <div class="w-10 h-10 rounded-lg bg-emerald-900/50 flex items-center justify-center ml-3">
+                                <i class="fas fa-clipboard-check text-emerald-400"></i>
+                              </div>
+                              <span class="text-gray-300 group-hover:text-white transition-colors">بررسی مدارک توسط تیم تایید هویت</span>
+                            </li>
+                            <li class="flex items-center p-3 rounded-xl bg-gradient-to-l from-emerald-900/30 to-transparent hover:from-emerald-900/50 transition-all group">
+                              <div class="w-10 h-10 rounded-lg bg-emerald-900/50 flex items-center justify-center ml-3">
+                                <i class="fas fa-brain text-emerald-400"></i>
+                              </div>
+                              <span class="text-gray-300 group-hover:text-white transition-colors">مصاحبه تخصصی (در صورت نیاز)</span>
+                            </li>
+                            <li class="flex items-center p-3 rounded-xl bg-gradient-to-l from-emerald-900/30 to-transparent hover:from-emerald-900/50 transition-all group">
+                              <div class="w-10 h-10 rounded-lg bg-emerald-900/50 flex items-center justify-center ml-3">
+                                <i class="fas fa-tasks text-emerald-400"></i>
+                              </div>
+                              <span class="text-gray-300 group-hover:text-white transition-colors">ارزیابی نمونه کارها و مهارت‌ها</span>
+                            </li>
+                            <li class="flex items-center p-3 rounded-xl bg-gradient-to-l from-emerald-900/30 to-transparent hover:from-emerald-900/50 transition-all group">
+                              <div class="w-10 h-10 rounded-lg bg-emerald-900/50 flex items-center justify-center ml-3">
+                                <i class="fas fa-star text-emerald-400"></i>
+                              </div>
+                              <span class="text-gray-300 group-hover:text-white transition-colors">تعیین سطح اولیه فروشنده</span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
                     </div>
-
+              
                     <!-- مرحله 3 -->
-                    <div class="timeline-item">
-                        <div class="glass rounded-2xl p-6 step-card">
-                            <div class="step-number">۳</div>
-                            <h3 class="font-bold text-xl mb-4">تکمیل پروفایل</h3>
-                            <ul class="text-slate-300 space-y-3 pr-4">
-                                <li class="flex items-start">
-                                    <i class="fas fa-user-circle text-amber-400 ml-2 mt-1"></i>
-                                    آپلود عکس پروفایل حرفه‌ای
-                                </li>
-                                <li class="flex items-start">
-                                    <i class="fas fa-edit text-amber-400 ml-2 mt-1"></i>
-                                    تکمیل بیوگرافی و معرفی تخصص
-                                </li>
-                                <li class="flex items-start">
-                                    <i class="fas fa-link text-amber-400 ml-2 mt-1"></i>
-                                    اتصال شبکه‌های اجتماعی
-                                </li>
-                                <li class="flex items-start">
-                                    <i class="fas fa-wallet text-amber-400 ml-2 mt-1"></i>
-                                    ثبت اطلاعات بانکی و مالی
-                                </li>
-                            </ul>
-                            <div class="mt-4 text-sm text-slate-400">
-                                <i class="fas fa-clock ml-1"></i>
-                                زمان مورد نیاز: ۳۰ دقیقه
-                            </div>
+                    <div class="relative flex flex-col md:flex-row items-center mb-16 md:mb-24">
+                      <!-- عدد مرحله -->
+                      <div class="absolute right-1/2 translate-x-1/2 md:relative md:right-auto md:translate-x-0 z-10 mb-6 md:mb-0">
+                        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-amber-600 to-amber-800 flex items-center justify-center shadow-xl shadow-amber-900/50 border-4 border-slate-900 relative group">
+                          <span class="text-2xl font-black text-white">۳</span>
+                          <div class="absolute inset-0 rounded-full bg-amber-400/20 blur-md group-hover:blur-xl transition-all duration-500"></div>
                         </div>
+                      </div>
+                      
+                      <!-- کارت مرحله -->
+                      <div class="md:w-1/2 md:mr-12 md:text-left text-right">
+                        <div class="bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-lg rounded-3xl p-8 border border-white/10 shadow-2xl shadow-amber-900/20 hover:shadow-amber-900/40 transition-all duration-500 hover:-translate-y-2">
+                          <div class="flex items-start mb-6">
+                            <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-600/30 to-amber-800/30 border border-amber-500/30 flex items-center justify-center ml-4">
+                              <i class="fas fa-user-circle text-amber-400 text-xl"></i>
+                            </div>
+                            <div>
+                              <h3 class="text-2xl font-bold text-white mb-2">تکمیل پروفایل</h3>
+                              <div class="flex items-center text-sm text-gray-400">
+                                <i class="fas fa-clock ml-1"></i>
+                                <span>زمان مورد نیاز: ۳۰ دقیقه</span>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <ul class="space-y-4">
+                            <li class="flex items-center p-3 rounded-xl bg-gradient-to-l from-amber-900/30 to-transparent hover:from-amber-900/50 transition-all group">
+                              <div class="w-10 h-10 rounded-lg bg-amber-900/50 flex items-center justify-center ml-3">
+                                <i class="fas fa-user-circle text-amber-400"></i>
+                              </div>
+                              <span class="text-gray-300 group-hover:text-white transition-colors">آپلود عکس پروفایل حرفه‌ای</span>
+                            </li>
+                            <li class="flex items-center p-3 rounded-xl bg-gradient-to-l from-amber-900/30 to-transparent hover:from-amber-900/50 transition-all group">
+                              <div class="w-10 h-10 rounded-lg bg-amber-900/50 flex items-center justify-center ml-3">
+                                <i class="fas fa-edit text-amber-400"></i>
+                              </div>
+                              <span class="text-gray-300 group-hover:text-white transition-colors">تکمیل بیوگرافی و معرفی تخصص</span>
+                            </li>
+                            <li class="flex items-center p-3 rounded-xl bg-gradient-to-l from-amber-900/30 to-transparent hover:from-amber-900/50 transition-all group">
+                              <div class="w-10 h-10 rounded-lg bg-amber-900/50 flex items-center justify-center ml-3">
+                                <i class="fas fa-link text-amber-400"></i>
+                              </div>
+                              <span class="text-gray-300 group-hover:text-white transition-colors">اتصال شبکه‌های اجتماعی</span>
+                            </li>
+                            <li class="flex items-center p-3 rounded-xl bg-gradient-to-l from-amber-900/30 to-transparent hover:from-amber-900/50 transition-all group">
+                              <div class="w-10 h-10 rounded-lg bg-amber-900/50 flex items-center justify-center ml-3">
+                                <i class="fas fa-wallet text-amber-400"></i>
+                              </div>
+                              <span class="text-gray-300 group-hover:text-white transition-colors">ثبت اطلاعات بانکی و مالی</span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
                     </div>
-
+              
                     <!-- مرحله 4 -->
-                    <div class="timeline-item">
-                        <div class="glass rounded-2xl p-6 step-card">
-                            <div class="step-number">۴</div>
-                            <h3 class="font-bold text-xl mb-4">آموزش و راه‌اندازی</h3>
-                            <ul class="text-slate-300 space-y-3 pr-4">
-                                <li class="flex items-start">
-                                    <i class="fas fa-graduation-cap text-purple-400 ml-2 mt-1"></i>
-                                    دوره آموزشی رایگان فروشندگان
-                                </li>
-                                <li class="flex items-start">
-                                    <i class="fas fa-upload text-purple-400 ml-2 mt-1"></i>
-                                    آموزش آپلود و قیمت‌گذاری محصول
-                                </li>
-                                <li class="flex items-start">
-                                    <i class="fas fa-chart-line text-purple-400 ml-2 mt-1"></i>
-                                    آشنایی با پنل مدیریت و آمار
-                                </li>
-                                <li class="flex items-start">
-                                    <i class="fas fa-headset text-purple-400 ml-2 mt-1"></i>
-                                    معرفی کانال‌های پشتیبانی
-                                </li>
-                            </ul>
-                            <div class="mt-4 text-sm text-slate-400">
-                                <i class="fas fa-clock ml-1"></i>
-                                زمان مورد نیاز: ۱ ساعت
-                            </div>
+                    <div class="relative flex flex-col md:flex-row items-center mb-16 md:mb-24">
+                      <!-- عدد مرحله -->
+                      <div class="absolute right-1/2 translate-x-1/2 md:relative md:right-auto md:translate-x-0 z-10 mb-6 md:mb-0 order-2 md:order-1">
+                        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-purple-600 to-purple-800 flex items-center justify-center shadow-xl shadow-purple-900/50 border-4 border-slate-900 relative group">
+                          <span class="text-2xl font-black text-white">۴</span>
+                          <div class="absolute inset-0 rounded-full bg-purple-400/20 blur-md group-hover:blur-xl transition-all duration-500"></div>
                         </div>
+                      </div>
+                      
+                      <!-- کارت مرحله -->
+                      <div class="md:w-1/2 md:mr-auto md:ml-12 md:text-right text-right order-1 md:order-2">
+                        <div class="bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-lg rounded-3xl p-8 border border-white/10 shadow-2xl shadow-purple-900/20 hover:shadow-purple-900/40 transition-all duration-500 hover:-translate-y-2">
+                          <div class="flex items-start mb-6">
+                            <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-600/30 to-purple-800/30 border border-purple-500/30 flex items-center justify-center ml-4">
+                              <i class="fas fa-graduation-cap text-purple-400 text-xl"></i>
+                            </div>
+                            <div>
+                              <h3 class="text-2xl font-bold text-white mb-2">آموزش و راه‌اندازی</h3>
+                              <div class="flex items-center text-sm text-gray-400">
+                                <i class="fas fa-clock ml-1"></i>
+                                <span>زمان مورد نیاز: ۱ ساعت</span>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <ul class="space-y-4">
+                            <li class="flex items-center p-3 rounded-xl bg-gradient-to-l from-purple-900/30 to-transparent hover:from-purple-900/50 transition-all group">
+                              <div class="w-10 h-10 rounded-lg bg-purple-900/50 flex items-center justify-center ml-3">
+                                <i class="fas fa-graduation-cap text-purple-400"></i>
+                              </div>
+                              <span class="text-gray-300 group-hover:text-white transition-colors">دوره آموزشی رایگان فروشندگان</span>
+                            </li>
+                            <li class="flex items-center p-3 rounded-xl bg-gradient-to-l from-purple-900/30 to-transparent hover:from-purple-900/50 transition-all group">
+                              <div class="w-10 h-10 rounded-lg bg-purple-900/50 flex items-center justify-center ml-3">
+                                <i class="fas fa-upload text-purple-400"></i>
+                              </div>
+                              <span class="text-gray-300 group-hover:text-white transition-colors">آموزش آپلود و قیمت‌گذاری محصول</span>
+                            </li>
+                            <li class="flex items-center p-3 rounded-xl bg-gradient-to-l from-purple-900/30 to-transparent hover:from-purple-900/50 transition-all group">
+                              <div class="w-10 h-10 rounded-lg bg-purple-900/50 flex items-center justify-center ml-3">
+                                <i class="fas fa-chart-line text-purple-400"></i>
+                              </div>
+                              <span class="text-gray-300 group-hover:text-white transition-colors">آشنایی با پنل مدیریت و آمار</span>
+                            </li>
+                            <li class="flex items-center p-3 rounded-xl bg-gradient-to-l from-purple-900/30 to-transparent hover:from-purple-900/50 transition-all group">
+                              <div class="w-10 h-10 rounded-lg bg-purple-900/50 flex items-center justify-center ml-3">
+                                <i class="fas fa-headset text-purple-400"></i>
+                              </div>
+                              <span class="text-gray-300 group-hover:text-white transition-colors">معرفی کانال‌های پشتیبانی</span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
                     </div>
-
+              
                     <!-- مرحله 5 -->
-                    <div class="timeline-item">
-                        <div class="glass rounded-2xl p-6 step-card">
-                            <div class="step-number">۵</div>
-                            <h3 class="font-bold text-xl mb-4">فعال‌سازی حساب</h3>
-                            <ul class="text-slate-300 space-y-3 pr-4">
-                                <li class="flex items-start">
-                                    <i class="fas fa-check-double text-blue-400 ml-2 mt-1"></i>
-                                    تایید نهایی توسط مدیریت
-                                </li>
-                                <li class="flex items-start">
-                                    <i class="fas fa-store text-blue-400 ml-2 mt-1"></i>
-                                    فعال‌سازی فروشگاه شخصی
-                                </li>
-                                <li class="flex items-start">
-                                    <i class="fas fa-rocket text-blue-400 ml-2 mt-1"></i>
-                                    شروع آپلود و فروش محصولات
-                                </li>
-                                <li class="flex items-start">
-                                    <i class="fas fa-badge-check text-blue-400 ml-2 mt-1"></i>
-                                    دریافت نشان "فروشنده تایید شده"
-                                </li>
-                            </ul>
-                            <div class="mt-4 text-sm text-slate-400">
-                                <i class="fas fa-clock ml-1"></i>
-                                زمان کل فرآیند: ۲-۵ روز کاری
-                            </div>
+                    <div class="relative flex flex-col md:flex-row items-center">
+                      <!-- عدد مرحله -->
+                      <div class="absolute right-1/2 translate-x-1/2 md:relative md:right-auto md:translate-x-0 z-10 mb-6 md:mb-0">
+                        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center shadow-xl shadow-blue-900/50 border-4 border-slate-900 relative group">
+                          <span class="text-2xl font-black text-white">۵</span>
+                          <div class="absolute inset-0 rounded-full bg-blue-400/20 blur-md group-hover:blur-xl transition-all duration-500"></div>
                         </div>
+                      </div>
+                      
+                      <!-- کارت مرحله -->
+                      <div class="md:w-1/2 md:mr-12 md:text-left text-right">
+                        <div class="bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-lg rounded-3xl p-8 border border-white/10 shadow-2xl shadow-blue-900/20 hover:shadow-blue-900/40 transition-all duration-500 hover:-translate-y-2">
+                          <div class="flex items-start mb-6">
+                            <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-600/30 to-blue-800/30 border border-blue-500/30 flex items-center justify-center ml-4">
+                              <i class="fas fa-check-double text-blue-400 text-xl"></i>
+                            </div>
+                            <div>
+                              <h3 class="text-2xl font-bold text-white mb-2">فعال‌سازی حساب</h3>
+                              <div class="flex items-center text-sm text-gray-400">
+                                <i class="fas fa-clock ml-1"></i>
+                                <span>زمان کل فرآیند: ۲-۵ روز کاری</span>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <ul class="space-y-4">
+                            <li class="flex items-center p-3 rounded-xl bg-gradient-to-l from-blue-900/30 to-transparent hover:from-blue-900/50 transition-all group">
+                              <div class="w-10 h-10 rounded-lg bg-blue-900/50 flex items-center justify-center ml-3">
+                                <i class="fas fa-check-double text-blue-400"></i>
+                              </div>
+                              <span class="text-gray-300 group-hover:text-white transition-colors">تایید نهایی توسط مدیریت</span>
+                            </li>
+                            <li class="flex items-center p-3 rounded-xl bg-gradient-to-l from-blue-900/30 to-transparent hover:from-blue-900/50 transition-all group">
+                              <div class="w-10 h-10 rounded-lg bg-blue-900/50 flex items-center justify-center ml-3">
+                                <i class="fas fa-store text-blue-400"></i>
+                              </div>
+                              <span class="text-gray-300 group-hover:text-white transition-colors">فعال‌سازی فروشگاه شخصی</span>
+                            </li>
+                            <li class="flex items-center p-3 rounded-xl bg-gradient-to-l from-blue-900/30 to-transparent hover:from-blue-900/50 transition-all group">
+                              <div class="w-10 h-10 rounded-lg bg-blue-900/50 flex items-center justify-center ml-3">
+                                <i class="fas fa-rocket text-blue-400"></i>
+                              </div>
+                              <span class="text-gray-300 group-hover:text-white transition-colors">شروع آپلود و فروش محصولات</span>
+                            </li>
+                            <li class="flex items-center p-3 rounded-xl bg-gradient-to-l from-blue-900/30 to-transparent hover:from-blue-900/50 transition-all group">
+                              <div class="w-10 h-10 rounded-lg bg-blue-900/50 flex items-center justify-center ml-3">
+                                <i class="fas fa-badge-check text-blue-400"></i>
+                              </div>
+                              <span class="text-gray-300 group-hover:text-white transition-colors">دریافت نشان "فروشنده تایید شده"</span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
                     </div>
+                  </div>
                 </div>
-            </section>
+              
+                <!-- فوتر بخش -->
+                <div class="max-w-4xl mx-auto mt-20 text-center">
+                  <div class="inline-flex items-center justify-center p-4 rounded-2xl bg-gradient-to-r from-purple-900/30 to-blue-900/30 border border-white/10 backdrop-blur-sm">
+                    <i class="fas fa-bolt text-yellow-400 text-xl ml-2"></i>
+                    <span class="text-gray-300">فرآیند ثبت‌نام کاملاً آنلاین و سریع</span>
+                  </div>
+                </div>
+              </section>
 
             <!-- بخش سوم: مزایای فروشندگی -->
             <section class="mb-16">
