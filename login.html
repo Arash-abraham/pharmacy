@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود / ثبت‌نام | فایل استور</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body class="gradient-bg flex flex-col min-h-screen">
+    <!-- هدر -->
+    <header class="glass py-4">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <a href="index.html" class="flex items-center space-x-3 space-x-reverse">
+                        <div class="primary-gradient p-3 rounded-xl shadow-lg">
+                            <i class="fas fa-cloud-download-alt text-white text-2xl"></i>
+                        </div>
+                        <h1 class="text-2xl font-bold gradient-text">فایل استور</h1>
+                    </a>
+                </div>
+                
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <a href="index.html" class="text-slate-300 hover:text-white transition-colors duration-300">
+                        بازگشت به صفحه اصلی
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- محتوای اصلی -->
+    <main class="flex-1 flex items-center justify-center py-12 relative overflow-hidden">
+        <div class="absolute inset-0 grid-pattern"></div>
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center justify-center gap-12">
+                <!-- بخش راست: فرم‌های ورود و ثبت‌نام -->
+                <div class="lg:w-2/5 max-w-lg">
+                    <div class="glass rounded-3xl p-8 shadow-2xl relative overflow-hidden">
+                        <div class="absolute -top-10 -left-10 w-20 h-20 bg-amber-500/20 rounded-full"></div>
+                        <div class="absolute -bottom-10 -right-10 w-28 h-28 bg-purple-500/20 rounded-full"></div>
+                        
+                        <div class="relative z-10">
+                            <!-- تب‌های ورود و ثبت‌نام -->
+                            <div class="flex justify-center mb-8 bg-slate-800/30 rounded-2xl p-1">
+                                <button id="loginTab" class="tab-button active flex-1">ورود</button>
+                                <button id="registerTab" class="tab-button flex-1">ثبت‌نام</button>
+                            </div>
+                            
+                            <!-- فرم ورود -->
+                            <form id="loginForm" class="space-y-6">
+                                <div>
+                                    <label for="loginEmail" class="block text-slate-300 mb-2">ایمیل یا شماره موبایل</label>
+                                    <div class="relative">
+                                        <input type="text" id="loginEmail" class="form-input pr-12" placeholder="example@email.com">
+                                        <i class="fas fa-envelope absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-500"></i>
+                                    </div>
+                                    <div id="loginEmailError" class="error-message">لطفا ایمیل یا شماره موبایل معتبر وارد کنید</div>
+                                </div>
+                                
+                                <div>
+                                    <label for="loginPassword" class="block text-slate-300 mb-2">رمز عبور</label>
+                                    <div class="relative">
+                                        <input type="password" id="loginPassword" class="form-input pr-12" placeholder="••••••••">
+                                        <i class="fas fa-lock absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-500"></i>
+                                        <span class="password-toggle" id="toggleLoginPassword">
+                                            <i class="fas fa-eye"></i>
+                                        </span>
+                                    </div>
+                                    <div id="loginPasswordError" class="error-message">رمز عبور باید حداقل ۸ کاراکتر باشد</div>
+                                </div>
+                                
+                                <div class="flex justify-between items-center"> 
+                                    <a href="#" class="text-primary hover:text-indigo-300 transition-colors duration-300 text-sm">رمز عبور را فراموش کرده‌اید؟</a>
+                                </div>
+                                
+                                <button type="submit" class="primary-gradient hover:shadow-lg hover:shadow-indigo-500/30 w-full py-4 rounded-xl font-bold transition-all duration-300 shine-effect">
+                                    ورود به حساب کاربری
+                                </button>
+                            </form>
+                            
+                            <!-- فرم ثبت‌نام -->
+                            <form id="registerForm" class="space-y-6 hidden">
+                                <div>
+                                    <label for="registerName" class="block text-slate-300 mb-2">نام و نام خانوادگی</label>
+                                    <div class="relative">
+                                        <input type="text" id="registerName" class="form-input pr-12" placeholder="علی محمدی">
+                                        <i class="fas fa-user absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-500"></i>
+                                    </div>
+                                    <div id="registerNameError" class="error-message">لطفا نام و نام خانوادگی خود را وارد کنید</div>
+                                </div>
+                                
+                                <div>
+                                    <label for="registerEmail" class="block text-slate-300 mb-2">ایمیل</label>
+                                    <div class="relative">
+                                        <input type="email" id="registerEmail" class="form-input pr-12" placeholder="example@email.com">
+                                        <i class="fas fa-envelope absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-500"></i>
+                                    </div>
+                                    <div id="registerEmailError" class="error-message">لطفا ایمیل معتبر وارد کنید</div>
+                                </div>
+                                
+                                <div>
+                                    <label for="registerPhone" class="block text-slate-300 mb-2">شماره موبایل</label>
+                                    <div class="relative">
+                                        <input type="tel" id="registerPhone" class="form-input pr-12" placeholder="09123456789">
+                                        <i class="fas fa-phone absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-500"></i>
+                                    </div>
+                                    <div id="registerPhoneError" class="error-message">لطفا شماره موبایل معتبر وارد کنید</div>
+                                </div>
+                                
+                                <div>
+                                    <label for="registerPassword" class="block text-slate-300 mb-2">رمز عبور</label>
+                                    <div class="relative">
+                                        <input type="password" id="registerPassword" class="form-input pr-12" placeholder="••••••••">
+                                        <i class="fas fa-lock absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-500"></i>
+                                        <span class="password-toggle" id="toggleRegisterPassword">
+                                            <i class="fas fa-eye"></i>
+                                        </span>
+                                    </div>
+                                    <div id="registerPasswordError" class="error-message">رمز عبور باید حداقل ۸ کاراکتر و شامل حروف و اعداد باشد</div>
+                                </div>
+                                
+                                <div>
+                                    <label for="registerConfirmPassword" class="block text-slate-300 mb-2">تکرار رمز عبور</label>
+                                    <div class="relative">
+                                        <input type="password" id="registerConfirmPassword" class="form-input pr-12" placeholder="••••••••">
+                                        <i class="fas fa-lock absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-500"></i>
+                                        <span class="password-toggle" id="toggleRegisterConfirmPassword">
+                                            <i class="fas fa-eye"></i>
+                                        </span>
+                                    </div>
+                                    <div id="registerConfirmPasswordError" class="error-message">رمز عبور و تکرار آن باید یکسان باشند</div>
+                                </div>
+
+                                <div class="flex items-start gap-3">
+                                    <label class="checkbox-container">
+                                        <input type="checkbox" id="termsAgreement">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <span class="text-slate-300 text-sm leading-relaxed">
+                                        با <a href="#" class="text-primary hover:text-indigo-300 underline">قوانین و مقررات</a> فایل استور موافقم
+                                    </span>
+                                </div>
+
+
+                                <div id="termsError" class="error-message">لطفا قوانین و مقررات را بپذیرید</div>
+                                
+                                <button type="submit" class="secondary-gradient hover:shadow-lg hover:shadow-emerald-500/30 w-full py-4 rounded-xl font-bold transition-all duration-300 shine-effect">
+                                    ایجاد حساب کاربری
+                                </button>
+                            </form>
+                            
+                            <!-- جداکننده -->
+                            <div class="flex items-center my-8">
+                                <div class="flex-1 h-px bg-slate-700"></div>
+                                <div class="px-4 text-slate-500">یا ورود با</div>
+                                <div class="flex-1 h-px bg-slate-700"></div>
+                            </div>
+                            
+                            <!-- دکمه‌های ورود با شبکه‌های اجتماعی -->
+                            <div class="grid grid-cols-3 gap-4">
+                                <button class="social-btn google">
+                                    <i class="fab fa-google text-xl"></i>
+                                </button>
+                                <button class="social-btn github">
+                                    <i class="fab fa-github text-xl"></i>
+                                </button>
+                                <button class="social-btn twitter">
+                                    <i class="fab fa-twitter text-xl"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- عناصر دکوری اضافی -->
+        <div class="absolute -top-20 -right-20 w-64 h-64 bg-indigo-500/10 rounded-full pulse-slow"></div>
+        <div class="absolute -bottom-20 -left-20 w-80 h-80 bg-amber-500/10 rounded-full pulse-slow" style="animation-delay: 1s;"></div>
+        <div class="absolute top-1/4 left-10 w-32 h-32 bg-emerald-500/10 rounded-full pulse-slow" style="animation-delay: 2s;"></div>
+    </main>
+
+    <!-- فوتر -->
+    <footer class="glass border-t border-slate-800/50 py-8 mt-12">
+        <div class="container mx-auto px-6">
+            <div class="text-center text-slate-500">
+                <p>© ۲۰۲۵ فایل استور. تمام حقوق محفوظ است.</p>
+                <p class="mt-2 text-sm">ورود و ثبت‌نام در سایت به منزله پذیرش <a href="#" class="text-primary hover:text-indigo-300">قوانین و مقررات</a> است.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // عناصر DOM
+            const loginTab = document.getElementById('loginTab');
+            const registerTab = document.getElementById('registerTab');
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const notification = document.getElementById('notification');
+            const notificationMessage = document.getElementById('notificationMessage');
+            
+            // مدیریت تب‌ها
+            loginTab.addEventListener('click', function() {
+                loginTab.classList.add('active');
+                registerTab.classList.remove('active');
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+            });
+            
+            registerTab.addEventListener('click', function() {
+                registerTab.classList.add('active');
+                loginTab.classList.remove('active');
+                registerForm.classList.remove('hidden');
+                loginForm.classList.add('hidden');
+            });
+            
+            // نمایش/مخفی کردن رمز عبور
+            function setupPasswordToggle(toggleId, passwordId) {
+                const toggle = document.getElementById(toggleId);
+                const passwordInput = document.getElementById(passwordId);
+                
+                if (toggle && passwordInput) {
+                    toggle.addEventListener('click', function() {
+                        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                        passwordInput.setAttribute('type', type);
+                        this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+                    });
+                }
+            }
+            
+            setupPasswordToggle('toggleLoginPassword', 'loginPassword');
+            setupPasswordToggle('toggleRegisterPassword', 'registerPassword');
+            setupPasswordToggle('toggleRegisterConfirmPassword', 'registerConfirmPassword');
+            
+            // تابع نمایش نوتیفیکیشن
+            function showNotification(message, type = 'success') {
+                notificationMessage.textContent = message;
+                notification.className = 'notification';
+                
+                if (type === 'error') {
+                    notification.classList.add('error');
+                    notification.querySelector('i').className = 'fas fa-exclamation-circle ml-2';
+                } else if (type === 'warning') {
+                    notification.classList.add('warning');
+                    notification.querySelector('i').className = 'fas fa-exclamation-triangle ml-2';
+                } else {
+                    notification.querySelector('i').className = 'fas fa-check-circle ml-2';
+                }
+                
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 4000);
+            }
+            
+            // افکت ریپل برای دکمه‌ها
+            document.querySelectorAll('button[type="submit"]').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size/2;
+                    const y = e.clientY - rect.top - size/2;
+                    
+                    ripple.style.width = ripple.style.height = size + 'px';
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                    ripple.classList.add('ripple');
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+            
+            // اعتبارسنجی فرم ورود
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                let isValid = true;
+                const email = document.getElementById('loginEmail');
+                const password = document.getElementById('loginPassword');
+                const emailError = document.getElementById('loginEmailError');
+                const passwordError = document.getElementById('loginPasswordError');
+                
+                // ریست خطاها
+                emailError.style.display = 'none';
+                passwordError.style.display = 'none';
+                email.classList.remove('error', 'success');
+                password.classList.remove('error', 'success');
+                
+                // اعتبارسنجی ایمیل/موبایل
+                if (!email.value.trim()) {
+                    emailError.textContent = 'لطفا ایمیل یا شماره موبایل را وارد کنید';
+                    emailError.style.display = 'block';
+                    email.classList.add('error');
+                    isValid = false;
+                } else if (!isValidEmail(email.value) && !isValidPhone(email.value)) {
+                    emailError.textContent = 'لطفا ایمیل یا شماره موبایل معتبر وارد کنید';
+                    emailError.style.display = 'block';
+                    email.classList.add('error');
+                    isValid = false;
+                } else {
+                    email.classList.add('success');
+                }
+                
+                // اعتبارسنجی رمز عبور
+                if (!password.value.trim()) {
+                    passwordError.textContent = 'لطفا رمز عبور را وارد کنید';
+                    passwordError.style.display = 'block';
+                    password.classList.add('error');
+                    isValid = false;
+                } else if (password.value.length < 8) {
+                    passwordError.textContent = 'رمز عبور باید حداقل ۸ کاراکتر باشد';
+                    passwordError.style.display = 'block';
+                    password.classList.add('error');
+                    isValid = false;
+                } else {
+                    password.classList.add('success');
+                }
+                
+                if (isValid) {
+                    // شبیه‌سازی ارسال فرم
+                    setTimeout(() => {
+                        showNotification('ورود با موفقیت انجام شد! در حال انتقال به پنل کاربری...');
+                        
+                        // انتقال به صفحه اصلی بعد از 2 ثانیه
+                        setTimeout(() => {
+                            window.location.href = 'index.html';
+                        }, 2000);
+                    }, 800);
+                }
+            });
+            
+            // اعتبارسنجی فرم ثبت‌نام
+            registerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                let isValid = true;
+                const name = document.getElementById('registerName');
+                const email = document.getElementById('registerEmail');
+                const phone = document.getElementById('registerPhone');
+                const password = document.getElementById('registerPassword');
+                const confirmPassword = document.getElementById('registerConfirmPassword');
+                const terms = document.getElementById('termsAgreement');
+                
+                const nameError = document.getElementById('registerNameError');
+                const emailError = document.getElementById('registerEmailError');
+                const phoneError = document.getElementById('registerPhoneError');
+                const passwordError = document.getElementById('registerPasswordError');
+                const confirmPasswordError = document.getElementById('registerConfirmPasswordError');
+                const termsError = document.getElementById('termsError');
+                
+                // ریست خطاها
+                [nameError, emailError, phoneError, passwordError, confirmPasswordError, termsError].forEach(error => {
+                    error.style.display = 'none';
+                });
+                
+                [name, email, phone, password, confirmPassword].forEach(input => {
+                    input.classList.remove('error', 'success');
+                });
+                
+                // اعتبارسنجی نام
+                if (!name.value.trim()) {
+                    nameError.style.display = 'block';
+                    name.classList.add('error');
+                    isValid = false;
+                } else if (name.value.trim().length < 3) {
+                    nameError.textContent = 'نام باید حداقل ۳ کاراکتر باشد';
+                    nameError.style.display = 'block';
+                    name.classList.add('error');
+                    isValid = false;
+                } else {
+                    name.classList.add('success');
+                }
+                
+                // اعتبارسنجی ایمیل
+                if (!email.value.trim()) {
+                    emailError.textContent = 'لطفا ایمیل را وارد کنید';
+                    emailError.style.display = 'block';
+                    email.classList.add('error');
+                    isValid = false;
+                } else if (!isValidEmail(email.value)) {
+                    emailError.textContent = 'لطفا ایمیل معتبر وارد کنید';
+                    emailError.style.display = 'block';
+                    email.classList.add('error');
+                    isValid = false;
+                } else {
+                    email.classList.add('success');
+                }
+                
+                // اعتبارسنجی شماره موبایل
+                if (!phone.value.trim()) {
+                    phoneError.textContent = 'لطفا شماره موبایل را وارد کنید';
+                    phoneError.style.display = 'block';
+                    phone.classList.add('error');
+                    isValid = false;
+                } else if (!isValidPhone(phone.value)) {
+                    phoneError.textContent = 'لطفا شماره موبایل معتبر وارد کنید (مانند 09123456789)';
+                    phoneError.style.display = 'block';
+                    phone.classList.add('error');
+                    isValid = false;
+                } else {
+                    phone.classList.add('success');
+                }
+                
+                // اعتبارسنجی رمز عبور
+                if (!password.value.trim()) {
+                    passwordError.textContent = 'لطفا رمز عبور را وارد کنید';
+                    passwordError.style.display = 'block';
+                    password.classList.add('error');
+                    isValid = false;
+                } else if (password.value.length < 8) {
+                    passwordError.textContent = 'رمز عبور باید حداقل ۸ کاراکتر باشد';
+                    passwordError.style.display = 'block';
+                    password.classList.add('error');
+                    isValid = false;
+                } else if (!/(?=.*[a-zA-Z])(?=.*\d)/.test(password.value)) {
+                    passwordError.textContent = 'رمز عبور باید شامل حروف و اعداد باشد';
+                    passwordError.style.display = 'block';
+                    password.classList.add('error');
+                    isValid = false;
+                } else {
+                    password.classList.add('success');
+                }
+                
+                // اعتبارسنجی تکرار رمز عبور
+                if (!confirmPassword.value.trim()) {
+                    confirmPasswordError.textContent = 'لطفا تکرار رمز عبور را وارد کنید';
+                    confirmPasswordError.style.display = 'block';
+                    confirmPassword.classList.add('error');
+                    isValid = false;
+                } else if (confirmPassword.value !== password.value) {
+                    confirmPasswordError.textContent = 'رمز عبور و تکرار آن باید یکسان باشند';
+                    confirmPasswordError.style.display = 'block';
+                    confirmPassword.classList.add('error');
+                    isValid = false;
+                } else {
+                    confirmPassword.classList.add('success');
+                }
+                
+                // اعتبارسنجی قوانین
+                if (!terms.checked) {
+                    termsError.style.display = 'block';
+                    isValid = false;
+                }
+                
+                if (isValid) {
+                    // شبیه‌سازی ارسال فرم
+                    setTimeout(() => {
+                        showNotification('ثبت‌نام با موفقیت انجام شد! حساب کاربری شما ایجاد شد.');
+                        
+                        // تغییر به تب ورود بعد از 2 ثانیه
+                        setTimeout(() => {
+                            loginTab.click();
+                            document.getElementById('loginEmail').value = email.value;
+                            document.getElementById('loginPassword').value = password.value;
+                        }, 2000);
+                    }, 800);
+                }
+            });
+            
+            // اعتبارسنجی ایمیل
+            function isValidEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+            
+            // اعتبارسنجی شماره موبایل
+            function isValidPhone(phone) {
+                const re = /^09[0-9]{9}$/;
+                return re.test(phone);
+            }
+            
+            // ورود با شبکه‌های اجتماعی
+            document.querySelectorAll('.social-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const socialName = this.classList.contains('google') ? 'گوگل' : 
+                                      this.classList.contains('github') ? 'گیت‌هاب' : 'توییتر';
+                    
+                    showNotification(`در حال اتصال با ${socialName}... لطفا صبر کنید`, 'warning');
+                });
+            });
+            
+            // اعتبارسنجی لحظه‌ای برای فرم ثبت‌نام
+            document.getElementById('registerPassword').addEventListener('input', function() {
+                const password = this.value;
+                const errorElement = document.getElementById('registerPasswordError');
+                
+                if (password.length > 0 && password.length < 8) {
+                    errorElement.textContent = 'رمز عبور باید حداقل ۸ کاراکتر باشد';
+                    errorElement.style.display = 'block';
+                    this.classList.add('error');
+                    this.classList.remove('success');
+                } else if (password.length >= 8 && !/(?=.*[a-zA-Z])(?=.*\d)/.test(password)) {
+                    errorElement.textContent = 'رمز عبور باید شامل حروف و اعداد باشد';
+                    errorElement.style.display = 'block';
+                    this.classList.add('error');
+                    this.classList.remove('success');
+                } else if (password.length >= 8 && /(?=.*[a-zA-Z])(?=.*\d)/.test(password)) {
+                    errorElement.style.display = 'none';
+                    this.classList.remove('error');
+                    this.classList.add('success');
+                } else {
+                    errorElement.style.display = 'none';
+                    this.classList.remove('error', 'success');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

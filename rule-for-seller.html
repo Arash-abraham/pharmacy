@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ثبت‌نام فروشنده | فایل استور</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+        }
+        
+        body {
+            background-color: var(--darker);
+            color: var(--light);
+        }
+        
+        .glass {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #020617 0%, #0f172a 60%, #1e293b 100%);
+        }
+        
+        .primary-gradient {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        }
+        
+        .secondary-gradient {
+            background: linear-gradient(135deg, var(--secondary), #059669);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .card-hover {
+            transition: all 0.4s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.15);
+        }
+        
+        .shine {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .shine::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.08), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+        
+        .shine:hover::after {
+            transform: translateX(100%);
+        }
+    </style>
+</head>
+<body class="gradient-bg">
+
+    <!-- هدر -->
+    <header class="glass fixed top-0 w-full z-50 border-b border-white/5">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-4">
+                    <a href="#" class="primary-gradient p-3 rounded-xl shadow-lg">
+                        <i class="fas fa-cloud-download-alt text-white text-2xl"></i>
+                    </a>
+                    <h1 class="text-2xl font-bold gradient-text">فایل استور</h1>
+                </div>
+                <button class="primary-gradient px-6 py-2.5 rounded-xl font-medium hover:shadow-lg hover:shadow-indigo-500/30 transition shine">
+                    ورود / ثبت‌نام
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- هیرو -->
+    <section class="pt-24 pb-12 text-center">
+        <div class="container mx-auto px-6">
+            <h1 class="text-4xl lg:text-5xl font-bold mb-4">
+                ثبت‌نام به عنوان <span class="gradient-text">فروشنده</span>
+            </h1>
+            <p class="text-lg text-slate-300 max-w-2xl mx-auto mb-8">
+                فایل‌های دیجیتال خود را به راحتی بفروشید و از درآمد پایدار بهره‌مند شوید.
+            </p>
+            <button class="secondary-gradient px-10 py-4 rounded-xl text-lg font-medium hover:shadow-xl hover:shadow-emerald-500/40 transition shine">
+                شروع ثبت‌نام
+            </button>
+        </div>
+    </section>
+
+    <!-- مراحل ثبت‌نام -->
+    <section class="py-12">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-10 gradient-text">مراحل ثبت‌نام فروشنده</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass rounded-2xl p-8 text-center card-hover">
+                    <div class="primary-gradient w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold text-white">
+                        ۱
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">ثبت‌نام اولیه</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        وارد سایت شوید و با ایمیل یا شماره موبایل حساب کاربری بسازید. کد تأیید برای احراز هویت ارسال می‌شود.
+                    </p>
+                </div>
+                <div class="glass rounded-2xl p-8 text-center card-hover">
+                    <div class="primary-gradient w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold text-white">
+                        ۲
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">تکمیل پروفایل فروشندگی</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        اطلاعات شخصی، تصویر پروفایل، بیوگرافی کوتاه، شماره شبا بانکی و اسکن کارت ملی را آپلود کنید.
+                    </p>
+                </div>
+                <div class="glass rounded-2xl p-8 text-center card-hover">
+                    <div class="primary-gradient w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold text-white">
+                        ۳
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">بررسی و فعال‌سازی</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        تیم پشتیبانی مدارک را بررسی می‌کند (معمولاً کمتر از ۴۸ ساعت). پس از تأیید، پنل فروشندگی فعال می‌شود.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- شرایط و قوانین کامل -->
+    <section class="py-12 bg-slate-900/20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-10 gradient-text">شرایط و قوانین فروشندگی</h2>
+            <div class="glass rounded-2xl p-8">
+                <ul class="space-y-6 text-slate-300">
+                    <li class="flex items-start gap-4">
+                        <i class="fas fa-check-circle text-emerald-400 text-xl mt-1"></i>
+                        <div>
+                            <strong class="text-white">اورجینال بودن فایل‌ها:</strong> فقط فایل‌های تولید خودتان یا دارای مجوز رسمی مجاز هستند. فایل‌های نال، کرک‌شده یا کپی ممنوع و منجر به مسدود شدن دائمی حساب می‌شود.
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <i class="fas fa-check-circle text-emerald-400 text-xl mt-1"></i>
+                        <div>
+                            <strong class="text-white">کیفیت و پشتیبانی:</strong> فایل‌ها باید کامل، بدون ویروس و قابل استفاده باشند. فروشنده موظف به ارائه پشتیبانی حداقل ۶ ماهه (پاسخ به کامنت‌ها و تیکت‌ها) است.
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <i class="fas fa-check-circle text-emerald-400 text-xl mt-1"></i>
+                        <div>
+                            <strong class="text-white">رعایت قوانین:</strong> محتوای فایل‌ها نباید مخالف قوانین جمهوری اسلامی ایران، اخلاق عمومی یا حقوق کپی‌رایت باشد. محتوای سیاسی، غیراخلاقی یا غیرقانونی پذیرفته نمی‌شود.
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <i class="fas fa-check-circle text-emerald-400 text-xl mt-1"></i>
+                        <div>
+                            <strong class="text-white">کمیسیون و تسویه:</strong> ۳۰٪ کارمزد سایت (۷۰٪ سهم فروشنده). تسویه حساب هفتگی برای مبالغ بالای ۲۰۰,۰۰۰ تومان به شماره شبا.
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <i class="fas fa-check-circle text-emerald-400 text-xl mt-1"></i>
+                        <div>
+                            <strong class="text-white">بررسی فایل‌ها:</strong> هر فایل قبل از انتشار توسط تیم فنی بررسی می‌شود (۲۴ تا ۷۲ ساعت). فایل‌های مشکل‌دار رد یا درخواست ویرایش می‌شوند.
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <i class="fas fa-check-circle text-emerald-400 text-xl mt-1"></i>
+                        <div>
+                            <strong class="text-white">مدارک لازم:</strong> اسکن کارت ملی، شماره شبا معتبر، و در صورت نیاز مجوزهای مرتبط با محتوای تخصصی.
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <i class="fas fa-check-circle text-emerald-400 text-xl mt-1"></i>
+                        <div>
+                            <strong class="text-white">مسئولیت فروشنده:</strong> فروشنده مسئول صحت محتوا، به‌روزرسانی فایل‌ها و پاسخگویی به خریداران است. امتیاز پایین یا شکایت مکرر منجر به محدودیت حساب می‌شود.
+                        </div>
+                    </li>
+                </ul>
+                <div class="mt-8 p-5 bg-slate-800/50 rounded-xl text-center border border-slate-700">
+                    <p class="text-slate-300">
+                        با کلیک روی دکمه ثبت‌نام، شما تمام قوانین فوق را مطالعه کرده و پذیرفته‌اید.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- مزایا -->
+    <section class="py-12">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-10 gradient-text">مزایای فروشندگی در فایل استور</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass rounded-2xl p-8 text-center card-hover">
+                    <i class="fas fa-users text-4xl text-indigo-400 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-3">دسترسی به هزاران مشتری</h3>
+                    <p class="text-slate-300 text-sm">فایل‌های شما در بزرگ‌ترین بازار دیجیتال ایران نمایش داده می‌شود.</p>
+                </div>
+                <div class="glass rounded-2xl p-8 text-center card-hover">
+                    <i class="fas fa-lock text-4xl text-emerald-400 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-3">امنیت کامل</h3>
+                    <p class="text-slate-300 text-sm">رمزنگاری فایل‌ها و دانلود فقط برای خریداران مجاز.</p>
+                </div>
+                <div class="glass rounded-2xl p-8 text-center card-hover">
+                    <i class="fas fa-headset text-4xl text-amber-400 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-3">پشتیبانی ۲۴ ساعته</h3>
+                    <p class="text-slate-300 text-sm">تیم حرفه‌ای همیشه آماده کمک به شما و خریداران است.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA نهایی -->
+    <section class="py-12">
+        <div class="container mx-auto px-6 text-center">
+            <div class="glass rounded-2xl p-10">
+                <h2 class="text-3xl font-bold mb-4 gradient-text">همین حالا فروشنده شوید</h2>
+                <p class="text-lg text-slate-300 mb-8">ثبت‌نام رایگان و سریع — بدون هزینه اولیه</p>
+                <button class="secondary-gradient px-10 py-4 rounded-xl text-lg font-medium hover:shadow-xl hover:shadow-emerald-500/40 transition shine">
+                    ثبت‌نام فروشنده
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- فوتر -->
+    <footer class="py-8 border-t border-white/5 text-center text-slate-500">
+        <div class="container mx-auto px-6">
+            <p>© ۲۰۲۵ فایل استور — تمام حقوق محفوظ است.</p>
+        </div>
+    </footer>
+</body>
+</html>
