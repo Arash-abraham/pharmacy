@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ثبت‌نام فروشنده | فایل استور</title>
+    <title>شرایط ثبت‌نام فروشنده | فایل استور</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
             font-family: 'Vazirmatn', sans-serif;
@@ -16,6 +16,7 @@
             --primary: #6366f1;
             --primary-dark: #4f46e5;
             --secondary: #10b981;
+            --accent: #f59e0b;
             --dark: #0f172a;
             --darker: #020617;
             --light: #f8fafc;
@@ -24,235 +25,988 @@
         body {
             background-color: var(--darker);
             color: var(--light);
+            overflow-x: hidden;
         }
         
         .glass {
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .gradient-bg {
-            background: linear-gradient(135deg, #020617 0%, #0f172a 60%, #1e293b 100%);
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 50%, #1e293b 100%);
         }
         
         .primary-gradient {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
         }
         
         .secondary-gradient {
-            background: linear-gradient(135deg, var(--secondary), #059669);
+            background: linear-gradient(135deg, var(--secondary) 0%, #059669 100%);
+        }
+        
+        .accent-gradient {
+            background: linear-gradient(135deg, var(--accent) 0%, #d97706 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
         
         .gradient-text {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
         
-        .card-hover {
-            transition: all 0.4s ease;
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            z-index: 1000;
+            transition: width 0.3s ease;
         }
         
-        .card-hover:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.15);
-        }
-        
-        .shine {
+        .step-card {
             position: relative;
-            overflow: hidden;
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            border-right: 4px solid transparent;
+            transition: all 0.3s ease;
         }
         
-        .shine::after {
+        .step-card:hover {
+            border-right-color: var(--primary);
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
+        }
+        
+        .requirement-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-right: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .requirement-item:hover {
+            border-right-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+        
+        .benefit-item {
+            text-align: center;
+            padding: 25px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .benefit-item:hover {
+            transform: translateY(-5px);
+            background: rgba(99, 102, 241, 0.1);
+        }
+        
+        .timeline {
+            position: relative;
+            padding-right: 40px;
+        }
+        
+        .timeline::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.08), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.6s;
+            right: 20px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
         }
         
-        .shine:hover::after {
-            transform: translateX(100%);
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding-right: 20px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 3px solid var(--darker);
         }
     </style>
 </head>
-<body class="gradient-bg">
+<body class="gradient-bg min-h-screen">
+    <!-- نوار پیشرفت اسکرول -->
+    <div class="progress-bar" id="progressBar"></div>
 
     <!-- هدر -->
-    <header class="glass fixed top-0 w-full z-50 border-b border-white/5">
-        <div class="container mx-auto px-6 py-4">
+    <header class="glass fixed w-full z-50 py-4">
+        <div class="container mx-auto px-6">
             <div class="flex justify-between items-center">
-                <div class="flex items-center gap-4">
-                    <a href="#" class="primary-gradient p-3 rounded-xl shadow-lg">
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <a href="index.html" class="primary-gradient p-3 rounded-xl shadow-lg">
                         <i class="fas fa-cloud-download-alt text-white text-2xl"></i>
                     </a>
                     <h1 class="text-2xl font-bold gradient-text">فایل استور</h1>
                 </div>
-                <button class="primary-gradient px-6 py-2.5 rounded-xl font-medium hover:shadow-lg hover:shadow-indigo-500/30 transition shine">
-                    ورود / ثبت‌نام
-                </button>
+                
+                <nav class="hidden lg:flex items-center space-x-8 space-x-reverse">
+                    <a href="index.html" class="text-lg font-medium hover:text-indigo-300 transition-all duration-300 relative group">
+                        خانه
+                        <span class="absolute bottom-0 right-0 w-0 h-0.5 bg-indigo-400 transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="sellers.html" class="text-lg font-medium hover:text-indigo-300 transition-all duration-300 relative group">
+                        فروشندگان
+                        <span class="absolute bottom-0 right-0 w-0 h-0.5 bg-indigo-400 transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="seller-requirements.html" class="text-lg font-medium text-indigo-300 relative group">
+                        ثبت‌نام فروشنده
+                        <span class="absolute bottom-0 right-0 w-full h-0.5 bg-indigo-400"></span>
+                    </a>
+                    <a href="about.html" class="text-lg font-medium hover:text-indigo-300 transition-all duration-300 relative group">
+                        درباره ما
+                        <span class="absolute bottom-0 right-0 w-0 h-0.5 bg-indigo-400 transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="terms.html" class="text-lg font-medium hover:text-indigo-300 transition-all duration-300 relative group">
+                        قوانین و مقررات
+                        <span class="absolute bottom-0 right-0 w-0 h-0.5 bg-indigo-400 transition-all group-hover:w-full"></span>
+                    </a>
+                </nav>
+                
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <a href="#apply-form" class="primary-gradient hover:shadow-lg hover:shadow-indigo-500/30 px-6 py-2.5 rounded-xl font-medium transition-all duration-300">
+                        درخواست عضویت
+                    </a>
+                    <button class="lg:hidden text-xl bg-slate-800 w-10 h-10 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </header>
 
-    <!-- هیرو -->
-    <section class="pt-24 pb-12 text-center">
-        <div class="container mx-auto px-6">
-            <h1 class="text-4xl lg:text-5xl font-bold mb-4">
-                ثبت‌نام به عنوان <span class="gradient-text">فروشنده</span>
-            </h1>
-            <p class="text-lg text-slate-300 max-w-2xl mx-auto mb-8">
-                فایل‌های دیجیتال خود را به راحتی بفروشید و از درآمد پایدار بهره‌مند شوید.
-            </p>
-            <button class="secondary-gradient px-10 py-4 rounded-xl text-lg font-medium hover:shadow-xl hover:shadow-emerald-500/40 transition shine">
-                شروع ثبت‌نام
-            </button>
-        </div>
-    </section>
+    <!-- محتوای اصلی -->
+    <main class="pt-28 pb-16">
+        <div class="container mx-auto px-4 lg:px-6">
+            <!-- هدر صفحه -->
+            <div class="text-center mb-12">
+                <h1 class="text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 lg:mb-6 gradient-text">شرایط و مراحل ثبت‌نام فروشنده</h1>
+                <p class="text-lg lg:text-xl text-slate-300 leading-relaxed max-w-3xl mx-auto">
+                    برای ثبت‌نام به عنوان فروشنده در فایل استور، باید شرایط و مراحل زیر را به دقت مطالعه کرده و رعایت کنید.
+                </p>
+            </div>
 
-    <!-- مراحل ثبت‌نام -->
-    <section class="py-12">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-10 gradient-text">مراحل ثبت‌نام فروشنده</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="glass rounded-2xl p-8 text-center card-hover">
-                    <div class="primary-gradient w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold text-white">
-                        ۱
+            <!-- معرفی -->
+            <div class="glass rounded-2xl p-8 mb-12">
+                <div class="flex items-start">
+                    <div class="primary-gradient p-4 rounded-xl ml-6">
+                        <i class="fas fa-user-tie text-white text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold mb-3">ثبت‌نام اولیه</h3>
-                    <p class="text-slate-300 text-sm leading-relaxed">
-                        وارد سایت شوید و با ایمیل یا شماره موبایل حساب کاربری بسازید. کد تأیید برای احراز هویت ارسال می‌شود.
-                    </p>
-                </div>
-                <div class="glass rounded-2xl p-8 text-center card-hover">
-                    <div class="primary-gradient w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold text-white">
-                        ۲
+                    <div>
+                        <h2 class="text-2xl font-bold mb-4">چرا فروشنده فایل استور شوید؟</h2>
+                        <p class="text-slate-300 leading-relaxed">
+                            فایل استور بزرگترین پلتفرم خرید و فروش فایل‌های دیجیتال در ایران است. با عضویت به عنوان فروشنده، می‌توانید:
+                        </p>
+                        <ul class="list-disc pr-6 mt-4 text-slate-300 space-y-2">
+                            <li>محصولات دیجیتال خود را به هزاران کاربر فعال بفروشید</li>
+                            <li>از سیستم پرداخت امن و سریع ما استفاده کنید</li>
+                            <li>به پنل مدیریت پیشرفته دسترسی داشته باشید</li>
+                            <li>از پشتیبانی ۲۴ ساعته تیم فنی بهره‌مند شوید</li>
+                            <li>در برنامه‌های ویژه و تخفیف‌های فصلی شرکت کنید</li>
+                        </ul>
                     </div>
-                    <h3 class="text-xl font-semibold mb-3">تکمیل پروفایل فروشندگی</h3>
-                    <p class="text-slate-300 text-sm leading-relaxed">
-                        اطلاعات شخصی، تصویر پروفایل، بیوگرافی کوتاه، شماره شبا بانکی و اسکن کارت ملی را آپلود کنید.
-                    </p>
                 </div>
-                <div class="glass rounded-2xl p-8 text-center card-hover">
-                    <div class="primary-gradient w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl font-bold text-white">
-                        ۳
+            </div>
+
+            <!-- بخش اول: شرایط عمومی -->
+            <section class="mb-16">
+                <div class="flex items-center mb-8">
+                    <div class="w-12 h-12 primary-gradient rounded-xl flex items-center justify-center ml-4">
+                        <i class="fas fa-list-check text-white text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold mb-3">بررسی و فعال‌سازی</h3>
-                    <p class="text-slate-300 text-sm leading-relaxed">
-                        تیم پشتیبانی مدارک را بررسی می‌کند (معمولاً کمتر از ۴۸ ساعت). پس از تأیید، پنل فروشندگی فعال می‌شود.
-                    </p>
+                    <h2 class="text-2xl lg:text-3xl font-bold gradient-text">شرایط عمومی ثبت‌نام</h2>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- شرایط و قوانین کامل -->
-    <section class="py-12 bg-slate-900/20">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-10 gradient-text">شرایط و قوانین فروشندگی</h2>
-            <div class="glass rounded-2xl p-8">
-                <ul class="space-y-6 text-slate-300">
-                    <li class="flex items-start gap-4">
-                        <i class="fas fa-check-circle text-emerald-400 text-xl mt-1"></i>
-                        <div>
-                            <strong class="text-white">اورجینال بودن فایل‌ها:</strong> فقط فایل‌های تولید خودتان یا دارای مجوز رسمی مجاز هستند. فایل‌های نال، کرک‌شده یا کپی ممنوع و منجر به مسدود شدن دائمی حساب می‌شود.
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- شرایط سنی -->
+                    <div class="glass rounded-2xl p-6 requirement-item">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-indigo-500/20 p-2 rounded-lg ml-3">
+                                <i class="fas fa-user-clock text-indigo-400"></i>
+                            </div>
+                            <h3 class="font-bold text-lg">شرایط سنی و هویتی</h3>
                         </div>
-                    </li>
-                    <li class="flex items-start gap-4">
-                        <i class="fas fa-check-circle text-emerald-400 text-xl mt-1"></i>
-                        <div>
-                            <strong class="text-white">کیفیت و پشتیبانی:</strong> فایل‌ها باید کامل، بدون ویروس و قابل استفاده باشند. فروشنده موظف به ارائه پشتیبانی حداقل ۶ ماهه (پاسخ به کامنت‌ها و تیکت‌ها) است.
-                        </div>
-                    </li>
-                    <li class="flex items-start gap-4">
-                        <i class="fas fa-check-circle text-emerald-400 text-xl mt-1"></i>
-                        <div>
-                            <strong class="text-white">رعایت قوانین:</strong> محتوای فایل‌ها نباید مخالف قوانین جمهوری اسلامی ایران، اخلاق عمومی یا حقوق کپی‌رایت باشد. محتوای سیاسی، غیراخلاقی یا غیرقانونی پذیرفته نمی‌شود.
-                        </div>
-                    </li>
-                    <li class="flex items-start gap-4">
-                        <i class="fas fa-check-circle text-emerald-400 text-xl mt-1"></i>
-                        <div>
-                            <strong class="text-white">کمیسیون و تسویه:</strong> ۳۰٪ کارمزد سایت (۷۰٪ سهم فروشنده). تسویه حساب هفتگی برای مبالغ بالای ۲۰۰,۰۰۰ تومان به شماره شبا.
-                        </div>
-                    </li>
-                    <li class="flex items-start gap-4">
-                        <i class="fas fa-check-circle text-emerald-400 text-xl mt-1"></i>
-                        <div>
-                            <strong class="text-white">بررسی فایل‌ها:</strong> هر فایل قبل از انتشار توسط تیم فنی بررسی می‌شود (۲۴ تا ۷۲ ساعت). فایل‌های مشکل‌دار رد یا درخواست ویرایش می‌شوند.
-                        </div>
-                    </li>
-                    <li class="flex items-start gap-4">
-                        <i class="fas fa-check-circle text-emerald-400 text-xl mt-1"></i>
-                        <div>
-                            <strong class="text-white">مدارک لازم:</strong> اسکن کارت ملی، شماره شبا معتبر، و در صورت نیاز مجوزهای مرتبط با محتوای تخصصی.
-                        </div>
-                    </li>
-                    <li class="flex items-start gap-4">
-                        <i class="fas fa-check-circle text-emerald-400 text-xl mt-1"></i>
-                        <div>
-                            <strong class="text-white">مسئولیت فروشنده:</strong> فروشنده مسئول صحت محتوا، به‌روزرسانی فایل‌ها و پاسخگویی به خریداران است. امتیاز پایین یا شکایت مکرر منجر به محدودیت حساب می‌شود.
-                        </div>
-                    </li>
-                </ul>
-                <div class="mt-8 p-5 bg-slate-800/50 rounded-xl text-center border border-slate-700">
-                    <p class="text-slate-300">
-                        با کلیک روی دکمه ثبت‌نام، شما تمام قوانین فوق را مطالعه کرده و پذیرفته‌اید.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
+                        <ul class="text-slate-300 space-y-2 pr-4">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-400 ml-2 mt-1"></i>
+                                حداقل سن ۱۸ سال تمام
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-400 ml-2 mt-1"></i>
+                                ارائه کارت ملی معتبر
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-400 ml-2 mt-1"></i>
+                                برای اشخاص حقوقی: ارائه مدارک ثبت شرکت
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-400 ml-2 mt-1"></i>
+                                تابعیت جمهوری اسلامی ایران
+                            </li>
+                        </ul>
+                    </div>
 
-    <!-- مزایا -->
-    <section class="py-12">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-10 gradient-text">مزایای فروشندگی در فایل استور</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="glass rounded-2xl p-8 text-center card-hover">
-                    <i class="fas fa-users text-4xl text-indigo-400 mb-4"></i>
-                    <h3 class="text-xl font-semibold mb-3">دسترسی به هزاران مشتری</h3>
-                    <p class="text-slate-300 text-sm">فایل‌های شما در بزرگ‌ترین بازار دیجیتال ایران نمایش داده می‌شود.</p>
-                </div>
-                <div class="glass rounded-2xl p-8 text-center card-hover">
-                    <i class="fas fa-lock text-4xl text-emerald-400 mb-4"></i>
-                    <h3 class="text-xl font-semibold mb-3">امنیت کامل</h3>
-                    <p class="text-slate-300 text-sm">رمزنگاری فایل‌ها و دانلود فقط برای خریداران مجاز.</p>
-                </div>
-                <div class="glass rounded-2xl p-8 text-center card-hover">
-                    <i class="fas fa-headset text-4xl text-amber-400 mb-4"></i>
-                    <h3 class="text-xl font-semibold mb-3">پشتیبانی ۲۴ ساعته</h3>
-                    <p class="text-slate-300 text-sm">تیم حرفه‌ای همیشه آماده کمک به شما و خریداران است.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+                    <!-- شرایط فنی -->
+                    <div class="glass rounded-2xl p-6 requirement-item">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-emerald-500/20 p-2 rounded-lg ml-3">
+                                <i class="fas fa-laptop-code text-emerald-400"></i>
+                            </div>
+                            <h3 class="font-bold text-lg">شرایط فنی و تخصصی</h3>
+                        </div>
+                        <ul class="text-slate-300 space-y-2 pr-4">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-400 ml-2 mt-1"></i>
+                                تسلط به حداقل یک حوزه تخصصی
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-400 ml-2 mt-1"></i>
+                                آشنایی با ابزارهای دیجیتال مرتبط
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-400 ml-2 mt-1"></i>
+                                توانایی تولید محتوای با کیفیت
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-400 ml-2 mt-1"></i>
+                                آشنایی با قوانین کپی‌رایت و مالکیت معنوی
+                            </li>
+                        </ul>
+                    </div>
 
-    <!-- CTA نهایی -->
-    <section class="py-12">
-        <div class="container mx-auto px-6 text-center">
-            <div class="glass rounded-2xl p-10">
-                <h2 class="text-3xl font-bold mb-4 gradient-text">همین حالا فروشنده شوید</h2>
-                <p class="text-lg text-slate-300 mb-8">ثبت‌نام رایگان و سریع — بدون هزینه اولیه</p>
-                <button class="secondary-gradient px-10 py-4 rounded-xl text-lg font-medium hover:shadow-xl hover:shadow-emerald-500/40 transition shine">
-                    ثبت‌نام فروشنده
-                </button>
-            </div>
+                    <!-- شرایط مالی -->
+                    <div class="glass rounded-2xl p-6 requirement-item">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-amber-500/20 p-2 rounded-lg ml-3">
+                                <i class="fas fa-wallet text-amber-400"></i>
+                            </div>
+                            <h3 class="font-bold text-lg">شرایط مالی و بانکی</h3>
+                        </div>
+                        <ul class="text-slate-300 space-y-2 pr-4">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-400 ml-2 mt-1"></i>
+                                داشتن حساب بانکی ایرانی
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-400 ml-2 mt-1"></i>
+                                کارت بانکی فعال و دارای شبا
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-400 ml-2 mt-1"></i>
+                                پذیرش قوانین مالیاتی پلتفرم
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-400 ml-2 mt-1"></i>
+                                موافقت با کسر کارمزد ۱۵٪ از هر فروش
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- شرایط تعهدی -->
+                    <div class="glass rounded-2xl p-6 requirement-item">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-purple-500/20 p-2 rounded-lg ml-3">
+                                <i class="fas fa-handshake text-purple-400"></i>
+                            </div>
+                            <h3 class="font-bold text-lg">تعهدات و مسئولیت‌ها</h3>
+                        </div>
+                        <ul class="text-slate-300 space-y-2 pr-4">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-400 ml-2 mt-1"></i>
+                                رعایت کامل قوانین و مقررات فایل استور
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-400 ml-2 mt-1"></i>
+                                پاسخگویی به کاربران در مدت ۲۴ ساعت
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-400 ml-2 mt-1"></i>
+                                ارائه پشتیبانی فنی برای محصولات
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-400 ml-2 mt-1"></i>
+                                به‌روزرسانی منظم محصولات
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- بخش دوم: مراحل ثبت‌نام -->
+            <section class="mb-16">
+                <div class="flex items-center mb-8">
+                    <div class="w-12 h-12 secondary-gradient rounded-xl flex items-center justify-center ml-4">
+                        <i class="fas fa-stairs text-white text-xl"></i>
+                    </div>
+                    <h2 class="text-2xl lg:text-3xl font-bold gradient-text">مراحل ثبت‌نام و تایید</h2>
+                </div>
+
+                <div class="timeline max-w-4xl mx-auto">
+                    <!-- مرحله 1 -->
+                    <div class="timeline-item">
+                        <div class="glass rounded-2xl p-6 step-card">
+                            <div class="step-number">۱</div>
+                            <h3 class="font-bold text-xl mb-4">ثبت‌نام اولیه</h3>
+                            <ul class="text-slate-300 space-y-3 pr-4">
+                                <li class="flex items-start">
+                                    <i class="fas fa-user-plus text-indigo-400 ml-2 mt-1"></i>
+                                    تکمیل فرم درخواست عضویت
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-envelope text-indigo-400 ml-2 mt-1"></i>
+                                    تایید ایمیل و شماره موبایل
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-id-card text-indigo-400 ml-2 mt-1"></i>
+                                    ارسال تصویر کارت ملی
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-file-signature text-indigo-400 ml-2 mt-1"></i>
+                                    مطالعه و تایید قوانین
+                                </li>
+                            </ul>
+                            <div class="mt-4 text-sm text-slate-400">
+                                <i class="fas fa-clock ml-1"></i>
+                                زمان مورد نیاز: ۱۵ دقیقه
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- مرحله 2 -->
+                    <div class="timeline-item">
+                        <div class="glass rounded-2xl p-6 step-card">
+                            <div class="step-number">۲</div>
+                            <h3 class="font-bold text-xl mb-4">ارزیابی تخصصی</h3>
+                            <ul class="text-slate-300 space-y-3 pr-4">
+                                <li class="flex items-start">
+                                    <i class="fas fa-clipboard-check text-emerald-400 ml-2 mt-1"></i>
+                                    بررسی مدارک توسط تیم تایید هویت
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-brain text-emerald-400 ml-2 mt-1"></i>
+                                    مصاحبه تخصصی (در صورت نیاز)
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-tasks text-emerald-400 ml-2 mt-1"></i>
+                                    ارزیابی نمونه کارها و مهارت‌ها
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-star text-emerald-400 ml-2 mt-1"></i>
+                                    تعیین سطح اولیه فروشنده
+                                </li>
+                            </ul>
+                            <div class="mt-4 text-sm text-slate-400">
+                                <i class="fas fa-clock ml-1"></i>
+                                زمان مورد نیاز: ۱-۳ روز کاری
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- مرحله 3 -->
+                    <div class="timeline-item">
+                        <div class="glass rounded-2xl p-6 step-card">
+                            <div class="step-number">۳</div>
+                            <h3 class="font-bold text-xl mb-4">تکمیل پروفایل</h3>
+                            <ul class="text-slate-300 space-y-3 pr-4">
+                                <li class="flex items-start">
+                                    <i class="fas fa-user-circle text-amber-400 ml-2 mt-1"></i>
+                                    آپلود عکس پروفایل حرفه‌ای
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-edit text-amber-400 ml-2 mt-1"></i>
+                                    تکمیل بیوگرافی و معرفی تخصص
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-link text-amber-400 ml-2 mt-1"></i>
+                                    اتصال شبکه‌های اجتماعی
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-wallet text-amber-400 ml-2 mt-1"></i>
+                                    ثبت اطلاعات بانکی و مالی
+                                </li>
+                            </ul>
+                            <div class="mt-4 text-sm text-slate-400">
+                                <i class="fas fa-clock ml-1"></i>
+                                زمان مورد نیاز: ۳۰ دقیقه
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- مرحله 4 -->
+                    <div class="timeline-item">
+                        <div class="glass rounded-2xl p-6 step-card">
+                            <div class="step-number">۴</div>
+                            <h3 class="font-bold text-xl mb-4">آموزش و راه‌اندازی</h3>
+                            <ul class="text-slate-300 space-y-3 pr-4">
+                                <li class="flex items-start">
+                                    <i class="fas fa-graduation-cap text-purple-400 ml-2 mt-1"></i>
+                                    دوره آموزشی رایگان فروشندگان
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-upload text-purple-400 ml-2 mt-1"></i>
+                                    آموزش آپلود و قیمت‌گذاری محصول
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-chart-line text-purple-400 ml-2 mt-1"></i>
+                                    آشنایی با پنل مدیریت و آمار
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-headset text-purple-400 ml-2 mt-1"></i>
+                                    معرفی کانال‌های پشتیبانی
+                                </li>
+                            </ul>
+                            <div class="mt-4 text-sm text-slate-400">
+                                <i class="fas fa-clock ml-1"></i>
+                                زمان مورد نیاز: ۱ ساعت
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- مرحله 5 -->
+                    <div class="timeline-item">
+                        <div class="glass rounded-2xl p-6 step-card">
+                            <div class="step-number">۵</div>
+                            <h3 class="font-bold text-xl mb-4">فعال‌سازی حساب</h3>
+                            <ul class="text-slate-300 space-y-3 pr-4">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-double text-blue-400 ml-2 mt-1"></i>
+                                    تایید نهایی توسط مدیریت
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-store text-blue-400 ml-2 mt-1"></i>
+                                    فعال‌سازی فروشگاه شخصی
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-rocket text-blue-400 ml-2 mt-1"></i>
+                                    شروع آپلود و فروش محصولات
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-badge-check text-blue-400 ml-2 mt-1"></i>
+                                    دریافت نشان "فروشنده تایید شده"
+                                </li>
+                            </ul>
+                            <div class="mt-4 text-sm text-slate-400">
+                                <i class="fas fa-clock ml-1"></i>
+                                زمان کل فرآیند: ۲-۵ روز کاری
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- بخش سوم: مزایای فروشندگی -->
+            <section class="mb-16">
+                <div class="flex items-center mb-8">
+                    <div class="w-12 h-12 accent-gradient rounded-xl flex items-center justify-center ml-4">
+                        <i class="fas fa-gift text-white text-xl"></i>
+                    </div>
+                    <h2 class="text-2xl lg:text-3xl font-bold gradient-text">مزایای عضویت به عنوان فروشنده</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="benefit-item">
+                        <div class="primary-gradient w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-money-bill-wave text-white text-2xl"></i>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">درآمدزایی مستمر</h3>
+                        <p class="text-slate-400 text-sm">
+                            کسب درآمد دائمی از فروش محصولات دیجیتال بدون محدودیت زمانی و مکانی
+                        </p>
+                    </div>
+
+                    <div class="benefit-item">
+                        <div class="secondary-gradient w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-users text-white text-2xl"></i>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">دسترسی به بازار بزرگ</h3>
+                        <p class="text-slate-400 text-sm">
+                            دسترسی به جامعه ۵۰,۰۰۰+ کاربر فعال فایل استور برای فروش محصولات
+                        </p>
+                    </div>
+
+                    <div class="benefit-item">
+                        <div class="accent-gradient w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-shield-alt text-white text-2xl"></i>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">پشتیبانی و امنیت</h3>
+                        <p class="text-slate-400 text-sm">
+                            پشتیبانی ۲۴ ساعته و سیستم امن پرداخت برای حفاظت از حقوق شما
+                        </p>
+                    </div>
+
+                    <div class="benefit-item">
+                        <div class="bg-purple-600 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-chart-line text-white text-2xl"></i>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">ابزارهای تحلیلی</h3>
+                        <p class="text-slate-400 text-sm">
+                            پنل مدیریت پیشرفته با آمار دقیق فروش، بازدید و تحلیل بازار
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- بخش چهارم: مدارک مورد نیاز -->
+            <section class="mb-16">
+                <div class="glass rounded-2xl p-8">
+                    <div class="flex items-center mb-8">
+                        <div class="w-12 h-12 bg-red-600 rounded-xl flex items-center justify-center ml-4">
+                            <i class="fas fa-file-alt text-white text-xl"></i>
+                        </div>
+                        <h2 class="text-2xl lg:text-3xl font-bold gradient-text">مدارک مورد نیاز برای ثبت‌نام</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- مدارک اشخاص حقیقی -->
+                        <div>
+                            <h3 class="font-bold text-xl mb-6 text-slate-300 border-r-4 border-indigo-500 pr-4">مدارک اشخاص حقیقی</h3>
+                            <ul class="space-y-4">
+                                <li class="flex items-start">
+                                    <div class="bg-indigo-500/20 p-2 rounded-lg ml-3">
+                                        <i class="fas fa-id-card text-indigo-400"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold mb-1">تصویر کارت ملی</h4>
+                                        <p class="text-slate-400 text-sm">تصویر واضح از دو طرف کارت ملی با تاریخ انقضای معتبر</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="bg-indigo-500/20 p-2 rounded-lg ml-3">
+                                        <i class="fas fa-selfie text-indigo-400"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold mb-1">عکس پرسنلی</h4>
+                                        <p class="text-slate-400 text-sm">عکس رنگی زمینه سفید با اندازه ۴×۳ سانتی‌متر</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="bg-indigo-500/20 p-2 rounded-lg ml-3">
+                                        <i class="fas fa-credit-card text-indigo-400"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold mb-1">اطلاعات بانکی</h4>
+                                        <p class="text-slate-400 text-sm">شماره کارت و شماره شبا حساب بانکی شخصی</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="bg-indigo-500/20 p-2 rounded-lg ml-3">
+                                        <i class="fas fa-portfolio text-indigo-400"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold mb-1">نمونه کارها</h4>
+                                        <p class="text-slate-400 text-sm">حداقل ۳ نمونه از محصولات یا پروژه‌های قبلی</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- مدارک اشخاص حقوقی -->
+                        <div>
+                            <h3 class="font-bold text-xl mb-6 text-slate-300 border-r-4 border-emerald-500 pr-4">مدارک اشخاص حقوقی</h3>
+                            <ul class="space-y-4">
+                                <li class="flex items-start">
+                                    <div class="bg-emerald-500/20 p-2 rounded-lg ml-3">
+                                        <i class="fas fa-building text-emerald-400"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold mb-1">آگهی تأسیس شرکت</h4>
+                                        <p class="text-slate-400 text-sm">کپی آگهی تأسیس شرکت از روزنامه رسمی</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="bg-emerald-500/20 p-2 rounded-lg ml-3">
+                                        <i class="fas fa-file-contract text-emerald-400"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold mb-1">شناسنامه شرکت</h4>
+                                        <p class="text-slate-400 text-sm">تصویر شناسنامه شرکت (کارت بازرگانی)</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="bg-emerald-500/20 p-2 rounded-lg ml-3">
+                                        <i class="fas fa-user-tie text-emerald-400"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold mb-1">مدارک نماینده</h4>
+                                        <p class="text-slate-400 text-sm">مدارک هویتی و معرفی‌نامه نماینده قانونی شرکت</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="bg-emerald-500/20 p-2 rounded-lg ml-3">
+                                        <i class="fas fa-university text-emerald-400"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold mb-1">حساب بانکی شرکت</h4>
+                                        <p class="text-slate-400 text-sm">شماره حساب و شبا حساب بانکی شرکت</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- بخش پنجم: فرم درخواست عضویت -->
+            <section id="apply-form" class="mb-16">
+                <div class="glass rounded-2xl p-8">
+                    <div class="text-center mb-8">
+                        <h2 class="text-2xl lg:text-3xl font-bold mb-4 gradient-text">ثبت درخواست عضویت</h2>
+                        <p class="text-slate-300 max-w-2xl mx-auto">
+                            پس از مطالعه شرایط و مدارک مورد نیاز، فرم زیر را تکمیل کنید. کارشناسان ما در اولین فرصت با شما تماس خواهند گرفت.
+                        </p>
+                    </div>
+
+                    <form class="max-w-3xl mx-auto">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label class="block text-slate-300 mb-2">نام و نام خانوادگی *</label>
+                                <input type="text" required class="w-full bg-slate-800/50 border border-slate-700 rounded-xl py-3 px-4 text-white placeholder-slate-400 focus:outline-none focus:border-indigo-500 transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-slate-300 mb-2">شماره موبایل *</label>
+                                <input type="tel" required class="w-full bg-slate-800/50 border border-slate-700 rounded-xl py-3 px-4 text-white placeholder-slate-400 focus:outline-none focus:border-indigo-500 transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-slate-300 mb-2">آدرس ایمیل *</label>
+                                <input type="email" required class="w-full bg-slate-800/50 border border-slate-700 rounded-xl py-3 px-4 text-white placeholder-slate-400 focus:outline-none focus:border-indigo-500 transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-slate-300 mb-2">نوع درخواست *</label>
+                                <select class="w-full bg-slate-800/50 border border-slate-700 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-indigo-500 transition-colors">
+                                    <option value="">انتخاب کنید</option>
+                                    <option value="individual">شخص حقیقی</option>
+                                    <option value="company">شخص حقوقی</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-6">
+                            <label class="block text-slate-300 mb-2">حوزه تخصصی *</label>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="ml-2">
+                                    <span class="text-slate-300">قالب‌های وب</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="ml-2">
+                                    <span class="text-slate-300">اپلیکیشن موبایل</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="ml-2">
+                                    <span class="text-slate-300">گرافیک و طراحی</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="ml-2">
+                                    <span class="text-slate-300">کتاب و محتوا</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="ml-2">
+                                    <span class="text-slate-300">ویدئو آموزشی</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="ml-2">
+                                    <span class="text-slate-300">پلاگین و اسکریپت</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="ml-2">
+                                    <span class="text-slate-300">فایل صوتی</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="ml-2">
+                                    <span class="text-slate-300">سایر</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="mb-6">
+                            <label class="block text-slate-300 mb-2">توضیحات و سوابق کاری *</label>
+                            <textarea rows="4" class="w-full bg-slate-800/50 border border-slate-700 rounded-xl py-3 px-4 text-white placeholder-slate-400 focus:outline-none focus:border-indigo-500 transition-colors" placeholder="تجربیات، مهارت‌ها و نمونه کارهای خود را شرح دهید..."></textarea>
+                        </div>
+
+                        <div class="mb-6">
+                            <label class="flex items-center cursor-pointer">
+                                <input type="checkbox" required class="ml-3">
+                                <span class="text-slate-300">
+                                    کلیه شرایط و قوانین ثبت‌نام فروشنده در فایل استور را مطالعه کرده و می‌پذیرم
+                                </span>
+                            </label>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="primary-gradient hover:shadow-lg hover:shadow-indigo-500/30 px-8 py-3 rounded-xl font-bold text-lg transition-all duration-300 inline-flex items-center">
+                                <i class="fas fa-paper-plane ml-2"></i>
+                                ارسال درخواست عضویت
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- بخش پرسش و پاسخ -->
+            <section class="mb-16">
+                <div class="text-center mb-8">
+                    <h2 class="text-2xl lg:text-3xl font-bold mb-4 gradient-text">پرسش‌های متداول</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="glass rounded-2xl p-6 card-hover">
+                        <h3 class="font-bold text-lg mb-3">آیا نیاز به سرمایه اولیه دارم؟</h3>
+                        <p class="text-slate-400">
+                            خیر، عضویت و راه‌اندازی فروشگاه در فایل استور کاملاً رایگان است. تنها هنگام فروش محصول، ۱۵٪ کارمزد از مبلغ فروش کسر می‌شود.
+                        </p>
+                    </div>
+
+                    <div class="glass rounded-2xl p-6 card-hover">
+                        <h3 class="font-bold text-lg mb-3">چگونه درآمد خود را دریافت می‌کنم؟</h3>
+                        <p class="text-slate-400">
+                            درآمد شما به صورت ماهیانه و پس از کسر کارمزد، به حساب بانکی ثبت شده واریز می‌شود. حداقل مبلغ قابل پرداخت ۱۰۰,۰۰۰ تومان است.
+                        </p>
+                    </div>
+
+                    <div class="glass rounded-2xl p-6 card-hover">
+                        <h3 class="font-bold text-lg mb-3">آیا محدودیتی در تعداد محصولات دارم؟</h3>
+                        <p class="text-slate-400">
+                            خیر، شما می‌توانید تعداد نامحدودی محصول آپلود کنید. فقط حجم کل فایل‌های شما نباید از ۱۰ گیگابایت بیشتر شود.
+                        </p>
+                    </div>
+
+                    <div class="glass rounded-2xl p-6 card-hover">
+                        <h3 class="font-bold text-lg mb-3">چقدر طول می‌کشد تا حساب من تأیید شود؟</h3>
+                        <p class="text-slate-400">
+                            معمولاً فرآیند تأیید حساب ۲ تا ۵ روز کاری طول می‌کشد. در صورت کامل بودن مدارک، این زمان ممکن است کمتر باشد.
+                        </p>
+                    </div>
+                </div>
+            </section>
         </div>
-    </section>
+    </main>
 
     <!-- فوتر -->
-    <footer class="py-8 border-t border-white/5 text-center text-slate-500">
+    <footer class="glass border-t border-slate-800/50 py-12">
         <div class="container mx-auto px-6">
-            <p>© ۲۰۲۵ فایل استور — تمام حقوق محفوظ است.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 space-x-reverse mb-6">
+                        <div class="primary-gradient p-2 rounded-lg">
+                            <i class="fas fa-cloud-download-alt text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold gradient-text">فایل استور</h3>
+                    </div>
+                    <p class="text-slate-400 mb-6">بازار آنلاین خرید و فروش فایل‌های دیجیتال با کیفیت و قیمت مناسب</p>
+                    <div class="flex space-x-4 space-x-reverse">
+                        <a href="#" class="bg-slate-800 hover:bg-slate-700 w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="#" class="bg-slate-800 hover:bg-slate-700 w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="bg-slate-800 hover:bg-slate-700 w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-6">لینک‌های مفید</h4>
+                    <ul class="space-y-3">
+                        <li><a href="index.html" class="text-slate-400 hover:text-white transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-left text-xs ml-2"></i>
+                            صفحه اصلی
+                        </a></li>
+                        <li><a href="sellers.html" class="text-slate-400 hover:text-white transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-left text-xs ml-2"></i>
+                            فروشندگان
+                        </a></li>
+                        <li><a href="seller-requirements.html" class="text-slate-400 hover:text-white transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-left text-xs ml-2"></i>
+                            ثبت‌نام فروشنده
+                        </a></li>
+                        <li><a href="terms.html" class="text-slate-400 hover:text-white transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-left text-xs ml-2"></i>
+                            قوانین و مقررات
+                        </a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-6">برای فروشندگان</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-left text-xs ml-2"></i>
+                            راهنمای آپلود محصول
+                        </a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-left text-xs ml-2"></i>
+                            پنل مدیریت فروشنده
+                        </a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-left text-xs ml-2"></i>
+                            برنامه‌های تشویقی
+                        </a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-left text-xs ml-2"></i>
+                            پشتیبانی فروشندگان
+                        </a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-6">تماس با واحد فروشندگان</h4>
+                    <ul class="space-y-4">
+                        <li class="flex items-center">
+                            <i class="fas fa-phone text-indigo-500 ml-3"></i>
+                            <span class="text-slate-400">۰۲۱-۱۲۳۴۵۶۷۸</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope text-indigo-500 ml-3"></i>
+                            <span class="text-slate-400">seller-support@filestore.ir</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-clock text-indigo-500 ml-3"></i>
+                            <span class="text-slate-400">شنبه تا چهارشنبه ۹-۱۸</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt text-indigo-500 ml-3"></i>
+                            <span class="text-slate-400">تهران، خیابان ولیعصر</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-800/50 mt-12 pt-8 text-center text-slate-500">
+                <p>© ۱۴۰۴ فایل استور. تمام حقوق محفوظ است.</p>
+                <p class="text-sm mt-2">این صفحه آخرین بار در تاریخ ۱۵ فروردین ۱۴۰۴ به‌روزرسانی شده است.</p>
+            </div>
         </div>
     </footer>
+
+    <script>
+        // نوار پیشرفت اسکرول
+        window.addEventListener('scroll', function() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+
+        // مدیریت ارسال فرم
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // شبیه‌سازی ارسال موفق فرم
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.innerHTML;
+                    
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin ml-2"></i> در حال ارسال...';
+                    submitBtn.disabled = true;
+                    
+                    setTimeout(() => {
+                        // ایجاد پیام موفقیت
+                        const successMsg = document.createElement('div');
+                        successMsg.className = 'fixed top-24 left-6 bg-emerald-600 text-white px-6 py-4 rounded-xl shadow-lg z-50 transform translate-x-full transition-transform duration-300';
+                        successMsg.innerHTML = `
+                            <div class="flex items-center">
+                                <i class="fas fa-check-circle text-2xl ml-3"></i>
+                                <div>
+                                    <div class="font-bold">درخواست شما با موفقیت ثبت شد</div>
+                                    <div class="text-sm mt-1">کارشناسان ما در ۲۴ ساعت آینده با شما تماس خواهند گرفت</div>
+                                </div>
+                            </div>
+                        `;
+                        
+                        document.body.appendChild(successMsg);
+                        
+                        // نمایش پیام
+                        setTimeout(() => {
+                            successMsg.style.transform = 'translateX(0)';
+                        }, 10);
+                        
+                        // بازنشانی فرم
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.disabled = false;
+                        form.reset();
+                        
+                        // مخفی کردن پیام
+                        setTimeout(() => {
+                            successMsg.style.transform = 'translateX(100%)';
+                            setTimeout(() => {
+                                document.body.removeChild(successMsg);
+                            }, 300);
+                        }, 5000);
+                    }, 1500);
+                });
+            }
+
+            // مدیریت منوی موبایل
+            const mobileMenuButton = document.querySelector('.lg\\:hidden');
+            const nav = document.querySelector('nav');
+            
+            if (mobileMenuButton && nav) {
+                mobileMenuButton.addEventListener('click', () => {
+                    nav.classList.toggle('hidden');
+                    nav.classList.toggle('flex');
+                    nav.classList.toggle('absolute');
+                    nav.classList.toggle('top-full');
+                    nav.classList.toggle('left-0');
+                    nav.classList.toggle('right-0');
+                    nav.classList.toggle('bg-slate-900');
+                    nav.classList.toggle('p-6');
+                    nav.classList.toggle('rounded-lg');
+                    nav.classList.toggle('mt-2');
+                    nav.classList.toggle('flex-col');
+                    nav.classList.toggle('space-y-4');
+                    nav.classList.toggle('space-y-reverse');
+                    nav.classList.toggle('space-x-8');
+                    nav.classList.toggle('space-x-reverse');
+                });
+            }
+        });
+    </script>
 </body>
 </html>
