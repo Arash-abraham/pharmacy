@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محصولات | فایل استور</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --dark: #0f172a;
+            --darker: #020617;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 50%, #1e293b 100%);
+            color: #f8fafc;
+            min-height: 100vh;
+        }
+        
+        .glass {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #6366f1 0%, #10b981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .filter-checkbox {
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            margin-left: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        
+        .filter-checkbox.checked {
+            background: #6366f1;
+            border-color: #6366f1;
+        }
+        
+        .filter-checkbox.checked::after {
+            content: '✓';
+            color: white;
+            font-size: 12px;
+        }
+        
+        .price-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 4px;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            outline: none;
+        }
+        
+        .price-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #6366f1;
+            cursor: pointer;
+            border: 3px solid var(--darker);
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin: 0.25rem;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        
+        .tag:hover {
+            background: rgba(99, 102, 241, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .tag.active {
+            background: rgba(99, 102, 241, 0.3);
+            border-color: #6366f1;
+            color: white;
+        }
+        
+        .active-filter {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 20px;
+            padding: 0.25rem 0.75rem;
+            margin: 0.25rem;
+            font-size: 0.875rem;
+        }
+        
+        .category-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .category-badge:hover {
+            opacity: 0.8;
+        }
+        
+        .category-web {
+            background: rgba(99, 102, 241, 0.2);
+            color: #818cf8;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+        }
+        
+        .category-app {
+            background: rgba(34, 197, 94, 0.2);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+        
+        .category-graphic {
+            background: rgba(245, 158, 11, 0.2);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+        
+        .category-education {
+            background: rgba(139, 92, 246, 0.2);
+            color: #a78bfa;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .filtered-item {
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-8 gradient-text text-center">محصولات فایل استور</h1>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- سایدبار فیلتر -->
+            <div class="lg:col-span-1">
+                <div class="glass rounded-2xl p-6 sticky top-4">
+                    <!-- جستجو -->
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-3">
+                            <i class="fas fa-search ml-2 text-indigo-400"></i>
+                            جستجو
+                        </h3>
+                        <input type="text" 
+                               id="searchInput"
+                               class="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+                               placeholder="نام محصول...">
+                    </div>
+                    
+                    <!-- دسته‌بندی -->
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-3">
+                            <i class="fas fa-folder ml-2 text-indigo-400"></i>
+                            دسته‌بندی
+                        </h3>
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between cursor-pointer" onclick="toggleFilter('category', 'web')">
+                                <div class="flex items-center">
+                                    <div class="filter-checkbox" id="filter-category-web"></div>
+                                    <span class="mr-2">قالب وب</span>
+                                </div>
+                                <span class="text-slate-500 text-sm">(۴)</span>
+                            </div>
+                            <div class="flex items-center justify-between cursor-pointer" onclick="toggleFilter('category', 'app')">
+                                <div class="flex items-center">
+                                    <div class="filter-checkbox" id="filter-category-app"></div>
+                                    <span class="mr-2">اپلیکیشن</span>
+                                </div>
+                                <span class="text-slate-500 text-sm">(۲)</span>
+                            </div>
+                            <div class="flex items-center justify-between cursor-pointer" onclick="toggleFilter('category', 'graphic')">
+                                <div class="flex items-center">
+                                    <div class="filter-checkbox" id="filter-category-graphic"></div>
+                                    <span class="mr-2">گرافیک</span>
+                                </div>
+                                <span class="text-slate-500 text-sm">(۳)</span>
+                            </div>
+                            <div class="flex items-center justify-between cursor-pointer" onclick="toggleFilter('category', 'education')">
+                                <div class="flex items-center">
+                                    <div class="filter-checkbox" id="filter-category-education"></div>
+                                    <span class="mr-2">آموزشی</span>
+                                </div>
+                                <span class="text-slate-500 text-sm">(۲)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- قیمت -->
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-3">
+                            <i class="fas fa-tag ml-2 text-indigo-400"></i>
+                            محدوده قیمت
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between">
+                                <span id="minPrice">۰ تومان</span>
+                                <span id="maxPrice">۳,۰۰۰,۰۰۰ تومان</span>
+                            </div>
+                            <input type="range" 
+                                   min="0" 
+                                   max="3000000" 
+                                   value="1500000" 
+                                   class="price-slider" 
+                                   id="priceRange"
+                                   oninput="updatePriceRange()">
+                            <div class="text-center text-sm text-slate-400">
+                                حداکثر: <span id="currentPrice">۱,۵۰۰,۰۰۰ تومان</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- وضعیت -->
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-3">
+                            <i class="fas fa-bolt ml-2 text-indigo-400"></i>
+                            وضعیت
+                        </h3>
+                        <div class="space-y-2">
+                            <div class="flex items-center cursor-pointer" onclick="toggleFilter('status', 'discount')">
+                                <div class="filter-checkbox" id="filter-status-discount"></div>
+                                <span class="mr-2">تخفیف‌دار</span>
+                            </div>
+                            <div class="flex items-center cursor-pointer" onclick="toggleFilter('status', 'new')">
+                                <div class="filter-checkbox" id="filter-status-new"></div>
+                                <span class="mr-2">جدید</span>
+                            </div>
+                            <div class="flex items-center cursor-pointer" onclick="toggleFilter('status', 'popular')">
+                                <div class="filter-checkbox" id="filter-status-popular"></div>
+                                <span class="mr-2">پرفروش</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- تگ‌ها -->
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-3">
+                            <i class="fas fa-tags ml-2 text-indigo-400"></i>
+                            تگ‌ها
+                        </h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tag" onclick="toggleFilter('tag', 'react')">React</span>
+                            <span class="tag" onclick="toggleFilter('tag', 'vue')">Vue.js</span>
+                            <span class="tag" onclick="toggleFilter('tag', 'flutter')">Flutter</span>
+                            <span class="tag" onclick="toggleFilter('tag', 'shop')">فروشگاهی</span>
+                            <span class="tag" onclick="toggleFilter('tag', 'wordpress')">WordPress</span>
+                        </div>
+                    </div>
+                    
+                    <!-- دکمه‌های فیلتر -->
+                    <div class="space-y-3">
+                        <button onclick="applyFilters()" class="bg-indigo-600 hover:bg-indigo-700 w-full py-3 rounded-xl font-medium transition-all duration-300">
+                            <i class="fas fa-filter ml-2"></i>
+                            اعمال فیلتر
+                        </button>
+                        <button onclick="clearAllFilters()" class="bg-slate-800 hover:bg-slate-700 w-full py-3 rounded-xl font-medium transition-all duration-300">
+                            <i class="fas fa-times ml-2"></i>
+                            حذف فیلترها
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- بخش اصلی محصولات -->
+            <div class="lg:col-span-3">
+                <!-- فیلترهای فعال -->
+                <div class="glass rounded-2xl p-6 mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <h2 class="text-2xl font-bold">همه محصولات</h2>
+                            <p class="text-slate-400">
+                                <span id="resultCount">۱۱</span> محصول یافت شد
+                            </p>
+                        </div>
+                        <div>
+                            <select id="sortSelect" class="bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-2 text-white" onchange="sortProducts()">
+                                <option value="default">مرتب‌سازی پیش‌فرض</option>
+                                <option value="price-low">قیمت: کم به زیاد</option>
+                                <option value="price-high">قیمت: زیاد به کم</option>
+                                <option value="sales">پرفروش‌ترین</option>
+                                <option value="new">جدیدترین</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div id="activeFiltersContainer" class="flex flex-wrap gap-2">
+                        <!-- فیلترهای فعال اینجا نمایش داده می‌شوند -->
+                    </div>
+                </div>
+                
+                <!-- محصولات (داده‌ها در HTML) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="productsContainer">
+                    <!-- محصول 1 -->
+                    <div class="product-card glass rounded-xl overflow-hidden card-hover" 
+                         data-id="1"
+                         data-name="قالب فروشگاهی React پیشرفته"
+                         data-price="1200000"
+                         data-category="web"
+                         data-category-name="قالب وب"
+                         data-status="discount"
+                         data-tags="react,shop,tailwind"
+                         data-sales="124">
+                        <div class="p-6">
+                            <!-- تصویر محصول -->
+                            <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                                 alt="قالب React" 
+                                 class="product-image">
+                            
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="font-bold text-lg">قالب فروشگاهی React پیشرفته</h3>
+                                <span class="bg-red-500 text-white px-2 py-1 rounded text-xs">۲۰٪ تخفیف</span>
+                            </div>
+                            
+                            <!-- دسته‌بندی محصول -->
+                            <div class="mb-3">
+                                <span class="category-badge category-web" onclick="filterByCategory('web')">
+                                    <i class="fas fa-code ml-1"></i>
+                                    قالب وب
+                                </span>
+                            </div>
+                            
+                            <p class="text-slate-400 text-sm mb-4">قالب کامل فروشگاهی با React و Tailwind CSS</p>
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center">
+                                    <i class="fas fa-shopping-cart text-slate-400 ml-1"></i>
+                                    <span class="text-sm mr-2">۱۲۴ فروش</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="text-lg font-bold price-display" data-price="1200000">۱,۲۰۰,۰۰۰ تومان</span>
+                                    <span class="text-sm text-slate-500 line-through mr-2 original-price" data-price="1500000">۱,۵۰۰,۰۰۰</span>
+                                </div>
+                                <button class="bg-indigo-600 hover:bg-indigo-700 w-10 h-10 rounded-full flex items-center justify-center transition-all">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- محصول 2 -->
+                    <div class="product-card glass rounded-xl overflow-hidden card-hover" 
+                         data-id="2"
+                         data-name="اپلیکیشن فروشگاهی Flutter"
+                         data-price="2500000"
+                         data-category="app"
+                         data-category-name="اپلیکیشن"
+                         data-status="new"
+                         data-tags="flutter,mobile,shop"
+                         data-sales="89">
+                        <div class="p-6">
+                            <!-- تصویر محصول -->
+                            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                                 alt="اپلیکیشن Flutter" 
+                                 class="product-image">
+                            
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="font-bold text-lg">اپلیکیشن فروشگاهی Flutter</h3>
+                                <span class="bg-green-500 text-white px-2 py-1 rounded text-xs">جدید</span>
+                            </div>
+                            
+                            <!-- دسته‌بندی محصول -->
+                            <div class="mb-3">
+                                <span class="category-badge category-app" onclick="filterByCategory('app')">
+                                    <i class="fas fa-mobile-alt ml-1"></i>
+                                    اپلیکیشن
+                                </span>
+                            </div>
+                            
+                            <p class="text-slate-400 text-sm mb-4">اپلیکیشن فروشگاهی کامل با Flutter و Firebase</p>
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center">
+                                    <i class="fas fa-shopping-cart text-slate-400 ml-1"></i>
+                                    <span class="text-sm mr-2">۸۹ فروش</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-lg font-bold price-display" data-price="2500000">۲,۵۰۰,۰۰۰ تومان</span>
+                                <button class="bg-indigo-600 hover:bg-indigo-700 w-10 h-10 rounded-full flex items-center justify-center transition-all">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- محصول 3 -->
+                    <div class="product-card glass rounded-xl overflow-hidden card-hover" 
+                         data-id="3"
+                         data-name="پکیج آموزش React Native"
+                         data-price="1800000"
+                         data-category="education"
+                         data-category-name="آموزشی"
+                         data-status="popular"
+                         data-tags="react,mobile,education"
+                         data-sales="156">
+                        <div class="p-6">
+                            <!-- تصویر محصول -->
+                            <img src="https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                                 alt="آموزش React Native" 
+                                 class="product-image">
+                            
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="font-bold text-lg">پکیج آموزش React Native</h3>
+                                <span class="bg-yellow-500 text-black px-2 py-1 rounded text-xs">پرفروش</span>
+                            </div>
+                            
+                            <!-- دسته‌بندی محصول -->
+                            <div class="mb-3">
+                                <span class="category-badge category-education" onclick="filterByCategory('education')">
+                                    <i class="fas fa-graduation-cap ml-1"></i>
+                                    آموزشی
+                                </span>
+                            </div>
+                            
+                            <p class="text-slate-400 text-sm mb-4">آموزش کامل React Native از صفر تا صد</p>
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center">
+                                    <i class="fas fa-shopping-cart text-slate-400 ml-1"></i>
+                                    <span class="text-sm mr-2">۱۵۶ فروش</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-lg font-bold price-display" data-price="1800000">۱,۸۰۰,۰۰۰ تومان</span>
+                                <button class="bg-indigo-600 hover:bg-indigo-700 w-10 h-10 rounded-full flex items-center justify-center transition-all">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- محصول 4 -->
+                    <div class="product-card glass rounded-xl overflow-hidden card-hover" 
+                         data-id="4"
+                         data-name="پکیج UI/UX کامل"
+                         data-price="950000"
+                         data-category="graphic"
+                         data-category-name="گرافیک"
+                         data-status="discount"
+                         data-tags="ui-ux,design,figma"
+                         data-sales="187">
+                        <div class="p-6">
+                            <!-- تصویر محصول -->
+                            <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                                 alt="UI/UX Design" 
+                                 class="product-image">
+                            
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="font-bold text-lg">پکیج UI/UX کامل</h3>
+                                <span class="bg-red-500 text-white px-2 py-1 rounded text-xs">۲۱٪ تخفیف</span>
+                            </div>
+                            
+                            <!-- دسته‌بندی محصول -->
+                            <div class="mb-3">
+                                <span class="category-badge category-graphic" onclick="filterByCategory('graphic')">
+                                    <i class="fas fa-palette ml-1"></i>
+                                    گرافیک
+                                </span>
+                            </div>
+                            
+                            <p class="text-slate-400 text-sm mb-4">مجموعه کامل المان‌های طراحی رابط کاربری</p>
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center">
+                                    <i class="fas fa-shopping-cart text-slate-400 ml-1"></i>
+                                    <span class="text-sm mr-2">۱۸۷ فروش</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="text-lg font-bold price-display" data-price="950000">۹۵۰,۰۰۰ تومان</span>
+                                    <span class="text-sm text-slate-500 line-through mr-2 original-price" data-price="1200000">۱,۲۰۰,۰۰۰</span>
+                                </div>
+                                <button class="bg-indigo-600 hover:bg-indigo-700 w-10 h-10 rounded-full flex items-center justify-center transition-all">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- محصول 5 -->
+                    <div class="product-card glass rounded-xl overflow-hidden card-hover" 
+                         data-id="5"
+                         data-name="سیستم مدیریت محتوا"
+                         data-price="3200000"
+                         data-category="web"
+                         data-category-name="قالب وب"
+                         data-status="discount"
+                         data-tags="php,wordpress,admin"
+                         data-sales="67">
+                        <div class="p-6">
+                            <!-- تصویر محصول -->
+                            <img src="https://avatars.githubusercontent.com/u/82562395?v=4" 
+                                 alt="سیستم مدیریت محتوا" 
+                                 class="product-image">
+                            
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="font-bold text-lg">سیستم مدیریت محتوا</h3>
+                                <span class="bg-red-500 text-white px-2 py-1 rounded text-xs">۲۰٪ تخفیف</span>
+                            </div>
+                            
+                            <!-- دسته‌بندی محصول -->
+                            <div class="mb-3">
+                                <span class="category-badge category-web" onclick="filterByCategory('web')">
+                                    <i class="fas fa-code ml-1"></i>
+                                    قالب وب
+                                </span>
+                            </div>
+                            
+                            <p class="text-slate-400 text-sm mb-4">CMS کامل با پنل مدیریت پیشرفته</p>
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center">
+                                    <i class="fas fa-shopping-cart text-slate-400 ml-1"></i>
+                                    <span class="text-sm mr-2">۶۷ فروش</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="text-lg font-bold price-display" data-price="3200000">۳,۲۰۰,۰۰۰ تومان</span>
+                                    <span class="text-sm text-slate-500 line-through mr-2 original-price" data-price="4000000">۴,۰۰۰,۰۰۰</span>
+                                </div>
+                                <button class="bg-indigo-600 hover:bg-indigo-700 w-10 h-10 rounded-full flex items-center justify-center transition-all">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- محصول 6 -->
+                    <div class="product-card glass rounded-xl overflow-hidden card-hover" 
+                         data-id="6"
+                         data-name="پک موشن گرافیک"
+                         data-price="750000"
+                         data-category="graphic"
+                         data-category-name="گرافیک"
+                         data-status="discount"
+                         data-tags="video,motion,after-effects"
+                         data-sales="45">
+                        <div class="p-6">
+                            <!-- تصویر محصول -->
+                            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                                 alt="موشن گرافیک" 
+                                 class="product-image">
+                            
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="font-bold text-lg">پک موشن گرافیک</h3>
+                                <span class="bg-red-500 text-white px-2 py-1 rounded text-xs">۱۷٪ تخفیف</span>
+                            </div>
+                            
+                            <!-- دسته‌بندی محصول -->
+                            <div class="mb-3">
+                                <span class="category-badge category-graphic" onclick="filterByCategory('graphic')">
+                                    <i class="fas fa-palette ml-1"></i>
+                                    گرافیک
+                                </span>
+                            </div>
+                            
+                            <p class="text-slate-400 text-sm mb-4">انیمیشن‌های آماده برای پروژه‌های ویدئویی</p>
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center">
+                                    <i class="fas fa-shopping-cart text-slate-400 ml-1"></i>
+                                    <span class="text-sm mr-2">۴۵ فروش</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="text-lg font-bold price-display" data-price="750000">۷۵۰,۰۰۰ تومان</span>
+                                    <span class="text-sm text-slate-500 line-through mr-2 original-price" data-price="900000">۹۰۰,۰۰۰</span>
+                                </div>
+                                <button class="bg-indigo-600 hover:bg-indigo-700 w-10 h-10 rounded-full flex items-center justify-center transition-all">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- محصول 7 -->
+                    <div class="product-card glass rounded-xl overflow-hidden card-hover" 
+                         data-id="7"
+                         data-name="آموزش Node.js پیشرفته"
+                         data-price="1400000"
+                         data-category="education"
+                         data-category-name="آموزشی"
+                         data-status="popular"
+                         data-tags="nodejs,javascript,backend"
+                         data-sales="98">
+                        <div class="p-6">
+                            <!-- تصویر محصول -->
+                            <img src="https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                                 alt="Node.js آموزش" 
+                                 class="product-image">
+                            
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="font-bold text-lg">آموزش Node.js پیشرفته</h3>
+                                <span class="bg-yellow-500 text-black px-2 py-1 rounded text-xs">پرفروش</span>
+                            </div>
+                            
+                            <!-- دسته‌بندی محصول -->
+                            <div class="mb-3">
+                                <span class="category-badge category-education" onclick="filterByCategory('education')">
+                                    <i class="fas fa-graduation-cap ml-1"></i>
+                                    آموزشی
+                                </span>
+                            </div>
+                            
+                            <p class="text-slate-400 text-sm mb-4">آموزش جامع Node.js از مقدماتی تا پیشرفته</p>
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center">
+                                    <i class="fas fa-shopping-cart text-slate-400 ml-1"></i>
+                                    <span class="text-sm mr-2">۹۸ فروش</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-lg font-bold price-display" data-price="1400000">۱,۴۰۰,۰۰۰ تومان</span>
+                                <button class="bg-indigo-600 hover:bg-indigo-700 w-10 h-10 rounded-full flex items-center justify-center transition-all">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- محصول 8 -->
+                    <div class="product-card glass rounded-xl overflow-hidden card-hover" 
+                         data-id="8"
+                         data-name="کتابخانه کامپوننت Vue.js"
+                         data-price="1100000"
+                         data-category="web"
+                         data-category-name="قالب وب"
+                         data-status="discount"
+                         data-tags="vue,components,frontend"
+                         data-sales="76">
+                        <div class="p-6">
+                            <!-- تصویر محصول -->
+                            <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                                 alt="Vue.js Components" 
+                                 class="product-image">
+                            
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="font-bold text-lg">کتابخانه کامپوننت Vue.js</h3>
+                                <span class="bg-red-500 text-white px-2 py-1 rounded text-xs">۱۵٪ تخفیف</span>
+                            </div>
+                            
+                            <!-- دسته‌بندی محصول -->
+                            <div class="mb-3">
+                                <span class="category-badge category-web" onclick="filterByCategory('web')">
+                                    <i class="fas fa-code ml-1"></i>
+                                    قالب وب
+                                </span>
+                            </div>
+                            
+                            <p class="text-slate-400 text-sm mb-4">کتابخانه کامل کامپوننت‌های Vue 3</p>
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center">
+                                    <i class="fas fa-shopping-cart text-slate-400 ml-1"></i>
+                                    <span class="text-sm mr-2">۷۶ فروش</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="text-lg font-bold price-display" data-price="1100000">۱,۱۰۰,۰۰۰ تومان</span>
+                                    <span class="text-sm text-slate-500 line-through mr-2 original-price" data-price="1300000">۱,۳۰۰,۰۰۰</span>
+                                </div>
+                                <button class="bg-indigo-600 hover:bg-indigo-700 w-10 h-10 rounded-full flex items-center justify-center transition-all">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- پاگینیشن -->
+                <div class="flex justify-center items-center space-x-2 space-x-reverse mt-8" id="paginationContainer">
+                    <button class="bg-slate-800 hover:bg-slate-700 w-10 h-10 rounded flex items-center justify-center">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <button class="bg-indigo-600 text-white w-10 h-10 rounded flex items-center justify-center">1</button>
+                    <button class="bg-slate-800 hover:bg-slate-700 w-10 h-10 rounded flex items-center justify-center">2</button>
+                    <button class="bg-slate-800 hover:bg-slate-700 w-10 h-10 rounded flex items-center justify-center">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                </div>
+                
+                <!-- حالت بدون محصول -->
+                <div id="noProducts" class="hidden text-center py-12">
+                    <div class="mb-6">
+                        <i class="fas fa-search text-6xl text-slate-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">محصولی یافت نشد</h3>
+                    <p class="text-slate-400 mb-8">با تغییر فیلترهای جستجو دوباره امتحان کنید.</p>
+                    <button onclick="clearAllFilters()" class="bg-indigo-600 hover:bg-indigo-700 px-6 py-3 rounded-xl font-medium">
+                        <i class="fas fa-redo ml-2"></i>
+                        حذف همه فیلترها
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // تابع فرمت کردن اعداد با کاما
+        function formatNumber(number) {
+            return new Intl.NumberFormat('fa-IR').format(number);
+        }
+
+        // به‌روزرسانی نمایش قیمت‌ها
+        function updatePriceDisplay() {
+            // قیمت اصلی
+            const priceElements = document.querySelectorAll('.price-display');
+            priceElements.forEach(el => {
+                const price = el.getAttribute('data-price');
+                if (price) {
+                    el.textContent = formatNumber(parseInt(price)) + ' تومان';
+                }
+            });
+            
+            // قیمت قبل از تخفیف
+            const originalPriceElements = document.querySelectorAll('.original-price');
+            originalPriceElements.forEach(el => {
+                const price = el.getAttribute('data-price');
+                if (price) {
+                    el.textContent = formatNumber(parseInt(price));
+                }
+            });
+        }
+
+        // بارگذاری اولیه
+        document.addEventListener('DOMContentLoaded', function() {
+            updatePriceDisplay();
+            
+            // به‌روزرسانی نمایش قیمت در اسلایدر
+            const priceRange = document.getElementById('priceRange');
+            const currentPrice = document.getElementById('currentPrice');
+            const maxPrice = document.getElementById('maxPrice');
+            
+            maxPrice.textContent = formatNumber(3000000) + ' تومان';
+            currentPrice.textContent = formatNumber(parseInt(priceRange.value)) + ' تومان';
+            
+            // محاسبه تعداد محصولات هر دسته
+            updateCategoryCounts();
+        });
+
+        // به‌روزرسانی تعداد محصولات هر دسته
+        function updateCategoryCounts() {
+            const categories = ['web', 'app', 'graphic', 'education'];
+            
+            categories.forEach(category => {
+                const count = document.querySelectorAll(`.product-card[data-category="${category}"]`).length;
+                const countElement = document.querySelector(`[onclick*="${category}"] .text-slate-500`);
+                if (countElement) {
+                    countElement.textContent = `(${count})`;
+                }
+            });
+        }
+
+        // به‌روزرسانی قیمت در اسلایدر
+        function updatePriceRange() {
+            const priceRange = document.getElementById('priceRange');
+            const currentPrice = document.getElementById('currentPrice');
+            currentPrice.textContent = formatNumber(parseInt(priceRange.value)) + ' تومان';
+        }
+
+        // وضعیت فیلترها
+        const filters = {
+            category: [],
+            status: [],
+            tag: [],
+            maxPrice: 3000000,
+            search: ''
+        };
+
+        // اضافه/حذف فیلتر
+        function toggleFilter(type, value) {
+            const checkbox = document.getElementById(`filter-${type}-${value}`);
+            const index = filters[type].indexOf(value);
+            
+            if (index > -1) {
+                // حذف فیلتر
+                filters[type].splice(index, 1);
+                checkbox.classList.remove('checked');
+            } else {
+                // اضافه کردن فیلتر
+                filters[type].push(value);
+                checkbox.classList.add('checked');
+                
+                // برای تگ‌ها، کلاس active هم اضافه کن
+                if (type === 'tag') {
+                    const tagElement = document.querySelector(`.tag[onclick*="${value}"]`);
+                    if (tagElement) {
+                        tagElement.classList.add('active');
+                    }
+                }
+            }
+            
+            updateActiveFilters();
+        }
+
+        // فیلتر کردن بر اساس دسته‌بندی (با کلیک روی بج دسته‌بندی)
+        function filterByCategory(category) {
+            // اگر قبلا انتخاب شده، حذفش کن
+            const index = filters.category.indexOf(category);
+            const checkbox = document.getElementById(`filter-category-${category}`);
+            
+            if (index > -1) {
+                filters.category.splice(index, 1);
+                checkbox.classList.remove('checked');
+            } else {
+                // فقط این دسته رو انتخاب کن (بقیه رو حذف کن)
+                filters.category = [category];
+                
+                // همه چک‌باکس‌های دسته‌بندی رو ریست کن
+                document.querySelectorAll('[id^="filter-category-"]').forEach(cb => {
+                    cb.classList.remove('checked');
+                });
+                
+                // این یکی رو انتخاب کن
+                checkbox.classList.add('checked');
+            }
+            
+            updateActiveFilters();
+            applyFilters();
+        }
+
+        // اعمال فیلترها
+        function applyFilters() {
+            const products = document.querySelectorAll('.product-card');
+            const maxPrice = parseInt(document.getElementById('priceRange').value);
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            let visibleCount = 0;
+            
+            products.forEach(product => {
+                let showProduct = true;
+                
+                // فیلتر قیمت
+                const price = parseInt(product.dataset.price);
+                if (price > maxPrice) {
+                    showProduct = false;
+                }
+                
+                // فیلتر جستجو
+                if (searchTerm) {
+                    const name = product.dataset.name.toLowerCase();
+                    if (!name.includes(searchTerm)) {
+                        showProduct = false;
+                    }
+                }
+                
+                // فیلتر دسته‌بندی
+                if (filters.category.length > 0) {
+                    const category = product.dataset.category;
+                    if (!filters.category.includes(category)) {
+                        showProduct = false;
+                    }
+                }
+                
+                // فیلتر وضعیت
+                if (filters.status.length > 0) {
+                    const status = product.dataset.status;
+                    if (!filters.status.includes(status)) {
+                        showProduct = false;
+                    }
+                }
+                
+                // فیلتر تگ‌ها
+                if (filters.tag.length > 0) {
+                    const tags = product.dataset.tags.split(',');
+                    let tagMatch = false;
+                    
+                    filters.tag.forEach(filterTag => {
+                        if (tags.includes(filterTag)) {
+                            tagMatch = true;
+                        }
+                    });
+                    
+                    if (!tagMatch) {
+                        showProduct = false;
+                    }
+                }
+                
+                // نمایش/مخفی کردن محصول
+                if (showProduct) {
+                    product.style.display = 'block';
+                    product.classList.add('filtered-item');
+                    visibleCount++;
+                } else {
+                    product.style.display = 'none';
+                    product.classList.remove('filtered-item');
+                }
+            });
+            
+            // به‌روزرسانی تعداد نتایج
+            document.getElementById('resultCount').textContent = visibleCount;
+            
+            // نمایش پیام عدم یافتن محصول
+            const noProducts = document.getElementById('noProducts');
+            if (visibleCount === 0) {
+                noProducts.classList.remove('hidden');
+            } else {
+                noProducts.classList.add('hidden');
+            }
+        }
+
+        // به‌روزرسانی نمایش فیلترهای فعال
+        function updateActiveFilters() {
+            const container = document.getElementById('activeFiltersContainer');
+            container.innerHTML = '';
+            
+            // قیمت
+            const maxPrice = document.getElementById('priceRange').value;
+            if (parseInt(maxPrice) < 3000000) {
+                const priceFilter = document.createElement('div');
+                priceFilter.className = 'active-filter';
+                priceFilter.innerHTML = `
+                    <span>حداکثر قیمت: ${formatNumber(parseInt(maxPrice))} تومان</span>
+                    <button onclick="resetPriceFilter()" class="mr-2 text-slate-400 hover:text-white">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                container.appendChild(priceFilter);
+            }
+            
+            // دسته‌بندی
+            filters.category.forEach(cat => {
+                const filter = document.createElement('div');
+                filter.className = 'active-filter';
+                const categoryName = getCategoryName(cat);
+                filter.innerHTML = `
+                    <span>دسته‌بندی: ${categoryName}</span>
+                    <button onclick="removeFilter('category', '${cat}')" class="mr-2 text-slate-400 hover:text-white">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                container.appendChild(filter);
+            });
+            
+            // وضعیت
+            filters.status.forEach(status => {
+                const filter = document.createElement('div');
+                filter.className = 'active-filter';
+                filter.innerHTML = `
+                    <span>وضعیت: ${getStatusName(status)}</span>
+                    <button onclick="removeFilter('status', '${status}')" class="mr-2 text-slate-400 hover:text-white">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                container.appendChild(filter);
+            });
+            
+            // تگ‌ها
+            filters.tag.forEach(tag => {
+                const filter = document.createElement('div');
+                filter.className = 'active-filter';
+                filter.innerHTML = `
+                    <span>تگ: ${tag}</span>
+                    <button onclick="removeFilter('tag', '${tag}')" class="mr-2 text-slate-400 hover:text-white">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                container.appendChild(filter);
+            });
+        }
+
+        // حذف یک فیلتر خاص
+        function removeFilter(type, value) {
+            const index = filters[type].indexOf(value);
+            if (index > -1) {
+                filters[type].splice(index, 1);
+                
+                // به‌روزرسانی نمایش چک‌باکس
+                const checkbox = document.getElementById(`filter-${type}-${value}`);
+                if (checkbox) {
+                    checkbox.classList.remove('checked');
+                }
+                
+                // برای تگ‌ها، کلاس active هم حذف کن
+                if (type === 'tag') {
+                    const tagElement = document.querySelector(`.tag[onclick*="${value}"]`);
+                    if (tagElement) {
+                        tagElement.classList.remove('active');
+                    }
+                }
+                
+                updateActiveFilters();
+                applyFilters();
+            }
+        }
+
+        // ریست فیلتر قیمت
+        function resetPriceFilter() {
+            document.getElementById('priceRange').value = 3000000;
+            updatePriceRange();
+            applyFilters();
+        }
+
+        // حذف همه فیلترها
+        function clearAllFilters() {
+            // ریست فیلترهای چک‌باکس
+            document.querySelectorAll('.filter-checkbox.checked').forEach(cb => {
+                cb.classList.remove('checked');
+            });
+            
+            // ریست تگ‌های فعال
+            document.querySelectorAll('.tag.active').forEach(tag => {
+                tag.classList.remove('active');
+            });
+            
+            // ریست جستجو
+            document.getElementById('searchInput').value = '';
+            
+            // ریست اسلایدر قیمت
+            document.getElementById('priceRange').value = 3000000;
+            updatePriceRange();
+            
+            // ریست آبجکت فیلترها
+            filters.category = [];
+            filters.status = [];
+            filters.tag = [];
+            filters.maxPrice = 3000000;
+            filters.search = '';
+            
+            updateActiveFilters();
+            applyFilters();
+        }
+
+        // مرتب‌سازی محصولات
+        function sortProducts() {
+            const sortValue = document.getElementById('sortSelect').value;
+            const container = document.getElementById('productsContainer');
+            const visibleProducts = Array.from(container.querySelectorAll('.product-card[style*="block"], .product-card:not([style*="none"])'));
+            
+            // فقط محصولات قابل مشاهده را مرتب کن
+            if (visibleProducts.length === 0) return;
+            
+            const sortedProducts = visibleProducts.sort((a, b) => {
+                switch(sortValue) {
+                    case 'price-low':
+                        return parseInt(a.dataset.price) - parseInt(b.dataset.price);
+                    case 'price-high':
+                        return parseInt(b.dataset.price) - parseInt(a.dataset.price);
+                    case 'sales':
+                        return parseInt(b.dataset.sales) - parseInt(a.dataset.sales);
+                    case 'new':
+                        return parseInt(b.dataset.id) - parseInt(a.dataset.id);
+                    default:
+                        return parseInt(a.dataset.id) - parseInt(b.dataset.id);
+                }
+            });
+            
+            // جدا کردن همه محصولات
+            const allProducts = Array.from(container.querySelectorAll('.product-card'));
+            allProducts.forEach(product => {
+                container.removeChild(product);
+            });
+            
+            // اضافه کردن دوباره به ترتیب جدید
+            sortedProducts.forEach(product => {
+                container.appendChild(product);
+            });
+            
+            // اضافه کردن بقیه محصولات (مخفی شده)
+            allProducts.forEach(product => {
+                if (!sortedProducts.includes(product)) {
+                    container.appendChild(product);
+                }
+            });
+        }
+
+        // تابع کمکی برای نام دسته‌بندی
+        function getCategoryName(cat) {
+            const names = {
+                'web': 'قالب وب',
+                'app': 'اپلیکیشن',
+                'graphic': 'گرافیک',
+                'education': 'آموزشی'
+            };
+            return names[cat] || cat;
+        }
+
+        // تابع کمکی برای نام وضعیت
+        function getStatusName(status) {
+            const names = {
+                'discount': 'تخفیف‌دار',
+                'new': 'جدید',
+                'popular': 'پرفروش'
+            };
+            return names[status] || status;
+        }
+
+        // جستجو با تایپ
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            filters.search = e.target.value.toLowerCase();
+            applyFilters();
+        });
+    </script>
+</body>
+</html>

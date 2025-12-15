@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سبد خرید | فایل استور</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 50%, #1e293b 100%);
+            color: var(--light);
+            min-height: 100vh;
+        }
+        
+        .glass {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .primary-gradient {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        }
+        
+        .secondary-gradient {
+            background: linear-gradient(135deg, var(--secondary) 0%, #059669 100%);
+        }
+        
+        .accent-gradient {
+            background: linear-gradient(135deg, var(--accent) 0%, #d97706 100%);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .shine-effect {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .shine-effect::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(45deg);
+            transition: all 0.6s;
+            opacity: 0;
+        }
+        
+        .shine-effect:hover::before {
+            opacity: 1;
+            top: -30%;
+            left: -30%;
+        }
+        
+        .stagger-animation > * {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s forwards;
+        }
+        
+        .stagger-animation > *:nth-child(1) { animation-delay: 0.1s; }
+        .stagger-animation > *:nth-child(2) { animation-delay: 0.2s; }
+        .stagger-animation > *:nth-child(3) { animation-delay: 0.3s; }
+        .stagger-animation > *:nth-child(4) { animation-delay: 0.4s; }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* استایل‌های آیتم سبد خرید */
+        .cart-item {
+            transition: all 0.3s;
+        }
+        
+        .cart-item:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        
+        .quantity-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        
+        .quantity-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .quantity-input {
+            width: 50px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+        
+        /* استایل‌های کیف پول */
+        .wallet-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(79, 70, 229, 0.1) 100%);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+        
+        .wallet-amount {
+            font-size: 2rem;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* استایل‌های روش پرداخت */
+        .payment-method {
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .payment-method:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            background: rgba(99, 102, 241, 0.05);
+        }
+        
+        .payment-method.selected {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+        
+        /* استایل‌های کد تخفیف */
+        .coupon-input {
+            transition: all 0.3s;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .coupon-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 255, 0.1);
+        }
+        
+        .coupon-success {
+            background: rgba(34, 197, 94, 0.1);
+            border-color: rgba(34, 197, 94, 0.3);
+        }
+        
+        .coupon-error {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+        
+        /* استایل‌های مودال */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(2, 6, 23, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            transform: translateY(20px);
+            transition: transform 0.3s;
+        }
+        
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+        
+        /* استایل‌های اسکلتون */
+        .skeleton {
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 25%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.05) 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+        }
+        
+        @keyframes skeleton-loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        /* استایل‌های ریسپانسیو */
+        @media (max-width: 768px) {
+            .cart-summary-sticky {
+                position: static !important;
+                top: auto !important;
+            }
+        }
+        
+        /* استایل‌های انیمیشن موفقیت */
+        .success-animation {
+            animation: success-pulse 2s ease-out;
+        }
+        
+        @keyframes success-pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- هدر ساده -->
+    <header class="glass py-4 border-b border-slate-800/50">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <a href="index.html" class="flex items-center space-x-3 space-x-reverse hover:opacity-80 transition-opacity">
+                        <div class="primary-gradient p-2 rounded-lg">
+                            <i class="fas fa-arrow-right text-white"></i>
+                        </div>
+                        <span class="text-lg font-medium">بازگشت به فروشگاه</span>
+                    </a>
+                </div>
+                
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <div class="text-center">
+                        <div class="text-xs text-slate-400">سبد خرید شما</div>
+                        <div class="font-bold text-lg gradient-text" id="cartItemsCount">۳ محصول</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- محتوای اصلی -->
+    <main class="py-8">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 stagger-animation">
+                <!-- بخش سمت چپ - آیتم‌های سبد خرید -->
+                <div class="lg:col-span-2">
+                    <h1 class="text-3xl font-bold mb-6">سبد خرید شما</h1>
+                    
+                    <!-- آیتم‌های سبد خرید -->
+                    <div class="space-y-4 mb-8" id="cartItemsContainer">
+                        <!-- آیتم ۱ -->
+                        <div class="glass rounded-2xl p-6 cart-item">
+                            <div class="flex flex-col sm:flex-row sm:items-center">
+                                <!-- تصویر محصول -->
+                                <div class="mb-4 sm:mb-0 sm:ml-6 sm:w-32 sm:h-32 flex-shrink-0">
+                                    <div class="w-full h-40 sm:h-full bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-xl flex items-center justify-center">
+                                        <i class="fas fa-laptop-code text-4xl text-indigo-400"></i>
+                                    </div>
+                                </div>
+                                
+                                <!-- اطلاعات محصول -->
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <div>
+                                            <h3 class="font-bold text-lg mb-1">قالب فروشگاهی React پیشرفته</h3>
+                                            <p class="text-slate-400 text-sm mb-2">قالب کامل فروشگاهی با React و Tailwind CSS</p>
+                                            <div class="flex items-center text-sm">
+                                                <span class="text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-lg ml-2">
+                                                    <i class="fas fa-tag ml-1"></i>
+                                                    ۲۰٪ تخفیف
+                                                </span>
+                                                <span class="text-slate-400">
+                                                    <i class="fas fa-download ml-1"></i>
+                                                    ۵۴۲ دانلود
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <button class="remove-item-btn text-slate-500 hover:text-red-500 transition-colors" data-item="1">
+                                            <i class="fas fa-times text-lg"></i>
+                                        </button>
+                                    </div>
+                                    
+                                    <!-- قیمت و تعداد -->
+                                    <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-4">
+                                        <div class="flex items-center mb-4 sm:mb-0">
+                                            <!-- کنترل تعداد -->
+                                            <div class="flex items-center ml-4">
+                                                <button class="quantity-btn bg-slate-800 hover:bg-slate-700 decrease-btn" data-item="1">
+                                                    <i class="fas fa-minus"></i>
+                                                </button>
+                                                <input type="number" min="1" value="1" class="quantity-input mx-2 py-1 text-white" data-item="1">
+                                                <button class="quantity-btn bg-slate-800 hover:bg-slate-700 increase-btn" data-item="1">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                            </div>
+                                            
+                                            <div class="text-slate-400 text-sm">
+                                                <span class="text-lg font-bold text-white ml-2">120,000 تومان</span>
+                                                <span class="line-through">150,000</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="text-left sm:text-right">
+                                            <div class="text-slate-400 text-sm">جمع آیتم:</div>
+                                            <div class="text-xl font-bold item-total" data-item="1">120,000 تومان</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- آیتم ۲ -->
+                        <div class="glass rounded-2xl p-6 cart-item">
+                            <div class="flex flex-col sm:flex-row sm:items-center">
+                                <!-- تصویر محصول -->
+                                <div class="mb-4 sm:mb-0 sm:ml-6 sm:w-32 sm:h-32 flex-shrink-0">
+                                    <div class="w-full h-40 sm:h-full bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 rounded-xl flex items-center justify-center">
+                                        <i class="fas fa-mobile-alt text-4xl text-emerald-400"></i>
+                                    </div>
+                                </div>
+                                
+                                <!-- اطلاعات محصول -->
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <div>
+                                            <h3 class="font-bold text-lg mb-1">اپلیکیشن فروشگاهی Flutter</h3>
+                                            <p class="text-slate-400 text-sm mb-2">اپلیکیشن فروشگاهی کامل با Flutter و Firebase</p>
+                                            <div class="flex items-center text-sm">
+                                                <span class="text-slate-400">
+                                                    <i class="fas fa-download ml-1"></i>
+                                                    ۳۲۱ دانلود
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <button class="remove-item-btn text-slate-500 hover:text-red-500 transition-colors" data-item="2">
+                                            <i class="fas fa-times text-lg"></i>
+                                        </button>
+                                    </div>
+                                    
+                                    <!-- قیمت و تعداد -->
+                                    <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-4">
+                                        <div class="flex items-center mb-4 sm:mb-0">
+                                            <!-- کنترل تعداد -->
+                                            <div class="flex items-center ml-4">
+                                                <button class="quantity-btn bg-slate-800 hover:bg-slate-700 decrease-btn" data-item="2">
+                                                    <i class="fas fa-minus"></i>
+                                                </button>
+                                                <input type="number" min="1" value="1" class="quantity-input mx-2 py-1 text-white" data-item="2">
+                                                <button class="quantity-btn bg-slate-800 hover:bg-slate-700 increase-btn" data-item="2">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                            </div>
+                                            
+                                            <div class="text-lg font-bold text-white ml-4">250,000 تومان</div>
+                                        </div>
+                                        
+                                        <div class="text-left sm:text-right">
+                                            <div class="text-slate-400 text-sm">جمع آیتم:</div>
+                                            <div class="text-xl font-bold item-total" data-item="2">250,000 تومان</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- آیتم ۳ -->
+                        <div class="glass rounded-2xl p-6 cart-item">
+                            <div class="flex flex-col sm:flex-row sm:items-center">
+                                <!-- تصویر محصول -->
+                                <div class="mb-4 sm:mb-0 sm:ml-6 sm:w-32 sm:h-32 flex-shrink-0">
+                                    <div class="w-full h-40 sm:h-full bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-xl flex items-center justify-center">
+                                        <i class="fas fa-graduation-cap text-4xl text-amber-400"></i>
+                                    </div>
+                                </div>
+                                
+                                <!-- اطلاعات محصول -->
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <div>
+                                            <h3 class="font-bold text-lg mb-1">پکیج آموزش React Native</h3>
+                                            <p class="text-slate-400 text-sm mb-2">آموزش کامل React Native از صفر تا صد</p>
+                                            <div class="flex items-center text-sm">
+                                                <span class="text-green-400 bg-green-500/10 px-2 py-1 rounded-lg ml-2">
+                                                    <i class="fas fa-bolt ml-1"></i>
+                                                    جدید
+                                                </span>
+                                                <span class="text-slate-400">
+                                                    <i class="fas fa-download ml-1"></i>
+                                                    ۶۸۷ دانلود
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <button class="remove-item-btn text-slate-500 hover:text-red-500 transition-colors" data-item="3">
+                                            <i class="fas fa-times text-lg"></i>
+                                        </button>
+                                    </div>
+                                    
+                                    <!-- قیمت و تعداد -->
+                                    <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-4">
+                                        <div class="flex items-center mb-4 sm:mb-0">
+                                            <!-- کنترل تعداد -->
+                                            <div class="flex items-center ml-4">
+                                                <button class="quantity-btn bg-slate-800 hover:bg-slate-700 decrease-btn" data-item="3">
+                                                    <i class="fas fa-minus"></i>
+                                                </button>
+                                                <input type="number" min="1" value="1" class="quantity-input mx-2 py-1 text-white" data-item="3">
+                                                <button class="quantity-btn bg-slate-800 hover:bg-slate-700 increase-btn" data-item="3">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                            </div>
+                                            
+                                            <div class="text-lg font-bold text-white ml-4">180,000 تومان</div>
+                                        </div>
+                                        
+                                        <div class="text-left sm:text-right">
+                                            <div class="text-slate-400 text-sm">جمع آیتم:</div>
+                                            <div class="text-xl font-bold item-total" data-item="3">180,000 تومان</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- سبد خرید خالی -->
+                    <div id="emptyCart" class="hidden text-center py-12">
+                        <div class="mb-6">
+                            <i class="fas fa-shopping-cart text-6xl text-slate-600"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">سبد خرید شما خالی است</h3>
+                        <p class="text-slate-400 mb-8">هنوز هیچ محصولی به سبد خرید خود اضافه نکرده‌اید.</p>
+                        <a href="index.html" class="primary-gradient hover:shadow-lg hover:shadow-indigo-500/30 px-8 py-3 rounded-xl font-medium transition-all duration-300 shine-effect inline-flex items-center">
+                            <i class="fas fa-store ml-2"></i>
+                            بازگشت به فروشگاه
+                        </a>
+                    </div>
+                    
+                    <!-- کد تخفیف -->
+                    <div class="glass rounded-2xl p-6 mb-8">
+                        <h3 class="font-bold text-lg mb-4 flex items-center">
+                            <i class="fas fa-ticket-alt ml-2 text-indigo-400"></i>
+                            کد تخفیف
+                        </h3>
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <input type="text" 
+                                   id="couponInput" 
+                                   class="flex-1 bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 coupon-input" 
+                                   placeholder="کد تخفیف خود را وارد کنید">
+                            <button id="applyCouponBtn" class="primary-gradient hover:shadow-lg hover:shadow-indigo-500/30 px-6 py-3 rounded-xl font-medium transition-all duration-300 shine-effect">
+                                اعمال کد
+                            </button>
+                        </div>
+                        <div id="couponMessage" class="mt-3 text-sm hidden"></div>
+                    </div>
+                </div>
+                
+                <!-- بخش سمت راست - خلاصه سبد خرید -->
+                <div class="lg:col-span-1">
+                    <div class="cart-summary-sticky" style="position: sticky; top: 100px;">
+                        <!-- کیف پول کاربر -->
+                        <div class="wallet-card rounded-2xl p-6 mb-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center">
+                                    <div class="bg-indigo-500/20 p-3 rounded-lg ml-4">
+                                        <i class="fas fa-wallet text-indigo-400"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-bold">کیف پول شما</div>
+                                        <div class="text-slate-400 text-sm">موجودی قابل استفاده</div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="wallet-amount gradient-text" id="walletAmount">۱۰,۰۰۰</div>
+                                    <div class="text-slate-400 text-sm">تومان</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center text-sm text-slate-400">
+                                <i class="fas fa-info-circle ml-2"></i>
+                                <span>این مبلغ از کل فاکتور کسر خواهد شد</span>
+                            </div>
+                        </div>
+                        
+                        <!-- خلاصه سفارش -->
+                        <div class="glass rounded-2xl p-6 mb-6">
+                            <h3 class="font-bold text-lg mb-6">خلاصه سفارش</h3>
+                            
+                            <div class="space-y-4 mb-6">
+                                <!-- جمع کل -->
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-400">جمع کل سبد خرید:</span>
+                                    <span class="font-bold" id="subtotalAmount">۵۵۰,۰۰۰</span>
+                                </div>
+                                
+                                <!-- تخفیف -->
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-400">تخفیف محصولات:</span>
+                                    <span class="font-bold text-emerald-400" id="productsDiscount">۳۰,۰۰۰</span>
+                                </div>
+                                
+                                <!-- کد تخفیف -->
+                                <div class="flex justify-between items-center hidden" id="couponDiscountRow">
+                                    <span class="text-slate-400">تخفیف کد تخفیف:</span>
+                                    <span class="font-bold text-emerald-400" id="couponDiscountAmount">۰</span>
+                                </div>
+                                
+                                <!-- کسر از کیف پول -->
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-400">کسر از کیف پول:</span>
+                                    <span class="font-bold text-indigo-400" id="walletDeduction">۱۰,۰۰۰</span>
+                                </div>
+                                
+                                <!-- خط جداکننده -->
+                                <div class="border-t border-slate-700 pt-4"></div>
+                                
+                                <!-- مبلغ قابل پرداخت -->
+                                <div class="flex justify-between items-center">
+                                    <span class="text-lg">مبلغ قابل پرداخت:</span>
+                                    <span class="text-2xl font-bold gradient-text" id="totalAmount">۵۴۰,۰۰۰</span>
+                                </div>
+                                
+                                <!-- مبلغ باقی‌مانده در کیف پول -->
+                                <div class="flex justify-between items-center text-sm text-slate-400 mt-2">
+                                    <span>موجودی کیف پول پس از پرداخت:</span>
+                                    <span id="remainingWallet">۰</span>
+                                </div>
+                            </div>
+                            
+                            <!-- انتخاب روش پرداخت -->
+                            <div class="mb-6">
+                                <h4 class="font-bold mb-4">روش پرداخت</h4>
+                                <div class="space-y-3">
+                                    <div class="payment-method rounded-xl p-4" data-method="wallet">
+                                        <div class="flex items-center">
+                                            <div class="bg-indigo-500/20 p-2 rounded-lg ml-3">
+                                                <i class="fas fa-wallet text-indigo-400"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="font-medium">پرداخت با کیف پول</div>
+                                                <div class="text-slate-400 text-sm">استفاده از موجودی کیف پول</div>
+                                            </div>
+                                            <div class="payment-radio">
+                                                <div class="w-5 h-5 rounded-full border-2 border-slate-600 flex items-center justify-center">
+                                                    <div class="w-3 h-3 rounded-full bg-indigo-500 hidden"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="payment-method rounded-xl p-4" data-method="online">
+                                        <div class="flex items-center">
+                                            <div class="bg-emerald-500/20 p-2 rounded-lg ml-3">
+                                                <i class="fas fa-credit-card text-emerald-400"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="font-medium">درگاه آنلاین</div>
+                                                <div class="text-slate-400 text-sm">پرداخت آنلاین با کارت بانکی</div>
+                                            </div>
+                                            <div class="payment-radio">
+                                                <div class="w-5 h-5 rounded-full border-2 border-slate-600 flex items-center justify-center">
+                                                    <div class="w-3 h-3 rounded-full bg-indigo-500 hidden"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- دکمه پرداخت -->
+                            <button id="checkoutBtn" class="secondary-gradient hover:shadow-lg hover:shadow-emerald-500/30 w-full py-4 rounded-xl font-bold text-lg transition-all duration-300 shine-effect flex items-center justify-center">
+                                <i class="fas fa-shopping-bag ml-3"></i>
+                                پرداخت و تکمیل خرید
+                            </button>
+                            
+                            <!-- قوانین -->
+                            <div class="mt-4 text-center text-sm text-slate-500">
+                                <p>با کلیک بر روی پرداخت، 
+                                    <a href="#" class="text-indigo-400 hover:text-indigo-300">قوانین و شرایط</a> 
+                                    را می‌پذیرید
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- راهنمایی -->
+                        <div class="glass rounded-2xl p-6">
+                            <h4 class="font-bold mb-4 flex items-center">
+                                <i class="fas fa-info-circle ml-2 text-indigo-400"></i>
+                                راهنمای خرید
+                            </h4>
+                            <ul class="space-y-2 text-sm text-slate-400">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-emerald-400 ml-2 mt-1"></i>
+                                    <span>پس از پرداخت، فایل‌ها بلافاصله قابل دانلود خواهند بود</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-emerald-400 ml-2 mt-1"></i>
+                                    <span>لینک‌های دانلود تا ۳۰ روز پس از خرید فعال هستند</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-emerald-400 ml-2 mt-1"></i>
+                                    <span>در صورت مشکل در دانلود با پشتیبانی تماس بگیرید</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- مودال پرداخت موفق -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal-content">
+            <div class="p-8 text-center">
+                <div class="mb-6">
+                    <div class="w-20 h-20 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto success-animation">
+                        <i class="fas fa-check text-emerald-400 text-3xl"></i>
+                    </div>
+                </div>
+                
+                <h3 class="text-2xl font-bold mb-4">پرداخت با موفقیت انجام شد!</h3>
+                <p class="text-slate-300 mb-6">خرید شما با موفقیت ثبت شد. فایل‌ها اکنون در حساب کاربری شما قابل دانلود هستند.</p>
+                
+                <div class="bg-slate-800/50 rounded-xl p-6 mb-6">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-slate-400">شماره سفارش:</span>
+                        <span class="font-bold" id="orderNumber">ORD-2025-00123</span>
+                    </div>
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-slate-400">تاریخ پرداخت:</span>
+                        <span class="font-bold" id="paymentDate">۱۴۰۳/۰۲/۲۵ - ۱۴:۳۰</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-slate-400">مبلغ پرداختی:</span>
+                        <span class="font-bold gradient-text" id="paymentAmount">۵۴۰,۰۰۰ تومان</span>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <button id="viewOrdersBtn" class="primary-gradient hover:shadow-lg hover:shadow-indigo-500/30 flex-1 py-3 rounded-xl font-medium transition-all duration-300 shine-effect">
+                        <i class="fas fa-list ml-2"></i>
+                        مشاهده سفارشات
+                    </button>
+                    <a href="index.html" class="glass hover:bg-slate-800/70 border border-slate-700 flex-1 py-3 rounded-xl font-medium transition-all duration-300 flex items-center justify-center">
+                        <i class="fas fa-store ml-2"></i>
+                        بازگشت به فروشگاه
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- مودال تأیید حذف -->
+    <div class="modal-overlay" id="confirmDeleteModal">
+        <div class="modal-content">
+            <div class="p-8">
+                <div class="mb-6 text-center">
+                    <div class="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mx-auto">
+                        <i class="fas fa-exclamation-triangle text-red-400 text-2xl"></i>
+                    </div>
+                </div>
+                
+                <h3 class="text-xl font-bold text-center mb-4">آیا مطمئن هستید؟</h3>
+                <p class="text-slate-300 text-center mb-6">آیا می‌خواهید این محصول را از سبد خرید حذف کنید؟</p>
+                
+                <div class="flex gap-3">
+                    <button id="cancelDeleteBtn" class="flex-1 glass hover:bg-slate-800/70 border border-slate-700 py-3 rounded-xl font-medium transition-all duration-300">
+                        لغو
+                    </button>
+                    <button id="confirmDeleteBtn" class="flex-1 bg-red-500 hover:bg-red-600 py-3 rounded-xl font-medium transition-all duration-300">
+                        بله، حذف کن
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // داده‌های اولیه
+        let cartData = {
+            items: [
+                {
+                    id: 1,
+                    name: "قالب فروشگاهی React پیشرفته",
+                    price: 120000,
+                    originalPrice: 150000,
+                    quantity: 1,
+                    discount: 30000
+                },
+                {
+                    id: 2,
+                    name: "اپلیکیشن فروشگاهی Flutter",
+                    price: 250000,
+                    originalPrice: 250000,
+                    quantity: 1,
+                    discount: 0
+                },
+                {
+                    id: 3,
+                    name: "پکیج آموزش React Native",
+                    price: 180000,
+                    originalPrice: 180000,
+                    quantity: 1,
+                    discount: 0
+                }
+            ],
+            wallet: 10000,
+            coupon: {
+                code: "",
+                discount: 0,
+                applied: false
+            },
+            selectedPaymentMethod: "wallet"
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // محاسبات اولیه
+            updateCartCalculations();
+            
+            // مدیریت تعداد آیتم‌ها
+            document.querySelectorAll('.increase-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const itemId = this.getAttribute('data-item');
+                    increaseQuantity(itemId);
+                });
+            });
+            
+            document.querySelectorAll('.decrease-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const itemId = this.getAttribute('data-item');
+                    decreaseQuantity(itemId);
+                });
+            });
+            
+            document.querySelectorAll('.quantity-input').forEach(input => {
+                input.addEventListener('change', function() {
+                    const itemId = this.getAttribute('data-item');
+                    const newQuantity = parseInt(this.value);
+                    if (newQuantity > 0) {
+                        updateQuantity(itemId, newQuantity);
+                    } else {
+                        showDeleteConfirm(itemId);
+                    }
+                });
+            });
+            
+            // حذف آیتم‌ها
+            document.querySelectorAll('.remove-item-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const itemId = this.getAttribute('data-item');
+                    showDeleteConfirm(itemId);
+                });
+            });
+            
+            // مدیریت کد تخفیف
+            const couponInput = document.getElementById('couponInput');
+            const applyCouponBtn = document.getElementById('applyCouponBtn');
+            const couponMessage = document.getElementById('couponMessage');
+            
+            applyCouponBtn.addEventListener('click', applyCoupon);
+            
+            couponInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    applyCoupon();
+                }
+            });
+            
+            // مدیریت روش پرداخت
+            document.querySelectorAll('.payment-method').forEach(method => {
+                method.addEventListener('click', function() {
+                    const methodType = this.getAttribute('data-method');
+                    selectPaymentMethod(methodType);
+                });
+            });
+            
+            // دکمه پرداخت
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            checkoutBtn.addEventListener('click', processPayment);
+            
+            // مدیریت مودال حذف
+            const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+            const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+            let itemToDelete = null;
+            
+            confirmDeleteBtn.addEventListener('click', function() {
+                if (itemToDelete) {
+                    removeItem(itemToDelete);
+                    hideModal('confirmDeleteModal');
+                    itemToDelete = null;
+                }
+            });
+            
+            cancelDeleteBtn.addEventListener('click', function() {
+                hideModal('confirmDeleteModal');
+                itemToDelete = null;
+            });
+            
+            // دکمه مشاهده سفارشات
+            document.getElementById('viewOrdersBtn').addEventListener('click', function() {
+                showNotification('در حال انتقال به صفحه سفارشات...', 'info');
+                setTimeout(() => {
+                    window.location.href = 'orders.html';
+                }, 1000);
+            });
+            
+            // استایل‌های اولیه
+            selectPaymentMethod('wallet');
+        });
+        
+        // افزایش تعداد
+        function increaseQuantity(itemId) {
+            const item = cartData.items.find(item => item.id == itemId);
+            if (item) {
+                item.quantity++;
+                updateItemDisplay(itemId);
+                updateCartCalculations();
+                showNotification('تعداد محصول افزایش یافت', 'info');
+            }
+        }
+        
+        // کاهش تعداد
+        function decreaseQuantity(itemId) {
+            const item = cartData.items.find(item => item.id == itemId);
+            if (item) {
+                if (item.quantity > 1) {
+                    item.quantity--;
+                    updateItemDisplay(itemId);
+                    updateCartCalculations();
+                    showNotification('تعداد محصول کاهش یافت', 'info');
+                } else {
+                    showDeleteConfirm(itemId);
+                }
+            }
+        }
+        
+        // بروزرسانی تعداد
+        function updateQuantity(itemId, newQuantity) {
+            const item = cartData.items.find(item => item.id == itemId);
+            if (item) {
+                item.quantity = newQuantity;
+                updateItemDisplay(itemId);
+                updateCartCalculations();
+                showNotification('تعداد محصول بروزرسانی شد', 'info');
+            }
+        }
+        
+        // نمایش تأیید حذف
+        function showDeleteConfirm(itemId) {
+            itemToDelete = itemId;
+            showModal('confirmDeleteModal');
+        }
+        
+        // حذف آیتم
+        function removeItem(itemId) {
+            cartData.items = cartData.items.filter(item => item.id != itemId);
+            
+            // بروزرسانی نمایش
+            const itemElement = document.querySelector(`[data-item="${itemId}"]`).closest('.cart-item');
+            if (itemElement) {
+                itemElement.style.opacity = '0';
+                itemElement.style.transform = 'translateX(20px)';
+                setTimeout(() => {
+                    itemElement.remove();
+                    updateCartCalculations();
+                    checkEmptyCart();
+                    showNotification('محصول از سبد خرید حذف شد', 'info');
+                }, 300);
+            }
+        }
+        
+        // بررسی سبد خرید خالی
+        function checkEmptyCart() {
+            const cartItemsContainer = document.getElementById('cartItemsContainer');
+            const emptyCart = document.getElementById('emptyCart');
+            const cartItemsCount = document.getElementById('cartItemsCount');
+            
+            if (cartData.items.length === 0) {
+                cartItemsContainer.classList.add('hidden');
+                emptyCart.classList.remove('hidden');
+                cartItemsCount.textContent = '۰ محصول';
+                document.getElementById('checkoutBtn').disabled = true;
+            } else {
+                cartItemsCount.textContent = `${cartData.items.length} محصول`;
+                document.getElementById('checkoutBtn').disabled = false;
+            }
+        }
+        
+        // بروزرسانی نمایش آیتم
+        function updateItemDisplay(itemId) {
+            const item = cartData.items.find(item => item.id == itemId);
+            if (item) {
+                const input = document.querySelector(`.quantity-input[data-item="${itemId}"]`);
+                const totalElement = document.querySelector(`.item-total[data-item="${itemId}"]`);
+                
+                if (input) input.value = item.quantity;
+                if (totalElement) {
+                    const itemTotal = item.price * item.quantity;
+                    totalElement.textContent = formatPrice(itemTotal) + ' تومان';
+                }
+            }
+        }
+        
+        // اعمال کد تخفیف
+        function applyCoupon() {
+            const couponInput = document.getElementById('couponInput');
+            const couponMessage = document.getElementById('couponMessage');
+            const code = couponInput.value.trim();
+            
+            if (!code) {
+                couponMessage.textContent = 'لطفا کد تخفیف را وارد کنید';
+                couponMessage.className = 'mt-3 text-sm text-red-400';
+                couponMessage.classList.remove('hidden');
+                return;
+            }
+            
+            // شبیه‌سازی اعتبارسنجی کد تخفیف
+            const validCoupons = {
+                'OFF20': 20000,
+                'SAVE30': 30000,
+                'WELCOME10': 10000
+            };
+            
+            if (validCoupons[code]) {
+                cartData.coupon.code = code;
+                cartData.coupon.discount = validCoupons[code];
+                cartData.coupon.applied = true;
+                
+                couponMessage.textContent = `کد تخفیف با موفقیت اعمال شد! ${formatPrice(validCoupons[code])} تومان تخفیف`;
+                couponMessage.className = 'mt-3 text-sm text-emerald-400';
+                couponMessage.classList.remove('hidden');
+                
+                couponInput.classList.add('coupon-success');
+                couponInput.classList.remove('coupon-error');
+                
+                updateCartCalculations();
+                showNotification('کد تخفیف با موفقیت اعمال شد', 'success');
+            } else {
+                couponMessage.textContent = 'کد تخفیف معتبر نیست';
+                couponMessage.className = 'mt-3 text-sm text-red-400';
+                couponMessage.classList.remove('hidden');
+                
+                couponInput.classList.add('coupon-error');
+                couponInput.classList.remove('coupon-success');
+                
+                showNotification('کد تخفیف معتبر نیست', 'error');
+            }
+        }
+        
+        // انتخاب روش پرداخت
+        function selectPaymentMethod(method) {
+            cartData.selectedPaymentMethod = method;
+            
+            // بروزرسانی نمایش
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.classList.remove('selected');
+                const radio = el.querySelector('.payment-radio div:last-child');
+                radio.classList.add('hidden');
+            });
+            
+            const selectedMethod = document.querySelector(`[data-method="${method}"]`);
+            selectedMethod.classList.add('selected');
+            const selectedRadio = selectedMethod.querySelector('.payment-radio div:last-child');
+            selectedRadio.classList.remove('hidden');
+            
+            // بروزرسانی محاسبات
+            updateCartCalculations();
+        }
+        
+        // محاسبات سبد خرید
+        function updateCartCalculations() {
+            // محاسبه جمع کل
+            let subtotal = 0;
+            let totalDiscount = 0;
+            
+            cartData.items.forEach(item => {
+                subtotal += item.price * item.quantity;
+                totalDiscount += item.discount * item.quantity;
+            });
+            
+            // اعمال کد تخفیف
+            let couponDiscount = cartData.coupon.applied ? cartData.coupon.discount : 0;
+            
+            // محاسبه کسر از کیف پول
+            let walletDeduction = 0;
+            if (cartData.selectedPaymentMethod === 'wallet') {
+                walletDeduction = Math.min(cartData.wallet, subtotal - couponDiscount);
+            }
+            
+            // محاسبه مبلغ نهایی
+            let total = subtotal - couponDiscount - walletDeduction;
+            
+            // بروزرسانی نمایش
+            document.getElementById('subtotalAmount').textContent = formatPrice(subtotal);
+            document.getElementById('productsDiscount').textContent = formatPrice(totalDiscount);
+            
+            const couponDiscountRow = document.getElementById('couponDiscountRow');
+            const couponDiscountAmount = document.getElementById('couponDiscountAmount');
+            
+            if (couponDiscount > 0) {
+                couponDiscountRow.classList.remove('hidden');
+                couponDiscountAmount.textContent = formatPrice(couponDiscount);
+            } else {
+                couponDiscountRow.classList.add('hidden');
+            }
+            
+            document.getElementById('walletDeduction').textContent = formatPrice(walletDeduction);
+            document.getElementById('totalAmount').textContent = formatPrice(total);
+            
+            // بروزرسانی کیف پول باقی‌مانده
+            const remainingWallet = cartData.wallet - walletDeduction;
+            document.getElementById('remainingWallet').textContent = formatPrice(remainingWallet) + ' تومان';
+            
+            // بروزرسانی موجودی کیف پول
+            document.getElementById('walletAmount').textContent = formatPrice(cartData.wallet);
+        }
+        
+        // پردازش پرداخت
+        function processPayment() {
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            
+            // غیرفعال کردن دکمه برای جلوگیری از کلیک مجدد
+            checkoutBtn.disabled = true;
+            checkoutBtn.innerHTML = '<i class="fas fa-spinner fa-spin ml-3"></i> در حال پردازش...';
+            
+            // شبیه‌سازی پردازش پرداخت
+            setTimeout(() => {
+                // محاسبه مبلغ نهایی
+                let subtotal = 0;
+                cartData.items.forEach(item => {
+                    subtotal += item.price * item.quantity;
+                });
+                
+                let couponDiscount = cartData.coupon.applied ? cartData.coupon.discount : 0;
+                let walletDeduction = cartData.selectedPaymentMethod === 'wallet' ? 
+                    Math.min(cartData.wallet, subtotal - couponDiscount) : 0;
+                
+                let total = subtotal - couponDiscount - walletDeduction;
+                
+                // کسر از کیف پول
+                if (walletDeduction > 0) {
+                    cartData.wallet -= walletDeduction;
+                }
+                
+                // تولید شماره سفارش
+                const orderNumber = 'ORD-' + new Date().getFullYear() + '-' + 
+                    Math.random().toString().substr(2, 5);
+                
+                // تاریخ پرداخت
+                const now = new Date();
+                const paymentDate = now.toLocaleDateString('fa-IR') + ' - ' + 
+                    now.toLocaleTimeString('fa-IR', {hour: '2-digit', minute:'2-digit'});
+                
+                // بروزرسانی مودال موفقیت
+                document.getElementById('orderNumber').textContent = orderNumber;
+                document.getElementById('paymentDate').textContent = paymentDate;
+                document.getElementById('paymentAmount').textContent = formatPrice(total) + ' تومان';
+                
+                // نمایش مودال موفقیت
+                showModal('successModal');
+                
+                // ریست سبد خرید
+                cartData.items = [];
+                cartData.coupon = {
+                    code: "",
+                    discount: 0,
+                    applied: false
+                };
+                
+                // بروزرسانی نمایش
+                setTimeout(() => {
+                    document.getElementById('cartItemsContainer').innerHTML = '';
+                    checkEmptyCart();
+                    updateCartCalculations();
+                    
+                    // ریست دکمه پرداخت
+                    checkoutBtn.disabled = false;
+                    checkoutBtn.innerHTML = '<i class="fas fa-shopping-bag ml-3"></i> پرداخت و تکمیل خرید';
+                    
+                    // پاک کردن کد تخفیف
+                    document.getElementById('couponInput').value = '';
+                    document.getElementById('couponInput').classList.remove('coupon-success', 'coupon-error');
+                    document.getElementById('couponMessage').classList.add('hidden');
+                }, 1000);
+                
+            }, 2000);
+        }
+        
+        // نمایش مودال
+        function showModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // مخفی کردن مودال
+        function hideModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // نمایش نوتیفیکیشن
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            const bgColor = type === 'success' ? 'bg-emerald-600' : 
+                           type === 'error' ? 'bg-red-600' : 
+                           'bg-indigo-600';
+            
+            notification.className = `fixed top-24 left-6 ${bgColor} text-white px-4 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300`;
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'} ml-2"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 10);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+        
+        // فرمت قیمت
+        function formatPrice(price) {
+            return new Intl.NumberFormat('fa-IR').format(price);
+        }
+        
+        // بستن مودال با کلیک بیرون
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    hideModal(this.id);
+                }
+            });
+        });
+        
+        // بستن مودال با کلید Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay.active').forEach(modal => {
+                    hideModal(modal.id);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
