@@ -1,0 +1,1863 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قالب فروشگاهی React پیشرفته | فایل استور</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+        }
+        
+        body {
+            background-color: var(--darker);
+            color: var(--light);
+            overflow-x: hidden;
+        }
+        
+        .glass {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 50%, #1e293b 100%);
+        }
+        
+        .primary-gradient {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        }
+        
+        .secondary-gradient {
+            background: linear-gradient(135deg, var(--secondary) 0%, #059669 100%);
+        }
+        
+        .accent-gradient {
+            background: linear-gradient(135deg, var(--accent) 0%, #d97706 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .shine-effect {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .shine-effect::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(45deg);
+            transition: all 0.6s;
+            opacity: 0;
+        }
+        
+        .shine-effect:hover::before {
+            opacity: 1;
+            top: -30%;
+            left: -30%;
+        }
+        
+        .stagger-animation > * {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s forwards;
+        }
+        
+        .stagger-animation > *:nth-child(1) { animation-delay: 0.1s; }
+        .stagger-animation > *:nth-child(2) { animation-delay: 0.2s; }
+        .stagger-animation > *:nth-child(3) { animation-delay: 0.3s; }
+        .stagger-animation > *:nth-child(4) { animation-delay: 0.4s; }
+        .stagger-animation > *:nth-child(5) { animation-delay: 0.5s; }
+        .stagger-animation > *:nth-child(6) { animation-delay: 0.6s; }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            z-index: 1000;
+            transition: width 0.3s ease;
+        }
+        
+        /* استایل‌های سبد خرید */
+        .cart-dropdown {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            transform: translateY(10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .cart-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        /* استایل‌های گالری تصاویر */
+        .product-gallery {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 15px;
+        }
+        
+        .gallery-thumbs {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .gallery-thumb {
+            border: 2px solid transparent;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .gallery-thumb.active {
+            border-color: var(--primary);
+        }
+        
+        .gallery-thumb:hover {
+            transform: scale(1.05);
+        }
+        
+        .gallery-main {
+            border-radius: 15px;
+            overflow: hidden;
+            background: rgba(15, 23, 42, 0.5);
+        }
+        
+        /* استایل‌های تب‌ها */
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .tab-button {
+            position: relative;
+            padding: 15px 25px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .tab-button:hover {
+            color: white;
+        }
+        
+        .tab-button.active {
+            color: white;
+            border-bottom-color: var(--primary);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* استایل‌های کامنت‌ها */
+        .comment-item {
+            position: relative;
+        }
+        
+        .comment-item::before {
+            content: '';
+            position: absolute;
+            right: -30px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .comment-item:last-child::before {
+            display: none;
+        }
+        
+        /* استایل‌های پیش‌نمایش کد */
+        .code-preview {
+            background: #1e293b;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .code-header {
+            background: #0f172a;
+            padding: 15px 20px;
+            border-bottom: 1px solid #334155;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .code-body {
+            padding: 20px;
+            overflow-x: auto;
+        }
+        
+        /* استایل‌های ریسپانسیو */
+        @media (max-width: 768px) {
+            .product-gallery {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 100px;
+            }
+            
+            .gallery-thumbs {
+                flex-direction: row;
+                order: 2;
+            }
+            
+            .gallery-main {
+                order: 1;
+            }
+        }
+        
+        /* استایل‌های محصولات مرتبط */
+        .related-products .swiper-slide {
+            height: auto;
+        }
+        
+        /* استایل‌های سیستم امتیازدهی */
+        .rating-stars {
+            direction: ltr;
+        }
+        
+        .rating-star {
+            cursor: pointer;
+            color: #4b5563;
+            transition: color 0.2s;
+        }
+        
+        .rating-star:hover,
+        .rating-star.hovered {
+            color: #fbbf24;
+        }
+        
+        .rating-star.active {
+            color: #f59e0b;
+        }
+        
+        /* استایل‌های پشتیبانی آنلاین */
+        .support-badge {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+            z-index: 100;
+            transition: all 0.3s;
+        }
+        
+        .support-badge:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.4);
+        }
+        
+        /* استایل‌های دکمه دانلود */
+        .download-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .download-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+        
+        .download-btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+        
+        /* استایل‌های بخش دانلود */
+        .download-section {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.8) 100%);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .download-status {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+        
+        .download-status.disabled {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        
+        .download-status.enabled {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+        
+        .download-status.pending {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+        
+        .download-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 15px;
+            flex-shrink: 0;
+        }
+        
+        .download-icon.disabled {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+        
+        .download-icon.enabled {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+        }
+        
+        .download-icon.pending {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+        }
+        
+        .download-info {
+            flex-grow: 1;
+        }
+        
+        .download-actions {
+            margin-top: 10px;
+        }
+        
+        /* استایل‌های پیش‌رفت دانلود */
+        .download-progress {
+            background: rgba(255, 255, 255, 0.1);
+            height: 6px;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        
+        .download-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 3px;
+        }
+        
+        /* استایل‌های فایل‌های قابل دانلود */
+        .file-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 10px;
+            margin-bottom: 10px;
+            transition: all 0.3s;
+        }
+        
+        .file-item:hover {
+            background: rgba(15, 23, 42, 0.8);
+        }
+        
+        .file-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 15px;
+            flex-shrink: 0;
+        }
+        
+        .file-icon.zip {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+        
+        .file-icon.pdf {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+        
+        .file-icon.image {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+        }
+        
+        .file-icon.code {
+            background: rgba(139, 92, 246, 0.2);
+            color: #8b5cf6;
+        }
+        
+        .file-info {
+            flex-grow: 1;
+        }
+        
+        .file-size {
+            color: #94a3b8;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body class="gradient-bg">
+    <!-- نوار پیشرفت -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- هدر -->
+    <header class="glass fixed w-full z-50 py-4">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <a href="index.html" class="flex items-center space-x-3 space-x-reverse">
+                        <div class="primary-gradient p-3 rounded-xl shadow-lg">
+                            <i class="fas fa-cloud-download-alt text-white text-2xl"></i>
+                        </div>
+                        <h1 class="text-2xl font-bold gradient-text">فایل استور</h1>
+                    </a>
+                </div>
+                
+                <nav class="hidden lg:flex items-center space-x-8 space-x-reverse">
+                    <a href="index.html" class="text-lg font-medium hover:text-indigo-300 transition-all duration-300 relative group">
+                        خانه
+                    </a>
+                    <a href="#" class="text-lg font-medium hover:text-indigo-300 transition-all duration-300 relative group">
+                        فایل‌ها
+                    </a>
+                    <a href="#" class="text-lg font-medium hover:text-indigo-300 transition-all duration-300 relative group">
+                        دسته‌بندی‌ها
+                    </a>
+                    <a href="#" class="text-lg font-medium hover:text-indigo-300 transition-all duration-300 relative group">
+                        فروشندگان
+                    </a>
+                    <a href="#" class="text-lg font-medium hover:text-indigo-300 transition-all duration-300 relative group">
+                        درباره ما
+                    </a>
+                </nav>
+                
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <!-- سبد خرید -->
+                    <div class="relative">
+                        <button id="cartButton" class="bg-slate-800 hover:bg-slate-700 w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 relative">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="absolute -top-1 -left-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">۳</span>
+                        </button>
+                    </div>
+                    
+                    <!-- دکمه‌های دیگر -->
+                    <button id="loginButton" class="primary-gradient hover:shadow-lg hover:shadow-indigo-500/30 px-6 py-2.5 rounded-xl font-medium transition-all duration-300 shine-effect">
+                        ورود / ثبت‌نام
+                    </button>
+                    <button class="lg:hidden text-xl bg-slate-800 w-10 h-10 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- مسیر ناوبری -->
+    <div class="container mx-auto px-6 pt-24 pb-6">
+        <div class="flex items-center text-sm text-slate-400">
+            <a href="index.html" class="hover:text-white transition-colors">خانه</a>
+            <i class="fas fa-chevron-left mx-2"></i>
+            <a href="#" class="hover:text-white transition-colors">قالب‌های وب</a>
+            <i class="fas fa-chevron-left mx-2"></i>
+            <a href="#" class="hover:text-white transition-colors">React</a>
+            <i class="fas fa-chevron-left mx-2"></i>
+            <span class="text-white">قالب فروشگاهی React پیشرفته</span>
+        </div>
+    </div>
+
+    <!-- بخش اصلی محصول -->
+    <section class="py-8">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16 stagger-animation">
+                <!-- گالری تصاویر محصول -->
+                <div>
+                    <div class="product-gallery">
+                        <div class="gallery-thumbs">
+                            <div class="gallery-thumb active">
+                                <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                                     alt="پیش‌نمایش ۱" class="w-full h-full object-cover">
+                            </div>
+                            <div class="gallery-thumb">
+                                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                                     alt="پیش‌نمایش ۲" class="w-full h-full object-cover">
+                            </div>
+                            <div class="gallery-thumb">
+                                <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                                     alt="پیش‌نمایش ۳" class="w-full h-full object-cover">
+                            </div>
+                            <div class="gallery-thumb">
+                                <img src="https://images.unsplash.com/photo-1581276879432-15e50529f34b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                                     alt="پیش‌نمایش ۴" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        
+                        <div class="gallery-main">
+                            <img id="mainImage" src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                                 alt="قالب فروشگاهی React" class="w-full h-auto">
+                        </div>
+                    </div>
+                    
+                    <!-- نمایش‌دهنده فایل‌های موجود -->
+                    <div class="mt-6 glass rounded-xl p-4">
+                        <h3 class="font-bold text-lg mb-3 flex items-center">
+                            <i class="fas fa-file-archive ml-2 text-indigo-400"></i>
+                            فایل‌های موجود در بسته
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="file-item">
+                                <div class="file-icon zip">
+                                    <i class="fas fa-file-archive"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="font-medium">فایل اصلی پروژه</div>
+                                    <div class="file-size">45.2 MB • فایل ZIP</div>
+                                </div>
+                                <button class="file-download-btn text-indigo-400 hover:text-indigo-300 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="file-item">
+                                <div class="file-icon pdf">
+                                    <i class="fas fa-file-pdf"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="font-medium">مستندات کامل</div>
+                                    <div class="file-size">3.1 MB • فایل PDF</div>
+                                </div>
+                                <button class="file-download-btn text-indigo-400 hover:text-indigo-300 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="file-item">
+                                <div class="file-icon image">
+                                    <i class="fas fa-images"></i>
+                                </div>
+                                <div class="file-info">
+                                    <div class="font-medium">تصاویر و آیکون‌ها</div>
+                                    <div class="file-size">15.7 MB • فایل PSD</div>
+                                </div>
+                                <button class="file-download-btn text-indigo-400 hover:text-indigo-300 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- اطلاعات محصول -->
+                <div>
+                    <div class="mb-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h1 class="text-3xl lg:text-4xl font-bold">قالب فروشگاهی React پیشرفته</h1>
+                            <span class="bg-red-500 text-white px-3 py-1 rounded-lg text-sm font-bold">تخفیف ویژه</span>
+                        </div>
+                        
+                        <div class="flex items-center mb-6">
+                            <div class="flex items-center ml-4">
+                                <div class="rating-stars ml-2">
+                                    <i class="fas fa-star text-yellow-500"></i>
+                                    <i class="fas fa-star text-yellow-500"></i>
+                                    <i class="fas fa-star text-yellow-500"></i>
+                                    <i class="fas fa-star text-yellow-500"></i>
+                                    <i class="fas fa-star-half-alt text-yellow-500"></i>
+                                </div>
+                                <span class="text-slate-300">۴.۸ (۱۲۴ نظر)</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-eye text-slate-400 ml-2"></i>
+                                <span class="text-slate-300">۲,۵۴۳ بازدید</span>
+                            </div>
+                        </div>
+                        
+                        <p class="text-lg text-slate-300 mb-8 leading-relaxed">
+                            قالب فروشگاهی React پیشرفته با Tailwind CSS، یک راه‌حل کامل برای ساخت فروشگاه‌های آنلاین مدرن و ریسپانسیو. این قالب شامل تمام صفحات ضروری یک فروشگاه اینترنتی حرفه‌ای می‌باشد.
+                        </p>
+                    </div>
+                    
+                    <!-- مشخصات فنی -->
+                    <div class="glass rounded-xl p-6 mb-8">
+                        <h3 class="font-bold text-xl mb-4 flex items-center">
+                            <i class="fas fa-info-circle ml-2 text-indigo-400"></i>
+                            مشخصات فنی
+                        </h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="flex items-center">
+                                <i class="fas fa-code text-slate-400 ml-3"></i>
+                                <span class="text-slate-300">React 18</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-paint-brush text-slate-400 ml-3"></i>
+                                <span class="text-slate-300">Tailwind CSS</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-mobile-alt text-slate-400 ml-3"></i>
+                                <span class="text-slate-300">واکنش‌گرا</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-layer-group text-slate-400 ml-3"></i>
+                                <span class="text-slate-300">۱۰+ کامپوننت</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-palette text-slate-400 ml-3"></i>
+                                <span class="text-slate-300">دارای تم تاریک</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-rocket text-slate-400 ml-3"></i>
+                                <span class="text-slate-300">SEO Friendly</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- قیمت و خرید -->
+                    <div class="glass rounded-xl p-6 mb-8">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <div class="text-3xl font-bold">۱۲۰,۰۰۰ تومان</div>
+                                <div class="text-slate-400 line-through">۱۵۰,۰۰۰ تومان</div>
+                            </div>
+                            <div class="text-emerald-400 font-bold">
+                                <i class="fas fa-percentage ml-1"></i>
+                                ۲۰٪ تخفیف
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <button id="addToCart" class="primary-gradient hover:shadow-lg hover:shadow-indigo-500/30 w-full py-4 rounded-xl font-bold text-lg transition-all duration-300 shine-effect flex items-center justify-center">
+                                <i class="fas fa-shopping-cart ml-3"></i>
+                                افزودن به سبد خرید
+                            </button>
+                            
+                            <button id="buyNow" class="secondary-gradient hover:shadow-lg hover:shadow-emerald-500/30 w-full py-4 rounded-xl font-bold text-lg transition-all duration-300 shine-effect flex items-center justify-center">
+                                <i class="fas fa-bolt ml-3"></i>
+                                خرید آنی
+                            </button>
+                        </div>
+                        
+                        <div class="mt-6 pt-6 border-t border-slate-700">
+                            <div class="flex items-center justify-between text-sm">
+                                <div class="flex items-center">
+                                    <i class="fas fa-shield-alt text-emerald-400 ml-2"></i>
+                                    <span>گارانتی بازگشت وجه ۷ روزه</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-sync-alt text-indigo-400 ml-2"></i>
+                                    <span>آپدیت رایگان</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- اطلاعات فروشنده -->
+                    <div class="glass rounded-xl p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
+                                     alt="فروشنده" class="w-12 h-12 rounded-full ml-3">
+                                <div>
+                                    <div class="font-bold">علیرضا محمدی</div>
+                                    <div class="text-slate-400 text-sm">توسعه‌دهنده ارشد</div>
+                                </div>
+                            </div>
+                            <span class="bg-emerald-500/20 text-emerald-400 px-3 py-1 rounded-lg text-sm">فروشنده طلایی</span>
+                        </div>
+                        <div class="flex items-center justify-between text-sm text-slate-400">
+                            <div class="flex items-center">
+                                <i class="fas fa-star text-yellow-500 ml-1"></i>
+                                <span>۴.۹ امتیاز</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-shopping-cart text-indigo-400 ml-1"></i>
+                                <span>۴۵ محصول</span>
+                            </div>
+                            <button class="text-indigo-400 hover:text-indigo-300 transition-colors">
+                                <i class="fas fa-store ml-1"></i>
+                                مشاهده فروشگاه
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- تب‌های اطلاعات محصول -->
+            <div class="mb-16">
+                <div class="flex overflow-x-auto border-b border-slate-700 mb-8">
+                    <button class="tab-button active" data-tab="description">توضیحات محصول</button>
+                    <button class="tab-button" data-tab="features">ویژگی‌ها</button>
+                    <button class="tab-button" data-tab="requirements">مورد نیاز</button>
+                    <button class="tab-button" data-tab="changelog">تغییرات</button>
+                    <button class="tab-button" data-tab="comments">نظرات (۱۲۴)</button>
+                    <button class="tab-button" data-tab="download">دانلود</button>
+                    <button class="tab-button" data-tab="support">پشتیبانی</button>
+                </div>
+                
+                <!-- محتوای تب‌ها -->
+                <div class="tab-content active" id="description">
+                    <div class="glass rounded-2xl p-8">
+                        <h3 class="text-2xl font-bold mb-6">توضیحات کامل محصول</h3>
+                        
+                        <div class="prose prose-invert max-w-none">
+                            <p class="text-lg text-slate-300 mb-6">
+                                قالب فروشگاهی React پیشرفته یک راه‌حل کامل و مدرن برای ایجاد فروشگاه‌های آنلاین با استفاده از React و Tailwind CSS می‌باشد. این قالب با آخرین استانداردهای توسعه وب طراحی شده و از ویژگی‌های پیشرفته React 18 بهره می‌برد.
+                            </p>
+                            
+                            <h4 class="text-xl font-bold mt-8 mb-4">ویژگی‌های کلیدی:</h4>
+                            <ul class="space-y-3 mb-8">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-emerald-400 ml-3 mt-1"></i>
+                                    <span>طراحی کاملاً واکنش‌گرا و سازگار با تمام دستگاه‌ها</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-emerald-400 ml-3 mt-1"></i>
+                                    <span>پنل مدیریت کامل با نمودارها و آمار پیشرفته</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-emerald-400 ml-3 mt-1"></i>
+                                    <span>سیستم سبد خرید و پرداخت ایمن</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-emerald-400 ml-3 mt-1"></i>
+                                    <span>پشتیبانی از چندین روش پرداخت</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check text-emerald-400 ml-3 mt-1"></i>
+                                    <span>سیستم نظردهی و امتیازدهی محصولات</span>
+                                </li>
+                            </ul>
+                        
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="features">
+                    <div class="glass rounded-2xl p-8">
+                        <h3 class="text-2xl font-bold mb-6">ویژگی‌های فنی</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-slate-800/30 rounded-xl p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-indigo-500/20 p-3 rounded-lg ml-4">
+                                        <i class="fas fa-bolt text-indigo-400"></i>
+                                    </div>
+                                    <h4 class="font-bold text-lg">عملکرد بالا</h4>
+                                </div>
+                                <p class="text-slate-300">بهینه‌سازی شده برای بارگیری سریع با کدهای تمیز و ساختاریافته</p>
+                            </div>
+                            
+                            <div class="bg-slate-800/30 rounded-xl p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-emerald-500/20 p-3 rounded-lg ml-4">
+                                        <i class="fas fa-mobile-alt text-emerald-400"></i>
+                                    </div>
+                                    <h4 class="font-bold text-lg">واکنش‌گرا</h4>
+                                </div>
+                                <p class="text-slate-300">سازگاری کامل با تمام دستگاه‌های موبایل، تبلت و دسکتاپ</p>
+                            </div>
+                            
+                            <div class="bg-slate-800/30 rounded-xl p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-amber-500/20 p-3 rounded-lg ml-4">
+                                        <i class="fas fa-search text-amber-400"></i>
+                                    </div>
+                                    <h4 class="font-bold text-lg">سئو بهینه</h4>
+                                </div>
+                                <p class="text-slate-300">ساختار مناسب برای موتورهای جستجو با متا تگ‌های کامل</p>
+                            </div>
+                            
+                            <div class="bg-slate-800/30 rounded-xl p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-purple-500/20 p-3 rounded-lg ml-4">
+                                        <i class="fas fa-code text-purple-400"></i>
+                                    </div>
+                                    <h4 class="font-bold text-lg">کامپوننت‌های آماده</h4>
+                                </div>
+                                <p class="text-slate-300">بیش از ۵۰ کامپوننت آماده و قابل سفارشی‌سازی</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="requirements">
+                    <div class="glass rounded-2xl p-8">
+                        <h3 class="text-2xl font-bold mb-6">نیازمندی‌های سیستم</h3>
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="font-bold text-lg mb-3">سرور:</h4>
+                                <ul class="space-y-2 text-slate-300">
+                                    <li class="flex items-center">
+                                        <i class="fas fa-server text-indigo-400 ml-3"></i>
+                                        Node.js 16.0 یا بالاتر
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-database text-indigo-400 ml-3"></i>
+                                        MongoDB یا MySQL
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-hdd text-indigo-400 ml-3"></i>
+                                        حداقل ۱GB فضای ذخیره‌سازی
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-bold text-lg mb-3">مرورگر:</h4>
+                                <ul class="space-y-2 text-slate-300">
+                                    <li class="flex items-center">
+                                        <i class="fab fa-chrome text-indigo-400 ml-3"></i>
+                                        Chrome 60+
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fab fa-firefox text-indigo-400 ml-3"></i>
+                                        Firefox 55+
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fab fa-safari text-indigo-400 ml-3"></i>
+                                        Safari 12+
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="changelog">
+                    <div class="glass rounded-2xl p-8">
+                        <h3 class="text-2xl font-bold mb-6">تاریخچه تغییرات</h3>
+                        <div class="space-y-6">
+                            <div class="border-r-2 border-indigo-500 pr-6">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h4 class="font-bold text-lg">ورژن ۲.۱.۰</h4>
+                                    <span class="text-slate-400 text-sm">۱۴۰۳/۰۲/۱۵</span>
+                                </div>
+                                <ul class="space-y-2 text-slate-300">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-plus text-emerald-400 ml-3 mt-1"></i>
+                                        <span>اضافه شدن پنل مدیریت پیشرفته</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-wrench text-amber-400 ml-3 mt-1"></i>
+                                        <span>بهبود عملکرد سبد خرید</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="border-r-2 border-indigo-500 pr-6">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h4 class="font-bold text-lg">ورژن ۲.۰.۰</h4>
+                                    <span class="text-slate-400 text-sm">۱۴۰۳/۰۱/۲۰</span>
+                                </div>
+                                <ul class="space-y-2 text-slate-300">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-sync text-indigo-400 ml-3 mt-1"></i>
+                                        <span>مهاجرت به React 18</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-paint-brush text-indigo-400 ml-3 mt-1"></i>
+                                        <span>طراحی مجدد رابط کاربری</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="comments">
+                    <div class="glass rounded-2xl p-8">
+                        <div class="flex justify-between items-center mb-8">
+                            <h3 class="text-2xl font-bold">نظرات کاربران</h3>
+                            <button class="primary-gradient hover:shadow-lg hover:shadow-indigo-500/30 px-6 py-3 rounded-xl font-medium transition-all duration-300 shine-effect">
+                                <i class="fas fa-plus ml-2"></i>
+                                ثبت نظر جدید
+                            </button>
+                        </div>
+                        
+                        <!-- فرم ثبت نظر -->
+                        <div class="glass rounded-xl p-6 mb-8">
+                            <h4 class="font-bold text-lg mb-4">ثبت نظر جدید</h4>
+                            <div class="mb-4">
+                                <div class="flex items-center mb-2">
+                                    <span class="text-slate-300 ml-2">امتیاز شما:</span>
+                                    <div class="rating-stars" id="ratingInput">
+                                        <i class="fas fa-star rating-star" data-rating="1"></i>
+                                        <i class="fas fa-star rating-star" data-rating="2"></i>
+                                        <i class="fas fa-star rating-star" data-rating="3"></i>
+                                        <i class="fas fa-star rating-star" data-rating="4"></i>
+                                        <i class="fas fa-star rating-star" data-rating="5"></i>
+                                    </div>
+                                </div>
+                                <textarea class="w-full bg-slate-800/50 border border-slate-700 rounded-lg p-4 text-white placeholder-slate-500" 
+                                          rows="4" 
+                                          placeholder="نظر خود را درباره این محصول بنویسید..."></textarea>
+                            </div>
+                            <div class="flex justify-end">
+                                <button class="primary-gradient hover:shadow-lg hover:shadow-indigo-500/30 px-6 py-3 rounded-lg font-medium transition-all duration-300">
+                                    ثبت نظر
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- لیست نظرات -->
+                        <div class="space-y-8">
+                            <!-- نظر ۱ -->
+                            <div class="comment-item pr-8">
+                                <div class="flex items-start mb-4">
+                                    <img src="https://i.pinimg.com/736x/a9/75/93/a975934bb378afc4ca8c133df451f56e.jpg" 
+                                         alt="کاربر" class="w-12 h-12 rounded-full ml-4">
+                                    <div>
+                                        <div class="font-bold">سارا نوروزی</div>
+                                        <div class="text-slate-400 text-sm mb-2">توسعه‌دهنده اپلیکیشن</div>
+                                        <div class="flex text-amber-400 mb-2">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="text-slate-400 text-sm">۱۴۰۳/۰۱/۱۰</div>
+                                    </div>
+                                </div>
+                                <p class="text-slate-300 pr-4 mb-4">قالب بسیار عالی و حرفه‌ای. داکیومنت کامل و پشتیبانی عالی. تمام کامپوننت‌ها به خوبی کار می‌کنند.</p>
+                                <div class="flex space-x-4 space-x-reverse">
+                                    <button class="text-slate-400 hover:text-white text-sm">
+                                        <i class="fas fa-thumbs-up ml-1"></i>
+                                        مفید بود (۲۴)
+                                    </button>
+                                    <button class="text-slate-400 hover:text-white text-sm">
+                                        پاسخ
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- نظر ۲ -->
+                            <div class="comment-item pr-8">
+                                <div class="flex items-start mb-4">
+                                    <img src="https://static.vecteezy.com/system/resources/previews/046/409/821/large_2x/avatar-profile-icon-in-flat-style-male-user-profile-illustration-on-isolated-background-man-profile-sign-business-concept-vector.jpg" 
+                                         alt="کاربر" class="w-12 h-12 rounded-full ml-4">
+                                    <div>
+                                        <div class="font-bold">محمدرضا کریمی</div>
+                                        <div class="text-slate-400 text-sm mb-2">گرافیست</div>
+                                        <div class="flex text-amber-400 mb-2">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                        </div>
+                                        <div class="text-slate-400 text-sm">۱۴۰۲/۱۲/۲۵</div>
+                                    </div>
+                                </div>
+                                <p class="text-slate-300 pr-4 mb-4">طراحی بسیار زیبا و مدرن. کامپوننت‌ها به خوبی سازماندهی شده‌اند. فقط ایجاده تغییرات کوچک در رنگ‌ها نیاز به کمی وقت گذاشتن داره.</p>
+                                <div class="flex space-x-4 space-x-reverse">
+                                    <button class="text-slate-400 hover:text-white text-sm">
+                                        <i class="fas fa-thumbs-up ml-1"></i>
+                                        مفید بود (۱۸)
+                                    </button>
+                                    <button class="text-slate-400 hover:text-white text-sm">
+                                        پاسخ
+                                    </button>
+                                </div>
+                                
+                                <!-- پاسخ -->
+                                <div class="mr-8 mt-4 bg-slate-800/30 rounded-xl p-4">
+                                    <div class="flex items-center mb-2">
+                                        <div class="bg-indigo-500/20 p-2 rounded-lg ml-3">
+                                            <i class="fas fa-store text-indigo-400"></i>
+                                        </div>
+                                        <div>
+                                            <div class="font-bold">علیرضا محمدی (فروشنده)</div>
+                                            <div class="text-slate-400 text-sm">۱۴۰۲/۱۲/۲۶</div>
+                                        </div>
+                                    </div>
+                                    <p class="text-slate-300">سلام محمدرضا جان، ممنون از نظرتون. برای تغییر تمپلیت رنگ‌ها، می‌تونید از فایل tailwind.config.js استفاده کنید. اگر نیاز به راهنمایی بیشتر داشتید در خدمتم.</p>
+                                </div>
+                            </div>
+                            
+                            <!-- نظر ۳ -->
+                            <div class="comment-item pr-8">
+                                <div class="flex items-start mb-4">
+                                    <img src="https://i.pinimg.com/736x/bd/d9/aa/bdd9aaee8c129b1d0a7180512c6f7ae5.jpg" 
+                                         alt="کاربر" class="w-12 h-12 rounded-full ml-4">
+                                    <div>
+                                        <div class="font-bold">علیرضا محمدی</div>
+                                        <div class="text-slate-400 text-sm mb-2">طراح وب</div>
+                                        <div class="flex text-amber-400 mb-2">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="text-slate-400 text-sm">۱۴۰۲/۱۲/۱۵</div>
+                                    </div>
+                                </div>
+                                <p class="text-slate-300 pr-4 mb-4">بهترین قالب React که تا حالا دیدم. داکیومنت عالی، کدهای تمیز و پشتیبانی ۲۴ ساعته. واقعا ارزش خرید داشت.</p>
+                                <div class="flex space-x-4 space-x-reverse">
+                                    <button class="text-slate-400 hover:text-white text-sm">
+                                        <i class="fas fa-thumbs-up ml-1"></i>
+                                        مفید بود (۳۲)
+                                    </button>
+                                    <button class="text-slate-400 hover:text-white text-sm">
+                                        پاسخ
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- تب جدید: دانلود -->
+                <div class="tab-content" id="download">
+                    <div class="download-section p-8">
+                        <h3 class="text-2xl font-bold mb-8 flex items-center">
+                            <i class="fas fa-download ml-3 text-indigo-400"></i>
+                            بخش دانلود فایل
+                        </h3>
+                        
+                        <!-- وضعیت‌های مختلف دانلود -->
+                        <div class="space-y-6">
+                            <!-- وضعیت ۱: کاربر لاگین نکرده -->
+                            <div class="download-status disabled" id="statusNotLoggedIn">
+                                <div class="download-icon disabled">
+                                    <i class="fas fa-user-slash"></i>
+                                </div>
+                                <div class="download-info">
+                                    <h4 class="font-bold text-lg mb-1">شما وارد حساب کاربری خود نشده‌اید</h4>
+                                    <p class="text-slate-300">برای دسترسی به فایل‌های محصول، ابتدا وارد حساب کاربری خود شوید.</p>
+                                    <div class="download-actions mt-3">
+                                        <button id="loginToDownload" class="primary-gradient hover:shadow-lg hover:shadow-indigo-500/30 px-6 py-2 rounded-lg font-medium transition-all duration-300">
+                                            <i class="fas fa-sign-in-alt ml-2"></i>
+                                            ورود به حساب کاربری
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- وضعیت ۲: کاربر لاگین کرده اما محصول را نخریده -->
+                            <div class="download-status disabled" id="statusNotPurchased" style="display: none;">
+                                <div class="download-icon disabled">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </div>
+                                <div class="download-info">
+                                    <h4 class="font-bold text-lg mb-1">شما این محصول را خریداری نکرده‌اید</h4>
+                                    <p class="text-slate-300">برای دانلود فایل‌ها، ابتدا محصول را خریداری کنید.</p>
+                                    <div class="download-actions mt-3">
+                                        <button id="buyToDownload" class="secondary-gradient hover:shadow-lg hover:shadow-emerald-500/30 px-6 py-2 rounded-lg font-medium transition-all duration-300">
+                                            <i class="fas fa-shopping-bag ml-2"></i>
+                                            خرید محصول
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- وضعیت ۳: کاربر مجاز به دانلود -->
+                            <div class="download-status enabled" id="statusAuthorized" style="display: none;">
+                                <div class="download-icon enabled">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="download-info">
+                                    <h4 class="font-bold text-lg mb-1">شما مجاز به دانلود این محصول هستید</h4>
+                                    <p class="text-slate-300">می‌توانید فایل‌های محصول را دانلود کنید. لینک‌های دانلود تا ۳۰ روز پس از خرید فعال هستند.</p>
+                                </div>
+                            </div>
+                            
+                            <!-- حالت فعال: فایل‌های قابل دانلود -->
+                            <div id="downloadFiles" style="display: none;">
+                                <h4 class="font-bold text-xl mb-6">فایل‌های قابل دانلود</h4>
+                                
+                                <div class="file-item">
+                                    <div class="file-icon zip">
+                                        <i class="fas fa-file-archive"></i>
+                                    </div>
+                                    <div class="file-info">
+                                        <div class="font-medium">فایل اصلی پروژه (V2.1.0)</div>
+                                        <div class="file-size">45.2 MB • آخرین آپدیت: ۱۴۰۳/۰۲/۱۵</div>
+                                    </div>
+                                    <button class="download-file-btn primary-gradient hover:shadow-lg hover:shadow-indigo-500/30 px-4 py-2 rounded-lg font-medium transition-all duration-300" data-file="main">
+                                        <i class="fas fa-download ml-2"></i>
+                                        دانلود
+                                    </button>
+                                </div>
+                                
+                                <div class="file-item">
+                                    <div class="file-icon pdf">
+                                        <i class="fas fa-file-pdf"></i>
+                                    </div>
+                                    <div class="file-info">
+                                        <div class="font-medium">مستندات کامل محصول</div>
+                                        <div class="file-size">3.1 MB • شامل راهنمای نصب و استفاده</div>
+                                    </div>
+                                    <button class="download-file-btn primary-gradient hover:shadow-lg hover:shadow-indigo-500/30 px-4 py-2 rounded-lg font-medium transition-all duration-300" data-file="docs">
+                                        <i class="fas fa-download ml-2"></i>
+                                        دانلود
+                                    </button>
+                                </div>
+                                
+                                <div class="file-item">
+                                    <div class="file-icon image">
+                                        <i class="fas fa-images"></i>
+                                    </div>
+                                    <div class="file-info">
+                                        <div class="font-medium">فایل‌های گرافیکی و آیکون‌ها</div>
+                                        <div class="file-size">15.7 MB • شامل فایل‌های PSD و SVG</div>
+                                    </div>
+                                    <button class="download-file-btn primary-gradient hover:shadow-lg hover:shadow-indigo-500/30 px-4 py-2 rounded-lg font-medium transition-all duration-300" data-file="graphics">
+                                        <i class="fas fa-download ml-2"></i>
+                                        دانلود
+                                    </button>
+                                </div>
+                                
+                                <div class="file-item">
+                                    <div class="file-icon code">
+                                        <i class="fas fa-code"></i>
+                                    </div>
+                                    <div class="file-info">
+                                        <div class="font-medium">کامپوننت‌های اضافی</div>
+                                        <div class="file-size">8.3 MB • شامل ۲۰ کامپوننت جدید</div>
+                                    </div>
+                                    <button class="download-file-btn primary-gradient hover:shadow-lg hover:shadow-indigo-500/30 px-4 py-2 rounded-lg font-medium transition-all duration-300" data-file="components">
+                                        <i class="fas fa-download ml-2"></i>
+                                        دانلود
+                                    </button>
+                                </div>
+                                
+                                <!-- پیش‌رفت دانلود -->
+                                <div class="mt-8 glass rounded-xl p-6">
+                                    <h4 class="font-bold text-lg mb-4">در حال دانلود...</h4>
+                                    <div class="mb-4">
+                                        <div class="flex justify-between text-sm mb-2">
+                                            <span id="downloadingFile">فایل اصلی پروژه</span>
+                                            <span id="downloadProgressText">۰٪</span>
+                                        </div>
+                                        <div class="download-progress">
+                                            <div class="download-progress-bar" id="downloadProgressBar"></div>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-between text-sm text-slate-400">
+                                        <span>سرعت: <span id="downloadSpeed">--</span></span>
+                                        <span>زمان باقی‌مانده: <span id="downloadTime">--</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- اطلاعات دانلود -->
+                            <div class="glass rounded-xl p-6 mt-8">
+                                <h4 class="font-bold text-lg mb-4 flex items-center">
+                                    <i class="fas fa-info-circle ml-2 text-indigo-400"></i>
+                                    اطلاعات دانلود
+                                </h4>
+                                <ul class="space-y-3 text-slate-300">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-emerald-400 ml-3 mt-1"></i>
+                                        <span>لینک‌های دانلود تا ۳۰ روز پس از خرید فعال هستند</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-emerald-400 ml-3 mt-1"></i>
+                                        <span>پس از دانلود، فایل را از حالت فشرده خارج کنید</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-emerald-400 ml-3 mt-1"></i>
+                                        <span>در صورت بروز هرگونه مشکل با پشتیبانی تماس بگیرید</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-emerald-400 ml-3 mt-1"></i>
+                                        <span>آپدیت‌های آینده برای خریداران رایگان خواهد بود</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="support">
+                    <div class="glass rounded-2xl p-8">
+                        <h3 class="text-2xl font-bold mb-6">پشتیبانی محصول</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div>
+                                <div class="bg-slate-800/30 rounded-xl p-6 mb-6">
+                                    <div class="flex items-center mb-4">
+                                        <div class="bg-emerald-500/20 p-3 rounded-lg ml-4">
+                                            <i class="fas fa-headset text-emerald-400"></i>
+                                        </div>
+                                        <h4 class="font-bold text-lg">پشتیبانی مستقیم</h4>
+                                    </div>
+                                    <p class="text-slate-300 mb-4">پشتیبانی ۲۴ ساعته از طریق تیکت پشتیبانی</p>
+                                    <button class="primary-gradient hover:shadow-lg hover:shadow-indigo-500/30 w-full py-3 rounded-lg font-medium transition-all duration-300">
+                                        ایجاد تیکت پشتیبانی
+                                    </button>
+                                </div>
+                                
+                                <div class="bg-slate-800/30 rounded-xl p-6">
+                                    <h4 class="font-bold text-lg mb-4">مستندات کامل</h4>
+                                    <p class="text-slate-300 mb-4">مستندات کامل نصب و راه‌اندازی همراه با مثال‌های کاربردی</p>
+                                    <a href="#" class="text-indigo-400 hover:text-indigo-300 flex items-center">
+                                        مشاهده مستندات
+                                        <i class="fas fa-external-link-alt mr-2"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="bg-slate-800/30 rounded-xl p-6">
+                                    <h4 class="font-bold text-lg mb-4">سوالات متداول</h4>
+                                    <div class="space-y-4">
+                                        <div>
+                                            <h5 class="font-medium mb-2">چگونه قالب را نصب کنم؟</h5>
+                                            <p class="text-slate-400 text-sm">پس از دانلود، فایل zip را extract کنید و دستور npm install را اجرا نمایید.</p>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-medium mb-2">آیا امکان سفارشی‌سازی وجود دارد؟</h5>
+                                            <p class="text-slate-400 text-sm">بله، تمام کامپوننت‌ها به راحتی قابل سفارشی‌سازی هستند.</p>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-medium mb-2">گارانتی بازگشت وجه چگونه است؟</h5>
+                                            <p class="text-slate-400 text-sm">در صورت عدم رضایت تا ۷ روز پس از خرید، مبلغ کامل بازگردانده می‌شود.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- محصولات مرتبط -->
+            <div class="mb-16">
+                <h2 class="text-3xl font-bold mb-8">محصولات مرتبط</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- محصول مرتبط ۱ -->
+                    <div class="glass rounded-2xl overflow-hidden card-hover group">
+                        <div class="relative overflow-hidden">
+                            <div class="h-40 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 flex items-center justify-center">
+                                <i class="fas fa-database text-5xl text-blue-400"></i>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-bold text-lg mb-2 group-hover:text-indigo-300 transition-colors">سیستم مدیریت محتوا</h3>
+                            <p class="text-slate-400 text-sm mb-4">CMS کامل با پنل مدیریت پیشرفته</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-lg font-bold">320,000 تومان</span>
+                                <button class="add-to-cart primary-gradient hover:shadow-lg hover:shadow-indigo-500/30 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 shine-effect text-sm">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- محصول مرتبط ۲ -->
+                    <div class="glass rounded-2xl overflow-hidden card-hover group">
+                        <div class="relative overflow-hidden">
+                            <div class="h-40 bg-gradient-to-r from-purple-500/20 to-pink-500/20 flex items-center justify-center">
+                                <i class="fas fa-photo-video text-5xl text-purple-400"></i>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-bold text-lg mb-2 group-hover:text-indigo-300 transition-colors">پک موشن گرافیک</h3>
+                            <p class="text-slate-400 text-sm mb-4">انیمیشن‌های آماده برای پروژه‌های ویدئویی</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-lg font-bold">75,000 تومان</span>
+                                <button class="add-to-cart primary-gradient hover:shadow-lg hover:shadow-indigo-500/30 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 shine-effect text-sm">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- محصول مرتبط ۳ -->
+                    <div class="glass rounded-2xl overflow-hidden card-hover group">
+                        <div class="relative overflow-hidden">
+                            <div class="h-40 bg-gradient-to-r from-green-500/20 to-emerald-500/20 flex items-center justify-center">
+                                <i class="fas fa-book-open text-5xl text-green-400"></i>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-bold text-lg mb-2 group-hover:text-indigo-300 transition-colors">آموزش Node.js پیشرفته</h3>
+                            <p class="text-slate-400 text-sm mb-4">آموزش جامع Node.js از مقدماتی تا پیشرفته</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-lg font-bold">140,000 تومان</span>
+                                <button class="add-to-cart primary-gradient hover:shadow-lg hover:shadow-indigo-500/30 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 shine-effect text-sm">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- محصول مرتبط ۴ -->
+                    <div class="glass rounded-2xl overflow-hidden card-hover group">
+                        <div class="relative overflow-hidden">
+                            <div class="h-40 bg-gradient-to-r from-amber-500/20 to-yellow-500/20 flex items-center justify-center">
+                                <i class="fas fa-chart-line text-5xl text-amber-400"></i>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-bold text-lg mb-2 group-hover:text-indigo-300 transition-colors">پکیج UI/UX کامل</h3>
+                            <p class="text-slate-400 text-sm mb-4">مجموعه کامل المان‌های طراحی رابط کاربری</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-lg font-bold">95,000 تومان</span>
+                                <button class="add-to-cart primary-gradient hover:shadow-lg hover:shadow-indigo-500/30 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 shine-effect text-sm">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- پشتیبانی آنلاین -->
+    <div class="support-badge" id="supportBadge">
+        <i class="fas fa-headset text-white text-2xl"></i>
+    </div>
+
+    <!-- فوتر -->
+    <footer class="glass border-t border-slate-800/50 py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 space-x-reverse mb-6">
+                        <div class="primary-gradient p-2 rounded-lg">
+                            <i class="fas fa-cloud-download-alt text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold gradient-text">فایل استور</h3>
+                    </div>
+                    <p class="text-slate-400 mb-6">بازار آنلاین خرید و فروش فایل‌های دیجیتال با کیفیت و قیمت مناسب</p>
+                    <div class="flex space-x-4 space-x-reverse">
+                        <a href="#" class="bg-slate-800 hover:bg-slate-700 w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="#" class="bg-slate-800 hover:bg-slate-700 w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="bg-slate-800 hover:bg-slate-700 w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-6">لینک‌های مفید</h4>
+                    <ul class="space-y-3">
+                        <li><a href="index.html" class="text-slate-400 hover:text-white transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-left text-xs ml-2"></i>
+                            صفحه اصلی
+                        </a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-left text-xs ml-2"></i>
+                            درباره ما
+                        </a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-left text-xs ml-2"></i>
+                            تماس با ما
+                        </a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-left text-xs ml-2"></i>
+                            قوانین و مقررات
+                        </a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-6">دسته‌بندی‌ها</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-left text-xs ml-2"></i>
+                            قالب‌های وب
+                        </a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-left text-xs ml-2"></i>
+                            اپلیکیشن‌ها
+                        </a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-left text-xs ml-2"></i>
+                            گرافیک
+                        </a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-left text-xs ml-2"></i>
+                            آموزشی
+                        </a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-6">تماس با ما</h4>
+                    <ul class="space-y-4">
+                        <li class="flex items-center">
+                            <i class="fas fa-phone text-indigo-500 ml-3"></i>
+                            <span class="text-slate-400">۰۲۱-۱۲۳۴۵۶۷۸</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope text-indigo-500 ml-3"></i>
+                            <span class="text-slate-400">info@filestore.ir</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt text-indigo-500 ml-3"></i>
+                            <span class="text-slate-400">تهران، خیابان ولیعصر</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-800/50 mt-12 pt-8 text-center text-slate-500">
+                <p>© ۲۰۲۵ فایل استور. تمام حقوق محفوظ است.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // حالت‌های مختلف کاربر
+        const USER_STATES = {
+            NOT_LOGGED_IN: 'not_logged_in',
+            LOGGED_IN_NOT_PURCHASED: 'logged_in_not_purchased',
+            AUTHORIZED: 'authorized'
+        };
+        
+        // حالت فعلی کاربر (می‌توانید این را تغییر دهید)
+        let currentUserState = USER_STATES.NOT_LOGGED_IN;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // نوار پیشرفت اسکرول
+            window.addEventListener('scroll', function() {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById('progressBar').style.width = scrolled + '%';
+            });
+            
+            // انیمیشن اسکرول
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.stagger-animation > *').forEach(el => {
+                observer.observe(el);
+            });
+            
+            // گالری تصاویر
+            const thumbnails = document.querySelectorAll('.gallery-thumb');
+            const mainImage = document.getElementById('mainImage');
+            
+            thumbnails.forEach(thumb => {
+                thumb.addEventListener('click', function() {
+                    thumbnails.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    const imgSrc = this.querySelector('img').src;
+                    mainImage.src = imgSrc;
+                });
+            });
+            
+            // سیستم تب‌ها
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    this.classList.add('active');
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                    
+                    // اگر تب دانلود انتخاب شد، وضعیت کاربر را بروزرسانی کن
+                    if (tabId === 'download') {
+                        updateDownloadSection();
+                    }
+                });
+            });
+            
+            // سیستم امتیازدهی
+            const ratingStars = document.querySelectorAll('.rating-star');
+            let currentRating = 0;
+            
+            ratingStars.forEach(star => {
+                star.addEventListener('mouseover', function() {
+                    const rating = parseInt(this.getAttribute('data-rating'));
+                    highlightStars(rating);
+                });
+                
+                star.addEventListener('mouseout', function() {
+                    highlightStars(currentRating);
+                });
+                
+                star.addEventListener('click', function() {
+                    currentRating = parseInt(this.getAttribute('data-rating'));
+                    highlightStars(currentRating);
+                });
+            });
+            
+            function highlightStars(rating) {
+                ratingStars.forEach(star => {
+                    star.classList.remove('active', 'hovered');
+                    const starRating = parseInt(star.getAttribute('data-rating'));
+                    
+                    if (starRating <= rating) {
+                        star.classList.add('active');
+                    }
+                });
+            }
+            
+            // دکمه‌های خرید
+            const addToCartBtn = document.getElementById('addToCart');
+            const buyNowBtn = document.getElementById('buyNow');
+            
+            function showNotification(message, type = 'success') {
+                const notification = document.createElement('div');
+                const bgColor = type === 'success' ? 'bg-emerald-600' : 'bg-indigo-600';
+                
+                notification.className = `fixed top-24 left-6 ${bgColor} text-white px-4 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300`;
+                notification.innerHTML = `
+                    <div class="flex items-center">
+                        <i class="fas fa-check-circle ml-2"></i>
+                        <span>${message}</span>
+                    </div>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(0)';
+                }, 10);
+                
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(100%)';
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 300);
+                }, 3000);
+            }
+            
+            if (addToCartBtn) {
+                addToCartBtn.addEventListener('click', function() {
+                    showNotification('محصول به سبد خرید اضافه شد!');
+                });
+            }
+            
+            if (buyNowBtn) {
+                buyNowBtn.addEventListener('click', function() {
+                    showNotification('در حال انتقال به صفحه پرداخت...', 'info');
+                    // بعد از خرید موفق، وضعیت کاربر را تغییر دهید
+                    setTimeout(() => {
+                        currentUserState = USER_STATES.AUTHORIZED;
+                        updateDownloadSection();
+                        showNotification('خرید با موفقیت انجام شد! اکنون می‌توانید فایل‌ها را دانلود کنید.');
+                    }, 2000);
+                });
+            }
+            
+            // دکمه ورود
+            const loginButton = document.getElementById('loginButton');
+            const loginToDownload = document.getElementById('loginToDownload');
+            
+            function handleLogin() {
+                showNotification('در حال ورود به حساب کاربری...', 'info');
+                setTimeout(() => {
+                    currentUserState = USER_STATES.LOGGED_IN_NOT_PURCHASED;
+                    updateDownloadSection();
+                    showNotification('با موفقیت وارد شدید!');
+                }, 1500);
+            }
+            
+            if (loginButton) {
+                loginButton.addEventListener('click', handleLogin);
+            }
+            
+            if (loginToDownload) {
+                loginToDownload.addEventListener('click', handleLogin);
+            }
+            
+            // دکمه خرید در بخش دانلود
+            const buyToDownload = document.getElementById('buyToDownload');
+            if (buyToDownload) {
+                buyToDownload.addEventListener('click', function() {
+                    showNotification('در حال انتقال به صفحه پرداخت...', 'info');
+                    setTimeout(() => {
+                        currentUserState = USER_STATES.AUTHORIZED;
+                        updateDownloadSection();
+                        showNotification('خرید با موفقیت انجام شد! اکنون می‌توانید فایل‌ها را دانلود کنید.');
+                    }, 2000);
+                });
+            }
+            
+            // تابع بروزرسانی بخش دانلود
+            function updateDownloadSection() {
+                const statusNotLoggedIn = document.getElementById('statusNotLoggedIn');
+                const statusNotPurchased = document.getElementById('statusNotPurchased');
+                const statusAuthorized = document.getElementById('statusAuthorized');
+                const downloadFiles = document.getElementById('downloadFiles');
+                
+                // ابتدا همه را مخفی کن
+                if (statusNotLoggedIn) statusNotLoggedIn.style.display = 'none';
+                if (statusNotPurchased) statusNotPurchased.style.display = 'none';
+                if (statusAuthorized) statusAuthorized.style.display = 'none';
+                if (downloadFiles) downloadFiles.style.display = 'none';
+                
+                // بر اساس وضعیت کاربر، بخش مناسب را نمایش بده
+                switch(currentUserState) {
+                    case USER_STATES.NOT_LOGGED_IN:
+                        if (statusNotLoggedIn) statusNotLoggedIn.style.display = 'flex';
+                        break;
+                        
+                    case USER_STATES.LOGGED_IN_NOT_PURCHASED:
+                        if (statusNotPurchased) statusNotPurchased.style.display = 'flex';
+                        break;
+                        
+                    case USER_STATES.AUTHORIZED:
+                        if (statusAuthorized) statusAuthorized.style.display = 'flex';
+                        if (downloadFiles) downloadFiles.style.display = 'block';
+                        break;
+                }
+            }
+            
+            // دکمه‌های دانلود فایل
+            const downloadFileButtons = document.querySelectorAll('.download-file-btn');
+            downloadFileButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const fileType = this.getAttribute('data-file');
+                    simulateDownload(fileType);
+                });
+            });
+            
+            // شبیه‌سازی دانلود
+            function simulateDownload(fileType) {
+                const fileNames = {
+                    'main': 'فایل اصلی پروژه',
+                    'docs': 'مستندات کامل محصول',
+                    'graphics': 'فایل‌های گرافیکی و آیکون‌ها',
+                    'components': 'کامپوننت‌های اضافی'
+                };
+                
+                const fileSize = {
+                    'main': '45.2 MB',
+                    'docs': '3.1 MB',
+                    'graphics': '15.7 MB',
+                    'components': '8.3 MB'
+                };
+                
+                const fileName = fileNames[fileType] || 'فایل محصول';
+                const size = fileSize[fileType] || '-- MB';
+                
+                showNotification(`شروع دانلود ${fileName}...`, 'info');
+                
+                // نمایش پیش‌رفت دانلود
+                document.getElementById('downloadingFile').textContent = `${fileName} (${size})`;
+                const progressBar = document.getElementById('downloadProgressBar');
+                const progressText = document.getElementById('downloadProgressText');
+                const downloadSpeed = document.getElementById('downloadSpeed');
+                const downloadTime = document.getElementById('downloadTime');
+                
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += Math.random() * 10;
+                    if (progress > 100) progress = 100;
+                    
+                    progressBar.style.width = progress + '%';
+                    progressText.textContent = Math.round(progress) + '%';
+                    
+                    // شبیه‌سازی سرعت و زمان باقی‌مانده
+                    const speed = (5 + Math.random() * 3).toFixed(1);
+                    const time = Math.round((100 - progress) / speed);
+                    
+                    downloadSpeed.textContent = speed + ' MB/s';
+                    downloadTime.textContent = time + ' ثانیه';
+                    
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        showNotification(`دانلود ${fileName} با موفقیت انجام شد!`);
+                        
+                        // ریست پیش‌رفت بعد از 3 ثانیه
+                        setTimeout(() => {
+                            progressBar.style.width = '0%';
+                            progressText.textContent = '۰٪';
+                            downloadSpeed.textContent = '--';
+                            downloadTime.textContent = '--';
+                        }, 3000);
+                    }
+                }, 200);
+            }
+            
+            // پشتیبانی آنلاین
+            const supportBadge = document.getElementById('supportBadge');
+            if (supportBadge) {
+                supportBadge.addEventListener('click', function() {
+                    showNotification('اتصال به پشتیبانی آنلاین...', 'info');
+                });
+            }
+            
+            // کپی کد
+            const copyButtons = document.querySelectorAll('.copy-code-btn');
+            copyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const code = this.closest('.code-preview').querySelector('code').textContent;
+                    navigator.clipboard.writeText(code)
+                        .then(() => {
+                            const originalHTML = this.innerHTML;
+                            this.innerHTML = '<i class="fas fa-check"></i>';
+                            showNotification('کد با موفقیت کپی شد!');
+                            
+                            setTimeout(() => {
+                                this.innerHTML = originalHTML;
+                            }, 2000);
+                        });
+                });
+            });
+            
+            // پاسخ به کامنت‌ها
+            const replyButtons = document.querySelectorAll('.comment-item button:last-child');
+            replyButtons.forEach(button => {
+                if (button.textContent.includes('پاسخ')) {
+                    button.addEventListener('click', function() {
+                        const commentItem = this.closest('.comment-item');
+                        const replyForm = document.createElement('div');
+                        replyForm.className = 'mr-8 mt-4 bg-slate-800/30 rounded-xl p-4';
+                        replyForm.innerHTML = `
+                            <div class="mb-4">
+                                <textarea class="w-full bg-slate-800/50 border border-slate-700 rounded-lg p-4 text-white placeholder-slate-500" 
+                                          rows="3" 
+                                          placeholder="پاسخ خود را بنویسید..."></textarea>
+                            </div>
+                            <div class="flex justify-end space-x-3 space-x-reverse">
+                                <button class="text-slate-400 hover:text-white transition-colors text-sm cancel-reply">
+                                    لغو
+                                </button>
+                                <button class="primary-gradient hover:shadow-lg hover:shadow-indigo-500/30 px-4 py-2 rounded-lg text-sm font-medium">
+                                    ثبت پاسخ
+                                </button>
+                            </div>
+                        `;
+                        
+                        commentItem.appendChild(replyForm);
+                        
+                        replyForm.querySelector('.cancel-reply').addEventListener('click', function() {
+                            replyForm.remove();
+                        });
+                    });
+                }
+            });
+            
+            // مدیریت responsive منو
+            const mobileMenuButton = document.querySelector('.lg\\:hidden');
+            const nav = document.querySelector('nav');
+            
+            if (mobileMenuButton && nav) {
+                mobileMenuButton.addEventListener('click', () => {
+                    nav.classList.toggle('hidden');
+                    nav.classList.toggle('flex');
+                    nav.classList.toggle('absolute');
+                    nav.classList.toggle('top-full');
+                    nav.classList.toggle('left-0');
+                    nav.classList.toggle('right-0');
+                    nav.classList.toggle('bg-slate-900');
+                    nav.classList.toggle('p-6');
+                    nav.classList.toggle('rounded-lg');
+                    nav.classList.toggle('mt-2');
+                    nav.classList.toggle('flex-col');
+                    nav.classList.toggle('space-y-4');
+                    nav.classList.toggle('space-y-reverse');
+                });
+            }
+            
+            // حالت اولیه را تنظیم کن
+            updateDownloadSection();
+        });
+    </script>
+</body>
+</html>
