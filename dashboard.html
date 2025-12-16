@@ -1,0 +1,2033 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فایل استور | پنل کاربری</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+        }
+        
+        body {
+            background-color: var(--darker);
+            color: var(--light);
+            overflow-x: hidden;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 50%, #1e293b 100%);
+        }
+        
+        .primary-gradient {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        }
+        
+        .secondary-gradient {
+            background: linear-gradient(135deg, var(--secondary) 0%, #059669 100%);
+        }
+        
+        .accent-gradient {
+            background: linear-gradient(135deg, var(--accent) 0%, #d97706 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .sidebar-item {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sidebar-item::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: var(--primary);
+            transform: translateX(10px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-item:hover::before {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        
+        .sidebar-item.active {
+            background-color: rgba(99, 102, 241, 0.15);
+        }
+        
+        .sidebar-item.active::before {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: fixed;
+                right: -100%;
+                top: 0;
+                height: 100%;
+                width: 280px;
+                z-index: 1000;
+                transition: right 0.3s ease;
+            }
+            
+            .sidebar.active {
+                right: 0;
+            }
+            
+            .sidebar-overlay {
+                position: fixed;
+                top: 0;
+                right: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 999;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            }
+            
+            .sidebar-overlay.active {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+        
+        .modal {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(2, 6, 23, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            transform: translateY(20px);
+            transition: transform 0.4s ease;
+        }
+        
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+        
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            z-index: 1000;
+            transition: width 0.3s ease;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .table-container table {
+            width: 100%;
+            min-width: 800px;
+        }
+        
+        .table-container th {
+            background-color: rgba(30, 41, 59, 0.5);
+            padding: 15px;
+            text-align: right;
+            font-weight: 600;
+            color: #cbd5e1;
+        }
+        
+        .table-container td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .table-container tr:hover {
+            background-color: rgba(99, 102, 241, 0.05);
+        }
+        
+        .page-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .page-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .file-type-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status-success {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+        
+        .status-pending {
+            background-color: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+        }
+        
+        .status-failed {
+            background-color: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+        
+        .wallet-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(79, 70, 229, 0.2) 100%);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+        }
+        
+        .stat-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .form-input {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 12px 16px;
+            color: white;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+        
+        .notification-item {
+            background: rgba(30, 41, 59, 0.5);
+            border-right: 4px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .notification-item.unread {
+            background: rgba(99, 102, 241, 0.1);
+            border-right-color: var(--primary);
+        }
+    </style>
+</head>
+<body class="gradient-bg">
+    <!-- نوار پیشرفت -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- منوی موبایل -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- ساختار پنل کاربری -->
+    <div class="dashboard-grid">
+        <!-- سایدبار -->
+        <aside class="sidebar bg-slate-900 border-l border-slate-800 p-5 overflow-y-auto">
+            <!-- لوگو و پروفایل -->
+            <div class="mb-8">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center space-x-3 space-x-reverse">
+                        <div class="primary-gradient p-2 rounded-lg">
+                            <i class="fas fa-cloud text-white text-xl"></i>
+                        </div>
+                        <h1 class="text-xl font-bold gradient-text">فایل استور</h1>
+                    </div>
+                    <button class="lg:hidden text-xl" id="closeSidebar">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <!-- پروفایل کاربر -->
+                <div class="bg-slate-800/50 rounded-xl p-4 flex items-center mb-6">
+                    <div class="w-12 h-12 rounded-full primary-gradient flex items-center justify-center text-white font-bold ml-3">
+                        ع
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold text-white">علی محمدی</h3>
+                        <p class="text-sm text-slate-400">کاربر طلایی</p>
+                    </div>
+                </div>
+                
+                <!-- وضعیت اکانت -->
+                <div class="bg-slate-800/50 rounded-xl p-4 mb-6">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-sm text-slate-400">وضعیت حساب:</span>
+                        <span class="text-sm font-bold text-emerald-400">فعال ✓</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-slate-400">عضویت از:</span>
+                        <span class="text-sm">۱۴۰۲/۰۵/۱۰</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- منوی اصلی -->
+            <nav class="mb-8">
+                <h3 class="text-slate-500 text-sm font-bold mb-3 px-3">منوی اصلی</h3>
+                <ul class="space-y-1">
+                    <li>
+                        <a href="#" class="sidebar-item active flex items-center p-3 rounded-lg text-white" data-page="dashboard">
+                            <i class="fas fa-home ml-3 text-slate-400"></i>
+                            <span>داشبورد</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-item flex items-center p-3 rounded-lg text-slate-300 hover:text-white" data-page="myFiles">
+                            <i class="fas fa-folder ml-3 text-slate-400"></i>
+                            <span>فایل‌های من</span>
+                            <span class="mr-auto bg-slate-700 text-xs px-2 py-1 rounded">۱۸</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-item flex items-center p-3 rounded-lg text-slate-300 hover:text-white" data-page="upload">
+                            <i class="fas fa-upload ml-3 text-slate-400"></i>
+                            <span>آپلود فایل</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-item flex items-center p-3 rounded-lg text-slate-300 hover:text-white" data-page="shared">
+                            <i class="fas fa-share-alt ml-3 text-slate-400"></i>
+                            <span>اشتراک‌گذاری</span>
+                            <span class="mr-auto bg-blue-500 text-white text-xs px-2 py-1 rounded">۳</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-item flex items-center p-3 rounded-lg text-slate-300 hover:text-white" data-page="favorites">
+                            <i class="fas fa-star ml-3 text-slate-400"></i>
+                            <span>علاقه‌مندی‌ها</span>
+                            <span class="mr-auto bg-amber-500 text-white text-xs px-2 py-1 rounded">۱۲</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <!-- بخش مالی و تراکنش‌ها -->
+            <nav class="mb-8">
+                <h3 class="text-slate-500 text-sm font-bold mb-3 px-3">مالی و تراکنش‌ها</h3>
+                <ul class="space-y-1">
+                    <li>
+                        <a href="#" class="sidebar-item flex items-center p-3 rounded-lg text-slate-300 hover:text-white" data-page="wallet">
+                            <i class="fas fa-wallet ml-3 text-slate-400"></i>
+                            <span>کیف پول</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-item flex items-center p-3 rounded-lg text-slate-300 hover:text-white" data-page="transactions">
+                            <i class="fas fa-exchange-alt ml-3 text-slate-400"></i>
+                            <span>تراکنش‌ها</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-item flex items-center p-3 rounded-lg text-slate-300 hover:text-white" data-page="purchases">
+                            <i class="fas fa-shopping-cart ml-3 text-slate-400"></i>
+                            <span>خریدهای من</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-item flex items-center p-3 rounded-lg text-slate-300 hover:text-white" data-page="sales">
+                            <i class="fas fa-chart-line ml-3 text-slate-400"></i>
+                            <span>فروش‌های من</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <!-- بخش کاربری -->
+            <nav class="mb-8">
+                <h3 class="text-slate-500 text-sm font-bold mb-3 px-3">حساب کاربری</h3>
+                <ul class="space-y-1">
+                    <li>
+                        <a href="#" class="sidebar-item flex items-center p-3 rounded-lg text-slate-300 hover:text-white" data-page="profile">
+                            <i class="fas fa-user ml-3 text-slate-400"></i>
+                            <span>پروفایل</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-item flex items-center p-3 rounded-lg text-slate-300 hover:text-white" data-page="security">
+                            <i class="fas fa-shield-alt ml-3 text-slate-400"></i>
+                            <span>امنیت و رمز عبور</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-item flex items-center p-3 rounded-lg text-slate-300 hover:text-white" data-page="notifications">
+                            <i class="fas fa-bell ml-3 text-slate-400"></i>
+                            <span>اعلان‌ها</span>
+                            <span class="mr-auto bg-red-500 text-white text-xs px-2 py-1 rounded">۳</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-item flex items-center p-3 rounded-lg text-slate-300 hover:text-white" data-page="settings">
+                            <i class="fas fa-cog ml-3 text-slate-400"></i>
+                            <span>تنظیمات</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <!-- وضعیت فضای ذخیره‌سازی -->
+            <div class="bg-slate-800/50 rounded-xl p-4 mb-6">
+                <div class="flex justify-between mb-2">
+                    <span class="text-sm">فضای ذخیره‌سازی</span>
+                    <span class="text-sm font-bold">۴٫۲ گیگ از ۱۰ گیگ</span>
+                </div>
+                <div class="w-full bg-slate-700 rounded-full h-2 mb-2">
+                    <div class="primary-gradient h-2 rounded-full" style="width: 42%"></div>
+                </div>
+                <button class="w-full mt-3 py-2 primary-gradient hover:shadow-lg hover:shadow-indigo-500/30 text-white rounded-lg text-sm transition-all duration-300">
+                    ارتقاء فضای ذخیره‌سازی
+                </button>
+            </div>
+            
+            <!-- دکمه خروج -->
+            <button class="sidebar-item flex items-center p-3 rounded-lg text-red-400 hover:text-red-300 hover:bg-red-900/20 w-full" id="logoutBtn">
+                <i class="fas fa-sign-out-alt ml-3"></i>
+                <span>خروج از حساب</span>
+            </button>
+        </aside>
+        
+        <!-- محتوای اصلی -->
+        <main class="overflow-y-auto">
+            <!-- هدر اصلی -->
+            <header class="bg-slate-900/80 backdrop-blur border-b border-slate-800 p-4 sticky top-0 z-40">
+                <div class="flex items-center justify-between">
+                    <!-- دکمه منو در موبایل -->
+                    <button class="lg:hidden text-xl bg-slate-800 w-10 h-10 rounded-lg flex items-center justify-center" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    
+                    <!-- عنوان صفحه -->
+                    <h1 class="text-xl font-bold text-white mr-4" id="pageTitle">داشبورد</h1>
+                    
+                    <!-- بخش کاربر -->
+                    <div class="flex items-center space-x-4 space-x-reverse">
+                        <!-- اعلان‌ها -->
+                        <div class="relative">
+                            <button class="relative bg-slate-800 hover:bg-slate-700 w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300" id="notificationsBtn">
+                                <i class="fas fa-bell"></i>
+                                <span class="absolute -top-1 -left-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">۳</span>
+                            </button>
+                        </div>
+                        
+                        <!-- سبد خرید -->
+                        <div class="relative">
+                            <button class="relative bg-slate-800 hover:bg-slate-700 w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300" id="cartBtn">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="absolute -top-1 -left-1 bg-indigo-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">۲</span>
+                            </button>
+                        </div>
+                        
+                        <!-- جستجو -->
+                        <button class="bg-slate-800 hover:bg-slate-700 w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300" id="searchBtn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        
+                        <!-- آواتار کاربر -->
+                        <div class="flex items-center space-x-3 space-x-reverse">
+                            <div class="w-10 h-10 rounded-full primary-gradient flex items-center justify-center text-white font-bold">
+                                ع
+                            </div>
+                            <div class="hidden md:block">
+                                <div class="font-bold text-sm">علی محمدی</div>
+                                <div class="text-xs text-slate-400">کاربر طلایی</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- محتوای صفحات -->
+            <div class="p-6">
+                
+                <!-- صفحه داشبورد -->
+                <div id="dashboard" class="page-content active">
+                    <div class="mb-8">
+                        <h1 class="text-2xl font-bold text-white mb-2">سلام علی، به پنل کاربری خوش آمدید</h1>
+                        <p class="text-slate-400">آخرین فعالیت‌ها و آمار حساب خود را مشاهده کنید</p>
+                    </div>
+                    
+                    <!-- آمار سریع -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <div class="stat-card rounded-xl p-5 card-hover">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-400 text-sm">کل فایل‌ها</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۱۸۶</p>
+                                </div>
+                                <div class="w-12 h-12 rounded-lg bg-indigo-500/20 flex items-center justify-center">
+                                    <i class="fas fa-file text-indigo-500 text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="mt-4 text-xs text-green-400">
+                                <i class="fas fa-arrow-up ml-1"></i>
+                                <span>۱۲ فایل جدید این ماه</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card rounded-xl p-5 card-hover">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-400 text-sm">فضای استفاده شده</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۴٫۲ گیگ</p>
+                                </div>
+                                <div class="w-12 h-12 rounded-lg bg-purple-500/20 flex items-center justify-center">
+                                    <i class="fas fa-database text-purple-500 text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="mt-4 text-xs text-yellow-400">
+                                <i class="fas fa-exclamation-triangle ml-1"></i>
+                                <span>۵۸٪ فضای استفاده شده</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card rounded-xl p-5 card-hover">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-400 text-sm">موجودی کیف پول</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۱,۲۵۰,۰۰۰</p>
+                                </div>
+                                <div class="w-12 h-12 rounded-lg bg-emerald-500/20 flex items-center justify-center">
+                                    <i class="fas fa-wallet text-emerald-500 text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="mt-4 text-xs text-blue-400">
+                                <i class="fas fa-history ml-1"></i>
+                                <span>آخرین شارژ: ۱۴۰۲/۰۸/۱۵</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card rounded-xl p-5 card-hover">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-400 text-sm">فعالیت امروز</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۷</p>
+                                </div>
+                                <div class="w-12 h-12 rounded-lg bg-amber-500/20 flex items-center justify-center">
+                                    <i class="fas fa-bolt text-amber-500 text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="mt-4 text-xs text-green-400">
+                                <i class="fas fa-check-circle ml-1"></i>
+                                <span>همه با موفقیت انجام شد</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- فایل‌های اخیر -->
+                    <div class="mb-8">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-xl font-bold text-white">آخرین فایل‌ها</h2>
+                            <a href="#" class="text-indigo-400 hover:text-indigo-300 text-sm" data-page="myFiles">مشاهده همه <i class="fas fa-arrow-left mr-1"></i></a>
+                        </div>
+                        
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>نام فایل</th>
+                                        <th>اندازه</th>
+                                        <th>نوع</th>
+                                        <th>تاریخ آپلود</th>
+                                        <th>عملیات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="flex items-center">
+                                                <div class="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center ml-3">
+                                                    <i class="fas fa-file-pdf text-blue-500"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="font-medium text-white">گزارش مالی.pdf</p>
+                                                    <p class="text-xs text-slate-400">آخرین ویرایش: امروز</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>۲٫۴ MB</td>
+                                        <td><span class="file-type-badge bg-blue-500/20 text-blue-400">PDF</span></td>
+                                        <td>۱۴۰۲/۰۸/۲۰</td>
+                                        <td>
+                                            <div class="flex items-center space-x-2 space-x-reverse">
+                                                <button class="p-1 text-blue-400 hover:text-blue-300">
+                                                    <i class="fas fa-download"></i>
+                                                </button>
+                                                <button class="p-1 text-green-400 hover:text-green-300">
+                                                    <i class="fas fa-share-alt"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>
+                                            <div class="flex items-center">
+                                                <div class="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center ml-3">
+                                                    <i class="fas fa-file-image text-green-500"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="font-medium text-white">پروژه طراحی.png</p>
+                                                    <p class="text-xs text-slate-400">آخرین ویرایش: دیروز</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>۵٫۸ MB</td>
+                                        <td><span class="file-type-badge bg-green-500/20 text-green-400">تصویر</span></td>
+                                        <td>۱۴۰۲/۰۸/۱۹</td>
+                                        <td>
+                                            <div class="flex items-center space-x-2 space-x-reverse">
+                                                <button class="p-1 text-blue-400 hover:text-blue-300">
+                                                    <i class="fas fa-download"></i>
+                                                </button>
+                                                <button class="p-1 text-green-400 hover:text-green-300">
+                                                    <i class="fas fa-share-alt"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- فعالیت اخیر -->
+                    <div>
+                        <h2 class="text-xl font-bold text-white mb-4">فعالیت اخیر</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="stat-card rounded-xl p-6">
+                                <h3 class="font-bold text-lg mb-4">آخرین خریدها</h3>
+                                <div class="space-y-4">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 rounded-lg bg-indigo-500/20 flex items-center justify-center ml-3">
+                                                <i class="fas fa-shopping-cart text-indigo-500"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-white">قالب فروشگاهی</p>
+                                                <p class="text-sm text-slate-400">مبلغ: ۱۲۰,۰۰۰ تومان</p>
+                                            </div>
+                                        </div>
+                                        <span class="text-sm text-slate-400">امروز</span>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center ml-3">
+                                                <i class="fas fa-download text-emerald-500"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-white">پکیج آموزشی</p>
+                                                <p class="text-sm text-slate-400">مبلغ: ۸۵,۰۰۰ تومان</p>
+                                            </div>
+                                        </div>
+                                        <span class="text-sm text-slate-400">دیروز</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card rounded-xl p-6">
+                                <h3 class="font-bold text-lg mb-4">آخرین فروش‌ها</h3>
+                                <div class="space-y-4">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center ml-3">
+                                                <i class="fas fa-chart-line text-amber-500"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-white">قالب وبسایت</p>
+                                                <p class="text-sm text-slate-400">مبلغ: ۲۰۰,۰۰۰ تومان</p>
+                                            </div>
+                                        </div>
+                                        <span class="text-sm text-slate-400">۲ روز پیش</span>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center ml-3">
+                                                <i class="fas fa-file-code text-purple-500"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-white">اسکریپت مدیریت</p>
+                                                <p class="text-sm text-slate-400">مبلغ: ۱۵۰,۰۰۰ تومان</p>
+                                            </div>
+                                        </div>
+                                        <span class="text-sm text-slate-400">۳ روز پیش</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- صفحه فایل‌های من -->
+                <div id="myFiles" class="page-content">
+                    <div class="mb-8">
+                        <h1 class="text-2xl font-bold text-white mb-2">فایل‌های من</h1>
+                        <p class="text-slate-400">مدیریت و سازماندهی فایل‌های شخصی</p>
+                    </div>
+                    
+                    <!-- آمار فایل‌ها -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="stat-card rounded-xl p-5">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-400 text-sm">کل فایل‌ها</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۱۸۶</p>
+                                </div>
+                                <i class="fas fa-folder text-indigo-500 text-2xl"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card rounded-xl p-5">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-400 text-sm">فضای استفاده شده</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۴٫۲ گیگ</p>
+                                </div>
+                                <i class="fas fa-hdd text-purple-500 text-2xl"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card rounded-xl p-5">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-400 text-sm">فایل‌های اشتراکی</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۲۳</p>
+                                </div>
+                                <i class="fas fa-share-alt text-green-500 text-2xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- جدول فایل‌ها -->
+                    <div class="mb-8">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="flex space-x-2 space-x-reverse">
+                                <button class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg transition-all duration-300">
+                                    <i class="fas fa-plus ml-2"></i>
+                                    آپلود فایل جدید
+                                </button>
+                                <button class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300">
+                                    <i class="fas fa-filter ml-2"></i>
+                                    فیلتر
+                                </button>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="text" placeholder="جستجوی فایل..." class="form-input w-64">
+                            </div>
+                        </div>
+                        
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-indigo-500">
+                                        </th>
+                                        <th>نام فایل</th>
+                                        <th>اندازه</th>
+                                        <th>نوع</th>
+                                        <th>تاریخ آپلود</th>
+                                        <th>وضعیت</th>
+                                        <th>عملیات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-indigo-500">
+                                        </td>
+                                        <td>
+                                            <div class="flex items-center">
+                                                <div class="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center ml-3">
+                                                    <i class="fas fa-file-pdf text-blue-500"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="font-medium text-white">گزارش مالی سالانه.pdf</p>
+                                                    <p class="text-xs text-slate-400">دسته: اسناد</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>۲٫۴ MB</td>
+                                        <td><span class="file-type-badge bg-blue-500/20 text-blue-400">PDF</span></td>
+                                        <td>۱۴۰۲/۰۸/۲۰</td>
+                                        <td><span class="status-badge status-success">فعال</span></td>
+                                        <td>
+                                            <div class="flex items-center space-x-2 space-x-reverse">
+                                                <button class="p-1 text-blue-400 hover:text-blue-300">
+                                                    <i class="fas fa-download"></i>
+                                                </button>
+                                                <button class="p-1 text-green-400 hover:text-green-300">
+                                                    <i class="fas fa-share-alt"></i>
+                                                </button>
+                                                <button class="p-1 text-red-400 hover:text-red-300">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-indigo-500">
+                                        </td>
+                                        <td>
+                                            <div class="flex items-center">
+                                                <div class="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center ml-3">
+                                                    <i class="fas fa-file-image text-green-500"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="font-medium text-white">پروژه طراحی UI.psd</p>
+                                                    <p class="text-xs text-slate-400">دسته: گرافیک</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>۱۵٫۷ MB</td>
+                                        <td><span class="file-type-badge bg-green-500/20 text-green-400">PSD</span></td>
+                                        <td>۱۴۰۲/۰۸/۱۸</td>
+                                        <td><span class="status-badge status-success">فعال</span></td>
+                                        <td>
+                                            <div class="flex items-center space-x-2 space-x-reverse">
+                                                <button class="p-1 text-blue-400 hover:text-blue-300">
+                                                    <i class="fas fa-download"></i>
+                                                </button>
+                                                <button class="p-1 text-green-400 hover:text-green-300">
+                                                    <i class="fas fa-share-alt"></i>
+                                                </button>
+                                                <button class="p-1 text-red-400 hover:text-red-300">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- صفحه آپلود فایل -->
+                <div id="upload" class="page-content">
+                    <div class="mb-8">
+                        <h1 class="text-2xl font-bold text-white mb-2">آپلود فایل</h1>
+                        <p class="text-slate-400">آپلود و مدیریت فایل‌های جدید</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-2">
+                            <div class="stat-card rounded-xl p-6 mb-6">
+                                <h2 class="text-xl font-bold text-white mb-4">آپلود فایل جدید</h2>
+                                
+                                <div class="border-2 border-dashed border-slate-700 rounded-xl p-8 text-center mb-6 hover:border-indigo-500 transition-all duration-300 cursor-pointer" id="dropZone">
+                                    <i class="fas fa-cloud-upload-alt text-4xl text-indigo-500 mb-4"></i>
+                                    <p class="font-medium text-white mb-2">فایل‌ها را اینجا رها کنید</p>
+                                    <p class="text-sm text-slate-400 mb-4">یا برای انتخاب فایل کلیک کنید</p>
+                                    <button class="px-6 py-2 primary-gradient text-white rounded-lg transition-all duration-300" id="selectFilesBtn">
+                                        انتخاب فایل
+                                    </button>
+                                    <input type="file" id="fileInput" class="hidden" multiple>
+                                    <p class="text-xs text-slate-500 mt-4">حداکثر حجم هر فایل: ۵۰۰ مگابایت</p>
+                                </div>
+                                
+                                <!-- فرم اطلاعات فایل -->
+                                <div id="fileInfoForm" class="hidden">
+                                    <h3 class="font-bold text-lg mb-4">اطلاعات فایل</h3>
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label class="block text-slate-300 mb-2">نام فایل</label>
+                                            <input type="text" class="form-input" placeholder="نام نمایشی فایل">
+                                        </div>
+                                        
+                                        <div>
+                                            <label class="block text-slate-300 mb-2">دسته‌بندی</label>
+                                            <select class="form-input">
+                                                <option>اسناد</option>
+                                                <option>تصاویر</option>
+                                                <option>ویدیو</option>
+                                                <option>صوتی</option>
+                                                <option>برنامه</option>
+                                                <option>سایر</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div>
+                                            <label class="block text-slate-300 mb-2">توضیحات</label>
+                                            <textarea class="form-input" rows="3" placeholder="توضیحات درباره فایل"></textarea>
+                                        </div>
+                                        
+                                        <div>
+                                            <label class="block text-slate-300 mb-2">قیمت (تومان)</label>
+                                            <input type="number" class="form-input" placeholder="۰ (رایگان)">
+                                        </div>
+                                        
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div>
+                                                <label class="flex items-center space-x-3 space-x-reverse">
+                                                    <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-indigo-500">
+                                                    <span class="text-slate-300">فایل عمومی</span>
+                                                </label>
+                                                <p class="text-xs text-slate-500 mt-1">قابل مشاهده برای همه کاربران</p>
+                                            </div>
+                                            
+                                            <div>
+                                                <label class="flex items-center space-x-3 space-x-reverse">
+                                                    <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-indigo-500">
+                                                    <span class="text-slate-300">قابل دانلود</span>
+                                                </label>
+                                                <p class="text-xs text-slate-500 mt-1">امکان دانلود توسط دیگران</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <button class="w-full py-3 primary-gradient hover:shadow-lg hover:shadow-indigo-500/30 text-white rounded-lg font-medium transition-all duration-300">
+                                            آپلود فایل
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="stat-card rounded-xl p-6 mb-6">
+                                <h3 class="font-bold text-lg mb-4">راهنما</h3>
+                                <ul class="space-y-3 text-slate-300">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-emerald-500 ml-2 mt-1"></i>
+                                        <span>فرمت‌های مجاز: PDF, DOC, JPG, PNG, MP4, ZIP</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-emerald-500 ml-2 mt-1"></i>
+                                        <span>حداکثر حجم هر فایل: ۵۰۰ مگابایت</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-emerald-500 ml-2 mt-1"></i>
+                                        <span>فایل‌های شما از نظر امنیتی بررسی می‌شوند</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check text-emerald-500 ml-2 mt-1"></i>
+                                        <span>قیمت‌گذاری دلخواه برای فروش فایل</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="stat-card rounded-xl p-6">
+                                <h3 class="font-bold text-lg mb-4">آمار آپلود</h3>
+                                <div class="space-y-4">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-slate-300">تعداد فایل‌های آپلود شده:</span>
+                                        <span class="font-bold">۴۸</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-slate-300">مجموع حجم آپلود:</span>
+                                        <span class="font-bold">۲٫۱ گیگ</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-slate-300">میانگین قیمت:</span>
+                                        <span class="font-bold">۷۵,۰۰۰ تومان</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-slate-300">درآمد از فروش:</span>
+                                        <span class="font-bold text-emerald-400">۳,۶۰۰,۰۰۰ تومان</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- صفحه کیف پول -->
+                <div id="wallet" class="page-content">
+                    <div class="mb-8">
+                        <h1 class="text-2xl font-bold text-white mb-2">کیف پول</h1>
+                        <p class="text-slate-400">مدیریت موجودی و تراکنش‌های مالی</p>
+                    </div>
+                    
+                    <!-- کارت کیف پول -->
+                    <div class="wallet-card rounded-xl p-6 mb-8 card-hover">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <h2 class="text-xl font-bold text-white mb-2">موجودی کیف پول</h2>
+                                <p class="text-3xl font-bold gradient-text">۱,۲۵۰,۰۰۰ تومان</p>
+                                <p class="text-slate-400 mt-2">آخرین به‌روزرسانی: امروس ۱۴:۳۰</p>
+                            </div>
+                            <div class="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center">
+                                <i class="fas fa-wallet text-white text-2xl"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="flex space-x-3 space-x-reverse">
+                            <button class="px-6 py-3 primary-gradient hover:shadow-lg hover:shadow-indigo-500/30 text-white rounded-lg font-medium transition-all duration-300 flex-1">
+                                <i class="fas fa-plus ml-2"></i>
+                                افزایش موجودی
+                            </button>
+                            <button class="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-medium transition-all duration-300 flex-1">
+                                <i class="fas fa-exchange-alt ml-2"></i>
+                                انتقال وجه
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- آمار مالی -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="stat-card rounded-xl p-5">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-400 text-sm">کل واریزی</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۳,۵۰۰,۰۰۰</p>
+                                </div>
+                                <i class="fas fa-arrow-down text-emerald-500 text-2xl"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card rounded-xl p-5">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-400 text-sm">کل برداشت</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۲,۲۵۰,۰۰۰</p>
+                                </div>
+                                <i class="fas fa-arrow-up text-red-500 text-2xl"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card rounded-xl p-5">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-400 text-sm">سود خالص</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۱,۲۵۰,۰۰۰</p>
+                                </div>
+                                <i class="fas fa-chart-line text-amber-500 text-2xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- آخرین تراکنش‌ها -->
+                    <div>
+                        <h2 class="text-xl font-bold text-white mb-4">آخرین تراکنش‌ها</h2>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>تاریخ</th>
+                                        <th>نوع تراکنش</th>
+                                        <th>مبلغ</th>
+                                        <th>وضعیت</th>
+                                        <th>توضیحات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>۱۴۰۲/۰۸/۲۰</td>
+                                        <td>افزایش موجودی</td>
+                                        <td class="text-emerald-400 font-bold">+۵۰۰,۰۰۰ تومان</td>
+                                        <td><span class="status-badge status-success">موفق</span></td>
+                                        <td>شارژ کیف پول</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>۱۴۰۲/۰۸/۱۹</td>
+                                        <td>خرید فایل</td>
+                                        <td class="text-red-400 font-bold">-۱۲۰,۰۰۰ تومان</td>
+                                        <td><span class="status-badge status-success">موفق</span></td>
+                                        <td>قالب فروشگاهی React</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>۱۴۰۲/۰۸/۱۸</td>
+                                        <td>دریافت از فروش</td>
+                                        <td class="text-emerald-400 font-bold">+۲۰۰,۰۰۰ تومان</td>
+                                        <td><span class="status-badge status-success">موفق</span></td>
+                                        <td>فروش قالب وبسایت</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- صفحه پروفایل -->
+                <div id="profile" class="page-content">
+                    <div class="mb-8">
+                        <h1 class="text-2xl font-bold text-white mb-2">پروفایل کاربری</h1>
+                        <p class="text-slate-400">مدیریت اطلاعات شخصی و حساب کاربری</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div>
+                            <div class="stat-card rounded-xl p-6 mb-6">
+                                <div class="text-center mb-6">
+                                    <div class="w-32 h-32 rounded-full primary-gradient flex items-center justify-center text-white font-bold text-4xl mx-auto mb-4">
+                                        ع
+                                    </div>
+                                    <h3 class="font-bold text-xl text-white">علی محمدی</h3>
+                                    <p class="text-slate-400">کاربر طلایی</p>
+                                    <button class="mt-4 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300">
+                                        <i class="fas fa-camera ml-2"></i>
+                                        تغییر عکس پروفایل
+                                    </button>
+                                </div>
+                                
+                                <div class="space-y-4">
+                                    <div class="flex justify-between">
+                                        <span class="text-slate-400">عضویت:</span>
+                                        <span>۱۴۰۲/۰۵/۱۰</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-slate-400">آخرین ورود:</span>
+                                        <span>امروز ۱۰:۳۰</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-slate-400">وضعیت حساب:</span>
+                                        <span class="text-emerald-400">فعال</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card rounded-xl p-6">
+                                <h3 class="font-bold text-lg mb-4">آمار فعالیت</h3>
+                                <div class="space-y-3">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-slate-300">تعداد فایل‌ها:</span>
+                                        <span class="font-bold">۱۸۶</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-slate-300">خریدها:</span>
+                                        <span class="font-bold">۴۸</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-slate-300">فروش‌ها:</span>
+                                        <span class="font-bold">۲۳</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-slate-300">امتیاز:</span>
+                                        <span class="font-bold text-amber-400">۴.۸/۵</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="lg:col-span-2">
+                            <div class="stat-card rounded-xl p-6">
+                                <h2 class="text-xl font-bold text-white mb-6">ویرایش اطلاعات شخصی</h2>
+                                
+                                <div class="space-y-6">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label class="block text-slate-300 mb-2">نام</label>
+                                            <input type="text" class="form-input" value="علی">
+                                        </div>
+                                        <div>
+                                            <label class="block text-slate-300 mb-2">نام خانوادگی</label>
+                                            <input type="text" class="form-input" value="محمدی">
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-slate-300 mb-2">ایمیل</label>
+                                        <input type="email" class="form-input" value="ali.mohammadi@example.com">
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-slate-300 mb-2">شماره موبایل</label>
+                                        <input type="tel" class="form-input" value="۰۹۱۲۱۲۳۴۵۶۷">
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-slate-300 mb-2">تاریخ تولد</label>
+                                        <input type="text" class="form-input" value="۱۳۷۵/۰۴/۱۵">
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-slate-300 mb-2">آدرس</label>
+                                        <textarea class="form-input" rows="3">تهران، خیابان ولیعصر</textarea>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-slate-300 mb-2">درباره من</label>
+                                        <textarea class="form-input" rows="4">طراح و توسعه‌دهنده وب با ۵ سال سابقه کار</textarea>
+                                    </div>
+                                    
+                                    <div class="flex space-x-3 space-x-reverse">
+                                        <button class="px-6 py-3 primary-gradient hover:shadow-lg hover:shadow-indigo-500/30 text-white rounded-lg font-medium transition-all duration-300">
+                                            ذخیره تغییرات
+                                        </button>
+                                        <button class="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-medium transition-all duration-300">
+                                            انصراف
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- صفحه امنیت و رمز عبور -->
+                <div id="security" class="page-content">
+                    <div class="mb-8">
+                        <h1 class="text-2xl font-bold text-white mb-2">امنیت و رمز عبور</h1>
+                        <p class="text-slate-400">مدیریت رمز عبور و تنظیمات امنیتی</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div>
+                            <div class="stat-card rounded-xl p-6 mb-6">
+                                <h2 class="text-xl font-bold text-white mb-6">تغییر رمز عبور</h2>
+                                
+                                <div class="space-y-6">
+                                    <div>
+                                        <label class="block text-slate-300 mb-2">رمز عبور فعلی</label>
+                                        <div class="relative">
+                                            <input type="password" class="form-input pr-10" placeholder="رمز عبور فعلی">
+                                            <button class="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-white">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-slate-300 mb-2">رمز عبور جدید</label>
+                                        <div class="relative">
+                                            <input type="password" class="form-input pr-10" placeholder="رمز عبور جدید">
+                                            <button class="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-white">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </div>
+                                        <p class="text-xs text-slate-500 mt-2">حداقل ۸ کاراکتر شامل حروف و اعداد</p>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-slate-300 mb-2">تکرار رمز عبور جدید</label>
+                                        <div class="relative">
+                                            <input type="password" class="form-input pr-10" placeholder="تکرار رمز عبور">
+                                            <button class="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-white">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <button class="w-full py-3 primary-gradient hover:shadow-lg hover:shadow-indigo-500/30 text-white rounded-lg font-medium transition-all duration-300">
+                                        تغییر رمز عبور
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card rounded-xl p-6">
+                                <h3 class="font-bold text-lg mb-4">ورود دو مرحله‌ای</h3>
+                                <p class="text-slate-300 mb-4">با فعال کردن این قابلیت، امنیت حساب شما افزایش می‌یابد.</p>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-slate-300">وضعیت:</span>
+                                    <div class="flex items-center">
+                                        <span class="text-red-400 mr-2">غیرفعال</span>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer">
+                                            <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="stat-card rounded-xl p-6 mb-6">
+                                <h2 class="text-xl font-bold text-white mb-6">تاریخچه ورود</h2>
+                                
+                                <div class="space-y-4">
+                                    <div class="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 rounded-lg bg-indigo-500/20 flex items-center justify-center ml-3">
+                                                <i class="fas fa-desktop text-indigo-500"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-white">مرورگر Chrome</p>
+                                                <p class="text-sm text-slate-400">تهران، ایران</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="text-sm text-slate-300">امروز ۱۰:۳۰</p>
+                                            <p class="text-xs text-emerald-400">فعلی</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 rounded-lg bg-slate-700 flex items-center justify-center ml-3">
+                                                <i class="fas fa-mobile-alt text-slate-400"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-white">اپلیکیشن موبایل</p>
+                                                <p class="text-sm text-slate-400">تهران، ایران</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="text-sm text-slate-300">دیروز ۱۴:۲۰</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 rounded-lg bg-slate-700 flex items-center justify-center ml-3">
+                                                <i class="fas fa-desktop text-slate-400"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-white">مرورگر Firefox</p>
+                                                <p class="text-sm text-slate-400">مشهد، ایران</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="text-sm text-slate-300">۲ روز پیش ۰۹:۱۵</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <button class="w-full mt-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300">
+                                    مشاهده همه
+                                </button>
+                            </div>
+                            
+                            <div class="stat-card rounded-xl p-6">
+                                <h3 class="font-bold text-lg mb-4">عملیات‌های حساس</h3>
+                                <div class="space-y-4">
+                                    <button class="w-full py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 flex items-center justify-center">
+                                        <i class="fas fa-key ml-2"></i>
+                                        بازنشانی رمز عبور از طریق ایمیل
+                                    </button>
+                                    
+                                    <button class="w-full py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 flex items-center justify-center">
+                                        <i class="fas fa-trash-alt ml-2"></i>
+                                        حذف تمام دستگاه‌های متصل
+                                    </button>
+                                    
+                                    <button class="w-full py-3 bg-red-500/20 hover:bg-red-500/30 text-red-400 hover:text-red-300 rounded-lg transition-all duration-300 flex items-center justify-center">
+                                        <i class="fas fa-user-slash ml-2"></i>
+                                        غیرفعال کردن حساب کاربری
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- صفحه اعلان‌ها -->
+                <div id="notifications" class="page-content">
+                    <div class="mb-8">
+                        <h1 class="text-2xl font-bold text-white mb-2">اعلان‌ها</h1>
+                        <p class="text-slate-400">مدیریت و مشاهده اعلان‌های سیستم</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-2">
+                            <div class="stat-card rounded-xl p-6">
+                                <div class="flex justify-between items-center mb-6">
+                                    <h2 class="text-xl font-bold text-white">همه اعلان‌ها</h2>
+                                    <button class="text-sm text-indigo-400 hover:text-indigo-300">
+                                        <i class="fas fa-check-circle ml-1"></i>
+                                        علامت‌خوانده‌شدن همه
+                                    </button>
+                                </div>
+                                
+                                <div class="space-y-4">
+                                    <!-- اعلان خوانده نشده -->
+                                    <div class="notification-item unread rounded-lg p-4">
+                                        <div class="flex items-start">
+                                            <div class="w-10 h-10 rounded-lg bg-indigo-500/20 flex items-center justify-center ml-3 flex-shrink-0">
+                                                <i class="fas fa-download text-indigo-500"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <p class="font-medium text-white">دانلود فایل شما تکمیل شد</p>
+                                                <p class="text-sm text-slate-400 mt-1">فایل "گزارش مالی.pdf" با موفقیت دانلود شد.</p>
+                                                <p class="text-xs text-slate-500 mt-2">امروز ۱۰:۳۰</p>
+                                            </div>
+                                            <button class="text-slate-400 hover:text-white">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- اعلان خوانده نشده -->
+                                    <div class="notification-item unread rounded-lg p-4">
+                                        <div class="flex items-start">
+                                            <div class="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center ml-3 flex-shrink-0">
+                                                <i class="fas fa-shopping-cart text-green-500"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <p class="font-medium text-white">خرید جدید از فروشگاه شما</p>
+                                                <p class="text-sm text-slate-400 mt-1">کاربر "مریم احمدی" قالب وبسایت شما را خریداری کرد.</p>
+                                                <p class="text-xs text-slate-500 mt-2">دیروز ۱۴:۲۰</p>
+                                            </div>
+                                            <button class="text-slate-400 hover:text-white">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- اعلان خوانده شده -->
+                                    <div class="notification-item rounded-lg p-4">
+                                        <div class="flex items-start">
+                                            <div class="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center ml-3 flex-shrink-0">
+                                                <i class="fas fa-exclamation-triangle text-amber-500"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <p class="font-medium text-white">فضای ذخیره‌سازی شما در حال پر شدن است</p>
+                                                <p class="text-sm text-slate-400 mt-1">۶۰٪ از فضای ذخیره‌سازی شما استفاده شده است.</p>
+                                                <p class="text-xs text-slate-500 mt-2">۲ روز پیش ۰۹:۱۵</p>
+                                            </div>
+                                            <button class="text-slate-400 hover:text-white">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="stat-card rounded-xl p-6 mb-6">
+                                <h3 class="font-bold text-lg mb-4">تنظیمات اعلان‌ها</h3>
+                                
+                                <div class="space-y-4">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-slate-300">اعلان‌های خرید</span>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer" checked>
+                                            <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-slate-300">اعلان‌های فروش</span>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer" checked>
+                                            <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-slate-300">اعلان‌های سیستم</span>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer" checked>
+                                            <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-slate-300">اعلان‌های امنیتی</span>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer" checked>
+                                            <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-slate-300">اعلان‌های تبلیغاتی</span>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer">
+                                            <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-slate-300">اعلان‌های ایمیل</span>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer" checked>
+                                            <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card rounded-xl p-6">
+                                <h3 class="font-bold text-lg mb-4">آمار اعلان‌ها</h3>
+                                <div class="space-y-3">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-slate-300">کل اعلان‌ها:</span>
+                                        <span class="font-bold">۱۲۴</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-slate-300">خوانده شده:</span>
+                                        <span class="font-bold">۱۱۸</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-slate-300">خوانده نشده:</span>
+                                        <span class="font-bold text-red-400">۶</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-slate-300">این ماه:</span>
+                                        <span class="font-bold">۲۳</span>
+                                    </div>
+                                </div>
+                                
+                                <button class="w-full mt-6 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300">
+                                    حذف همه اعلان‌ها
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- صفحه تنظیمات -->
+                <div id="settings" class="page-content">
+                    <div class="mb-8">
+                        <h1 class="text-2xl font-bold text-white mb-2">تنظیمات</h1>
+                        <p class="text-slate-400">شخصی‌سازی و تنظیمات پیشرفته</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div>
+                            <div class="stat-card rounded-xl p-6 mb-6">
+                                <h3 class="font-bold text-lg mb-4">تنظیمات نمایش</h3>
+                                
+                                <div class="space-y-4">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-slate-300">تم تاریک</span>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer" checked>
+                                            <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-500"></div>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-slate-300">نمایش تصاویر</span>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer" checked>
+                                            <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-500"></div>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-slate-300">انیمیشن‌ها</span>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer" checked>
+                                            <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-500"></div>
+                                        </label>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-slate-300 mb-2">زبان</label>
+                                        <select class="form-input">
+                                            <option>فارسی</option>
+                                            <option>English</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-slate-300 mb-2">واحد پول</label>
+                                        <select class="form-input">
+                                            <option>تومان (IRR)</option>
+                                            <option>دلار (USD)</option>
+                                            <option>یورو (EUR)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card rounded-xl p-6">
+                                <h3 class="font-bold text-lg mb-4">حریم خصوصی</h3>
+                                
+                                <div class="space-y-4">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-slate-300">نمایش پروفایل عمومی</span>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer" checked>
+                                            <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-500"></div>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-slate-300">نمایش فعالیت‌ها</span>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer">
+                                            <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-500"></div>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-slate-300">نمایش فایل‌های عمومی</span>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer" checked>
+                                            <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-500"></div>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-slate-300">اجازه جستجوی فایل‌ها</span>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer" checked>
+                                            <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-500"></div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="lg:col-span-2">
+                            <div class="stat-card rounded-xl p-6">
+                                <h2 class="text-xl font-bold text-white mb-6">تنظیمات پیشرفته</h2>
+                                
+                                <div class="space-y-6">
+                                    <!-- تنظیمات دانلود -->
+                                    <div>
+                                        <h3 class="font-bold text-lg mb-4">تنظیمات دانلود</h3>
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div>
+                                                <label class="block text-slate-300 mb-2">موقعیت ذخیره فایل‌ها</label>
+                                                <select class="form-input">
+                                                    <option>پوشه پیش‌فرض</option>
+                                                    <option>پوشه دانلود</option>
+                                                    <option>انتخاب دستی</option>
+                                                </select>
+                                            </div>
+                                            
+                                            <div>
+                                                <label class="block text-slate-300 mb-2">تعداد همزمان دانلود</label>
+                                                <select class="form-input">
+                                                    <option>۱ فایل</option>
+                                                    <option>۲ فایل</option>
+                                                    <option>۳ فایل</option>
+                                                    <option>۵ فایل</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- تنظیمات آپلود -->
+                                    <div>
+                                        <h3 class="font-bold text-lg mb-4">تنظیمات آپلود</h3>
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div>
+                                                <label class="block text-slate-300 mb-2">فشرده‌سازی خودکار</label>
+                                                <select class="form-input">
+                                                    <option>غیرفعال</option>
+                                                    <option>فعال برای فایل‌های بزرگ</option>
+                                                    <option>همیشه فعال</option>
+                                                </select>
+                                            </div>
+                                            
+                                            <div>
+                                                <label class="block text-slate-300 mb-2">تایید قبل از آپلود</label>
+                                                <select class="form-input">
+                                                    <option>غیرفعال</option>
+                                                    <option>فعال برای فایل‌های بزرگ</option>
+                                                    <option>همیشه فعال</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- تنظیمات پشتیبان‌گیری -->
+                                    <div>
+                                        <h3 class="font-bold text-lg mb-4">پشتیبان‌گیری</h3>
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div>
+                                                <label class="block text-slate-300 mb-2">پشتیبان‌گیری خودکار</label>
+                                                <select class="form-input">
+                                                    <option>غیرفعال</option>
+                                                    <option>هفتگی</option>
+                                                    <option>ماهیانه</option>
+                                                </select>
+                                            </div>
+                                            
+                                            <div>
+                                                <label class="block text-slate-300 mb-2">نگهداری پشتیبان</label>
+                                                <select class="form-input">
+                                                    <option>۱ ماه</option>
+                                                    <option>۳ ماه</option>
+                                                    <option>۶ ماه</option>
+                                                    <option>۱ سال</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- تنظیمات API -->
+                                    <div>
+                                        <h3 class="font-bold text-lg mb-4">تنظیمات API</h3>
+                                        <div>
+                                            <label class="block text-slate-300 mb-2">کلید API</label>
+                                            <div class="flex">
+                                                <input type="text" class="form-input rounded-l-lg rounded-r-none" value="sk_live_51Hq4..." readonly>
+                                                <button class="px-4 bg-slate-800 hover:bg-slate-700 text-white rounded-r-lg transition-all duration-300">
+                                                    کپی
+                                                </button>
+                                            </div>
+                                            <p class="text-xs text-slate-500 mt-2">از این کلید برای دسترسی API استفاده می‌شود</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- دکمه‌های ذخیره -->
+                                    <div class="flex space-x-3 space-x-reverse pt-4">
+                                        <button class="px-6 py-3 primary-gradient hover:shadow-lg hover:shadow-indigo-500/30 text-white rounded-lg font-medium transition-all duration-300">
+                                            ذخیره تنظیمات
+                                        </button>
+                                        <button class="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-medium transition-all duration-300">
+                                            بازنشانی به پیش‌فرض
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </main>
+    </div>
+
+    <!-- مودال خروج -->
+    <div class="modal" id="logoutModal">
+        <div class="modal-content">
+            <div class="text-center">
+                <div class="w-16 h-16 rounded-full bg-red-500/20 flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-sign-out-alt text-red-500 text-2xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-white mb-2">خروج از حساب کاربری</h2>
+                <p class="text-slate-400 mb-6">آیا از خروج از حساب کاربری خود اطمینان دارید؟</p>
+                
+                <div class="flex space-x-3 space-x-reverse">
+                    <button class="flex-1 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg font-medium transition-all duration-300" id="confirmLogout">
+                        بله، خارج شو
+                    </button>
+                    <button class="flex-1 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-medium transition-all duration-300" id="cancelLogout">
+                        انصراف
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- اسکریپت‌های جاوااسکریپت -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // نوار پیشرفت اسکرول
+            window.addEventListener('scroll', function() {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById('progressBar').style.width = scrolled + '%';
+            });
+            
+            // مدیریت منوی موبایل
+            const menuToggle = document.getElementById('menuToggle');
+            const closeSidebar = document.getElementById('closeSidebar');
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+            
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function() {
+                    sidebar.classList.add('active');
+                    sidebarOverlay.classList.add('active');
+                });
+            }
+            
+            if (closeSidebar) {
+                closeSidebar.addEventListener('click', function() {
+                    sidebar.classList.remove('active');
+                    sidebarOverlay.classList.remove('active');
+                });
+            }
+            
+            if (sidebarOverlay) {
+                sidebarOverlay.addEventListener('click', function() {
+                    sidebar.classList.remove('active');
+                    sidebarOverlay.classList.remove('active');
+                });
+            }
+            
+            // مدیریت صفحات
+            const pageLinks = document.querySelectorAll('[data-page]');
+            const pageContents = document.querySelectorAll('.page-content');
+            const pageTitle = document.getElementById('pageTitle');
+            
+            // عناوین صفحات
+            const pageTitles = {
+                'dashboard': 'داشبورد',
+                'myFiles': 'فایل‌های من',
+                'upload': 'آپلود فایل',
+                'shared': 'اشتراک‌گذاری',
+                'favorites': 'علاقه‌مندی‌ها',
+                'wallet': 'کیف پول',
+                'transactions': 'تراکنش‌ها',
+                'purchases': 'خریدهای من',
+                'sales': 'فروش‌های من',
+                'profile': 'پروفایل',
+                'security': 'امنیت و رمز عبور',
+                'notifications': 'اعلان‌ها',
+                'settings': 'تنظیمات'
+            };
+            
+            // تغییر صفحه
+            function changePage(pageId) {
+                // مخفی کردن همه صفحات
+                pageContents.forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // نمایش صفحه انتخاب شده
+                const targetPage = document.getElementById(pageId);
+                if (targetPage) {
+                    targetPage.classList.add('active');
+                }
+                
+                // به‌روزرسانی عنوان صفحه
+                if (pageTitles[pageId]) {
+                    pageTitle.textContent = pageTitles[pageId];
+                }
+                
+                // به‌روزرسانی منوی فعال
+                pageLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('data-page') === pageId) {
+                        link.classList.add('active');
+                    }
+                });
+                
+                // بستن منوی موبایل
+                if (window.innerWidth < 768) {
+                    sidebar.classList.remove('active');
+                    sidebarOverlay.classList.remove('active');
+                }
+                
+                // اسکرول به بالای صفحه
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            
+            // رویداد کلیک روی لینک‌های صفحه
+            pageLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const pageId = this.getAttribute('data-page');
+                    changePage(pageId);
+                });
+            });
+            
+            // مدیریت مودال خروج
+            const logoutBtn = document.getElementById('logoutBtn');
+            const logoutModal = document.getElementById('logoutModal');
+            const confirmLogout = document.getElementById('confirmLogout');
+            const cancelLogout = document.getElementById('cancelLogout');
+            
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function() {
+                    logoutModal.classList.add('active');
+                });
+            }
+            
+            if (confirmLogout) {
+                confirmLogout.addEventListener('click', function() {
+                    // در اینجا کد خروج از حساب کاربری قرار می‌گیرد
+                    alert('شما با موفقیت از حساب کاربری خارج شدید.');
+                    logoutModal.classList.remove('active');
+                    // ریدایرکت به صفحه اصلی
+                    window.location.href = '#';
+                });
+            }
+            
+            if (cancelLogout) {
+                cancelLogout.addEventListener('click', function() {
+                    logoutModal.classList.remove('active');
+                });
+            }
+            
+            // بستن مودال با کلیک بیرون
+            logoutModal.addEventListener('click', function(e) {
+                if (e.target === logoutModal) {
+                    logoutModal.classList.remove('active');
+                }
+            });
+            
+            // مدیریت آپلود فایل
+            const dropZone = document.getElementById('dropZone');
+            const selectFilesBtn = document.getElementById('selectFilesBtn');
+            const fileInput = document.getElementById('fileInput');
+            const fileInfoForm = document.getElementById('fileInfoForm');
+            
+            if (dropZone && fileInput) {
+                // کشیدن و رها کردن
+                dropZone.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    this.style.borderColor = 'var(--primary)';
+                    this.style.backgroundColor = 'rgba(99, 102, 241, 0.1)';
+                });
+                
+                dropZone.addEventListener('dragleave', function() {
+                    this.style.borderColor = '';
+                    this.style.backgroundColor = '';
+                });
+                
+                dropZone.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    this.style.borderColor = '';
+                    this.style.backgroundColor = '';
+                    
+                    if (e.dataTransfer.files.length) {
+                        handleFileSelect(e.dataTransfer.files);
+                    }
+                });
+                
+                // انتخاب فایل با دکمه
+                if (selectFilesBtn) {
+                    selectFilesBtn.addEventListener('click', function() {
+                        fileInput.click();
+                    });
+                }
+                
+                // انتخاب فایل با اینپوت
+                fileInput.addEventListener('change', function(e) {
+                    if (e.target.files.length) {
+                        handleFileSelect(e.target.files);
+                    }
+                });
+                
+                // تابع مدیریت فایل‌های انتخاب شده
+                function handleFileSelect(files) {
+                    console.log('فایل‌های انتخاب شده:', files);
+                    
+                    // نمایش فرم اطلاعات فایل
+                    if (fileInfoForm) {
+                        fileInfoForm.classList.remove('hidden');
+                        
+                        // اسکرول به فرم
+                        fileInfoForm.scrollIntoView({ behavior: 'smooth' });
+                    }
+                    
+                    // نمایش پیام موفقیت
+                    showNotification(`${files.length} فایل انتخاب شد`);
+                }
+            }
+            
+            // نمایش نوتیفیکیشن
+            function showNotification(message, type = 'success') {
+                const colors = {
+                    'success': 'bg-emerald-600',
+                    'error': 'bg-red-600',
+                    'info': 'bg-blue-600',
+                    'warning': 'bg-amber-600'
+                };
+                
+                const notification = document.createElement('div');
+                notification.className = `fixed top-24 right-6 ${colors[type]} text-white px-4 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300`;
+                notification.innerHTML = `
+                    <div class="flex items-center">
+                        <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'} ml-2"></i>
+                        <span>${message}</span>
+                    </div>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(0)';
+                }, 10);
+                
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(100%)';
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            document.body.removeChild(notification);
+                        }
+                    }, 300);
+                }, 3000);
+            }
+            
+            // نمایش/مخفی کردن رمز عبور
+            document.querySelectorAll('.fa-eye').forEach(icon => {
+                icon.addEventListener('click', function() {
+                    const input = this.closest('.relative').querySelector('input');
+                    if (input.type === 'password') {
+                        input.type = 'text';
+                        this.classList.remove('fa-eye');
+                        this.classList.add('fa-eye-slash');
+                    } else {
+                        input.type = 'password';
+                        this.classList.remove('fa-eye-slash');
+                        this.classList.add('fa-eye');
+                    }
+                });
+            });
+            
+            // مقداردهی اولیه
+            console.log('پنل کاربری فایل استور با تمام صفحات آماده است!');
+        });
+    </script>
+</body>
+</html>
