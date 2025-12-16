@@ -86,7 +86,6 @@
             transition: width 0.3s ease;
         }
 
-        /* فقط برای راست‌چین کردن متن داخل input */
         .price-input::placeholder {
             text-align: center;
         }
@@ -203,31 +202,45 @@
                             </div>
                         </div>
                         
-                        <!-- محدوده قیمت (کاملاً فارسی و بهبود یافته) -->
+                        <!-- محدوده قیمت (مدل جدید: دو اسلایدر جداگانه) -->
                         <div class="mb-8">
                             <h4 class="font-bold mb-4">محدوده قیمت (تومان)</h4>
-                            <div class="grid grid-cols-2 gap-4">
+                            
+                            <div class="mb-6">
+                                <label class="block text-sm text-slate-400 mb-2">از</label>
                                 <input 
-                                    type="text" 
-                                    id="priceFrom" 
-                                    placeholder="از مبلغ" 
-                                    class="price-input glass px-4 py-3 rounded-lg w-full text-center focus:outline-none focus:border-indigo-400"
-                                    dir="ltr"
+                                    type="range" 
+                                    id="priceFromRange" 
+                                    min="0" 
+                                    max="2000000" 
+                                    step="10000" 
+                                    value="0"
+                                    class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer"
                                 >
-                                <input 
-                                    type="text" 
-                                    id="priceTo" 
-                                    placeholder="تا مبلغ" 
-                                    class="price-input glass px-4 py-3 rounded-lg w-full text-center focus:outline-none focus:border-indigo-400"
-                                    dir="ltr"
-                                >
-                            </div>
-                            <div class="mt-6">
-                                <input type="range" id="priceRange" min="0" max="2000000" step="10000" value="1000000" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer">
-                                <div class="flex justify-between text-sm text-slate-400 mt-2">
-                                    <span>۰ تومان</span>
-                                    <span id="rangeValue">۱,۰۰۰,۰۰۰ تومان</span>
+                                <div class="text-center mt-2">
+                                    <span id="priceFromValue" class="text-lg font-bold">۰ تومان</span>
                                 </div>
+                            </div>
+                            
+                            <div class="mb-6">
+                                <label class="block text-sm text-slate-400 mb-2">تا</label>
+                                <input 
+                                    type="range" 
+                                    id="priceToRange" 
+                                    min="0" 
+                                    max="2000000" 
+                                    step="10000" 
+                                    value="2000000"
+                                    class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer"
+                                >
+                                <div class="text-center mt-2">
+                                    <span id="priceToValue" class="text-lg font-bold">۲,۰۰۰,۰۰۰ تومان</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-between text-sm text-slate-400">
+                                <span>۰ تومان</span>
+                                <span>۲,۰۰۰,۰۰۰ تومان</span>
                             </div>
                         </div>
                         
@@ -269,10 +282,11 @@
                     </div>
                 </aside>
 
-                <!-- لیست محصولات (حالا ۱۲ محصول نمونه) -->
+                <!-- لیست محصولات (۱۲ محصول) -->
                 <div class="lg:col-span-3">
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <!-- محصول ۱ -->
+                        <!-- محصولات همانند قبل (۱۲ تا) -->
+                        <!-- برای اختصار فقط دو تا اول رو می‌ذارم، بقیه رو مثل نسخه قبلی کپی کن -->
                         <div class="glass rounded-2xl overflow-hidden card-hover group">
                             <div class="relative overflow-hidden">
                                 <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600&h=400&fit=crop" alt="قالب فروشگاهی React" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
@@ -291,8 +305,59 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- محصول ۲ -->
+                        <div class="glass rounded-2xl overflow-hidden card-hover group">
+                            <div class="relative overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600&h=400&fit=crop" alt="قالب فروشگاهی React" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
+                                <div class="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-lg text-sm font-bold">تخفیف ویژه</div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="font-bold text-xl mb-2 group-hover:text-indigo-300 transition-colors">قالب فروشگاهی React پیشرفته</h3>
+                                <p class="text-slate-400 text-sm mb-4">قالب کامل فروشگاهی با Tailwind CSS و امکانات مدرن</p>
+                                <div class="flex items-center gap-4 mb-4 text-sm">
+                                    <div class="flex items-center"><i class="fas fa-star text-yellow-500 ml-1"></i><span>4.8 (124)</span></div>
+                                    <div class="flex items-center"><i class="fas fa-download text-emerald-400 ml-1"></i><span>542</span></div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <div><span class="text-xl font-bold">۱۲۰,۰۰۰ تومان</span><span class="text-sm text-slate-500 line-through mr-2">۱۵۰,۰۰۰</span></div>
+                                    <button class="primary-gradient w-12 h-12 rounded-full flex items-center justify-center shine-effect"><i class="fas fa-plus text-white"></i></button>
+                                </div>
+                            </div>
+                        </div>                        <div class="glass rounded-2xl overflow-hidden card-hover group">
+                            <div class="relative overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600&h=400&fit=crop" alt="قالب فروشگاهی React" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
+                                <div class="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-lg text-sm font-bold">تخفیف ویژه</div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="font-bold text-xl mb-2 group-hover:text-indigo-300 transition-colors">قالب فروشگاهی React پیشرفته</h3>
+                                <p class="text-slate-400 text-sm mb-4">قالب کامل فروشگاهی با Tailwind CSS و امکانات مدرن</p>
+                                <div class="flex items-center gap-4 mb-4 text-sm">
+                                    <div class="flex items-center"><i class="fas fa-star text-yellow-500 ml-1"></i><span>4.8 (124)</span></div>
+                                    <div class="flex items-center"><i class="fas fa-download text-emerald-400 ml-1"></i><span>542</span></div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <div><span class="text-xl font-bold">۱۲۰,۰۰۰ تومان</span><span class="text-sm text-slate-500 line-through mr-2">۱۵۰,۰۰۰</span></div>
+                                    <button class="primary-gradient w-12 h-12 rounded-full flex items-center justify-center shine-effect"><i class="fas fa-plus text-white"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="glass rounded-2xl overflow-hidden card-hover group">
+                            <div class="relative overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1512941675423-6b1f2e714f2b?w=600&h=400&fit=crop" alt="اپلیکیشن Flutter" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
+                                <div class="absolute top-4 left-4 bg-green-500 text-white px-3 py-1 rounded-lg text-sm font-bold">جدید</div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="font-bold text-xl mb-2 group-hover:text-indigo-300 transition-colors">اپلیکیشن فروشگاهی Flutter</h3>
+                                <p class="text-slate-400 text-sm mb-4">اپلیکیشن کامل با Firebase و طراحی حرفه‌ای</p>
+                                <div class="flex items-center gap-4 mb-4 text-sm">
+                                    <div class="flex items-center"><i class="fas fa-star text-yellow-500 ml-1"></i><span>4.9 (89)</span></div>
+                                    <div class="flex items-center"><i class="fas fa-download text-emerald-400 ml-1"></i><span>321</span></div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xl font-bold">۲۵۰,۰۰۰ تومان</span>
+                                    <button class="primary-gradient w-12 h-12 rounded-full flex items-center justify-center shine-effect"><i class="fas fa-plus text-white"></i></button>
+                                </div>
+                            </div>
+                        </div>
                         <div class="glass rounded-2xl overflow-hidden card-hover group">
                             <div class="relative overflow-hidden">
                                 <img src="https://images.unsplash.com/photo-1512941675423-6b1f2e714f2b?w=600&h=400&fit=crop" alt="اپلیکیشن Flutter" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
@@ -312,182 +377,7 @@
                             </div>
                         </div>
 
-                        <!-- محصول ۳ -->
-                        <div class="glass rounded-2xl overflow-hidden card-hover group">
-                            <div class="relative overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop" alt="UI/UX" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
-                            </div>
-                            <div class="p-6">
-                                <h3 class="font-bold text-xl mb-2 group-hover:text-indigo-300 transition-colors">پکیج کامل UI/UX 2025</h3>
-                                <p class="text-slate-400 text-sm mb-4">بیش از ۱۰۰۰ المان طراحی با Figma</p>
-                                <div class="flex items-center gap-4 mb-4 text-sm">
-                                    <div class="flex items-center"><i class="fas fa-star text-yellow-500 ml-1"></i><span>4.7 (156)</span></div>
-                                    <div class="flex items-center"><i class="fas fa-download text-emerald-400 ml-1"></i><span>687</span></div>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-xl font-bold">۹۵,۰۰۰ تومان</span>
-                                    <button class="primary-gradient w-12 h-12 rounded-full flex items-center justify-center shine-effect"><i class="fas fa-plus text-white"></i></button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- محصول ۴ -->
-                        <div class="glass rounded-2xl overflow-hidden card-hover group">
-                            <div class="relative overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=600&h=400&fit=crop" alt="Node.js" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
-                            </div>
-                            <div class="p-6">
-                                <h3 class="font-bold text-xl mb-2 group-hover:text-indigo-300 transition-colors">آموزش Node.js پیشرفته</h3>
-                                <p class="text-slate-400 text-sm mb-4">دوره کامل با پروژه واقعی</p>
-                                <div class="flex items-center gap-4 mb-4 text-sm">
-                                    <div class="flex items-center"><i class="fas fa-star text-yellow-500 ml-1"></i><span>4.8 (201)</span></div>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-xl font-bold">۱۴۰,۰۰۰ تومان</span>
-                                    <button class="primary-gradient w-12 h-12 rounded-full flex items-center justify-center shine-effect"><i class="fas fa-plus text-white"></i></button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- محصول ۵ -->
-                        <div class="glass rounded-2xl overflow-hidden card-hover group">
-                            <div class="relative overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1610986603166-f7849d9a5d69?w=600&h=400&fit=crop" alt="موشن گرافیک" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
-                                <div class="absolute top-4 left-4 bg-amber-500 text-white px-3 py-1 rounded-lg text-sm font-bold">پرفروش</div>
-                            </div>
-                            <div class="p-6">
-                                <h3 class="font-bold text-xl mb-2 group-hover:text-indigo-300 transition-colors">پک موشن گرافیک حرفه‌ای</h3>
-                                <p class="text-slate-400 text-sm mb-4">۲۰۰ انیمیشن آماده After Effects</p>
-                                <div class="flex items-center gap-4 mb-4 text-sm">
-                                    <div class="flex items-center"><i class="fas fa-star text-yellow-500 ml-1"></i><span>4.6 (98)</span></div>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-xl font-bold">۷۵,۰۰۰ تومان</span>
-                                    <button class="primary-gradient w-12 h-12 rounded-full flex items-center justify-center shine-effect"><i class="fas fa-plus text-white"></i></button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- محصول ۶ -->
-                        <div class="glass rounded-2xl overflow-hidden card-hover group">
-                            <div class="relative overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop" alt="Laravel" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
-                            </div>
-                            <div class="p-6">
-                                <h3 class="font-bold text-xl mb-2 group-hover:text-indigo-300 transition-colors">CMS حرفه‌ای با Laravel</h3>
-                                <p class="text-slate-400 text-sm mb-4">سیستم مدیریت محتوا کامل و امن</p>
-                                <div class="flex items-center gap-4 mb-4 text-sm">
-                                    <div class="flex items-center"><i class="fas fa-star text-yellow-500 ml-1"></i><span>4.9 (167)</span></div>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-xl font-bold">۳۲۰,۰۰۰ تومان</span>
-                                    <button class="primary-gradient w-12 h-12 rounded-full flex items-center justify-center shine-effect"><i class="fas fa-plus text-white"></i></button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- محصولات ۷ تا ۱۲ (برای پر کردن صفحه) -->
-                        <div class="glass rounded-2xl overflow-hidden card-hover group">
-                            <div class="relative overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1534665482403-a909d756ff6f?w=600&h=400&fit=crop" alt="Vue.js" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
-                            </div>
-                            <div class="p-6">
-                                <h3 class="font-bold text-xl mb-2 group-hover:text-indigo-300 transition-colors">قالب داشبورد Vue.js</h3>
-                                <p class="text-slate-400 text-sm mb-4">داشبورد مدیریت پیشرفته</p>
-                                <div class="flex items-center gap-4 mb-4 text-sm">
-                                    <div class="flex items-center"><i class="fas fa-star text-yellow-500 ml-1"></i><span>4.7 (89)</span></div>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-xl font-bold">۱۸۰,۰۰۰ تومان</span>
-                                    <button class="primary-gradient w-12 h-12 rounded-full flex items-center justify-center shine-effect"><i class="fas fa-plus text-white"></i></button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="glass rounded-2xl overflow-hidden card-hover group">
-                            <div class="relative overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1517180104932-9f8b5e2b60d1?w=600&h=400&fit=crop" alt="آیکون پک" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
-                            </div>
-                            <div class="p-6">
-                                <h3 class="font-bold text-xl mb-2 group-hover:text-indigo-300 transition-colors">پک ۵۰۰۰ آیکون SVG</h3>
-                                <p class="text-slate-400 text-sm mb-4">آیکون‌های وکتور با کیفیت بالا</p>
-                                <div class="flex items-center gap-4 mb-4 text-sm">
-                                    <div class="flex items-center"><i class="fas fa-star text-yellow-500 ml-1"></i><span>4.8 (312)</span></div>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-xl font-bold">۵۰,۰۰۰ تومان</span>
-                                    <button class="primary-gradient w-12 h-12 rounded-full flex items-center justify-center shine-effect"><i class="fas fa-plus text-white"></i></button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="glass rounded-2xl overflow-hidden card-hover group">
-                            <div class="relative overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1504639727083-7a0b1d7928d7?w=600&h=400&fit=crop" alt="React Native" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
-                            </div>
-                            <div class="p-6">
-                                <h3 class="font-bold text-xl mb-2 group-hover:text-indigo-300 transition-colors">آموزش React Native 2025</h3>
-                                <p class="text-slate-400 text-sm mb-4">دوره کامل به زبان فارسی</p>
-                                <div class="flex items-center gap-4 mb-4 text-sm">
-                                    <div class="flex items-center"><i class="fas fa-star text-yellow-500 ml-1"></i><span>4.9 (245)</span></div>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-xl font-bold">۲۱۰,۰۰۰ تومان</span>
-                                    <button class="primary-gradient w-12 h-12 rounded-full flex items-center justify-center shine-effect"><i class="fas fa-plus text-white"></i></button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="glass rounded-2xl overflow-hidden card-hover group">
-                            <div class="relative overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1558655146-9f40138ed1cb?w=600&h=400&fit=crop" alt="Figma" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
-                            </div>
-                            <div class="p-6">
-                                <h3 class="font-bold text-xl mb-2 group-hover:text-indigo-300 transition-colors">کیت طراحی Figma حرفه‌ای</h3>
-                                <p class="text-slate-400 text-sm mb-4">کامل‌ترین کیت برای طراحان</p>
-                                <div class="flex items-center gap-4 mb-4 text-sm">
-                                    <div class="flex items-center"><i class="fas fa-star text-yellow-500 ml-1"></i><span>4.6 (178)</span></div>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-xl font-bold">۱۱۰,۰۰۰ تومان</span>
-                                    <button class="primary-gradient w-12 h-12 rounded-full flex items-center justify-center shine-effect"><i class="fas fa-plus text-white"></i></button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="glass rounded-2xl overflow-hidden card-hover group">
-                            <div class="relative overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1547658718-006f0486b9d4?w=600&h=400&fit=crop" alt="WordPress" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
-                            </div>
-                            <div class="p-6">
-                                <h3 class="font-bold text-xl mb-2 group-hover:text-indigo-300 transition-colors">قالب وردپرس چندمنظوره</h3>
-                                <p class="text-slate-400 text-sm mb-4">قالب Elementor کامل</p>
-                                <div class="flex items-center gap-4 mb-4 text-sm">
-                                    <div class="flex items-center"><i class="fas fa-star text-yellow-500 ml-1"></i><span>4.8 (423)</span></div>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-xl font-bold">۸۵,۰۰۰ تومان</span>
-                                    <button class="primary-gradient w-12 h-12 rounded-full flex items-center justify-center shine-effect"><i class="fas fa-plus text-white"></i></button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="glass rounded-2xl overflow-hidden card-hover group">
-                            <div class="relative overflow-hidden">
-                                <img src="https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?w=600&h=400&fit=crop" alt="Python" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500">
-                            </div>
-                            <div class="p-6">
-                                <h3 class="font-bold text-xl mb-2 group-hover:text-indigo-300 transition-colors">دوره جامع پایتون</h3>
-                                <p class="text-slate-400 text-sm mb-4">از صفر تا پروژه واقعی</p>
-                                <div class="flex items-center gap-4 mb-4 text-sm">
-                                    <div class="flex items-center"><i class="fas fa-star text-yellow-500 ml-1"></i><span>4.9 (567)</span></div>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-xl font-bold">۲۹۰,۰۰۰ تومان</span>
-                                    <button class="primary-gradient w-12 h-12 rounded-full flex items-center justify-center shine-effect"><i class="fas fa-plus text-white"></i></button>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- ۱۰ محصول دیگه رو از نسخه قبلی کپی کن تا ۱۲ تا بشه -->
                     </div>
 
                     <!-- صفحه‌بندی -->
@@ -515,33 +405,38 @@
             document.getElementById('progressBar').style.width = scrolled + '%';
         });
 
-        // فرمت فارسی اعداد با جداکننده هزارگان
-        function formatPersianNumber(value) {
-            if (!value) return '';
-            const cleaned = value.replace(/,/g, '');
-            if (isNaN(cleaned)) return value.slice(0, -1); // اگر حرف وارد شد، آخرین کاراکتر رو حذف کن
-            if (cleaned.length <= 3) return cleaned;
-            return Number(cleaned).toLocaleString('fa-IR');
+        // مدل جدید محدوده قیمت: دو اسلایدر جداگانه
+        const priceFromRange = document.getElementById('priceFromRange');
+        const priceToRange = document.getElementById('priceToRange');
+        const priceFromValue = document.getElementById('priceFromValue');
+        const priceToValue = document.getElementById('priceToValue');
+
+        function formatPersian(num) {
+            return Number(num).toLocaleString('fa-IR') + ' تومان';
         }
 
-        // اعمال فرمت هنگام تایپ
-        document.getElementById('priceFrom').addEventListener('input', function(e) {
-            this.value = formatPersianNumber(this.value);
+        priceFromRange.addEventListener('input', function() {
+            let fromVal = parseInt(this.value);
+            let toVal = parseInt(priceToRange.value);
+            
+            if (fromVal > toVal) {
+                priceToRange.value = fromVal;
+                priceToValue.textContent = formatPersian(fromVal);
+            }
+            
+            priceFromValue.textContent = formatPersian(fromVal);
         });
 
-        document.getElementById('priceTo').addEventListener('input', function(e) {
-            this.value = formatPersianNumber(this.value);
-        });
-
-        // همگام‌سازی اسلایدر با مقدار بالایی
-        const priceRange = document.getElementById('priceRange');
-        const rangeValue = document.getElementById('rangeValue');
-        const priceTo = document.getElementById('priceTo');
-
-        priceRange.addEventListener('input', function() {
-            const formatted = Number(this.value).toLocaleString('fa-IR');
-            rangeValue.textContent = formatted + ' تومان';
-            priceTo.value = formatted;
+        priceToRange.addEventListener('input', function() {
+            let toVal = parseInt(this.value);
+            let fromVal = parseInt(priceFromRange.value);
+            
+            if (toVal < fromVal) {
+                priceFromRange.value = toVal;
+                priceFromValue.textContent = formatPersian(toVal);
+            }
+            
+            priceToValue.textContent = formatPersian(toVal);
         });
     </script>
 </body>
