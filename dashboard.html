@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فایل استور - پنل کاربری</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Font Vazir -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" type="text/css">
+    <style>
+        * {
+            font-family: 'Vazir', sans-serif;
+        }
+        
+        body {
+            background-color: #0a0a0a;
+            color: #e5e7eb;
+        }
+        
+        .sidebar-item:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-right: 3px solid #3b82f6;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+        
+        .progress-bar {
+            background: linear-gradient(to right, #3b82f6, #8b5cf6);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #1f2937;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #4b5563;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6b7280;
+        }
+    </style>
+</head>
+<body class="bg-black text-gray-200">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-gray-900 border-l border-gray-800 flex flex-col">
+            <!-- Logo -->
+            <div class="p-6 border-b border-gray-800">
+                <div class="flex items-center justify-center">
+                    <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-cloud text-white text-xl"></i>
+                    </div>
+                    <h1 class="mr-3 text-xl font-bold text-white">فایل استور</h1>
+                </div>
+            </div>
+            
+            <!-- User Profile -->
+            <div class="p-6 border-b border-gray-800 flex items-center">
+                <div class="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg">
+                    ع
+                </div>
+                <div class="mr-3">
+                    <h3 class="font-bold text-white">علی محمدی</h3>
+                    <p class="text-sm text-gray-400">سطح طلایی</p>
+                </div>
+                <i class="fas fa-chevron-down text-gray-400 mr-auto"></i>
+            </div>
+            
+            <!-- Navigation -->
+            <nav class="flex-1 p-4 overflow-y-auto">
+                <ul class="space-y-2">
+                    <li>
+                        <a href="#" class="sidebar-item flex items-center p-3 rounded-lg text-gray-300 hover:text-white">
+                            <i class="fas fa-home ml-3"></i>
+                            <span>داشبورد</span>
+                            <i class="fas fa-chevron-left mr-auto text-gray-500"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-item flex items-center p-3 rounded-lg text-gray-300 hover:text-white">
+                            <i class="fas fa-folder ml-3"></i>
+                            <span>فایل‌های من</span>
+                            <span class="mr-auto bg-gray-800 text-xs px-2 py-1 rounded">۱۸</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-item flex items-center p-3 rounded-lg text-gray-300 hover:text-white">
+                            <i class="fas fa-upload ml-3"></i>
+                            <span>آپلود فایل</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-item flex items-center p-3 rounded-lg text-gray-300 hover:text-white">
+                            <i class="fas fa-share-alt ml-3"></i>
+                            <span>اشتراک‌گذاری</span>
+                            <span class="mr-auto bg-blue-600 text-white text-xs px-2 py-1 rounded">۳</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-item flex items-center p-3 rounded-lg text-gray-300 hover:text-white">
+                            <i class="fas fa-star ml-3"></i>
+                            <span>علاقه‌مندی‌ها</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-item flex items-center p-3 rounded-lg text-gray-300 hover:text-white">
+                            <i class="fas fa-trash-alt ml-3"></i>
+                            <span>سطل بازیافت</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-item flex items-center p-3 rounded-lg text-gray-300 hover:text-white">
+                            <i class="fas fa-chart-bar ml-3"></i>
+                            <span>آمار و گزارشات</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-item flex items-center p-3 rounded-lg text-gray-300 hover:text-white">
+                            <i class="fas fa-cog ml-3"></i>
+                            <span>تنظیمات</span>
+                        </a>
+                    </li>
+                </ul>
+                
+                <!-- Storage Status -->
+                <div class="mt-8 p-4 bg-gray-800 rounded-lg">
+                    <div class="flex justify-between mb-2">
+                        <span class="text-sm">فضای ذخیره‌سازی</span>
+                        <span class="text-sm font-bold">۴٫۲ گیگ از ۱۰ گیگ</span>
+                    </div>
+                    <div class="w-full bg-gray-700 rounded-full h-2">
+                        <div class="progress-bar h-2 rounded-full" style="width: 42%"></div>
+                    </div>
+                    <button class="w-full mt-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-lg text-sm">
+                        ارتقاء فضای ذخیره‌سازی
+                    </button>
+                </div>
+            </nav>
+            
+            <!-- Logout -->
+            <div class="p-4 border-t border-gray-800">
+                <a href="#" class="flex items-center p-3 text-red-400 hover:text-red-300 hover:bg-red-900/20 rounded-lg">
+                    <i class="fas fa-sign-out-alt ml-3"></i>
+                    <span>خروج از حساب</span>
+                </a>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto">
+            <!-- Header -->
+            <header class="sticky top-0 z-10 bg-gray-900/95 backdrop-blur border-b border-gray-800 p-4">
+                <div class="flex items-center justify-between">
+                    <!-- Search -->
+                    <div class="relative w-96">
+                        <i class="fas fa-search absolute right-3 top-3 text-gray-500"></i>
+                        <input type="text" placeholder="جستجو در فایل‌ها..." class="w-full bg-gray-800 border border-gray-700 rounded-lg py-2 pr-10 pl-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    
+                    <!-- Notifications & Actions -->
+                    <div class="flex items-center space-x-4 space-x-reverse">
+                        <button class="relative p-2 rounded-lg hover:bg-gray-800">
+                            <i class="fas fa-bell text-xl"></i>
+                            <span class="absolute -top-1 -left-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">۳</span>
+                        </button>
+                        <button class="p-2 rounded-lg hover:bg-gray-800">
+                            <i class="fas fa-plus text-xl"></i>
+                        </button>
+                        <button class="p-2 rounded-lg hover:bg-gray-800">
+                            <i class="fas fa-moon text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Dashboard Content -->
+            <div class="p-6">
+                <!-- Welcome & Quick Stats -->
+                <div class="mb-8">
+                    <h1 class="text-2xl font-bold text-white mb-2">سلام علی، به پنل کاربری خوش آمدید</h1>
+                    <p class="text-gray-400">مدیریت فایل‌های خود را از اینجا انجام دهید</p>
+                    
+                    <!-- Quick Stats -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-6">
+                        <div class="bg-gray-900 border border-gray-800 rounded-xl p-5 card-hover">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-gray-400 text-sm">کل فایل‌ها</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۱۸۶</p>
+                                </div>
+                                <div class="w-12 h-12 rounded-lg bg-blue-900/30 flex items-center justify-center">
+                                    <i class="fas fa-file text-blue-500 text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="mt-4 text-xs text-green-400">
+                                <i class="fas fa-arrow-up ml-1"></i>
+                                <span>۱۲ فایل جدید این ماه</span>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-900 border border-gray-800 rounded-xl p-5 card-hover">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-gray-400 text-sm">فضای استفاده شده</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۴٫۲ گیگ</p>
+                                </div>
+                                <div class="w-12 h-12 rounded-lg bg-purple-900/30 flex items-center justify-center">
+                                    <i class="fas fa-database text-purple-500 text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="mt-4 text-xs text-yellow-400">
+                                <i class="fas fa-exclamation-triangle ml-1"></i>
+                                <span>۵۸٪ فضای استفاده شده</span>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-900 border border-gray-800 rounded-xl p-5 card-hover">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-gray-400 text-sm">فایل‌های اشتراکی</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۲۳</p>
+                                </div>
+                                <div class="w-12 h-12 rounded-lg bg-green-900/30 flex items-center justify-center">
+                                    <i class="fas fa-share-alt text-green-500 text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="mt-4 text-xs text-blue-400">
+                                <i class="fas fa-users ml-1"></i>
+                                <span>با ۱۴ نفر اشتراک گذاشته شده</span>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-900 border border-gray-800 rounded-xl p-5 card-hover">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-gray-400 text-sm">آخرین فعالیت</p>
+                                    <p class="text-2xl font-bold text-white mt-1">امروز</p>
+                                </div>
+                                <div class="w-12 h-12 rounded-lg bg-red-900/30 flex items-center justify-center">
+                                    <i class="fas fa-clock text-red-500 text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="mt-4 text-xs text-gray-400">
+                                <i class="fas fa-history ml-1"></i>
+                                <span>۲ ساعت پیش</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recent Files & Upload -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Recent Files -->
+                    <div class="lg:col-span-2">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-xl font-bold text-white">آخرین فایل‌ها</h2>
+                            <a href="#" class="text-blue-400 hover:text-blue-300 text-sm">مشاهده همه <i class="fas fa-chevron-left mr-1"></i></a>
+                        </div>
+                        
+                        <div class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
+                            <div class="overflow-x-auto">
+                                <table class="w-full">
+                                    <thead class="bg-gray-800">
+                                        <tr>
+                                            <th class="py-3 px-4 text-right font-medium text-gray-300">نام فایل</th>
+                                            <th class="py-3 px-4 text-right font-medium text-gray-300">اندازه</th>
+                                            <th class="py-3 px-4 text-right font-medium text-gray-300">تاریخ</th>
+                                            <th class="py-3 px-4 text-right font-medium text-gray-300">عملیات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="border-b border-gray-800 hover:bg-gray-800/50">
+                                            <td class="py-3 px-4">
+                                                <div class="flex items-center">
+                                                    <div class="w-10 h-10 rounded-lg bg-blue-900/30 flex items-center justify-center ml-3">
+                                                        <i class="fas fa-file-pdf text-blue-500"></i>
+                                                    </div>
+                                                    <div>
+                                                        <p class="font-medium text-white">گزارش مالی سال ۱۴۰۲.pdf</p>
+                                                        <p class="text-xs text-gray-400">PDF Document</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="py-3 px-4">۲٫۴ MB</td>
+                                            <td class="py-3 px-4">۲ روز پیش</td>
+                                            <td class="py-3 px-4">
+                                                <div class="flex items-center space-x-2 space-x-reverse">
+                                                    <button class="p-1 text-blue-400 hover:text-blue-300">
+                                                        <i class="fas fa-download"></i>
+                                                    </button>
+                                                    <button class="p-1 text-green-400 hover:text-green-300">
+                                                        <i class="fas fa-share-alt"></i>
+                                                    </button>
+                                                    <button class="p-1 text-red-400 hover:text-red-300">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        
+                                        <tr class="border-b border-gray-800 hover:bg-gray-800/50">
+                                            <td class="py-3 px-4">
+                                                <div class="flex items-center">
+                                                    <div class="w-10 h-10 rounded-lg bg-green-900/30 flex items-center justify-center ml-3">
+                                                        <i class="fas fa-file-video text-green-500"></i>
+                                                    </div>
+                                                    <div>
+                                                        <p class="font-medium text-white">ویدیو معرفی محصول.mp4</p>
+                                                        <p class="text-xs text-gray-400">MP4 Video</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="py-3 px-4">۱۵۲٫۷ MB</td>
+                                            <td class="py-3 px-4">۳ روز پیش</td>
+                                            <td class="py-3 px-4">
+                                                <div class="flex items-center space-x-2 space-x-reverse">
+                                                    <button class="p-1 text-blue-400 hover:text-blue-300">
+                                                        <i class="fas fa-download"></i>
+                                                    </button>
+                                                    <button class="p-1 text-green-400 hover:text-green-300">
+                                                        <i class="fas fa-share-alt"></i>
+                                                    </button>
+                                                    <button class="p-1 text-red-400 hover:text-red-300">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        
+                                        <tr class="border-b border-gray-800 hover:bg-gray-800/50">
+                                            <td class="py-3 px-4">
+                                                <div class="flex items-center">
+                                                    <div class="w-10 h-10 rounded-lg bg-purple-900/30 flex items-center justify-center ml-3">
+                                                        <i class="fas fa-file-archive text-purple-500"></i>
+                                                    </div>
+                                                    <div>
+                                                        <p class="font-medium text-white">پروژه‌های طراحی.zip</p>
+                                                        <p class="text-xs text-gray-400">ZIP Archive</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="py-3 px-4">۸۷٫۳ MB</td>
+                                            <td class="py-3 px-4">۱ هفته پیش</td>
+                                            <td class="py-3 px-4">
+                                                <div class="flex items-center space-x-2 space-x-reverse">
+                                                    <button class="p-1 text-blue-400 hover:text-blue-300">
+                                                        <i class="fas fa-download"></i>
+                                                    </button>
+                                                    <button class="p-1 text-green-400 hover:text-green-300">
+                                                        <i class="fas fa-share-alt"></i>
+                                                    </button>
+                                                    <button class="p-1 text-red-400 hover:text-red-300">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        
+                                        <tr class="border-b border-gray-800 hover:bg-gray-800/50">
+                                            <td class="py-3 px-4">
+                                                <div class="flex items-center">
+                                                    <div class="w-10 h-10 rounded-lg bg-yellow-900/30 flex items-center justify-center ml-3">
+                                                        <i class="fas fa-file-image text-yellow-500"></i>
+                                                    </div>
+                                                    <div>
+                                                        <p class="font-medium text-white">لوگو شرکت.png</p>
+                                                        <p class="text-xs text-gray-400">PNG Image</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="py-3 px-4">۱٫۸ MB</td>
+                                            <td class="py-3 px-4">۲ هفته پیش</td>
+                                            <td class="py-3 px-4">
+                                                <div class="flex items-center space-x-2 space-x-reverse">
+                                                    <button class="p-1 text-blue-400 hover:text-blue-300">
+                                                        <i class="fas fa-download"></i>
+                                                    </button>
+                                                    <button class="p-1 text-green-400 hover:text-green-300">
+                                                        <i class="fas fa-share-alt"></i>
+                                                    </button>
+                                                    <button class="p-1 text-red-400 hover:text-red-300">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        
+                                        <tr class="hover:bg-gray-800/50">
+                                            <td class="py-3 px-4">
+                                                <div class="flex items-center">
+                                                    <div class="w-10 h-10 rounded-lg bg-red-900/30 flex items-center justify-center ml-3">
+                                                        <i class="fas fa-file-word text-red-500"></i>
+                                                    </div>
+                                                    <div>
+                                                        <p class="font-medium text-white">مقاله تحقیقی.docx</p>
+                                                        <p class="text-xs text-gray-400">Word Document</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="py-3 px-4">۰٫۹ MB</td>
+                                            <td class="py-3 px-4">۱ ماه پیش</td>
+                                            <td class="py-3 px-4">
+                                                <div class="flex items-center space-x-2 space-x-reverse">
+                                                    <button class="p-1 text-blue-400 hover:text-blue-300">
+                                                        <i class="fas fa-download"></i>
+                                                    </button>
+                                                    <button class="p-1 text-green-400 hover:text-green-300">
+                                                        <i class="fas fa-share-alt"></i>
+                                                    </button>
+                                                    <button class="p-1 text-red-400 hover:text-red-300">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Upload & Shared -->
+                    <div>
+                        <!-- Quick Upload -->
+                        <div class="mb-6">
+                            <h2 class="text-xl font-bold text-white mb-4">آپلود سریع</h2>
+                            <div class="bg-gray-900 border-2 border-dashed border-gray-700 rounded-xl p-8 text-center hover:border-blue-500 transition-colors">
+                                <div class="w-16 h-16 rounded-full bg-gradient-to-r from-blue-900/30 to-purple-900/30 flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-cloud-upload-alt text-blue-500 text-2xl"></i>
+                                </div>
+                                <p class="font-medium text-white mb-2">فایل‌ها را اینجا رها کنید</p>
+                                <p class="text-sm text-gray-400 mb-4">یا برای انتخاب فایل کلیک کنید</p>
+                                <button id="uploadBtn" class="py-2 px-6 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-lg">
+                                    انتخاب فایل
+                                </button>
+                                <input type="file" id="fileInput" class="hidden" multiple>
+                                <p class="text-xs text-gray-500 mt-4">حداکثر حجم: ۵۰۰ مگابایت</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Shared With Me -->
+                        <div>
+                            <h2 class="text-xl font-bold text-white mb-4">به اشتراک گذاشته شده با من</h2>
+                            <div class="space-y-4">
+                                <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 flex items-center card-hover">
+                                    <div class="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center text-white font-bold ml-3">
+                                        م
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="font-medium text-white">فایل‌های طراحی</p>
+                                        <p class="text-sm text-gray-400">اشتراک‌گذاری از: مریم احمدی</p>
+                                    </div>
+                                    <button class="p-2 text-blue-400 hover:text-blue-300">
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </button>
+                                </div>
+                                
+                                <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 flex items-center card-hover">
+                                    <div class="w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold ml-3">
+                                        ر
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="font-medium text-white">گزارش‌های مالی</p>
+                                        <p class="text-sm text-gray-400">اشتراک‌گذاری از: رضا کریمی</p>
+                                    </div>
+                                    <button class="p-2 text-blue-400 hover:text-blue-300">
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </button>
+                                </div>
+                                
+                                <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 flex items-center card-hover">
+                                    <div class="w-12 h-12 rounded-full bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center text-white font-bold ml-3">
+                                        س
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="font-medium text-white">پروپوزال تحقیقاتی</p>
+                                        <p class="text-sm text-gray-400">اشتراک‌گذاری از: سارا محمدی</p>
+                                    </div>
+                                    <button class="p-2 text-blue-400 hover:text-blue-300">
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- File Categories -->
+                <div class="mt-8">
+                    <h2 class="text-xl font-bold text-white mb-4">دسته‌بندی فایل‌ها</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="bg-gray-900 border border-gray-800 rounded-xl p-5 flex items-center justify-between card-hover">
+                            <div>
+                                <p class="font-medium text-white">اسناد</p>
+                                <p class="text-sm text-gray-400">۴۸ فایل</p>
+                            </div>
+                            <div class="w-12 h-12 rounded-lg bg-blue-900/30 flex items-center justify-center">
+                                <i class="fas fa-file-alt text-blue-500 text-xl"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-900 border border-gray-800 rounded-xl p-5 flex items-center justify-between card-hover">
+                            <div>
+                                <p class="font-medium text-white">تصاویر</p>
+                                <p class="text-sm text-gray-400">۶۷ فایل</p>
+                            </div>
+                            <div class="w-12 h-12 rounded-lg bg-green-900/30 flex items-center justify-center">
+                                <i class="fas fa-image text-green-500 text-xl"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-900 border border-gray-800 rounded-xl p-5 flex items-center justify-between card-hover">
+                            <div>
+                                <p class="font-medium text-white">ویدیو</p>
+                                <p class="text-sm text-gray-400">۲۳ فایل</p>
+                            </div>
+                            <div class="w-12 h-12 rounded-lg bg-red-900/30 flex items-center justify-center">
+                                <i class="fas fa-video text-red-500 text-xl"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-900 border border-gray-800 rounded-xl p-5 flex items-center justify-between card-hover">
+                            <div>
+                                <p class="font-medium text-white">سایر</p>
+                                <p class="text-sm text-gray-400">۴۸ فایل</p>
+                            </div>
+                            <div class="w-12 h-12 rounded-lg bg-purple-900/30 flex items-center justify-center">
+                                <i class="fas fa-folder text-purple-500 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <footer class="border-t border-gray-800 p-6 text-center text-gray-500 text-sm">
+                <p>© ۱۴۰۳ فایل استور - تمامی حقوق محفوظ است.</p>
+                <p class="mt-1">نسخه ۲.۱.۰ - آخرین بروزرسانی: ۱۵ مرداد ۱۴۰۳</p>
+            </footer>
+        </main>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Upload button functionality
+        document.getElementById('uploadBtn').addEventListener('click', function() {
+            document.getElementById('fileInput').click();
+        });
+        
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            if (e.target.files.length > 0) {
+                alert(`شما ${e.target.files.length} فایل انتخاب کردید. فایل‌ها در حال آپلود هستند...`);
+                // در اینجا می‌توانید کد آپلود واقعی را اضافه کنید
+            }
+        });
+        
+        // Toggle dark mode
+        const darkModeToggle = document.querySelector('button:nth-of-type(3)');
+        darkModeToggle.addEventListener('click', function() {
+            document.body.classList.toggle('bg-gray-100');
+            document.body.classList.toggle('text-gray-900');
+            document.body.classList.toggle('bg-black');
+            document.body.classList.toggle('text-gray-200');
+            
+            const icon = this.querySelector('i');
+            if (icon.classList.contains('fa-moon')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+        
+        // Mark notifications as read
+        const notificationBtn = document.querySelector('button.relative');
+        notificationBtn.addEventListener('click', function() {
+            const badge = this.querySelector('span');
+            if (badge) {
+                badge.remove();
+                alert('همه اعلان‌ها به عنوان خوانده شده علامت زده شدند.');
+            }
+        });
+        
+        // Add hover effect to table rows
+        const tableRows = document.querySelectorAll('tbody tr');
+        tableRows.forEach(row => {
+            row.addEventListener('mouseenter', function() {
+                this.style.backgroundColor = 'rgba(31, 41, 55, 0.5)';
+            });
+            
+            row.addEventListener('mouseleave', function() {
+                this.style.backgroundColor = '';
+            });
+        });
+    </script>
+</body>
+</html>
