@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فایل استور | تیکت پشتیبانی</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+        }
+        
+        body {
+            background-color: var(--darker);
+            color: var(--light);
+            overflow-x: hidden;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 50%, #1e293b 100%);
+        }
+        
+        .primary-gradient {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-2px);
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .sidebar-item {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sidebar-item::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: var(--primary);
+            transform: translateX(10px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-item:hover::before {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        
+        .sidebar-item.active {
+            background-color: rgba(99, 102, 241, 0.15);
+        }
+        
+        .sidebar-item.active::before {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: fixed;
+                right: -100%;
+                top: 0;
+                height: 100%;
+                width: 280px;
+                z-index: 1000;
+                transition: right 0.3s ease;
+            }
+            
+            .sidebar.active {
+                right: 0;
+            }
+            
+            .sidebar-overlay {
+                position: fixed;
+                top: 0;
+                right: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 999;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            }
+            
+            .sidebar-overlay.active {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+        
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status-open {
+            background-color: rgba(37, 99, 235, 0.2);
+            color: #3b82f6;
+        }
+        
+        .status-in-progress {
+            background-color: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+        }
+        
+        .status-resolved {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+        
+        .status-closed {
+            background-color: rgba(107, 114, 128, 0.2);
+            color: #6b7280;
+        }
+        
+        .stat-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .form-input {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 12px 16px;
+            color: white;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+        
+        .message-user {
+            background: rgba(99, 102, 241, 0.15);
+            border-right: 4px solid var(--primary);
+        }
+        
+        .message-support {
+            background: rgba(16, 185, 129, 0.15);
+            border-right: 4px solid var(--secondary);
+        }
+        
+        .message-system {
+            background: rgba(245, 158, 11, 0.15);
+            border-right: 4px solid var(--accent);
+        }
+        
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            z-index: 1000;
+            transition: width 0.3s ease;
+        }
+        
+        .ticket-priority-low {
+            border-right: 4px solid #10b981;
+        }
+        
+        .ticket-priority-medium {
+            border-right: 4px solid #f59e0b;
+        }
+        
+        .ticket-priority-high {
+            border-right: 4px solid #ef4444;
+        }
+        
+        .ticket-priority-urgent {
+            border-right: 4px solid #dc2626;
+        }
+    </style>
+</head>
+<body class="gradient-bg">
+    <!-- نوار پیشرفت -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- منوی موبایل -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- ساختار پنل کاربری -->
+    <div class="dashboard-grid">
+        <!-- سایدبار -->
+        <aside class="sidebar bg-slate-900 border-l border-slate-800 p-5 overflow-y-auto">
+            <!-- لوگو و پروفایل -->
+            <div class="mb-8">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center space-x-3 space-x-reverse">
+                        <div class="primary-gradient p-2 rounded-lg">
+                            <i class="fas fa-cloud text-white text-xl"></i>
+                        </div>
+                        <h1 class="text-xl font-bold gradient-text">فایل استور</h1>
+                    </div>
+                    <button class="lg:hidden text-xl" id="closeSidebar">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <!-- پروفایل کاربر -->
+                <div class="bg-slate-800/50 rounded-xl p-4 flex items-center mb-6">
+                    <div class="w-12 h-12 rounded-full primary-gradient flex items-center justify-center text-white font-bold ml-3">
+                        ع
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold text-white">علی محمدی</h3>
+                        <p class="text-sm text-slate-400">کاربر طلایی</p>
+                    </div>
+                </div>
+                
+                <!-- وضعیت اکانت -->
+                <div class="bg-slate-800/50 rounded-xl p-4 mb-6">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-sm text-slate-400">وضعیت حساب:</span>
+                        <span class="text-sm font-bold text-emerald-400">فعال ✓</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-slate-400">عضویت از:</span>
+                        <span class="text-sm">۱۴۰۲/۰۵/۱۰</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- منوی اصلی -->
+            <nav class="mb-8">
+                <h3 class="text-slate-500 text-sm font-bold mb-3 px-3">منوی اصلی</h3>
+                <ul class="space-y-1">
+                    <li>
+                        <a href="#" class="sidebar-item flex items-center p-3 rounded-lg text-slate-300 hover:text-white">
+                            <i class="fas fa-home ml-3 text-slate-400"></i>
+                            <span>داشبورد</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-item flex items-center p-3 rounded-lg text-slate-300 hover:text-white">
+                            <i class="fas fa-folder ml-3 text-slate-400"></i>
+                            <span>فایل‌های من</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <!-- بخش پشتیبانی -->
+            <nav class="mb-8">
+                <h3 class="text-slate-500 text-sm font-bold mb-3 px-3">پشتیبانی</h3>
+                <ul class="space-y-1">
+                    <li>
+                        <a href="#" class="sidebar-item active flex items-center p-3 rounded-lg text-white">
+                            <i class="fas fa-ticket-alt ml-3 text-slate-400"></i>
+                            <span>تیکت‌های من</span>
+                            <span class="mr-auto bg-indigo-500 text-white text-xs px-2 py-1 rounded">۳</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-item flex items-center p-3 rounded-lg text-slate-300 hover:text-white">
+                            <i class="fas fa-plus-circle ml-3 text-slate-400"></i>
+                            <span>تیکت جدید</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-item flex items-center p-3 rounded-lg text-slate-300 hover:text-white">
+                            <i class="fas fa-question-circle ml-3 text-slate-400"></i>
+                            <span>راهنما و FAQ</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <!-- بخش کاربری -->
+            <nav class="mb-8">
+                <h3 class="text-slate-500 text-sm font-bold mb-3 px-3">حساب کاربری</h3>
+                <ul class="space-y-1">
+                    <li>
+                        <a href="#" class="sidebar-item flex items-center p-3 rounded-lg text-slate-300 hover:text-white">
+                            <i class="fas fa-user ml-3 text-slate-400"></i>
+                            <span>پروفایل</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-item flex items-center p-3 rounded-lg text-slate-300 hover:text-white">
+                            <i class="fas fa-cog ml-3 text-slate-400"></i>
+                            <span>تنظیمات</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- دکمه خروج -->
+            <button class="sidebar-item flex items-center p-3 rounded-lg text-red-400 hover:text-red-300 hover:bg-red-900/20 w-full" id="logoutBtn">
+                <i class="fas fa-sign-out-alt ml-3"></i>
+                <span>خروج از حساب</span>
+            </button>
+        </aside>
+        
+        <!-- محتوای اصلی -->
+        <main class="overflow-y-auto">
+            <!-- هدر اصلی -->
+            <header class="bg-slate-900/80 backdrop-blur border-b border-slate-800 p-4 sticky top-0 z-40">
+                <div class="flex items-center justify-between">
+                    <!-- دکمه منو در موبایل -->
+                    <button class="lg:hidden text-xl bg-slate-800 w-10 h-10 rounded-lg flex items-center justify-center" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    
+                    <!-- عنوان صفحه -->
+                    <h1 class="text-xl font-bold text-white mr-4">تیکت پشتیبانی #TKT-789456</h1>
+                    
+                    <!-- بخش کاربر -->
+                    <div class="flex items-center space-x-4 space-x-reverse">
+                        <!-- اعلان‌ها -->
+                        <div class="relative">
+                            <button class="relative bg-slate-800 hover:bg-slate-700 w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300">
+                                <i class="fas fa-bell"></i>
+                                <span class="absolute -top-1 -left-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">۳</span>
+                            </button>
+                        </div>
+                        
+                        <!-- آواتار کاربر -->
+                        <div class="flex items-center space-x-3 space-x-reverse">
+                            <div class="w-10 h-10 rounded-full primary-gradient flex items-center justify-center text-white font-bold">
+                                ع
+                            </div>
+                            <div class="hidden md:block">
+                                <div class="font-bold text-sm">علی محمدی</div>
+                                <div class="text-xs text-slate-400">کاربر طلایی</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- محتوای صفحه تیکت -->
+            <div class="p-6">
+                <!-- اطلاعات تیکت -->
+                <div class="mb-8">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+                        <div>
+                            <h1 class="text-2xl font-bold text-white mb-2">مشکل در آپلود فایل‌های بزرگ</h1>
+                            <div class="flex flex-wrap items-center gap-3">
+                                <span class="status-badge status-in-progress">در حال بررسی</span>
+                                <span class="text-sm text-slate-400">
+                                    <i class="fas fa-calendar ml-1"></i>
+                                    ایجاد شده در: ۱۴۰۲/۰۸/۲۰
+                                </span>
+                                <span class="text-sm text-slate-400">
+                                    <i class="fas fa-clock ml-1"></i>
+                                    آخرین بروزرسانی: امروز ۱۱:۳۰
+                                </span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-3 space-x-reverse">
+                            <button class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-all duration-300 flex items-center">
+                                <i class="fas fa-print ml-2"></i>
+                                چاپ تیکت
+                            </button>
+                            <button class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 flex items-center">
+                                <i class="fas fa-times ml-2"></i>
+                                بستن تیکت
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- جزئیات تیکت -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="stat-card rounded-xl p-5">
+                            <div class="flex items-center mb-3">
+                                <div class="w-10 h-10 rounded-lg bg-indigo-500/20 flex items-center justify-center ml-3">
+                                    <i class="fas fa-tag text-indigo-500"></i>
+                                </div>
+                                <div>
+                                    <p class="text-slate-400 text-sm">دسته‌بندی</p>
+                                    <p class="font-bold text-white">مشکلات فنی</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card rounded-xl p-5 ticket-priority-high">
+                            <div class="flex items-center mb-3">
+                                <div class="w-10 h-10 rounded-lg bg-red-500/20 flex items-center justify-center ml-3">
+                                    <i class="fas fa-exclamation-triangle text-red-500"></i>
+                                </div>
+                                <div>
+                                    <p class="text-slate-400 text-sm">اولویت</p>
+                                    <p class="font-bold text-white">بالا</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card rounded-xl p-5">
+                            <div class="flex items-center mb-3">
+                                <div class="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center ml-3">
+                                    <i class="fas fa-user-headset text-blue-500"></i>
+                                </div>
+                                <div>
+                                    <p class="text-slate-400 text-sm">پاسخ‌دهنده</p>
+                                    <p class="font-bold text-white">پشتیبانی فنی</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- تاریخچه مکالمه -->
+                <div class="mb-8">
+                    <h2 class="text-xl font-bold text-white mb-6">تاریخچه مکالمه</h2>
+                    
+                    <div class="space-y-6">
+                        <!-- پیام کاربر (اولین پیام) -->
+                        <div class="message-user rounded-xl p-5">
+                            <div class="flex items-start mb-4">
+                                <div class="w-10 h-10 rounded-full primary-gradient flex items-center justify-center text-white font-bold ml-3 flex-shrink-0">
+                                    ع
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div>
+                                            <h4 class="font-bold text-white">علی محمدی</h4>
+                                            <p class="text-xs text-slate-400">کاربر</p>
+                                        </div>
+                                        <div class="text-sm text-slate-400">
+                                            <i class="fas fa-clock ml-1"></i>
+                                            ۱۴۰۲/۰۸/۲۰ - ۱۰:۱۵
+                                        </div>
+                                    </div>
+                                    <p class="text-slate-300">
+                                        با سلام،<br>
+                                        هنگام آپلود فایل‌های بزرگتر از ۲۰۰ مگابایت با خطای "Connection Timeout" مواجه می‌شوم. این مشکل از دیروز شروع شده و برای فایل‌های کوچکتر مشکلی وجود ندارد.<br><br>
+                                        لطفاً راهنمایی کنید چگونه می‌توانم فایل‌های بزرگ را آپلود کنم. فایل مورد نظرم یک ویدیوی آموزشی به حجم ۳۵۰ مگابایت است.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-slate-700/50">
+                                <div class="text-xs text-slate-500">
+                                    <i class="fas fa-paperclip ml-1"></i>
+                                    ضمیمه شده: screenshot-error.png
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- پاسخ پشتیبانی -->
+                        <div class="message-support rounded-xl p-5">
+                            <div class="flex items-start mb-4">
+                                <div class="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-500 ml-3 flex-shrink-0">
+                                    <i class="fas fa-headset"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div>
+                                            <h4 class="font-bold text-white">پشتیبانی فنی</h4>
+                                            <p class="text-xs text-slate-400">کارشناس پشتیبانی</p>
+                                        </div>
+                                        <div class="text-sm text-slate-400">
+                                            <i class="fas fa-clock ml-1"></i>
+                                            ۱۴۰۲/۰۸/۲۰ - ۱۴:۳۰
+                                        </div>
+                                    </div>
+                                    <p class="text-slate-300">
+                                        سلام آقای محمدی،<br>
+                                        از گزارش مشکل شما متشکریم. مشکل timeout در آپلود فایل‌های بزرگ می‌تواند به دلیل محدودیت‌های زیر باشد:<br><br>
+                                        ۱. محدودیت زمان اجرای اسکریپت‌ها در سرور<br>
+                                        ۲. محدودیت حجم آپلود در تنظیمات PHP<br>
+                                        ۳. سرعت اینترنت شما<br><br>
+                                        لطفاً موارد زیر را بررسی کنید:<br>
+                                        • سرعت اینترنت خود را تست کنید<br>
+                                        • فایل را به بخش‌های کوچکتر تقسیم کنید<br>
+                                        • از نرم‌افزار FTP برای آپلود استفاده کنید<br><br>
+                                        در صورت ادامه مشکل، لطفاً اطلاعات زیر را ارسال کنید:<br>
+                                        • نسخه مرورگر<br>
+                                        • سیستم عامل<br>
+                                        • اندازه دقیق فایل
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-slate-700/50">
+                                <div class="flex items-center text-xs text-slate-500">
+                                    <i class="fas fa-user-tie ml-1"></i>
+                                    پاسخ داده شده توسط: محمد کریمی (کارشناس فنی)
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- پاسخ کاربر -->
+                        <div class="message-user rounded-xl p-5">
+                            <div class="flex items-start mb-4">
+                                <div class="w-10 h-10 rounded-full primary-gradient flex items-center justify-center text-white font-bold ml-3 flex-shrink-0">
+                                    ع
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div>
+                                            <h4 class="font-bold text-white">علی محمدی</h4>
+                                            <p class="text-xs text-slate-400">کاربر</p>
+                                        </div>
+                                        <div class="text-sm text-slate-400">
+                                            <i class="fas fa-clock ml-1"></i>
+                                            امروز - ۰۹:۴۵
+                                        </div>
+                                    </div>
+                                    <p class="text-slate-300">
+                                        با تشکر از پاسخ شما،<br>
+                                        موارد پیشنهادی را بررسی کردم:<br><br>
+                                        • سرعت اینترنت من ۵۰ مگابیت بر ثانیه است (تست شده)<br>
+                                        • مرورگر: Chrome آخرین نسخه<br>
+                                        • سیستم عامل: Windows 11<br>
+                                        • اندازه فایل: ۳۴۷ مگابایت دقیقاً<br><br>
+                                        فایل را به ۳ بخش تقسیم کردم و هر بخش به درستی آپلود شد. اما نیاز دارم فایل را به صورت یکجا آپلود کنم چون برای مشتری‌ام ارسال می‌کنم و باید یک فایل واحد باشد.<br><br>
+                                        آیا امکان افزایش limit سرور وجود دارد؟
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- وضعیت در حال بررسی -->
+                        <div class="message-system rounded-xl p-5">
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-500 ml-3 flex-shrink-0">
+                                    <i class="fas fa-cog"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div>
+                                            <h4 class="font-bold text-white">سیستم</h4>
+                                            <p class="text-xs text-slate-400">وضعیت تیکت تغییر کرد</p>
+                                        </div>
+                                        <div class="text-sm text-slate-400">
+                                            <i class="fas fa-clock ml-1"></i>
+                                            امروز - ۱۱:۳۰
+                                        </div>
+                                    </div>
+                                    <p class="text-slate-300">
+                                        تیکت به بخش "پشتیبانی سطح دو" ارجاع داده شد. کارشناسان فنی در حال بررسی تنظیمات سرور هستند.
+                                    </p>
+                                    <div class="mt-3 flex items-center">
+                                        <div class="flex items-center text-amber-400">
+                                            <i class="fas fa-sync-alt fa-spin ml-2"></i>
+                                            <span>در حال بررسی توسط تیم فنی</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- فرم پاسخ جدید -->
+                <div class="stat-card rounded-xl p-6">
+                    <h2 class="text-xl font-bold text-white mb-6">پاسخ جدید به تیکت</h2>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-slate-300 mb-2">پیام شما</label>
+                            <textarea class="form-input" rows="6" placeholder="پاسخ خود را اینجا بنویسید..."></textarea>
+                            <p class="text-xs text-slate-500 mt-2">می‌توانید از تگ‌های HTML ساده استفاده کنید: &lt;b&gt;, &lt;i&gt;, &lt;code&gt;</p>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-slate-300 mb-2">ضمیمه کردن فایل (اختیاری)</label>
+                            <div class="border-2 border-dashed border-slate-700 rounded-xl p-6 text-center hover:border-indigo-500 transition-all duration-300 cursor-pointer">
+                                <i class="fas fa-cloud-upload-alt text-3xl text-indigo-500 mb-4"></i>
+                                <p class="font-medium text-white mb-2">فایل‌ها را اینجا رها کنید</p>
+                                <p class="text-sm text-slate-400 mb-4">یا برای انتخاب فایل کلیک کنید</p>
+                                <button class="px-6 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300">
+                                    انتخاب فایل
+                                </button>
+                                <p class="text-xs text-slate-500 mt-4">حداکثر حجم هر فایل: ۵۰ مگابایت (مجموع: ۱۰۰ مگابایت)</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-4 space-x-reverse">
+                                <label class="flex items-center space-x-3 space-x-reverse cursor-pointer">
+                                    <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-indigo-500 w-5 h-5" checked>
+                                    <span class="text-slate-300">ارسال کپی به ایمیل من</span>
+                                </label>
+                                <label class="flex items-center space-x-3 space-x-reverse cursor-pointer">
+                                    <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-indigo-500 w-5 h-5">
+                                    <span class="text-slate-300">نیاز به پاسخ فوری</span>
+                                </label>
+                            </div>
+                            
+                            <div class="flex space-x-3 space-x-reverse">
+                                <button class="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-medium transition-all duration-300">
+                                    پیش‌نمایش
+                                </button>
+                                <button class="px-6 py-3 primary-gradient hover:shadow-lg hover:shadow-indigo-500/30 text-white rounded-lg font-medium transition-all duration-300">
+                                    <i class="fas fa-paper-plane ml-2"></i>
+                                    ارسال پاسخ
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- اطلاعات فنی -->
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="stat-card rounded-xl p-6">
+                        <h3 class="font-bold text-lg mb-4">اطلاعات فنی تیکت</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-300">شناسه تیکت:</span>
+                                <code class="text-sm bg-slate-800 px-2 py-1 rounded">TKT-789456</code>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-300">آیپی کاربر:</span>
+                                <span class="font-mono">192.168.1.105</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-300">مرورگر:</span>
+                                <span>Chrome 118</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-300">سیستم عامل:</span>
+                                <span>Windows 11</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-300">زمان پاسخ‌گویی:</span>
+                                <span class="text-emerald-400">۴ ساعت و ۱۵ دقیقه</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card rounded-xl p-6">
+                        <h3 class="font-bold text-lg mb-4">عملیات تیکت</h3>
+                        <div class="space-y-3">
+                            <button class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-all duration-300 flex items-center justify-center">
+                                <i class="fas fa-user-plus ml-2"></i>
+                                دعوت همکار به تیکت
+                            </button>
+                            <button class="w-full py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 flex items-center justify-center">
+                                <i class="fas fa-history ml-2"></i>
+                                مشاهده تاریخچه کامل
+                            </button>
+                            <button class="w-full py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 flex items-center justify-center">
+                                <i class="fas fa-star ml-2"></i>
+                                امتیازدهی به پشتیبانی
+                            </button>
+                            <button class="w-full py-3 bg-red-500/20 hover:bg-red-500/30 text-red-400 hover:text-red-300 rounded-lg transition-all duration-300 flex items-center justify-center">
+                                <i class="fas fa-flag ml-2"></i>
+                                گزارش مشکل
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- اسکریپت‌های جاوااسکریپت -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // نوار پیشرفت اسکرول
+            window.addEventListener('scroll', function() {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById('progressBar').style.width = scrolled + '%';
+            });
+            
+            // مدیریت منوی موبایل
+            const menuToggle = document.getElementById('menuToggle');
+            const closeSidebar = document.getElementById('closeSidebar');
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+            
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function() {
+                    sidebar.classList.add('active');
+                    sidebarOverlay.classList.add('active');
+                });
+            }
+            
+            if (closeSidebar) {
+                closeSidebar.addEventListener('click', function() {
+                    sidebar.classList.remove('active');
+                    sidebarOverlay.classList.remove('active');
+                });
+            }
+            
+            if (sidebarOverlay) {
+                sidebarOverlay.addEventListener('click', function() {
+                    sidebar.classList.remove('active');
+                    sidebarOverlay.classList.remove('active');
+                });
+            }
+            
+            // مدیریت ارسال پاسخ
+            const sendBtn = document.querySelector('.primary-gradient');
+            if (sendBtn) {
+                sendBtn.addEventListener('click', function() {
+                    const textarea = document.querySelector('textarea');
+                    if (textarea && textarea.value.trim() !== '') {
+                        alert('پاسخ شما با موفقیت ارسال شد و در صف بررسی قرار گرفت.');
+                        textarea.value = '';
+                    } else {
+                        alert('لطفاً پیام خود را وارد کنید.');
+                    }
+                });
+            }
+            
+            // نمایش/مخفی کردن رمز عبور (اگر وجود داشته باشد)
+            document.querySelectorAll('.fa-eye').forEach(icon => {
+                icon.addEventListener('click', function() {
+                    const input = this.closest('.relative')?.querySelector('input');
+                    if (input && input.type === 'password') {
+                        input.type = 'text';
+                        this.classList.remove('fa-eye');
+                        this.classList.add('fa-eye-slash');
+                    } else if (input) {
+                        input.type = 'password';
+                        this.classList.remove('fa-eye-slash');
+                        this.classList.add('fa-eye');
+                    }
+                });
+            });
+            
+            // مدیریت انتخاب فایل
+            const fileUpload = document.querySelector('.border-dashed');
+            if (fileUpload) {
+                fileUpload.addEventListener('click', function() {
+                    const input = document.createElement('input');
+                    input.type = 'file';
+                    input.multiple = true;
+                    input.accept = 'image/*,.pdf,.doc,.docx,.zip,.rar';
+                    input.onchange = function(e) {
+                        if (e.target.files.length) {
+                            alert(`${e.target.files.length} فایل انتخاب شد`);
+                        }
+                    };
+                    input.click();
+                });
+            }
+            
+            console.log('صفحه تیکت پشتیبانی آماده است!');
+        });
+    </script>
+</body>
+</html>
