@@ -10,6 +10,7 @@
     <!-- اضافه کردن Chart.js برای نمودارها -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        /* تمام استایل‌های قبلی اینجا قرار می‌گیرند */
         * {
             font-family: 'Vazirmatn', sans-serif;
         }
@@ -652,32 +653,1293 @@
                 
                 <!-- صفحه داشبورد فروش -->
                 <div id="sellerDashboard" class="page-content active">
-                    <!-- محتوای صفحه داشبورد -->
+                    <div class="mb-8">
+                        <h1 class="text-2xl font-bold text-white mb-2">سلام علی، به پنل فروشنده خوش آمدید</h1>
+                        <p class="text-slate-400">آمار فروش، درآمدها و عملکرد خود را مدیریت کنید</p>
+                    </div>
+                    
+                    <!-- آمار کلی -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <div class="stat-card rounded-xl p-5 card-hover">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-400 text-sm">درآمد امروز</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۱,۲۵۰,۰۰۰</p>
+                                </div>
+                                <div class="w-12 h-12 rounded-lg bg-emerald-500/20 flex items-center justify-center">
+                                    <i class="fas fa-money-bill-wave text-emerald-500 text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="mt-4 text-xs text-emerald-400">
+                                <i class="fas fa-arrow-up ml-1"></i>
+                                <span>۱۸٪ نسبت به دیروز</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card rounded-xl p-5 card-hover">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-400 text-sm">فروش این ماه</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۴۸</p>
+                                </div>
+                                <div class="w-12 h-12 rounded-lg bg-indigo-500/20 flex items-center justify-center">
+                                    <i class="fas fa-shopping-cart text-indigo-500 text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="mt-4 text-xs text-indigo-400">
+                                <i class="fas fa-chart-line ml-1"></i>
+                                <span>۱۲ فروش جدید</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card rounded-xl p-5 card-hover">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-400 text-sm">محصولات فعال</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۲۴</p>
+                                </div>
+                                <div class="w-12 h-12 rounded-lg bg-amber-500/20 flex items-center justify-center">
+                                    <i class="fas fa-box text-amber-500 text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="mt-4 text-xs text-amber-400">
+                                <i class="fas fa-check-circle ml-1"></i>
+                                <span>۲ محصول در انتظار تایید</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card rounded-xl p-5 card-hover">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-400 text-sm">میانگین امتیاز</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۴.۷</p>
+                                </div>
+                                <div class="w-12 h-12 rounded-lg bg-purple-500/20 flex items-center justify-center">
+                                    <i class="fas fa-star text-purple-500 text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="mt-4 text-xs text-purple-400">
+                                <i class="fas fa-award ml-1"></i>
+                                <span>فروشنده برتر این ماه</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- نمودار و آمار پیشرفته -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                        <div class="lg:col-span-2">
+                            <div class="stat-card rounded-xl p-6">
+                                <div class="flex justify-between items-center mb-6">
+                                    <h2 class="text-xl font-bold text-white">نمودار فروش ۷ روز اخیر</h2>
+                                    <select class="form-input w-48" id="salesChartRange">
+                                        <option value="7">۷ روز گذشته</option>
+                                        <option value="30">۳۰ روز گذشته</option>
+                                        <option value="90">۳ ماه گذشته</option>
+                                    </select>
+                                </div>
+                                
+                                <!-- نمودار Chart.js -->
+                                <div class="chart-container">
+                                    <canvas id="salesChart"></canvas>
+                                </div>
+                                
+                                <div class="grid grid-cols-3 gap-4 mt-8">
+                                    <div class="text-center">
+                                        <p class="text-slate-400 text-sm">میانگین فروش روزانه</p>
+                                        <p class="text-xl font-bold text-white">۳.۲</p>
+                                    </div>
+                                    <div class="text-center">
+                                        <p class="text-slate-400 text-sm">بیشترین فروش در روز</p>
+                                        <p class="text-xl font-bold text-white">۸</p>
+                                    </div>
+                                    <div class="text-center">
+                                        <p class="text-slate-400 text-sm">رشد نسبت به ماه قبل</p>
+                                        <p class="text-xl font-bold text-emerald-400">+۲۴٪</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="stat-card rounded-xl p-6 mb-6">
+                                <h3 class="font-bold text-lg mb-4">اهداف این ماه</h3>
+                                
+                                <!-- پیشرفت سطح -->
+                                <div class="mb-6">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-slate-300">سطح طلایی</span>
+                                        <span class="text-sm font-bold text-amber-400">۸۵٪</span>
+                                    </div>
+                                    <div class="w-full bg-slate-700 h-2 rounded-full overflow-hidden">
+                                        <div class="bg-amber-500 h-full" style="width: 85%;"></div>
+                                    </div>
+                                    <p class="text-xs text-slate-400 mt-2">نیاز به ۳ فروش دیگر برای ارتقاء</p>
+                                </div>
+                                
+                                <!-- پیشرفت درآمد -->
+                                <div class="mb-6">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-slate-300">هدف درآمدی</span>
+                                        <span class="text-sm font-bold text-emerald-400">۱۵M / ۲۰M</span>
+                                    </div>
+                                    <div class="w-full bg-slate-700 h-2 rounded-full overflow-hidden">
+                                        <div class="bg-emerald-500 h-full" style="width: 75%;"></div>
+                                    </div>
+                                </div>
+                                
+                                <!-- پاداش‌ها -->
+                                <div>
+                                    <h4 class="text-slate-300 font-medium mb-3">پاداش‌های فعال</h4>
+                                    <div class="space-y-2">
+                                        <div class="flex items-center p-2 bg-emerald-500/10 rounded-lg">
+                                            <div class="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center ml-2">
+                                                <i class="fas fa-gift text-emerald-500 text-sm"></i>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-medium text-white">فروشنده برتر ماه</p>
+                                                <p class="text-xs text-slate-400">پاداش: ۵۰۰,۰۰۰ تومان</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center p-2 bg-indigo-500/10 rounded-lg">
+                                            <div class="w-8 h-8 rounded-full bg-indigo-500/20 flex items-center justify-center ml-2">
+                                                <i class="fas fa-trophy text-indigo-500 text-sm"></i>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-medium text-white">۱۰ فروش متوالی</p>
+                                                <p class="text-xs text-slate-400">پاداش: ۱۰٪ تخفیف کمیسیون</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card rounded-xl p-6">
+                                <h3 class="font-bold text-lg mb-4">عملکرد سریع</h3>
+                                <div class="space-y-3">
+                                    <button class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-all duration-300 flex items-center justify-center" data-page="addProduct">
+                                        <i class="fas fa-plus-circle ml-2"></i>
+                                        افزودن محصول جدید
+                                    </button>
+                                    <button class="w-full py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 flex items-center justify-center" data-page="analytics">
+                                        <i class="fas fa-chart-bar ml-2"></i>
+                                        مشاهده گزارش کامل
+                                    </button>
+                                    <button class="w-full py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 flex items-center justify-center" data-page="withdrawals">
+                                        <i class="fas fa-wallet ml-2"></i>
+                                        درخواست برداشت
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- آخرین فروش‌ها -->
+                    <div class="mb-8">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-xl font-bold text-white">آخرین فروش‌ها</h2>
+                            <a href="#" class="text-indigo-400 hover:text-indigo-300 text-sm" data-page="earnings">مشاهده همه <i class="fas fa-arrow-left mr-1"></i></a>
+                        </div>
+                        
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>شناسه فروش</th>
+                                        <th>محصول</th>
+                                        <th>خریدار</th>
+                                        <th>مبلغ</th>
+                                        <th>کمیسیون</th>
+                                        <th>تاریخ</th>
+                                        <th>وضعیت</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code class="text-xs bg-slate-800 p-1 rounded">S-789123</code></td>
+                                        <td class="font-medium">قالب فروشگاهی React</td>
+                                        <td>مریم احمدی</td>
+                                        <td class="font-bold">۱۲۰,۰۰۰ تومان</td>
+                                        <td class="text-emerald-400 font-bold">۳۰,۰۰۰ تومان</td>
+                                        <td>امروز ۱۰:۳۰</td>
+                                        <td><span class="status-badge status-success">تکمیل شده</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code class="text-xs bg-slate-800 p-1 rounded">S-456789</code></td>
+                                        <td class="font-medium">پکیج آموزشی Node.js</td>
+                                        <td>رضا کریمی</td>
+                                        <td class="font-bold">۸۵,۰۰۰ تومان</td>
+                                        <td class="text-emerald-400 font-bold">۲۱,۲۵۰ تومان</td>
+                                        <td>دیروز ۱۴:۲۰</td>
+                                        <td><span class="status-badge status-success">تکمیل شده</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code class="text-xs bg-slate-800 p-1 rounded">S-123456</code></td>
+                                        <td class="font-medium">پلاگین امنیتی وردپرس</td>
+                                        <td>سارا محمدی</td>
+                                        <td class="font-bold">۶۰,۰۰۰ تومان</td>
+                                        <td class="text-amber-400 font-bold">۱۵,۰۰۰ تومان</td>
+                                        <td>۲ روز پیش</td>
+                                        <td><span class="status-badge status-pending">در حال پردازش</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code class="text-xs bg-slate-800 p-1 rounded">S-987654</code></td>
+                                        <td class="font-medium">اسکریپت مدیریت دانلود</td>
+                                        <td>علی رضایی</td>
+                                        <td class="font-bold">۱۵۰,۰۰۰ تومان</td>
+                                        <td class="text-emerald-400 font-bold">۳۷,۵۰۰ تومان</td>
+                                        <td>۳ روز پیش</td>
+                                        <td><span class="status-badge status-success">تکمیل شده</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code class="text-xs bg-slate-800 p-1 rounded">S-654321</code></td>
+                                        <td class="font-medium">قالب شرکتی Vue.js</td>
+                                        <td>محمد حسینی</td>
+                                        <td class="font-bold">۹۵,۰۰۰ تومان</td>
+                                        <td class="text-emerald-400 font-bold">۲۳,۷۵۰ تومان</td>
+                                        <td>۴ روز پیش</td>
+                                        <td><span class="status-badge status-success">تکمیل شده</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- محصولات پرفروش -->
+                    <div>
+                        <h2 class="text-xl font-bold text-white mb-4">محصولات پرفروش شما</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                            <div class="product-card rounded-xl overflow-hidden">
+                                <div class="product-image">
+                                    <i class="fas fa-palette text-5xl text-white opacity-80"></i>
+                                </div>
+                                <div class="p-4">
+                                    <h3 class="font-bold text-white mb-2">قالب فروشگاهی React</h3>
+                                    <div class="flex justify-between items-center mb-3">
+                                        <span class="text-slate-400 text-sm">قالب وبسایت</span>
+                                        <span class="font-bold text-white">۱۲۰,۰۰۰ تومان</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <div class="flex items-center">
+                                            <i class="fas fa-star text-amber-500 ml-1"></i>
+                                            <span class="text-sm">۴.۹</span>
+                                        </div>
+                                        <span class="text-sm text-emerald-400">۴۸ فروش</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="product-card rounded-xl overflow-hidden">
+                                <div class="product-image">
+                                    <i class="fas fa-graduation-cap text-5xl text-white opacity-80"></i>
+                                </div>
+                                <div class="p-4">
+                                    <h3 class="font-bold text-white mb-2">پکیج آموزشی Node.js</h3>
+                                    <div class="flex justify-between items-center mb-3">
+                                        <span class="text-slate-400 text-sm">آموزش و دوره</span>
+                                        <span class="font-bold text-white">۸۵,۰۰۰ تومان</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <div class="flex items-center">
+                                            <i class="fas fa-star text-amber-500 ml-1"></i>
+                                            <span class="text-sm">۴.۷</span>
+                                        </div>
+                                        <span class="text-sm text-emerald-400">۳۲ فروش</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="product-card rounded-xl overflow-hidden">
+                                <div class="product-image">
+                                    <i class="fas fa-puzzle-piece text-5xl text-white opacity-80"></i>
+                                </div>
+                                <div class="p-4">
+                                    <h3 class="font-bold text-white mb-2">پلاگین امنیتی وردپرس</h3>
+                                    <div class="flex justify-between items-center mb-3">
+                                        <span class="text-slate-400 text-sm">پلاگین و افزونه</span>
+                                        <span class="font-bold text-white">۶۰,۰۰۰ تومان</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <div class="flex items-center">
+                                            <i class="fas fa-star text-amber-500 ml-1"></i>
+                                            <span class="text-sm">۴.۵</span>
+                                        </div>
+                                        <span class="text-sm text-emerald-400">۲۴ فروش</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="product-card rounded-xl overflow-hidden">
+                                <div class="product-image">
+                                    <i class="fas fa-code text-5xl text-white opacity-80"></i>
+                                </div>
+                                <div class="p-4">
+                                    <h3 class="font-bold text-white mb-2">اسکریپت مدیریت دانلود</h3>
+                                    <div class="flex justify-between items-center mb-3">
+                                        <span class="text-slate-400 text-sm">اسکریپت و کد</span>
+                                        <span class="font-bold text-white">۱۵۰,۰۰۰ تومان</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <div class="flex items-center">
+                                            <i class="fas fa-star text-amber-500 ml-1"></i>
+                                            <span class="text-sm">۴.۸</span>
+                                        </div>
+                                        <span class="text-sm text-emerald-400">۱۸ فروش</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- صفحه محصولات من -->
                 <div id="products" class="page-content">
-                    <!-- محتوای صفحه محصولات -->
+                    <div class="mb-8">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
+                            <div>
+                                <h1 class="text-2xl font-bold text-white mb-2">محصولات من</h1>
+                                <p class="text-slate-400">مدیریت و سازماندهی محصولات فروشگاه شما</p>
+                            </div>
+                            <button class="mt-4 md:mt-0 px-5 py-2.5 primary-gradient hover:shadow-lg hover:shadow-indigo-500/30 text-white rounded-lg font-medium transition-all duration-300 flex items-center" data-page="addProduct">
+                                <i class="fas fa-plus-circle ml-2"></i>
+                                افزودن محصول جدید
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- فیلتر و جستجو -->
+                    <div class="stat-card rounded-xl p-6 mb-6">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                            <div class="flex flex-wrap gap-2">
+                                <button class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-all duration-300 filter-btn" data-filter="all">
+                                    همه محصولات
+                                </button>
+                                <button class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 filter-btn" data-filter="active">
+                                    فعال
+                                </button>
+                                <button class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 filter-btn" data-filter="pending">
+                                    در انتظار تایید
+                                </button>
+                                <button class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 filter-btn" data-filter="draft">
+                                    پیش‌نویس
+                                </button>
+                            </div>
+                            <div class="flex items-center w-full md:w-auto">
+                                <div class="relative flex-1 md:w-64">
+                                    <input type="text" placeholder="جستجو در محصولات..." class="form-input pr-10" id="productSearch">
+                                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+                                </div>
+                                <select class="form-input w-48 mr-3" id="productSort">
+                                    <option value="newest">مرتب‌سازی: جدیدترین</option>
+                                    <option value="best-selling">مرتب‌سازی: پرفروش‌ترین</option>
+                                    <option value="price-high">مرتب‌سازی: گران‌ترین</option>
+                                    <option value="price-low">مرتب‌سازی: ارزان‌ترین</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- جدول محصولات -->
+                    <div class="table-container mb-6">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-indigo-500" id="selectAllProducts">
+                                    </th>
+                                    <th>محصول</th>
+                                    <th>دسته‌بندی</th>
+                                    <th>قیمت</th>
+                                    <th>فروش</th>
+                                    <th>درآمد</th>
+                                    <th>امتیاز</th>
+                                    <th>وضعیت</th>
+                                    <th>عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- محصول ۱ -->
+                                <tr data-product-id="1">
+                                    <td>
+                                        <input type="checkbox" class="product-checkbox rounded bg-slate-800 border-slate-700 text-indigo-500" value="1">
+                                    </td>
+                                    <td>
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 rounded-lg bg-indigo-500/20 flex items-center justify-center ml-3">
+                                                <i class="fas fa-palette text-indigo-500"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-white">قالب فروشگاهی React</p>
+                                                <p class="text-xs text-slate-400">آخرین بروزرسانی: ۳ روز پیش</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>قالب وبسایت</td>
+                                    <td class="font-bold">۱۲۰,۰۰۰ تومان</td>
+                                    <td>۴۸</td>
+                                    <td class="text-emerald-400 font-bold">۵,۷۶۰,۰۰۰ تومان</td>
+                                    <td>
+                                        <div class="flex items-center">
+                                            <i class="fas fa-star text-amber-500 ml-1"></i>
+                                            <span>۴.۹</span>
+                                        </div>
+                                    </td>
+                                    <td><span class="status-badge status-success">فعال</span></td>
+                                    <td>
+                                        <div class="flex space-x-2 space-x-reverse">
+                                            <button class="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm product-edit" data-id="1">
+                                                ویرایش
+                                            </button>
+                                            <button class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-sm product-view" data-id="1">
+                                                مشاهده
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <!-- محصول ۲ -->
+                                <tr data-product-id="2">
+                                    <td>
+                                        <input type="checkbox" class="product-checkbox rounded bg-slate-800 border-slate-700 text-indigo-500" value="2">
+                                    </td>
+                                    <td>
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center ml-3">
+                                                <i class="fas fa-graduation-cap text-emerald-500"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-white">پکیج آموزشی Node.js</p>
+                                                <p class="text-xs text-slate-400">آخرین بروزرسانی: ۱ هفته پیش</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>آموزش و دوره</td>
+                                    <td class="font-bold">۸۵,۰۰۰ تومان</td>
+                                    <td>۳۲</td>
+                                    <td class="text-emerald-400 font-bold">۲,۷۲۰,۰۰۰ تومان</td>
+                                    <td>
+                                        <div class="flex items-center">
+                                            <i class="fas fa-star text-amber-500 ml-1"></i>
+                                            <span>۴.۷</span>
+                                        </div>
+                                    </td>
+                                    <td><span class="status-badge status-success">فعال</span></td>
+                                    <td>
+                                        <div class="flex space-x-2 space-x-reverse">
+                                            <button class="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm product-edit" data-id="2">
+                                                ویرایش
+                                            </button>
+                                            <button class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-sm product-view" data-id="2">
+                                                مشاهده
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <!-- محصول ۳ -->
+                                <tr data-product-id="3">
+                                    <td>
+                                        <input type="checkbox" class="product-checkbox rounded bg-slate-800 border-slate-700 text-indigo-500" value="3">
+                                    </td>
+                                    <td>
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center ml-3">
+                                                <i class="fas fa-puzzle-piece text-amber-500"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-white">پلاگین امنیتی وردپرس</p>
+                                                <p class="text-xs text-slate-400">آخرین بروزرسانی: ۵ روز پیش</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>پلاگین و افزونه</td>
+                                    <td class="font-bold">۶۰,۰۰۰ تومان</td>
+                                    <td>۲۴</td>
+                                    <td class="text-emerald-400 font-bold">۱,۴۴۰,۰۰۰ تومان</td>
+                                    <td>
+                                        <div class="flex items-center">
+                                            <i class="fas fa-star text-amber-500 ml-1"></i>
+                                            <span>۴.۵</span>
+                                        </div>
+                                    </td>
+                                    <td><span class="status-badge status-pending">در انتظار تایید</span></td>
+                                    <td>
+                                        <div class="flex space-x-2 space-x-reverse">
+                                            <button class="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm product-edit" data-id="3">
+                                                ویرایش
+                                            </button>
+                                            <button class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-sm product-view" data-id="3">
+                                                مشاهده
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <!-- محصول ۴ -->
+                                <tr data-product-id="4">
+                                    <td>
+                                        <input type="checkbox" class="product-checkbox rounded bg-slate-800 border-slate-700 text-indigo-500" value="4">
+                                    </td>
+                                    <td>
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center ml-3">
+                                                <i class="fas fa-code text-purple-500"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-white">اسکریپت مدیریت دانلود</p>
+                                                <p class="text-xs text-slate-400">آخرین بروزرسانی: ۲ روز پیش</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>اسکریپت و کد</td>
+                                    <td class="font-bold">۱۵۰,۰۰۰ تومان</td>
+                                    <td>۱۸</td>
+                                    <td class="text-emerald-400 font-bold">۲,۷۰۰,۰۰۰ تومان</td>
+                                    <td>
+                                        <div class="flex items-center">
+                                            <i class="fas fa-star text-amber-500 ml-1"></i>
+                                            <span>۴.۸</span>
+                                        </div>
+                                    </td>
+                                    <td><span class="status-badge status-success">فعال</span></td>
+                                    <td>
+                                        <div class="flex space-x-2 space-x-reverse">
+                                            <button class="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm product-edit" data-id="4">
+                                                ویرایش
+                                            </button>
+                                            <button class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-sm product-view" data-id="4">
+                                                مشاهده
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <!-- محصول ۵ -->
+                                <tr data-product-id="5">
+                                    <td>
+                                        <input type="checkbox" class="product-checkbox rounded bg-slate-800 border-slate-700 text-indigo-500" value="5">
+                                    </td>
+                                    <td>
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center ml-3">
+                                                <i class="fas fa-palette text-blue-500"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-white">قالب شرکتی Vue.js</p>
+                                                <p class="text-xs text-slate-400">آخرین بروزرسانی: ۱ ماه پیش</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>قالب وبسایت</td>
+                                    <td class="font-bold">۹۵,۰۰۰ تومان</td>
+                                    <td>۱۵</td>
+                                    <td class="text-emerald-400 font-bold">۱,۴۲۵,۰۰۰ تومان</td>
+                                    <td>
+                                        <div class="flex items-center">
+                                            <i class="fas fa-star text-amber-500 ml-1"></i>
+                                            <span>۴.۶</span>
+                                        </div>
+                                    </td>
+                                    <td><span class="status-badge status-draft">پیش‌نویس</span></td>
+                                    <td>
+                                        <div class="flex space-x-2 space-x-reverse">
+                                            <button class="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm product-edit" data-id="5">
+                                                ویرایش
+                                            </button>
+                                            <button class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-sm product-view" data-id="5">
+                                                مشاهده
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- عملیات دسته‌ای -->
+                    <div class="flex justify-between items-center mb-8" id="bulkActions" style="display: none;">
+                        <div class="flex items-center space-x-3 space-x-reverse">
+                            <span class="text-slate-400 text-sm" id="selectedCount">۰ محصول انتخاب شده</span>
+                            <button class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-all duration-300 text-sm" id="activateSelected">
+                                فعال‌سازی انتخاب‌ها
+                            </button>
+                            <button class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-all duration-300 text-sm" id="deleteSelected">
+                                حذف انتخاب‌ها
+                            </button>
+                        </div>
+                        
+                        <!-- صفحه‌بندی -->
+                        <div class="flex items-center space-x-2 space-x-reverse">
+                            <button class="w-10 h-10 bg-slate-800 hover:bg-slate-700 text-white rounded-lg flex items-center justify-center" id="prevPage">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                            <span class="px-3 py-2 bg-indigo-600 text-white rounded-lg" id="currentPage">1</span>
+                            <button class="w-10 h-10 bg-slate-800 hover:bg-slate-700 text-white rounded-lg flex items-center justify-center" id="nextPage">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- آمار محصولات -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="stat-card rounded-xl p-6">
+                            <h3 class="font-bold text-lg mb-4">توزیع وضعیت محصولات</h3>
+                            <div class="chart-container">
+                                <canvas id="productsStatusChart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card rounded-xl p-6">
+                            <h3 class="font-bold text-lg mb-4">عملکرد دسته‌ها</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg">
+                                    <div>
+                                        <p class="font-medium text-white">قالب وبسایت</p>
+                                        <p class="text-sm text-slate-400">۶۳ فروش</p>
+                                    </div>
+                                    <div class="text-left">
+                                        <p class="font-bold text-white">۷,۱۸۵,۰۰۰ تومان</p>
+                                        <p class="text-xs text-emerald-400">+۱۲٪</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg">
+                                    <div>
+                                        <p class="font-medium text-white">آموزش و دوره</p>
+                                        <p class="text-sm text-slate-400">۳۲ فروش</p>
+                                    </div>
+                                    <div class="text-left">
+                                        <p class="font-bold text-white">۲,۷۲۰,۰۰۰ تومان</p>
+                                        <p class="text-xs text-emerald-400">+۸٪</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg">
+                                    <div>
+                                        <p class="font-medium text-white">پلاگین و افزونه</p>
+                                        <p class="text-sm text-slate-400">۲۴ فروش</p>
+                                    </div>
+                                    <div class="text-left">
+                                        <p class="font-bold text-white">۱,۴۴۰,۰۰۰ تومان</p>
+                                        <p class="text-xs text-emerald-400">+۱۵٪</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg">
+                                    <div>
+                                        <p class="font-medium text-white">اسکریپت و کد</p>
+                                        <p class="text-sm text-slate-400">۱۸ فروش</p>
+                                    </div>
+                                    <div class="text-left">
+                                        <p class="font-bold text-white">۲,۷۰۰,۰۰۰ تومان</p>
+                                        <p class="text-xs text-emerald-400">+۲۲٪</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card rounded-xl p-6">
+                            <h3 class="font-bold text-lg mb-4">توصیه‌ها</h3>
+                            <div class="space-y-4">
+                                <div class="p-3 bg-indigo-500/10 rounded-lg">
+                                    <h4 class="font-medium text-white mb-1">بهبود تصاویر محصول</h4>
+                                    <p class="text-sm text-slate-300">افزودن اسکرین‌شات‌های بیشتر می‌تواند نرخ تبدیل را ۱۵٪ افزایش دهد.</p>
+                                </div>
+                                
+                                <div class="p-3 bg-emerald-500/10 rounded-lg">
+                                    <h4 class="font-medium text-white mb-1">اضافه کردن ویدیو دمو</h4>
+                                    <p class="text-sm text-slate-300">محصولات دارای ویدیو دمو ۴۰٪ بیشتر فروش می‌روند.</p>
+                                </div>
+                                
+                                <div class="p-3 bg-amber-500/10 rounded-lg">
+                                    <h4 class="font-medium text-white mb-1">به‌روزرسانی مستندات</h4>
+                                    <p class="text-sm text-slate-300">مستندات کامل نرخ بازگشت محصول را کاهش می‌دهد.</p>
+                                </div>
+                            </div>
+                            
+                            <button class="w-full mt-6 py-2.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 flex items-center justify-center" id="optimizeProducts">
+                                <i class="fas fa-magic ml-2"></i>
+                                بهینه‌سازی هوشمند
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- صفحه سفارشات -->
                 <div id="orders" class="page-content">
-                    <!-- محتوای صفحه سفارشات -->
+                    <div class="mb-8">
+                        <h1 class="text-2xl font-bold text-white mb-2">سفارشات و درخواست‌ها</h1>
+                        <p class="text-slate-400">مدیریت سفارشات و درخواست‌های خریداران</p>
+                    </div>
+                    
+                    <!-- آمار سفارشات -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <div class="stat-card rounded-xl p-5 card-hover">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-400 text-sm">سفارشات جدید</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۱۲</p>
+                                </div>
+                                <div class="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center">
+                                    <i class="fas fa-shopping-cart text-blue-500 text-xl"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card rounded-xl p-5 card-hover">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-400 text-sm">در حال پردازش</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۸</p>
+                                </div>
+                                <div class="w-12 h-12 rounded-lg bg-amber-500/20 flex items-center justify-center">
+                                    <i class="fas fa-cog text-amber-500 text-xl"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card rounded-xl p-5 card-hover">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-400 text-sm">تحویل شده</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۴۲</p>
+                                </div>
+                                <div class="w-12 h-12 rounded-lg bg-emerald-500/20 flex items-center justify-center">
+                                    <i class="fas fa-check-circle text-emerald-500 text-xl"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card rounded-xl p-5 card-hover">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-400 text-sm">مرجوعی</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۲</p>
+                                </div>
+                                <div class="w-12 h-12 rounded-lg bg-red-500/20 flex items-center justify-center">
+                                    <i class="fas fa-undo text-red-500 text-xl"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- جدول سفارشات -->
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>شماره سفارش</th>
+                                    <th>خریدار</th>
+                                    <th>محصول</th>
+                                    <th>تاریخ</th>
+                                    <th>مبلغ</th>
+                                    <th>وضعیت</th>
+                                    <th>عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code class="text-xs bg-slate-800 p-1 rounded">ORD-789123</code></td>
+                                    <td>مریم احمدی</td>
+                                    <td>قالب فروشگاهی React</td>
+                                    <td>امروز ۱۰:۳۰</td>
+                                    <td class="font-bold">۱۲۰,۰۰۰ تومان</td>
+                                    <td><span class="status-badge status-success">تکمیل شده</span></td>
+                                    <td>
+                                        <button class="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm">
+                                            مشاهده
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><code class="text-xs bg-slate-800 p-1 rounded">ORD-456789</code></td>
+                                    <td>رضا کریمی</td>
+                                    <td>پکیج آموزشی Node.js</td>
+                                    <td>دیروز ۱۴:۲۰</td>
+                                    <td class="font-bold">۸۵,۰۰۰ تومان</td>
+                                    <td><span class="status-badge status-success">تکمیل شده</span></td>
+                                    <td>
+                                        <button class="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm">
+                                            مشاهده
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><code class="text-xs bg-slate-800 p-1 rounded">ORD-123456</code></td>
+                                    <td>سارا محمدی</td>
+                                    <td>پلاگین امنیتی وردپرس</td>
+                                    <td>۲ روز پیش</td>
+                                    <td class="font-bold">۶۰,۰۰۰ تومان</td>
+                                    <td><span class="status-badge status-pending">در حال پردازش</span></td>
+                                    <td>
+                                        <button class="px-3 py-1 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-sm">
+                                            پردازش
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 
                 <!-- صفحه افزودن محصول -->
                 <div id="addProduct" class="page-content">
-                    <!-- محتوای صفحه افزودن محصول -->
+                    <div class="mb-8">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
+                            <div>
+                                <h1 class="text-2xl font-bold text-white mb-2">افزودن محصول جدید</h1>
+                                <p class="text-slate-400">محصول جدید خود را به فروشگاه اضافه کنید</p>
+                            </div>
+                            <div class="flex items-center space-x-3 space-x-reverse mt-4 md:mt-0">
+                                <button class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 flex items-center" id="saveDraft">
+                                    <i class="fas fa-save ml-2"></i>
+                                    ذخیره پیش‌نویس
+                                </button>
+                                <button class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-all duration-300 flex items-center" id="previewProduct">
+                                    <i class="fas fa-eye ml-2"></i>
+                                    پیش‌نمایش
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- مراحل افزودن محصول -->
+                    <div class="flex items-center justify-between mb-8 relative">
+                        <div class="flex-1 h-1 bg-slate-700 absolute top-1/2 transform -translate-y-1/2 z-0"></div>
+                        <div class="flex items-center justify-between w-full relative z-10">
+                            <div class="flex flex-col items-center">
+                                <div class="w-10 h-10 rounded-full bg-indigo-600 text-white flex items-center justify-center mb-2">
+                                    <i class="fas fa-info"></i>
+                                </div>
+                                <span class="text-sm font-medium text-white">اطلاعات پایه</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="w-10 h-10 rounded-full bg-slate-700 text-slate-400 flex items-center justify-center mb-2">
+                                    <i class="fas fa-image"></i>
+                                </div>
+                                <span class="text-sm font-medium text-slate-400">تصاویر</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="w-10 h-10 rounded-full bg-slate-700 text-slate-400 flex items-center justify-center mb-2">
+                                    <i class="fas fa-dollar-sign"></i>
+                                </div>
+                                <span class="text-sm font-medium text-slate-400">قیمت‌گذاری</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="w-10 h-10 rounded-full bg-slate-700 text-slate-400 flex items-center justify-center mb-2">
+                                    <i class="fas fa-cog"></i>
+                                </div>
+                                <span class="text-sm font-medium text-slate-400">تنظیمات</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-2">
+                            <div class="stat-card rounded-xl p-6 mb-6">
+                                <h2 class="text-xl font-bold text-white mb-6">اطلاعات محصول</h2>
+                                
+                                <div class="space-y-6">
+                                    <div>
+                                        <label class="block text-slate-300 mb-2">عنوان محصول <span class="text-red-400">*</span></label>
+                                        <input type="text" class="form-input" placeholder="عنوان جذاب و توصیفی محصول" id="productTitle">
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-slate-300 mb-2">توضیحات کامل <span class="text-red-400">*</span></label>
+                                        <textarea class="form-input" rows="6" placeholder="توضیحات کامل محصول، ویژگی‌ها، امکانات و..." id="productDescription"></textarea>
+                                    </div>
+                                    
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label class="block text-slate-300 mb-2">دسته‌بندی اصلی <span class="text-red-400">*</span></label>
+                                            <select class="form-input" id="productCategory">
+                                                <option value="">انتخاب دسته‌بندی</option>
+                                                <option value="template">قالب وبسایت</option>
+                                                <option value="script">اسکریپت و کد</option>
+                                                <option value="plugin">پلاگین و افزونه</option>
+                                                <option value="course">آموزش و دوره</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div>
+                                            <label class="block text-slate-300 mb-2">برچسب‌ها</label>
+                                            <input type="text" class="form-input" placeholder="برچسب‌ها را با کاما جدا کنید" id="productTags">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card rounded-xl p-6">
+                                <h2 class="text-xl font-bold text-white mb-6">فایل محصول</h2>
+                                
+                                <div class="space-y-6">
+                                    <div>
+                                        <label class="block text-slate-300 mb-2">فایل اصلی محصول <span class="text-red-400">*</span></label>
+                                        <div class="border-2 border-dashed border-slate-700 rounded-xl p-8 text-center hover:border-indigo-500 transition-all duration-300 cursor-pointer" id="fileUploadZone">
+                                            <i class="fas fa-cloud-upload-alt text-4xl text-indigo-500 mb-4"></i>
+                                            <p class="font-medium text-white mb-2" id="fileUploadText">فایل اصلی محصول را اینجا رها کنید</p>
+                                            <p class="text-sm text-slate-400 mb-4">یا برای انتخاب فایل کلیک کنید</p>
+                                            <button class="px-6 py-2 primary-gradient text-white rounded-lg transition-all duration-300" id="selectFileBtn">
+                                                انتخاب فایل
+                                            </button>
+                                            <p class="text-xs text-slate-500 mt-4">حداکثر حجم فایل: ۵۰۰ مگابایت | فرمت‌های مجاز: ZIP, RAR</p>
+                                        </div>
+                                        <div id="selectedFileInfo" class="hidden mt-4 p-3 bg-emerald-500/10 rounded-lg">
+                                            <p class="text-emerald-400"><i class="fas fa-check-circle ml-2"></i> فایل انتخاب شد</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="stat-card rounded-xl p-6 mb-6">
+                                <h3 class="font-bold text-lg mb-4">قیمت‌گذاری</h3>
+                                
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-slate-300 mb-2">قیمت اصلی (تومان) <span class="text-red-400">*</span></label>
+                                        <input type="number" class="form-input" placeholder="۰" id="productPrice" min="0">
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-slate-300 mb-2">قیمت با تخفیف</label>
+                                        <input type="number" class="form-input" placeholder="۰" id="productSalePrice" min="0">
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="flex items-center space-x-3 space-x-reverse">
+                                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-indigo-500" id="featuredProduct">
+                                            <span class="text-slate-300">نمایش در بخش ویژه</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card rounded-xl p-6 mb-6">
+                                <h3 class="font-bold text-lg mb-4">تنظیمات انتشار</h3>
+                                
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-slate-300 mb-2">وضعیت انتشار</label>
+                                        <select class="form-input" id="productStatus">
+                                            <option value="draft">پیش‌نویس</option>
+                                            <option value="pending">در انتظار تایید</option>
+                                            <option value="publish">انتشار فوری</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-slate-300 mb-2">دسترسی محصول</label>
+                                        <select class="form-input" id="productAccess">
+                                            <option value="public">عمومی</option>
+                                            <option value="registered">فقط کاربران عضو</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card rounded-xl p-6">
+                                <h3 class="font-bold text-lg mb-4">پیش‌نمایش محصول</h3>
+                                
+                                <div class="space-y-4">
+                                    <div class="text-center p-4 bg-slate-800/50 rounded-lg">
+                                        <div class="w-16 h-16 rounded-lg bg-indigo-500/20 flex items-center justify-center mx-auto mb-3">
+                                            <i class="fas fa-box text-indigo-500 text-2xl"></i>
+                                        </div>
+                                        <p class="font-medium text-white mb-1" id="previewTitle">عنوان محصول</p>
+                                        <p class="text-sm text-slate-400" id="previewCategory">دسته‌بندی</p>
+                                        <p class="text-xl font-bold text-white mt-2" id="previewPrice">۰ تومان</p>
+                                    </div>
+                                    
+                                    <button class="w-full py-3 primary-gradient hover:shadow-lg hover:shadow-indigo-500/30 text-white rounded-lg font-medium transition-all duration-300" id="publishProduct">
+                                        <i class="fas fa-rocket ml-2"></i>
+                                        انتشار محصول
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- صفحه درآمدها -->
                 <div id="earnings" class="page-content">
-                    <!-- محتوای صفحه درآمدها -->
+                    <div class="mb-8">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
+                            <div>
+                                <h1 class="text-2xl font-bold text-white mb-2">درآمدها و فروش</h1>
+                                <p class="text-slate-400">تاریخچه کامل درآمدها و فروش‌های شما</p>
+                            </div>
+                            <div class="flex items-center space-x-3 space-x-reverse mt-4 md:mt-0">
+                                <button class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-all duration-300 flex items-center" id="exportEarnings">
+                                    <i class="fas fa-download ml-2"></i>
+                                    خروجی اکسل
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- خلاصه درآمد -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <div class="stat-card rounded-xl p-5">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-400 text-sm">درآمد کل</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۱۲.۵M</p>
+                                </div>
+                                <i class="fas fa-money-bill-wave text-emerald-500 text-2xl"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card rounded-xl p-5">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-400 text-sm">درآمد این ماه</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۲.۸M</p>
+                                </div>
+                                <i class="fas fa-calendar-alt text-indigo-500 text-2xl"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card rounded-xl p-5">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-400 text-sm">فروش کل</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۴۸۵</p>
+                                </div>
+                                <i class="fas fa-shopping-cart text-amber-500 text-2xl"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card rounded-xl p-5">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-400 text-sm">میانگین فروش</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۲۵۷K</p>
+                                </div>
+                                <i class="fas fa-chart-line text-purple-500 text-2xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- نمودار درآمد -->
+                    <div class="stat-card rounded-xl p-6 mb-8">
+                        <h2 class="text-xl font-bold text-white mb-6">نمودار درآمد ۶ ماه گذشته</h2>
+                        <div class="chart-container">
+                            <canvas id="earningsChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- جدول درآمدها -->
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>تاریخ</th>
+                                    <th>تعداد فروش</th>
+                                    <th>درآمد ناخالص</th>
+                                    <th>کمیسیون</th>
+                                    <th>درآمد خالص</th>
+                                    <th>وضعیت</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>مهر ۱۴۰۲</td>
+                                    <td>۳۲</td>
+                                    <td class="font-bold">۱,۸۵۰,۰۰۰ تومان</td>
+                                    <td class="text-amber-400">۴۶۲,۵۰۰ تومان</td>
+                                    <td class="font-bold text-emerald-400">۱,۳۸۷,۵۰۰ تومان</td>
+                                    <td><span class="status-badge status-success">پرداخت شده</span></td>
+                                </tr>
+                                <tr>
+                                    <td>آبان ۱۴۰۲</td>
+                                    <td>۴۲</td>
+                                    <td class="font-bold">۲,۴۰۰,۰۰۰ تومان</td>
+                                    <td class="text-amber-400">۶۰۰,۰۰۰ تومان</td>
+                                    <td class="font-bold text-emerald-400">۱,۸۰۰,۰۰۰ تومان</td>
+                                    <td><span class="status-badge status-success">پرداخت شده</span></td>
+                                </tr>
+                                <tr>
+                                    <td>آذر ۱۴۰۲</td>
+                                    <td>۴۸</td>
+                                    <td class="font-bold">۲,۸۰۰,۰۰۰ تومان</td>
+                                    <td class="text-amber-400">۷۰۰,۰۰۰ تومان</td>
+                                    <td class="font-bold text-emerald-400">۲,۱۰۰,۰۰۰ تومان</td>
+                                    <td><span class="status-badge status-success">پرداخت شده</span></td>
+                                </tr>
+                                <tr>
+                                    <td>دی ۱۴۰۲</td>
+                                    <td>۵۶</td>
+                                    <td class="font-bold">۳,۲۰۰,۰۰۰ تومان</td>
+                                    <td class="text-amber-400">۸۰۰,۰۰۰ تومان</td>
+                                    <td class="font-bold text-emerald-400">۲,۴۰۰,۰۰۰ تومان</td>
+                                    <td><span class="status-badge status-success">پرداخت شده</span></td>
+                                </tr>
+                                <tr>
+                                    <td>بهمن ۱۴۰۲</td>
+                                    <td>۴۵</td>
+                                    <td class="font-bold">۲,۷۵۰,۰۰۰ تومان</td>
+                                    <td class="text-amber-400">۶۸۷,۵۰۰ تومان</td>
+                                    <td class="font-bold text-emerald-400">۲,۰۶۲,۵۰۰ تومان</td>
+                                    <td><span class="status-badge status-success">پرداخت شده</span></td>
+                                </tr>
+                                <tr>
+                                    <td>اسفند ۱۴۰۲</td>
+                                    <td>۵۲</td>
+                                    <td class="font-bold">۳,۱۰۰,۰۰۰ تومان</td>
+                                    <td class="text-amber-400">۷۷۵,۰۰۰ تومان</td>
+                                    <td class="font-bold text-emerald-400">۲,۳۲۵,۰۰۰ تومان</td>
+                                    <td><span class="status-badge status-pending">در انتظار پرداخت</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 
                 <!-- صفحه برداشت‌ها -->
                 <div id="withdrawals" class="page-content">
-                    <!-- محتوای صفحه برداشت‌ها -->
+                    <div class="mb-8">
+                        <h1 class="text-2xl font-bold text-white mb-2">برداشت وجه</h1>
+                        <p class="text-slate-400">درخواست برداشت از حساب فروشنده</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-2">
+                            <div class="stat-card rounded-xl p-6 mb-6">
+                                <h2 class="text-xl font-bold text-white mb-6">درخواست برداشت جدید</h2>
+                                
+                                <div class="space-y-6">
+                                    <div>
+                                        <label class="block text-slate-300 mb-2">موجودی قابل برداشت</label>
+                                        <div class="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
+                                            <p class="text-2xl font-bold text-emerald-400">۳,۴۵۰,۰۰۰ تومان</p>
+                                            <p class="text-sm text-slate-400 mt-1">حداقل برداشت: ۱۰۰,۰۰۰ تومان</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-slate-300 mb-2">مبلغ برداشت (تومان)</label>
+                                        <input type="number" class="form-input" placeholder="مبلغ مورد نظر را وارد کنید" id="withdrawAmount" min="100000" max="3450000">
+                                        <p class="text-xs text-slate-500 mt-2">کارمزد برداشت: ۲٪ (کمتر از ۱۰,۰۰۰ تومان)</p>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-slate-300 mb-2">روش دریافت</label>
+                                        <select class="form-input" id="withdrawMethod">
+                                            <option value="bank">کارت به کارت بانکی</option>
+                                            <option value="wallet">کیف پول الکترونیکی</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div id="bankInfo" class="space-y-4">
+                                        <div>
+                                            <label class="block text-slate-300 mb-2">شماره کارت</label>
+                                            <input type="text" class="form-input" placeholder="۶۲۱۹-۸۶۱۰-۱۲۳۴-۵۶۷۸" maxlength="19">
+                                        </div>
+                                        
+                                        <div>
+                                            <label class="block text-slate-300 mb-2">نام دارنده حساب</label>
+                                            <input type="text" class="form-input" value="علی محمدی" readonly>
+                                        </div>
+                                    </div>
+                                    
+                                    <button class="w-full py-3 primary-gradient hover:shadow-lg hover:shadow-indigo-500/30 text-white rounded-lg font-medium transition-all duration-300" id="requestWithdrawal">
+                                        <i class="fas fa-paper-plane ml-2"></i>
+                                        ثبت درخواست برداشت
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card rounded-xl p-6">
+                                <h2 class="text-xl font-bold text-white mb-6">تاریخچه برداشت‌ها</h2>
+                                <div class="table-container">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>شماره درخواست</th>
+                                                <th>تاریخ</th>
+                                                <th>مبلغ</th>
+                                                <th>روش</th>
+                                                <th>وضعیت</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><code class="text-xs bg-slate-800 p-1 rounded">WD-789123</code></td>
+                                                <td>۱۴۰۲/۰۸/۱۵</td>
+                                                <td class="font-bold">۱,۵۰۰,۰۰۰ تومان</td>
+                                                <td>کارت به کارت</td>
+                                                <td><span class="status-badge status-success">پرداخت شده</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><code class="text-xs bg-slate-800 p-1 rounded">WD-456789</code></td>
+                                                <td>۱۴۰۲/۰۸/۰۱</td>
+                                                <td class="font-bold">۸۰۰,۰۰۰ تومان</td>
+                                                <td>کیف پول</td>
+                                                <td><span class="status-badge status-success">پرداخت شده</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><code class="text-xs bg-slate-800 p-1 rounded">WD-123456</code></td>
+                                                <td>۱۴۰۲/۰۷/۲۰</td>
+                                                <td class="font-bold">۱,۲۰۰,۰۰۰ تومان</td>
+                                                <td>کارت به کارت</td>
+                                                <td><span class="status-badge status-success">پرداخت شده</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="stat-card rounded-xl p-6 mb-6">
+                                <h3 class="font-bold text-lg mb-4">اطلاعات حساب</h3>
+                                <div class="space-y-4">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-slate-300">موجودی کل:</span>
+                                        <span class="font-bold text-emerald-400">۳,۴۵۰,۰۰۰ تومان</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-slate-300">برداشت شده:</span>
+                                        <span class="font-bold">۳,۵۰۰,۰۰۰ تومان</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-slate-300">در انتظار پرداخت:</span>
+                                        <span class="font-bold text-amber-400">۰ تومان</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-slate-300">کارمزد برداشت:</span>
+                                        <span class="font-bold text-red-400">۲٪</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card rounded-xl p-6">
+                                <h3 class="font-bold text-lg mb-4">راهنمای برداشت</h3>
+                                <div class="space-y-3">
+                                    <div class="flex items-start">
+                                        <div class="w-6 h-6 rounded-full bg-indigo-500/20 flex items-center justify-center ml-2 mt-1 flex-shrink-0">
+                                            <i class="fas fa-clock text-indigo-500 text-xs"></i>
+                                        </div>
+                                        <p class="text-sm text-slate-300">پرداخت حداکثر تا ۴۸ ساعت کاری</p>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <div class="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center ml-2 mt-1 flex-shrink-0">
+                                            <i class="fas fa-check text-emerald-500 text-xs"></i>
+                                        </div>
+                                        <p class="text-sm text-slate-300">حداقل برداشت: ۱۰۰,۰۰۰ تومان</p>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <div class="w-6 h-6 rounded-full bg-amber-500/20 flex items-center justify-center ml-2 mt-1 flex-shrink-0">
+                                            <i class="fas fa-exclamation text-amber-500 text-xs"></i>
+                                        </div>
+                                        <p class="text-sm text-slate-300">کارمزد ۲٪ برای هر برداشت</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- صفحه کمیسیون‌ها -->
@@ -1853,7 +3115,7 @@
                                         <i class="fas fa-box ml-2 text-emerald-500"></i>
                                         راهنمای محصولات
                                     </a>
-                                    <a href="#pricing-guide" class="block p-3 bg-slate-800/50 hover:bg-slate-800 rounded-lg transition-all duration-300 text-sm">
+                                    <a href="#pricing-guide" class="block p-3 bg-slate-800/50 hover:bg-slate-800 rounded-lg transitionall duration-300 text-sm">
                                         <i class="fas fa-tag ml-2 text-amber-500"></i>
                                         راهنمای قیمت‌گذاری
                                     </a>
@@ -1896,32 +3158,8 @@
     </div>
 
     <script>
-        // داده‌های نمونه
-        const sampleProducts = [
-            { id: 1, name: "قالب فروشگاهی React", category: "قالب وبسایت", price: "120,000", sales: 48, revenue: "5,760,000", rating: 4.9, status: "active", type: "template" },
-            { id: 2, name: "پکیج آموزشی Node.js", category: "آموزش و دوره", price: "85,000", sales: 32, revenue: "2,720,000", rating: 4.7, status: "active", type: "course" },
-            { id: 3, name: "پلاگین امنیتی وردپرس", category: "پلاگین و افزونه", price: "60,000", sales: 24, revenue: "1,440,000", rating: 4.5, status: "pending", type: "plugin" },
-            { id: 4, name: "اسکریپت مدیریت دانلود", category: "اسکریپت و کد", price: "150,000", sales: 18, revenue: "2,700,000", rating: 4.8, status: "active", type: "script" },
-            { id: 5, name: "قالب شرکتی Vue.js", category: "قالب وبسایت", price: "95,000", sales: 15, revenue: "1,425,000", rating: 4.6, status: "draft", type: "template" }
-        ];
-
-        const recentSales = [
-            { id: "S-789123", product: "قالب فروشگاهی React", buyer: "مریم احمدی", amount: "120,000", commission: "30,000", date: "امروز ۱۰:۳۰", status: "success" },
-            { id: "S-456789", product: "پکیج آموزشی Node.js", buyer: "رضا کریمی", amount: "85,000", commission: "21,250", date: "دیروز ۱۴:۲۰", status: "success" },
-            { id: "S-123456", product: "پلاگین امنیتی وردپرس", buyer: "سارا محمدی", amount: "60,000", commission: "15,000", date: "۲ روز پیش", status: "pending" },
-            { id: "S-987654", product: "اسکریپت مدیریت دانلود", buyer: "علی رضایی", amount: "150,000", commission: "37,500", date: "۳ روز پیش", status: "success" },
-            { id: "S-654321", product: "قالب شرکتی Vue.js", buyer: "محمد حسینی", amount: "95,000", commission: "23,750", date: "۴ روز پیش", status: "success" }
-        ];
-
-        const monthlyEarnings = [
-            { month: "مهر", earnings: 1850000, sales: 32 },
-            { month: "آبان", earnings: 2400000, sales: 42 },
-            { month: "آذر", earnings: 2800000, sales: 48 },
-            { month: "دی", earnings: 3200000, sales: 56 },
-            { month: "بهمن", earnings: 2750000, sales: 45 },
-            { month: "اسفند", earnings: 3100000, sales: 52 }
-        ];
-
+        // فقط JavaScript برای تعاملات (نه برای داده‌های نمونه)
+        
         // متغیرهای سراسری
         let selectedProducts = [];
         let currentPage = 1;
@@ -1936,9 +3174,6 @@
             // راه‌اندازی نمودارها
             setupCharts();
             
-            // راه‌اندازی داده‌های نمونه
-            setupSampleData();
-            
             // راه‌اندازی تعاملات
             setupInteractions();
             
@@ -1950,9 +3185,6 @@
             
             // راه‌اندازی نوار پیشرفت
             setupProgressBar();
-            
-            // نمایش داشبورد به عنوان پیش‌فرض
-            showPage('sellerDashboard');
         });
 
         // راه‌اندازی منو
@@ -2045,53 +3277,8 @@
                     pageTitle.textContent = targetPage.querySelector('h1')?.textContent || 'داشبورد فروش';
                 }
                 
-                // بارگذاری داده‌های صفحه
-                loadPageData(pageId);
-                
                 // اسکرول به بالا
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        }
-
-        // بارگذاری داده‌های صفحه
-        function loadPageData(pageId) {
-            switch(pageId) {
-                case 'sellerDashboard':
-                    loadDashboardData();
-                    break;
-                case 'products':
-                    loadProductsData();
-                    break;
-                case 'addProduct':
-                    loadAddProductForm();
-                    break;
-                case 'orders':
-                    loadOrdersData();
-                    break;
-                case 'earnings':
-                    loadEarningsData();
-                    break;
-                case 'commissions':
-                    loadCommissionsData();
-                    break;
-                case 'analytics':
-                    loadAnalyticsData();
-                    break;
-                case 'reports':
-                    loadReportsData();
-                    break;
-                case 'reviews':
-                    loadReviewsData();
-                    break;
-                case 'sellerSupport':
-                    loadSupportData();
-                    break;
-                case 'guidelines':
-                    loadGuidelinesData();
-                    break;
-                case 'withdrawals':
-                    loadWithdrawalsData();
-                    break;
             }
         }
 
@@ -2178,10 +3365,10 @@
                 charts.earningsChart = new Chart(earningsCtx, {
                     type: 'bar',
                     data: {
-                        labels: monthlyEarnings.map(item => item.month),
+                        labels: ['مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'],
                         datasets: [{
                             label: 'درآمد (هزار تومان)',
-                            data: monthlyEarnings.map(item => item.earnings / 1000),
+                            data: [1850, 2400, 2800, 3200, 2750, 3100],
                             backgroundColor: 'rgba(16, 185, 129, 0.7)',
                             borderColor: '#10b981',
                             borderWidth: 1
@@ -2327,115 +3514,193 @@
                     }
                 });
             }
+            
+            // نمودار بازدید ساعتی
+            const hourlyVisitsCtx = document.getElementById('hourlyVisitsChart')?.getContext('2d');
+            if (hourlyVisitsCtx) {
+                charts.hourlyVisitsChart = new Chart(hourlyVisitsCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['۸-۱۰', '۱۰-۱۲', '۱۲-۱۴', '۱۴-۱۶', '۱۶-۱۸', '۱۸-۲۰', '۲۰-۲۲'],
+                        datasets: [{
+                            label: 'تعداد بازدید',
+                            data: [45, 78, 92, 124, 88, 65, 42],
+                            backgroundColor: 'rgba(99, 102, 241, 0.7)',
+                            borderColor: '#6366f1',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: '#cbd5e1',
+                                    font: {
+                                        family: 'Vazirmatn'
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                },
+                                ticks: {
+                                    color: '#cbd5e1',
+                                    font: {
+                                        family: 'Vazirmatn'
+                                    }
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                },
+                                ticks: {
+                                    color: '#cbd5e1',
+                                    font: {
+                                        family: 'Vazirmatn'
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // نمودار فروش دسته‌ها
+            const categorySalesCtx = document.getElementById('categorySalesChart')?.getContext('2d');
+            if (categorySalesCtx) {
+                charts.categorySalesChart = new Chart(categorySalesCtx, {
+                    type: 'pie',
+                    data: {
+                        labels: ['قالب وبسایت', 'آموزش و دوره', 'پلاگین و افزونه', 'اسکریپت و کد'],
+                        datasets: [{
+                            data: [63, 32, 24, 18],
+                            backgroundColor: [
+                                'rgba(99, 102, 241, 0.7)',
+                                'rgba(16, 185, 129, 0.7)',
+                                'rgba(245, 158, 11, 0.7)',
+                                'rgba(139, 92, 246, 0.7)'
+                            ],
+                            borderColor: [
+                                '#6366f1',
+                                '#10b981',
+                                '#f59e0b',
+                                '#8b5cf6'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    color: '#cbd5e1',
+                                    font: {
+                                        family: 'Vazirmatn'
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // نمودار توزیع امتیازها
+            const ratingsCtx = document.getElementById('ratingsChart')?.getContext('2d');
+            if (ratingsCtx) {
+                charts.ratingsChart = new Chart(ratingsCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['۱ ستاره', '۲ ستاره', '۳ ستاره', '۴ ستاره', '۵ ستاره'],
+                        datasets: [{
+                            label: 'تعداد نظرات',
+                            data: [2, 3, 5, 12, 26],
+                            backgroundColor: 'rgba(245, 158, 11, 0.7)',
+                            borderColor: '#f59e0b',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: '#cbd5e1',
+                                    font: {
+                                        family: 'Vazirmatn'
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                },
+                                ticks: {
+                                    color: '#cbd5e1',
+                                    font: {
+                                        family: 'Vazirmatn'
+                                    }
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                },
+                                ticks: {
+                                    color: '#cbd5e1',
+                                    font: {
+                                        family: 'Vazirmatn'
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
         }
 
-        // راه‌اندازی داده‌های نمونه
-        function setupSampleData() {
-            // پر کردن جدول آخرین فروش‌ها
-            const recentSalesTable = document.getElementById('recentSalesTable');
-            if (recentSalesTable) {
-                recentSalesTable.innerHTML = '';
-                recentSales.forEach(sale => {
-                    const statusClass = sale.status === 'success' ? 'status-success' : 
-                                       sale.status === 'pending' ? 'status-pending' : 'status-failed';
-                    const statusText = sale.status === 'success' ? 'تکمیل شده' : 
-                                      sale.status === 'pending' ? 'در حال پردازش' : 'ناموفق';
+        // راه‌اندازی تعاملات
+        function setupInteractions() {
+            // اعلان‌های فروشنده
+            const sellerNotificationsBtn = document.getElementById('sellerNotificationsBtn');
+            if (sellerNotificationsBtn) {
+                sellerNotificationsBtn.addEventListener('click', function() {
+                    showNotification('اعلان‌های فروشنده', '۵ اعلان خوانده نشده دارید. برای مشاهده به بخش اعلان‌ها مراجعه کنید.', 'info');
+                });
+            }
+            
+            // دکمه‌های عملکرد سریع در داشبورد
+            document.querySelectorAll('#sellerDashboard button[data-page]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const pageId = this.getAttribute('data-page');
                     
-                    recentSalesTable.innerHTML += `
-                        <tr>
-                            <td><code class="text-xs bg-slate-800 p-1 rounded">${sale.id}</code></td>
-                            <td class="font-medium">${sale.product}</td>
-                            <td>${sale.buyer}</td>
-                            <td class="font-bold">${sale.amount} تومان</td>
-                            <td class="text-emerald-400 font-bold">${sale.commission} تومان</td>
-                            <td>${sale.date}</td>
-                            <td><span class="status-badge ${statusClass}">${statusText}</span></td>
-                        </tr>
-                    `;
-                });
-            }
-            
-            // پر کردن محصولات پرفروش
-            const topProducts = document.getElementById('topProducts');
-            if (topProducts) {
-                topProducts.innerHTML = '';
-                sampleProducts.slice(0, 4).forEach(product => {
-                    topProducts.innerHTML += `
-                        <div class="product-card rounded-xl overflow-hidden">
-                            <div class="product-image">
-                                <i class="fas fa-${product.type === 'template' ? 'palette' : 
-                                               product.type === 'course' ? 'graduation-cap' : 
-                                               product.type === 'plugin' ? 'puzzle-piece' : 'code'} text-5xl text-white opacity-80"></i>
-                            </div>
-                            <div class="p-4">
-                                <h3 class="font-bold text-white mb-2">${product.name}</h3>
-                                <div class="flex justify-between items-center mb-3">
-                                    <span class="text-slate-400 text-sm">${product.category}</span>
-                                    <span class="font-bold text-white">${product.price} تومان</span>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <div class="flex items-center">
-                                        <i class="fas fa-star text-amber-500 ml-1"></i>
-                                        <span class="text-sm">${product.rating}</span>
-                                    </div>
-                                    <span class="text-sm text-emerald-400">${product.sales} فروش</span>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                });
-            }
-            
-            // پر کردن جدول محصولات
-            loadProductsTable();
-            
-            // پر کردن جدول درآمدها
-            const earningsTable = document.getElementById('earningsTable');
-            if (earningsTable) {
-                earningsTable.innerHTML = '';
-                monthlyEarnings.forEach(month => {
-                    const netEarnings = month.earnings * 0.75; // 25% commission
-                    const commission = month.earnings * 0.25;
-                    
-                    earningsTable.innerHTML += `
-                        <tr>
-                            <td>${month.month} ۱۴۰۲</td>
-                            <td>${month.sales}</td>
-                            <td class="font-bold">${formatNumber(month.earnings)} تومان</td>
-                            <td class="text-amber-400">${formatNumber(commission)} تومان</td>
-                            <td class="font-bold text-emerald-400">${formatNumber(netEarnings)} تومان</td>
-                            <td><span class="status-badge status-success">پرداخت شده</span></td>
-                        </tr>
-                    `;
-                });
-            }
-        }
-
-        // بارگذاری داده‌های داشبورد
-        function loadDashboardData() {
-            // اگر نمودار فروش وجود دارد، به‌روزرسانی کن
-            if (charts.salesChart) {
-                // می‌توانیم داده‌های نمودار را بر اساس انتخاب کاربر به‌روزرسانی کنیم
-                const salesChartRange = document.getElementById('salesChartRange');
-                if (salesChartRange) {
-                    salesChartRange.addEventListener('change', function() {
-                        const days = parseInt(this.value);
-                        // در اینجا می‌توانیم داده‌های جدید بر اساس روزهای انتخابی بارگیری کنیم
-                        // برای نمونه، داده‌های تصادفی تولید می‌کنیم
-                        const newData = Array.from({length: days}, () => Math.floor(Math.random() * 20) + 5);
-                        const newLabels = Array.from({length: days}, (_, i) => `${i+1} روز پیش`);
-                        
-                        charts.salesChart.data.labels = newLabels;
-                        charts.salesChart.data.datasets[0].data = newData;
-                        charts.salesChart.update();
+                    // به روزرسانی منو
+                    document.querySelectorAll('.sidebar-item').forEach(el => {
+                        el.classList.remove('active');
+                        if (el.getAttribute('data-page') === pageId) {
+                            el.classList.add('active');
+                        }
                     });
-                }
-            }
-        }
-
-        // بارگذاری داده‌های محصولات
-        function loadProductsData() {
-            // راه‌اندازی فیلترها
+                    
+                    // نمایش صفحه
+                    showPage(pageId);
+                });
+            });
+            
+            // فیلتر محصولات
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     // حذف کلاس فعال از همه دکمه‌ها
@@ -2450,77 +3715,48 @@
                     
                     // اعمال فیلتر
                     const filter = this.getAttribute('data-filter');
-                    filterProducts(filter);
+                    let filterText = '';
+                    switch(filter) {
+                        case 'all': filterText = 'همه محصولات'; break;
+                        case 'active': filterText = 'فعال'; break;
+                        case 'pending': filterText = 'در انتظار تایید'; break;
+                        case 'draft': filterText = 'پیش‌نویس'; break;
+                    }
+                    
+                    showNotification('اعمال فیلتر', `فیلتر "${filterText}" اعمال شد.`, 'info');
                 });
             });
             
-            // راه‌اندازی جستجو
+            // جستجوی محصولات
             const productSearch = document.getElementById('productSearch');
             if (productSearch) {
                 productSearch.addEventListener('input', function() {
-                    filterProductsBySearch(this.value);
+                    if (this.value.length >= 2) {
+                        showNotification('جستجوی محصولات', `در حال جستجو برای "${this.value}"...`, 'info');
+                    }
                 });
             }
             
-            // راه‌اندازی مرتب‌سازی
+            // مرتب‌سازی محصولات
             const productSort = document.getElementById('productSort');
             if (productSort) {
                 productSort.addEventListener('change', function() {
-                    sortProducts(this.value);
+                    let sortText = '';
+                    switch(this.value) {
+                        case 'newest': sortText = 'جدیدترین'; break;
+                        case 'best-selling': sortText = 'پرفروش‌ترین'; break;
+                        case 'price-high': sortText = 'گران‌ترین'; break;
+                        case 'price-low': sortText = 'ارزان‌ترین'; break;
+                    }
+                    
+                    showNotification('مرتب‌سازی محصولات', `مرتب‌سازی بر اساس "${sortText}" اعمال شد.`, 'info');
                 });
             }
             
-            // راه‌اندازی انتخاب دسته‌ای
+            // انتخاب دسته‌ای محصولات
             setupBulkActions();
             
-            // پر کردن عملکرد دسته‌ها
-            const categoryPerformance = document.getElementById('categoryPerformance');
-            if (categoryPerformance) {
-                const categories = [
-                    { name: "قالب وبسایت", sales: 63, revenue: "7,185,000", growth: "+12%" },
-                    { name: "آموزش و دوره", sales: 32, revenue: "2,720,000", growth: "+8%" },
-                    { name: "پلاگین و افزونه", sales: 24, revenue: "1,440,000", growth: "+15%" },
-                    { name: "اسکریپت و کد", sales: 18, revenue: "2,700,000", growth: "+22%" }
-                ];
-                
-                categoryPerformance.innerHTML = '';
-                categories.forEach(cat => {
-                    categoryPerformance.innerHTML += `
-                        <div class="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg">
-                            <div>
-                                <p class="font-medium text-white">${cat.name}</p>
-                                <p class="text-sm text-slate-400">${cat.sales} فروش</p>
-                            </div>
-                            <div class="text-left">
-                                <p class="font-bold text-white">${cat.revenue} تومان</p>
-                                <p class="text-xs text-emerald-400">${cat.growth}</p>
-                            </div>
-                        </div>
-                    `;
-                });
-            }
-            
-            // پر کردن توصیه‌ها
-            const productRecommendations = document.getElementById('productRecommendations');
-            if (productRecommendations) {
-                const recommendations = [
-                    { title: "بهبود تصاویر محصول", description: "افزودن اسکرین‌شات‌های بیشتر می‌تواند نرخ تبدیل را ۱۵٪ افزایش دهد." },
-                    { title: "اضافه کردن ویدیو دمو", description: "محصولات دارای ویدیو دمو ۴۰٪ بیشتر فروش می‌روند." },
-                    { title: "به‌روزرسانی مستندات", description: "مستندات کامل نرخ بازگشت محصول را کاهش می‌دهد." }
-                ];
-                
-                productRecommendations.innerHTML = '';
-                recommendations.forEach(rec => {
-                    productRecommendations.innerHTML += `
-                        <div class="p-3 bg-indigo-500/10 rounded-lg">
-                            <h4 class="font-medium text-white mb-1">${rec.title}</h4>
-                            <p class="text-sm text-slate-300">${rec.description}</p>
-                        </div>
-                    `;
-                });
-            }
-            
-            // دکمه بهینه‌سازی هوشمند
+            // بهینه‌سازی هوشمند
             const optimizeProducts = document.getElementById('optimizeProducts');
             if (optimizeProducts) {
                 optimizeProducts.addEventListener('click', function() {
@@ -2531,88 +3767,150 @@
                     }, 2000);
                 });
             }
-        }
-
-        // بارگذاری جدول محصولات
-        function loadProductsTable() {
-            const productsTable = document.getElementById('productsTable');
-            if (!productsTable) return;
             
-            // محاسبه محصولات برای صفحه فعلی
-            const startIndex = (currentPage - 1) * productsPerPage;
-            const endIndex = startIndex + productsPerPage;
-            const productsToShow = sampleProducts.slice(startIndex, endIndex);
-            
-            productsTable.innerHTML = '';
-            productsToShow.forEach(product => {
-                const statusClass = product.status === 'active' ? 'status-success' : 
-                                   product.status === 'pending' ? 'status-pending' : 'status-draft';
-                const statusText = product.status === 'active' ? 'فعال' : 
-                                  product.status === 'pending' ? 'در انتظار تایید' : 'پیش‌نویس';
-                
-                productsTable.innerHTML += `
-                    <tr data-product-id="${product.id}">
-                        <td>
-                            <input type="checkbox" class="product-checkbox rounded bg-slate-800 border-slate-700 text-indigo-500" value="${product.id}">
-                        </td>
-                        <td>
-                            <div class="flex items-center">
-                                <div class="w-10 h-10 rounded-lg bg-indigo-500/20 flex items-center justify-center ml-3">
-                                    <i class="fas fa-${product.type === 'template' ? 'palette' : 
-                                                   product.type === 'course' ? 'graduation-cap' : 
-                                                   product.type === 'plugin' ? 'puzzle-piece' : 'code'} text-indigo-500"></i>
-                                </div>
-                                <div>
-                                    <p class="font-medium text-white">${product.name}</p>
-                                    <p class="text-xs text-slate-400">آخرین بروزرسانی: ۳ روز پیش</p>
-                                </div>
-                            </div>
-                        </td>
-                        <td>${product.category}</td>
-                        <td class="font-bold">${product.price} تومان</td>
-                        <td>${product.sales}</td>
-                        <td class="text-emerald-400 font-bold">${product.revenue} تومان</td>
-                        <td>
-                            <div class="flex items-center">
-                                <i class="fas fa-star text-amber-500 ml-1"></i>
-                                <span>${product.rating}</span>
-                            </div>
-                        </td>
-                        <td><span class="status-badge ${statusClass}">${statusText}</span></td>
-                        <td>
-                            <div class="flex space-x-2 space-x-reverse">
-                                <button class="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm product-edit" data-id="${product.id}">
-                                    ویرایش
-                                </button>
-                                <button class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-sm product-view" data-id="${product.id}">
-                                    مشاهده
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            });
-            
-            // به روزرسانی صفحه‌بندی
-            updatePagination();
-            
-            // راه‌اندازی رویدادهای چک‌باکس
-            setupProductCheckboxes();
-            
-            // راه‌اندازی رویدادهای ویرایش و مشاهده
-            document.querySelectorAll('.product-edit').forEach(btn => {
+            // فیلتر نظرات
+            document.querySelectorAll('.filter-review-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
-                    const productId = this.getAttribute('data-id');
-                    editProduct(productId);
+                    // حذف کلاس فعال از همه دکمه‌ها
+                    document.querySelectorAll('.filter-review-btn').forEach(b => {
+                        b.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
+                        b.classList.add('bg-slate-800', 'hover:bg-slate-700');
+                    });
+                    
+                    // اضافه کردن کلاس فعال به دکمه انتخاب شده
+                    this.classList.remove('bg-slate-800', 'hover:bg-slate-700');
+                    this.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
+                    
+                    // اعمال فیلتر
+                    const filter = this.getAttribute('data-filter');
+                    filterReviews(filter);
                 });
             });
             
-            document.querySelectorAll('.product-view').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const productId = this.getAttribute('data-id');
-                    viewProduct(productId);
+            // مرتب‌سازی نظرات
+            const reviewSort = document.getElementById('reviewSort');
+            if (reviewSort) {
+                reviewSort.addEventListener('change', function() {
+                    showNotification('مرتب‌سازی نظرات', `نظرات بر اساس ${this.options[this.selectedIndex].text} مرتب شدند.`, 'info');
+                });
+            }
+            
+            // ایجاد گزارش جدید
+            const generateReport = document.getElementById('generateReport');
+            if (generateReport) {
+                generateReport.addEventListener('click', function() {
+                    showNotification('ایجاد گزارش', 'گزارش جدید در حال ایجاد است...', 'info');
+                    
+                    setTimeout(() => {
+                        showNotification('ایجاد موفق', 'گزارش با موفقیت ایجاد و به لیست گزارش‌ها اضافه شد.', 'success');
+                    }, 2000);
+                });
+            }
+            
+            // تیکت جدید
+            const newTicketBtn = document.getElementById('newTicketBtn');
+            if (newTicketBtn) {
+                newTicketBtn.addEventListener('click', function() {
+                    // اسکرول به فرم تیکت جدید
+                    document.querySelector('#sellerSupport .stat-card:last-child')?.scrollIntoView({ behavior: 'smooth' });
+                });
+            }
+            
+            // اسکرول به بخش‌های راهنما
+            document.querySelectorAll('a[href^="#"]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId.startsWith('#')) {
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            e.preventDefault();
+                            targetElement.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }
                 });
             });
+            
+            // تغییر روش برداشت
+            const withdrawMethod = document.getElementById('withdrawMethod');
+            const bankInfo = document.getElementById('bankInfo');
+            
+            if (withdrawMethod && bankInfo) {
+                withdrawMethod.addEventListener('change', function() {
+                    if (this.value === 'bank') {
+                        bankInfo.style.display = 'block';
+                    } else {
+                        bankInfo.style.display = 'none';
+                    }
+                });
+            }
+            
+            // درخواست برداشت
+            const requestWithdrawal = document.getElementById('requestWithdrawal');
+            const withdrawAmount = document.getElementById('withdrawAmount');
+            
+            if (requestWithdrawal && withdrawAmount) {
+                requestWithdrawal.addEventListener('click', function() {
+                    const amount = parseInt(withdrawAmount.value);
+                    
+                    if (!amount || amount < 100000) {
+                        showNotification('خطا در مبلغ', 'حداقل مبلغ برداشت ۱۰۰,۰۰۰ تومان است.', 'error');
+                        return;
+                    }
+                    
+                    if (amount > 3450000) {
+                        showNotification('خطا در مبلغ', 'مبلغ درخواستی بیشتر از موجودی قابل برداشت است.', 'error');
+                        return;
+                    }
+                    
+                    const fee = amount * 0.02;
+                    const netAmount = amount - fee;
+                    
+                    if (confirm(`آیا از درخواست برداشت ${amount.toLocaleString()} تومان مطمئن هستید؟\nکارمزد: ${fee.toLocaleString()} تومان\nمبلغ قابل دریافت: ${netAmount.toLocaleString()} تومان`)) {
+                        showNotification('درخواست برداشت', 'درخواست برداشت شما ثبت شد و در حال پردازش است.', 'success');
+                        
+                        // بازنشانی فرم
+                        withdrawAmount.value = '';
+                    }
+                });
+            }
+            
+            // خروجی اکسل درآمدها
+            const exportEarnings = document.getElementById('exportEarnings');
+            if (exportEarnings) {
+                exportEarnings.addEventListener('click', function() {
+                    showNotification('در حال تولید خروجی', 'گزارش درآمدها در حال تولید و دانلود است...', 'info');
+                    
+                    setTimeout(() => {
+                        showNotification('دانلود موفق', 'گزارش درآمدها با موفقیت دانلود شد.', 'success');
+                    }, 1500);
+                });
+            }
+            
+            // تغییر بازه زمانی تحلیل
+            const analyticsPeriod = document.getElementById('analyticsPeriod');
+            if (analyticsPeriod) {
+                analyticsPeriod.addEventListener('change', function() {
+                    showNotification('تغییر بازه زمانی', `داده‌های تحلیل برای ${this.options[this.selectedIndex].text} بارگیری شد.`, 'info');
+                });
+            }
+            
+            // تغییر بازه زمانی نمودار فروش
+            const salesChartRange = document.getElementById('salesChartRange');
+            if (salesChartRange && charts.salesChart) {
+                salesChartRange.addEventListener('change', function() {
+                    const days = parseInt(this.value);
+                    // در اینجا می‌توانیم داده‌های جدید بر اساس روزهای انتخابی بارگیری کنیم
+                    // برای نمونه، داده‌های تصادفی تولید می‌کنیم
+                    const newData = Array.from({length: days}, () => Math.floor(Math.random() * 20) + 5);
+                    const newLabels = Array.from({length: days}, (_, i) => `${i+1} روز پیش`);
+                    
+                    charts.salesChart.data.labels = newLabels;
+                    charts.salesChart.data.datasets[0].data = newData;
+                    charts.salesChart.update();
+                    
+                    showNotification('به‌روزرسانی نمودار', `نمودار فروش برای ${days} روز گذشته به‌روزرسانی شد.`, 'info');
+                });
+            }
         }
 
         // راه‌اندازی انتخاب دسته‌ای
@@ -2622,9 +3920,6 @@
             const selectedCount = document.getElementById('selectedCount');
             const activateSelected = document.getElementById('activateSelected');
             const deleteSelected = document.getElementById('deleteSelected');
-            const prevPage = document.getElementById('prevPage');
-            const nextPage = document.getElementById('nextPage');
-            const currentPageElement = document.getElementById('currentPage');
             
             if (!selectAll) return;
             
@@ -2686,29 +3981,7 @@
                 });
             }
             
-            // صفحه‌بندی
-            if (prevPage) {
-                prevPage.addEventListener('click', function() {
-                    if (currentPage > 1) {
-                        currentPage--;
-                        loadProductsTable();
-                    }
-                });
-            }
-            
-            if (nextPage) {
-                nextPage.addEventListener('click', function() {
-                    const totalPages = Math.ceil(sampleProducts.length / productsPerPage);
-                    if (currentPage < totalPages) {
-                        currentPage++;
-                        loadProductsTable();
-                    }
-                });
-            }
-        }
-
-        // راه‌اندازی چک‌باکس محصولات
-        function setupProductCheckboxes() {
+            // راه‌اندازی رویدادهای چک‌باکس محصولات
             document.querySelectorAll('.product-checkbox').forEach(checkbox => {
                 checkbox.addEventListener('change', function() {
                     updateSelectedProducts();
@@ -2723,96 +3996,73 @@
                     }
                 });
             });
+            
+            // ویرایش محصول
+            document.querySelectorAll('.product-edit').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-id');
+                    showNotification('ویرایش محصول', `در حال بارگذاری اطلاعات محصول #${productId}...`, 'info');
+                    setTimeout(() => {
+                        showPage('addProduct');
+                    }, 1000);
+                });
+            });
+            
+            // مشاهده محصول
+            document.querySelectorAll('.product-view').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-id');
+                    showNotification('مشاهده محصول', `در حال باز کردن صفحه محصول #${productId}...`, 'info');
+                });
+            });
         }
 
-        // به روزرسانی صفحه‌بندی
-        function updatePagination() {
-            const currentPageElement = document.getElementById('currentPage');
-            const prevPage = document.getElementById('prevPage');
-            const nextPage = document.getElementById('nextPage');
-            const totalPages = Math.ceil(sampleProducts.length / productsPerPage);
+        // فیلتر نظرات
+        function filterReviews(filter) {
+            const reviews = document.querySelectorAll('#reviewsList > div');
             
-            if (currentPageElement) {
-                currentPageElement.textContent = currentPage;
-            }
+            reviews.forEach(review => {
+                let show = true;
+                
+                switch(filter) {
+                    case 'unanswered':
+                        show = review.getAttribute('data-answered') === 'false';
+                        break;
+                    case '5star':
+                        show = review.getAttribute('data-rating') === '5';
+                        break;
+                    case 'with-response':
+                        show = review.getAttribute('data-answered') === 'true';
+                        break;
+                    // 'all' - همه را نشان بده
+                }
+                
+                review.style.display = show ? 'block' : 'none';
+            });
             
-            if (prevPage) {
-                prevPage.disabled = currentPage <= 1;
-                prevPage.classList.toggle('opacity-50', currentPage <= 1);
-                prevPage.classList.toggle('cursor-not-allowed', currentPage <= 1);
-            }
-            
-            if (nextPage) {
-                nextPage.disabled = currentPage >= totalPages;
-                nextPage.classList.toggle('opacity-50', currentPage >= totalPages);
-                nextPage.classList.toggle('cursor-not-allowed', currentPage >= totalPages);
-            }
-        }
-
-        // فیلتر محصولات
-        function filterProducts(filter) {
-            // در یک پیاده‌سازی واقعی، اینجا درخواست AJAX به سرور ارسال می‌شود
-            // برای نمونه، فقط یک اعلان نمایش می‌دهیم
             let filterText = '';
             switch(filter) {
-                case 'all': filterText = 'همه محصولات'; break;
-                case 'active': filterText = 'فعال'; break;
-                case 'pending': filterText = 'در انتظار تایید'; break;
-                case 'draft': filterText = 'پیش‌نویس'; break;
+                case 'all': filterText = 'همه نظرات'; break;
+                case 'unanswered': filterText = 'پاسخ داده نشده'; break;
+                case '5star': filterText = '۵ ستاره'; break;
+                case 'with-response': filterText = 'دارای پاسخ'; break;
             }
             
             showNotification('اعمال فیلتر', `فیلتر "${filterText}" اعمال شد.`, 'info');
         }
 
-        // جستجوی محصولات
-        function filterProductsBySearch(query) {
-            if (query.length >= 2) {
-                // در یک پیاده‌سازی واقعی، اینجا درخواست AJAX به سرور ارسال می‌شود
-                showNotification('جستجوی محصولات', `در حال جستجو برای "${query}"...`, 'info');
-            }
-        }
-
-        // مرتب‌سازی محصولات
-        function sortProducts(sortBy) {
-            let sortText = '';
-            switch(sortBy) {
-                case 'newest': sortText = 'جدیدترین'; break;
-                case 'best-selling': sortText = 'پرفروش‌ترین'; break;
-                case 'price-high': sortText = 'گران‌ترین'; break;
-                case 'price-low': sortText = 'ارزان‌ترین'; break;
-            }
-            
-            showNotification('مرتب‌سازی محصولات', `مرتب‌سازی بر اساس "${sortText}" اعمال شد.`, 'info');
-        }
-
-        // ویرایش محصول
-        function editProduct(productId) {
-            showNotification('ویرایش محصول', `در حال بارگذاری اطلاعات محصول #${productId}...`, 'info');
-            setTimeout(() => {
-                showPage('addProduct');
-            }, 1000);
-        }
-
-        // مشاهده محصول
-        function viewProduct(productId) {
-            showNotification('مشاهده محصول', `در حال باز کردن صفحه محصول #${productId}...`, 'info');
-            // در یک پیاده‌سازی واقعی، اینجا کاربر به صفحه محصول هدایت می‌شود
-        }
-
-        // بارگذاری فرم افزودن محصول
-        function loadAddProductForm() {
-            // راه‌اندازی آپلود فایل
+        // راه‌اندازی فرم‌ها
+        function setupForms() {
+            // آپلود فایل محصول
             const fileUploadZone = document.getElementById('fileUploadZone');
             const selectFileBtn = document.getElementById('selectFileBtn');
             const selectedFileInfo = document.getElementById('selectedFileInfo');
-            const fileUploadText = document.getElementById('fileUploadText');
             
             if (fileUploadZone && selectFileBtn) {
                 // شبیه‌سازی انتخاب فایل
                 selectFileBtn.addEventListener('click', function(e) {
                     e.stopPropagation();
                     
-                    // در یک پیاده‌سازی واقعی، اینجا یک input[type=file] ایجاد می‌شود
                     // برای نمونه، فقط یک حالت موفق نشان می‌دهیم
                     selectedFileInfo.classList.remove('hidden');
                     fileUploadZone.innerHTML = `
@@ -2846,7 +4096,6 @@
                     e.preventDefault();
                     this.classList.remove('border-indigo-500', 'bg-indigo-500/10');
                     
-                    // در یک پیاده‌سازی واقعی، اینجا فایل‌ها پردازش می‌شوند
                     selectedFileInfo.classList.remove('hidden');
                     fileUploadZone.innerHTML = `
                         <i class="fas fa-check-circle text-4xl text-emerald-500 mb-4"></i>
@@ -2978,407 +4227,10 @@
             if (previewProductBtn) {
                 previewProductBtn.addEventListener('click', function() {
                     showNotification('پیش‌نمایش', 'در حال باز کردن پیش‌نمایش محصول...', 'info');
-                    // در یک پیاده‌سازی واقعی، اینجا صفحه پیش‌نمایش باز می‌شود
-                });
-            }
-        }
-
-        // بارگذاری داده‌های سفارشات
-        function loadOrdersData() {
-            // در اینجا می‌توانیم داده‌های سفارشات را از سرور بارگیری کنیم
-            // برای نمونه، داده‌ها از قبل در HTML وجود دارند
-        }
-
-        // بارگذاری داده‌های درآمدها
-        function loadEarningsData() {
-            // دکمه خروجی اکسل
-            const exportEarnings = document.getElementById('exportEarnings');
-            if (exportEarnings) {
-                exportEarnings.addEventListener('click', function() {
-                    showNotification('در حال تولید خروجی', 'گزارش درآمدها در حال تولید و دانلود است...', 'info');
-                    
-                    setTimeout(() => {
-                        showNotification('دانلود موفق', 'گزارش درآمدها با موفقیت دانلود شد.', 'success');
-                    }, 1500);
-                });
-            }
-        }
-
-        // بارگذاری داده‌های کمیسیون‌ها
-        function loadCommissionsData() {
-            // در اینجا می‌توانیم داده‌های کمیسیون را به‌روزرسانی کنیم
-        }
-
-        // بارگذاری داده‌های تحلیل
-        function loadAnalyticsData() {
-            // نمودار بازدید ساعتی
-            const hourlyVisitsCtx = document.getElementById('hourlyVisitsChart')?.getContext('2d');
-            if (hourlyVisitsCtx && !charts.hourlyVisitsChart) {
-                charts.hourlyVisitsChart = new Chart(hourlyVisitsCtx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['۸-۱۰', '۱۰-۱۲', '۱۲-۱۴', '۱۴-۱۶', '۱۶-۱۸', '۱۸-۲۰', '۲۰-۲۲'],
-                        datasets: [{
-                            label: 'تعداد بازدید',
-                            data: [45, 78, 92, 124, 88, 65, 42],
-                            backgroundColor: 'rgba(99, 102, 241, 0.7)',
-                            borderColor: '#6366f1',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                labels: {
-                                    color: '#cbd5e1',
-                                    font: {
-                                        family: 'Vazirmatn'
-                                    }
-                                }
-                            }
-                        },
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                grid: {
-                                    color: 'rgba(255, 255, 255, 0.1)'
-                                },
-                                ticks: {
-                                    color: '#cbd5e1',
-                                    font: {
-                                        family: 'Vazirmatn'
-                                    }
-                                }
-                            },
-                            x: {
-                                grid: {
-                                    color: 'rgba(255, 255, 255, 0.1)'
-                                },
-                                ticks: {
-                                    color: '#cbd5e1',
-                                    font: {
-                                        family: 'Vazirmatn'
-                                    }
-                                }
-                            }
-                        }
-                    }
                 });
             }
             
-            // نمودار فروش دسته‌ها
-            const categorySalesCtx = document.getElementById('categorySalesChart')?.getContext('2d');
-            if (categorySalesCtx && !charts.categorySalesChart) {
-                charts.categorySalesChart = new Chart(categorySalesCtx, {
-                    type: 'pie',
-                    data: {
-                        labels: ['قالب وبسایت', 'آموزش و دوره', 'پلاگین و افزونه', 'اسکریپت و کد'],
-                        datasets: [{
-                            data: [63, 32, 24, 18],
-                            backgroundColor: [
-                                'rgba(99, 102, 241, 0.7)',
-                                'rgba(16, 185, 129, 0.7)',
-                                'rgba(245, 158, 11, 0.7)',
-                                'rgba(139, 92, 246, 0.7)'
-                            ],
-                            borderColor: [
-                                '#6366f1',
-                                '#10b981',
-                                '#f59e0b',
-                                '#8b5cf6'
-                            ],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: 'bottom',
-                                labels: {
-                                    color: '#cbd5e1',
-                                    font: {
-                                        family: 'Vazirmatn'
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
-            }
-            
-            // تغییر بازه زمانی تحلیل
-            const analyticsPeriod = document.getElementById('analyticsPeriod');
-            if (analyticsPeriod) {
-                analyticsPeriod.addEventListener('change', function() {
-                    showNotification('تغییر بازه زمانی', `داده‌های تحلیل برای ${this.options[this.selectedIndex].text} بارگیری شد.`, 'info');
-                });
-            }
-        }
-
-        // بارگذاری داده‌های گزارش‌ها
-        function loadReportsData() {
-            // کلیک روی کارت‌های گزارش
-            document.querySelectorAll('[data-report]').forEach(card => {
-                card.addEventListener('click', function() {
-                    const reportType = this.getAttribute('data-report');
-                    let reportName = '';
-                    
-                    switch(reportType) {
-                        case 'sales': reportName = 'گزارش فروش'; break;
-                        case 'products': reportName = 'گزارش محصولات'; break;
-                        case 'financial': reportName = 'گزارش مالی'; break;
-                    }
-                    
-                    showNotification('بارگذاری گزارش', `در حال بارگذاری ${reportName}...`, 'info');
-                });
-            });
-            
-            // ایجاد گزارش جدید
-            const generateReport = document.getElementById('generateReport');
-            if (generateReport) {
-                generateReport.addEventListener('click', function() {
-                    showNotification('ایجاد گزارش', 'گزارش جدید در حال ایجاد است...', 'info');
-                    
-                    setTimeout(() => {
-                        showNotification('ایجاد موفق', 'گزارش با موفقیت ایجاد و به لیست گزارش‌ها اضافه شد.', 'success');
-                    }, 2000);
-                });
-            }
-        }
-
-        // بارگذاری داده‌های نظرات
-        function loadReviewsData() {
-            // فیلتر نظرات
-            document.querySelectorAll('.filter-review-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    // حذف کلاس فعال از همه دکمه‌ها
-                    document.querySelectorAll('.filter-review-btn').forEach(b => {
-                        b.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
-                        b.classList.add('bg-slate-800', 'hover:bg-slate-700');
-                    });
-                    
-                    // اضافه کردن کلاس فعال به دکمه انتخاب شده
-                    this.classList.remove('bg-slate-800', 'hover:bg-slate-700');
-                    this.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
-                    
-                    // اعمال فیلتر
-                    const filter = this.getAttribute('data-filter');
-                    filterReviews(filter);
-                });
-            });
-            
-            // مرتب‌سازی نظرات
-            const reviewSort = document.getElementById('reviewSort');
-            if (reviewSort) {
-                reviewSort.addEventListener('change', function() {
-                    showNotification('مرتب‌سازی نظرات', `نظرات بر اساس ${this.options[this.selectedIndex].text} مرتب شدند.`, 'info');
-                });
-            }
-            
-            // نمودار توزیع امتیازها
-            const ratingsCtx = document.getElementById('ratingsChart')?.getContext('2d');
-            if (ratingsCtx && !charts.ratingsChart) {
-                charts.ratingsChart = new Chart(ratingsCtx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['۱ ستاره', '۲ ستاره', '۳ ستاره', '۴ ستاره', '۵ ستاره'],
-                        datasets: [{
-                            label: 'تعداد نظرات',
-                            data: [2, 3, 5, 12, 26],
-                            backgroundColor: 'rgba(245, 158, 11, 0.7)',
-                            borderColor: '#f59e0b',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                labels: {
-                                    color: '#cbd5e1',
-                                    font: {
-                                        family: 'Vazirmatn'
-                                    }
-                                }
-                            }
-                        },
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                grid: {
-                                    color: 'rgba(255, 255, 255, 0.1)'
-                                },
-                                ticks: {
-                                    color: '#cbd5e1',
-                                    font: {
-                                        family: 'Vazirmatn'
-                                    }
-                                }
-                            },
-                            x: {
-                                grid: {
-                                    color: 'rgba(255, 255, 255, 0.1)'
-                                },
-                                ticks: {
-                                    color: '#cbd5e1',
-                                    font: {
-                                        family: 'Vazirmatn'
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
-            }
-        }
-
-        // فیلتر نظرات
-        function filterReviews(filter) {
-            const reviews = document.querySelectorAll('#reviewsList > div');
-            
-            reviews.forEach(review => {
-                let show = true;
-                
-                switch(filter) {
-                    case 'unanswered':
-                        show = review.getAttribute('data-answered') === 'false';
-                        break;
-                    case '5star':
-                        show = review.getAttribute('data-rating') === '5';
-                        break;
-                    case 'with-response':
-                        show = review.getAttribute('data-answered') === 'true';
-                        break;
-                    // 'all' - همه را نشان بده
-                }
-                
-                review.style.display = show ? 'block' : 'none';
-            });
-            
-            let filterText = '';
-            switch(filter) {
-                case 'all': filterText = 'همه نظرات'; break;
-                case 'unanswered': filterText = 'پاسخ داده نشده'; break;
-                case '5star': filterText = '۵ ستاره'; break;
-                case 'with-response': filterText = 'دارای پاسخ'; break;
-            }
-            
-            showNotification('اعمال فیلتر', `فیلتر "${filterText}" اعمال شد.`, 'info');
-        }
-
-        // بارگذاری داده‌های پشتیبانی
-        function loadSupportData() {
-            // دکمه تیکت جدید
-            const newTicketBtn = document.getElementById('newTicketBtn');
-            if (newTicketBtn) {
-                newTicketBtn.addEventListener('click', function() {
-                    // اسکرول به فرم تیکت جدید
-                    document.querySelector('#sellerSupport .stat-card:last-child')?.scrollIntoView({ behavior: 'smooth' });
-                });
-            }
-        }
-
-        // بارگذاری داده‌های راهنما
-        function loadGuidelinesData() {
-            // اسکرول به بخش‌های راهنما
-            document.querySelectorAll('a[href^="#"]').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    const targetId = this.getAttribute('href');
-                    if (targetId.startsWith('#')) {
-                        const targetElement = document.querySelector(targetId);
-                        if (targetElement) {
-                            e.preventDefault();
-                            targetElement.scrollIntoView({ behavior: 'smooth' });
-                        }
-                    }
-                });
-            });
-        }
-
-        // بارگذاری داده‌های برداشت‌ها
-        function loadWithdrawalsData() {
-            // تغییر روش برداشت
-            const withdrawMethod = document.getElementById('withdrawMethod');
-            const bankInfo = document.getElementById('bankInfo');
-            
-            if (withdrawMethod && bankInfo) {
-                withdrawMethod.addEventListener('change', function() {
-                    if (this.value === 'bank') {
-                        bankInfo.style.display = 'block';
-                    } else {
-                        bankInfo.style.display = 'none';
-                    }
-                });
-            }
-            
-            // درخواست برداشت
-            const requestWithdrawal = document.getElementById('requestWithdrawal');
-            const withdrawAmount = document.getElementById('withdrawAmount');
-            
-            if (requestWithdrawal && withdrawAmount) {
-                requestWithdrawal.addEventListener('click', function() {
-                    const amount = parseInt(withdrawAmount.value);
-                    
-                    if (!amount || amount < 100000) {
-                        showNotification('خطا در مبلغ', 'حداقل مبلغ برداشت ۱۰۰,۰۰۰ تومان است.', 'error');
-                        return;
-                    }
-                    
-                    if (amount > 3450000) {
-                        showNotification('خطا در مبلغ', 'مبلغ درخواستی بیشتر از موجودی قابل برداشت است.', 'error');
-                        return;
-                    }
-                    
-                    const fee = amount * 0.02;
-                    const netAmount = amount - fee;
-                    
-                    if (confirm(`آیا از درخواست برداشت ${amount.toLocaleString()} تومان مطمئن هستید؟\nکارمزد: ${fee.toLocaleString()} تومان\nمبلغ قابل دریافت: ${netAmount.toLocaleString()} تومان`)) {
-                        showNotification('درخواست برداشت', 'درخواست برداشت شما ثبت شد و در حال پردازش است.', 'success');
-                        
-                        // بازنشانی فرم
-                        withdrawAmount.value = '';
-                    }
-                });
-            }
-        }
-
-        // راه‌اندازی تعاملات
-        function setupInteractions() {
-            // اعلان‌های فروشنده
-            const sellerNotificationsBtn = document.getElementById('sellerNotificationsBtn');
-            if (sellerNotificationsBtn) {
-                sellerNotificationsBtn.addEventListener('click', function() {
-                    showNotification('اعلان‌های فروشنده', '۵ اعلان خوانده نشده دارید. برای مشاهده به بخش اعلان‌ها مراجعه کنید.', 'info');
-                });
-            }
-            
-            // دکمه‌های عملکرد سریع در داشبورد
-            document.querySelectorAll('#sellerDashboard button[data-page]').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const pageId = this.getAttribute('data-page');
-                    
-                    // به روزرسانی منو
-                    document.querySelectorAll('.sidebar-item').forEach(el => {
-                        el.classList.remove('active');
-                        if (el.getAttribute('data-page') === pageId) {
-                            el.classList.add('active');
-                        }
-                    });
-                    
-                    // نمایش صفحه
-                    showPage(pageId);
-                });
-            });
-        }
-
-        // راه‌اندازی فرم‌ها
-        function setupForms() {
-            // اعتبارسنجی فرم‌ها
+            // اعتبارسنجی فرم‌های دیگر
             document.querySelectorAll('form').forEach(form => {
                 form.addEventListener('submit', function(e) {
                     e.preventDefault();
@@ -3442,11 +4294,6 @@
                     progressBar.style.width = scrolled + '%';
                 }
             });
-        }
-
-        // تابع کمکی برای فرمت اعداد
-        function formatNumber(num) {
-            return num.toLocaleString('fa-IR');
         }
     </script>
 </body>
