@@ -1076,6 +1076,561 @@
                         </div>
                     </div>
                 </div>
+                <!-- صفحه خریدهای من -->
+                <div id="purchases" class="page-content">
+                    <div class="mb-8">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
+                            <div>
+                                <h1 class="text-2xl font-bold text-white mb-2">خریدهای من</h1>
+                                <p class="text-slate-400">مرور و مدیریت تمام فایل‌هایی که خریده‌اید</p>
+                            </div>
+                            <div class="mt-4 md:mt-0 flex items-center space-x-3 space-x-reverse">
+                                <button class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-all duration-300 flex items-center">
+                                    <i class="fas fa-file-export ml-2"></i>
+                                    خروجی PDF
+                                </button>
+                                <button class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 flex items-center">
+                                    <i class="fas fa-filter ml-2"></i>
+                                    فیلتر پیشرفته
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- آمار خرید -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <div class="stat-card rounded-xl p-5 card-hover">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-400 text-sm">کل خریدها</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۴۸</p>
+                                </div>
+                                <div class="w-12 h-12 rounded-lg bg-indigo-500/20 flex items-center justify-center">
+                                    <i class="fas fa-shopping-bag text-indigo-500 text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="mt-3 text-xs text-emerald-400">
+                                <i class="fas fa-arrow-up ml-1"></i>
+                                <span>۵ خرید این ماه</span>
+                            </div>
+                        </div>
+                        <div class="stat-card rounded-xl p-5 card-hover">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-400 text-sm">هزینه کل</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۴.۸۲M</p>
+                                </div>
+                                <div class="w-12 h-12 rounded-lg bg-amber-500/20 flex items-center justify-center">
+                                    <i class="fas fa-coins text-amber-500 text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="mt-3 text-xs text-amber-400">
+                                <i class="fas fa-chart-line ml-1"></i>
+                                <span>میانگین: ۱۰۰,۴۰۰ تومان</span>
+                            </div>
+                        </div>
+                        <div class="stat-card rounded-xl p-5 card-hover">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-400 text-sm">این ماه</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۵</p>
+                                </div>
+                                <div class="w-12 h-12 rounded-lg bg-emerald-500/20 flex items-center justify-center">
+                                    <i class="fas fa-calendar-alt text-emerald-500 text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="mt-3 text-xs text-blue-400">
+                                <i class="fas fa-history ml-1"></i>
+                                <span>آخرین: امروز</span>
+                            </div>
+                        </div>
+                        <div class="stat-card rounded-xl p-5 card-hover">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-400 text-sm">بازخرید شده</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۱۲</p>
+                                </div>
+                                <div class="w-12 h-12 rounded-lg bg-purple-500/20 flex items-center justify-center">
+                                    <i class="fas fa-redo text-purple-500 text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="mt-3 text-xs text-purple-400">
+                                <i class="fas fa-star ml-1"></i>
+                                <span>۲۵٪ خریدها</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- فیلترها و جستجو -->
+                    <div class="stat-card rounded-xl p-6 mb-6">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                            <div class="flex flex-wrap gap-2">
+                                <button class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-all duration-300 flex items-center">
+                                    <i class="fas fa-th-large ml-2"></i>
+                                    همه خریدها
+                                </button>
+                                <button class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 flex items-center">
+                                    <i class="fas fa-code ml-2"></i>
+                                    قالب‌ها
+                                </button>
+                                <button class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 flex items-center">
+                                    <i class="fas fa-file-alt ml-2"></i>
+                                    اسکریپت
+                                </button>
+                                <button class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 flex items-center">
+                                    <i class="fas fa-plug ml-2"></i>
+                                    پلاگین
+                                </button>
+                                <button class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 flex items-center">
+                                    <i class="fas fa-graduation-cap ml-2"></i>
+                                    آموزشی
+                                </button>
+                            </div>
+                            <div class="flex items-center w-full md:w-auto">
+                                <div class="relative flex-1 md:w-64">
+                                    <input type="text" placeholder="جستجو در خریدها..." class="form-input pr-10">
+                                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+                                </div>
+                                <select class="form-input w-48 mr-3">
+                                    <option>مرتب‌سازی: جدیدترین</option>
+                                    <option>مرتب‌سازی: گران‌ترین</option>
+                                    <option>مرتب‌سازی: ارزان‌ترین</option>
+                                    <option>مرتب‌سازی: محبوب‌ترین</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- لیست خریدها -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                        <!-- آیتم خرید ۱ -->
+                        <div class="stat-card rounded-xl overflow-hidden card-hover">
+                            <div class="relative">
+                                <div class="h-48 bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center">
+                                    <div class="text-center">
+                                        <i class="fas fa-laptop-code text-white text-5xl mb-3"></i>
+                                        <div class="bg-black/30 backdrop-blur-sm py-1 px-3 rounded-full inline-block">
+                                            <span class="text-white text-sm font-medium">قالب React</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="absolute top-3 left-3">
+                                    <span class="text-xs bg-emerald-500 text-white px-2 py-1 rounded-full">جدید</span>
+                                </div>
+                                <div class="absolute top-3 right-3">
+                                    <span class="text-xs bg-amber-500/20 text-amber-400 px-2 py-1 rounded-full flex items-center">
+                                        <i class="fas fa-star text-xs ml-1"></i>
+                                        ۴.۹
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-5">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div>
+                                        <h3 class="font-bold text-white text-lg mb-1">قالب فروشگاهی React Pro</h3>
+                                        <p class="text-slate-400 text-sm">قالب مدرن فروشگاهی با امکانات کامل</p>
+                                    </div>
+                                    <span class="text-xs bg-slate-700 text-slate-300 px-2 py-1 rounded">قالب</span>
+                                </div>
+                                
+                                <div class="flex items-center text-slate-400 text-sm mb-4">
+                                    <i class="fas fa-user ml-2"></i>
+                                    <span class="ml-1">طراحی وب</span>
+                                    <i class="fas fa-calendar mr-3 ml-4"></i>
+                                    <span>۱۴۰۲/۰۸/۱۹</span>
+                                </div>
+                                
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center ml-2">
+                                            <i class="fas fa-download text-sm text-slate-300"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-xs text-slate-400">تعداد دانلود</p>
+                                            <p class="text-sm font-bold text-white">۱۲۸</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-xs text-slate-400">قیمت</p>
+                                        <p class="text-xl font-bold text-white">۱۲۰,۰۰۰ <span class="text-sm">تومان</span></p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex space-x-2 space-x-reverse">
+                                    <button class="flex-1 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-all duration-300 flex items-center justify-center">
+                                        <i class="fas fa-download ml-2"></i>
+                                        دانلود
+                                    </button>
+                                    <button class="w-10 h-10 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 flex items-center justify-center">
+                                        <i class="fas fa-info"></i>
+                                    </button>
+                                    <button class="w-10 h-10 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 flex items-center justify-center">
+                                        <i class="fas fa-share-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- آیتم خرید ۲ -->
+                        <div class="stat-card rounded-xl overflow-hidden card-hover">
+                            <div class="relative">
+                                <div class="h-48 bg-gradient-to-r from-purple-500 to-pink-600 flex items-center justify-center">
+                                    <div class="text-center">
+                                        <i class="fas fa-video text-white text-5xl mb-3"></i>
+                                        <div class="bg-black/30 backdrop-blur-sm py-1 px-3 rounded-full inline-block">
+                                            <span class="text-white text-sm font-medium">دوره آموزشی</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="absolute top-3 left-3">
+                                    <span class="text-xs bg-blue-500 text-white px-2 py-1 rounded-full">پرفروش</span>
+                                </div>
+                                <div class="absolute top-3 right-3">
+                                    <span class="text-xs bg-amber-500/20 text-amber-400 px-2 py-1 rounded-full flex items-center">
+                                        <i class="fas fa-star text-xs ml-1"></i>
+                                        ۴.۸
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-5">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div>
+                                        <h3 class="font-bold text-white text-lg mb-1">پکیج آموزشی Node.js حرفه‌ای</h3>
+                                        <p class="text-slate-400 text-sm">آموزش کامل Node.js از صفر تا صد</p>
+                                    </div>
+                                    <span class="text-xs bg-slate-700 text-slate-300 px-2 py-1 rounded">آموزشی</span>
+                                </div>
+                                
+                                <div class="flex items-center text-slate-400 text-sm mb-4">
+                                    <i class="fas fa-user ml-2"></i>
+                                    <span class="ml-1">آکادمی برنامه‌نویسی</span>
+                                    <i class="fas fa-calendar mr-3 ml-4"></i>
+                                    <span>۱۴۰۲/۰۸/۱۰</span>
+                                </div>
+                                
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center ml-2">
+                                            <i class="fas fa-play-circle text-sm text-slate-300"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-xs text-slate-400">تعداد درس</p>
+                                            <p class="text-sm font-bold text-white">۴۲</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-xs text-slate-400">قیمت</p>
+                                        <p class="text-xl font-bold text-white">۸۵,۰۰۰ <span class="text-sm">تومان</span></p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex space-x-2 space-x-reverse">
+                                    <button class="flex-1 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-all duration-300 flex items-center justify-center">
+                                        <i class="fas fa-play ml-2"></i>
+                                        ادامه آموزش
+                                    </button>
+                                    <button class="w-10 h-10 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 flex items-center justify-center">
+                                        <i class="fas fa-info"></i>
+                                    </button>
+                                    <button class="w-10 h-10 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 flex items-center justify-center">
+                                        <i class="fas fa-comment"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- آیتم خرید ۳ -->
+                        <div class="stat-card rounded-xl overflow-hidden card-hover">
+                            <div class="relative">
+                                <div class="h-48 bg-gradient-to-r from-emerald-500 to-teal-600 flex items-center justify-center">
+                                    <div class="text-center">
+                                        <i class="fas fa-shield-alt text-white text-5xl mb-3"></i>
+                                        <div class="bg-black/30 backdrop-blur-sm py-1 px-3 rounded-full inline-block">
+                                            <span class="text-white text-sm font-medium">پلاگین امنیتی</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="absolute top-3 left-3">
+                                    <span class="text-xs bg-red-500 text-white px-2 py-1 rounded-full">ضروری</span>
+                                </div>
+                                <div class="absolute top-3 right-3">
+                                    <span class="text-xs bg-amber-500/20 text-amber-400 px-2 py-1 rounded-full flex items-center">
+                                        <i class="fas fa-star text-xs ml-1"></i>
+                                        ۴.۷
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-5">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div>
+                                        <h3 class="font-bold text-white text-lg mb-1">پلاگین امنیتی وردپرس Pro</h3>
+                                        <p class="text-slate-400 text-sm">افزایش امنیت وردپرس در برابر حملات</p>
+                                    </div>
+                                    <span class="text-xs bg-slate-700 text-slate-300 px-2 py-1 rounded">پلاگین</span>
+                                </div>
+                                
+                                <div class="flex items-center text-slate-400 text-sm mb-4">
+                                    <i class="fas fa-user ml-2"></i>
+                                    <span class="ml-1">تیم امنیت وب</span>
+                                    <i class="fas fa-calendar mr-3 ml-4"></i>
+                                    <span>۱۴۰۲/۰۷/۲۸</span>
+                                </div>
+                                
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center ml-2">
+                                            <i class="fas fa-sync text-sm text-slate-300"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-xs text-slate-400">آخرین بروزرسانی</p>
+                                            <p class="text-sm font-bold text-white">۲ هفته پیش</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-xs text-slate-400">قیمت</p>
+                                        <p class="text-xl font-bold text-white">۶۰,۰۰۰ <span class="text-sm">تومان</span></p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex space-x-2 space-x-reverse">
+                                    <button class="flex-1 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-all duration-300 flex items-center justify-center">
+                                        <i class="fas fa-cog ml-2"></i>
+                                        تنظیمات
+                                    </button>
+                                    <button class="w-10 h-10 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 flex items-center justify-center">
+                                        <i class="fas fa-info"></i>
+                                    </button>
+                                    <button class="w-10 h-10 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 flex items-center justify-center">
+                                        <i class="fas fa-question"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- آیتم خرید ۴ -->
+                        <div class="stat-card rounded-xl overflow-hidden card-hover">
+                            <div class="relative">
+                                <div class="h-48 bg-gradient-to-r from-amber-500 to-orange-600 flex items-center justify-center">
+                                    <div class="text-center">
+                                        <i class="fas fa-palette text-white text-5xl mb-3"></i>
+                                        <div class="bg-black/30 backdrop-blur-sm py-1 px-3 rounded-full inline-block">
+                                            <span class="text-white text-sm font-medium">ابزار طراحی</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="absolute top-3 left-3">
+                                    <span class="text-xs bg-purple-500 text-white px-2 py-1 rounded-full">پرامکانات</span>
+                                </div>
+                                <div class="absolute top-3 right-3">
+                                    <span class="text-xs bg-amber-500/20 text-amber-400 px-2 py-1 rounded-full flex items-center">
+                                        <i class="fas fa-star text-xs ml-1"></i>
+                                        ۴.۶
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-5">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div>
+                                        <h3 class="font-bold text-white text-lg mb-1">کیت UI/UX طراحی رابط کاربری</h3>
+                                        <p class="text-slate-400 text-sm">کامپوننت‌های آماده طراحی مدرن</p>
+                                    </div>
+                                    <span class="text-xs bg-slate-700 text-slate-300 px-2 py-1 rounded">ابزار</span>
+                                </div>
+                                
+                                <div class="flex items-center text-slate-400 text-sm mb-4">
+                                    <i class="fas fa-user ml-2"></i>
+                                    <span class="ml-1">استودیو طراحی</span>
+                                    <i class="fas fa-calendar mr-3 ml-4"></i>
+                                    <span>۱۴۰۲/۰۷/۱۵</span>
+                                </div>
+                                
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center ml-2">
+                                            <i class="fas fa-layer-group text-sm text-slate-300"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-xs text-slate-400">تعداد کامپوننت</p>
+                                            <p class="text-sm font-bold text-white">۱۵۰+</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-xs text-slate-400">قیمت</p>
+                                        <p class="text-xl font-bold text-white">۷۵,۰۰۰ <span class="text-sm">تومان</span></p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex space-x-2 space-x-reverse">
+                                    <button class="flex-1 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-all duration-300 flex items-center justify-center">
+                                        <i class="fas fa-eye ml-2"></i>
+                                        پیش‌نمایش
+                                    </button>
+                                    <button class="w-10 h-10 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 flex items-center justify-center">
+                                        <i class="fas fa-info"></i>
+                                    </button>
+                                    <button class="w-10 h-10 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 flex items-center justify-center">
+                                        <i class="fas fa-heart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- آیتم خرید ۵ -->
+                        <div class="stat-card rounded-xl overflow-hidden card-hover">
+                            <div class="relative">
+                                <div class="h-48 bg-gradient-to-r from-cyan-500 to-blue-600 flex items-center justify-center">
+                                    <div class="text-center">
+                                        <i class="fas fa-mobile-alt text-white text-5xl mb-3"></i>
+                                        <div class="bg-black/30 backdrop-blur-sm py-1 px-3 rounded-full inline-block">
+                                            <span class="text-white text-sm font-medium">اپ موبایل</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="absolute top-3 left-3">
+                                    <span class="text-xs bg-pink-500 text-white px-2 py-1 rounded-full">پیشنهاد ویژه</span>
+                                </div>
+                                <div class="absolute top-3 right-3">
+                                    <span class="text-xs bg-amber-500/20 text-amber-400 px-2 py-1 rounded-full flex items-center">
+                                        <i class="fas fa-star text-xs ml-1"></i>
+                                        ۴.۵
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-5">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div>
+                                        <h3 class="font-bold text-white text-lg mb-1">اپلیکیشن فروشگاهی Flutter</h3>
+                                        <p class="text-slate-400 text-sm">اپ موبایل کامل با Flutter و Firebase</p>
+                                    </div>
+                                    <span class="text-xs bg-slate-700 text-slate-300 px-2 py-1 rounded">اپلیکیشن</span>
+                                </div>
+                                
+                                <div class="flex items-center text-slate-400 text-sm mb-4">
+                                    <i class="fas fa-user ml-2"></i>
+                                    <span class="ml-1">تیم موبایل</span>
+                                    <i class="fas fa-calendar mr-3 ml-4"></i>
+                                    <span>۱۴۰۲/۰۷/۰۵</span>
+                                </div>
+                                
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center ml-2">
+                                            <i class="fas fa-code-branch text-sm text-slate-300"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-xs text-slate-400">ورژن</p>
+                                            <p class="text-sm font-bold text-white">۲.۱.۴</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-xs text-slate-400">قیمت</p>
+                                        <p class="text-xl font-bold text-white">۱۵۰,۰۰۰ <span class="text-sm">تومان</span></p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex space-x-2 space-x-reverse">
+                                    <button class="flex-1 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-all duration-300 flex items-center justify-center">
+                                        <i class="fas fa-code ml-2"></i>
+                                        مشاهده سورس
+                                    </button>
+                                    <button class="w-10 h-10 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 flex items-center justify-center">
+                                        <i class="fas fa-info"></i>
+                                    </button>
+                                    <button class="w-10 h-10 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 flex items-center justify-center">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- آیتم خرید ۶ -->
+                        <div class="stat-card rounded-xl overflow-hidden card-hover">
+                            <div class="relative">
+                                <div class="h-48 bg-gradient-to-r from-red-500 to-rose-600 flex items-center justify-center">
+                                    <div class="text-center">
+                                        <i class="fas fa-chart-line text-white text-5xl mb-3"></i>
+                                        <div class="bg-black/30 backdrop-blur-sm py-1 px-3 rounded-full inline-block">
+                                            <span class="text-white text-sm font-medium">آنالیز داده</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="absolute top-3 left-3">
+                                    <span class="text-xs bg-green-500 text-white px-2 py-1 rounded-full">پیشرفته</span>
+                                </div>
+                                <div class="absolute top-3 right-3">
+                                    <span class="text-xs bg-amber-500/20 text-amber-400 px-2 py-1 rounded-full flex items-center">
+                                        <i class="fas fa-star text-xs ml-1"></i>
+                                        ۴.۹
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-5">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div>
+                                        <h3 class="font-bold text-white text-lg mb-1">سیستم آنالیز داده‌های بزرگ</h3>
+                                        <p class="text-slate-400 text-sm">ابزار تحلیل و گزارش‌گیری پیشرفته</p>
+                                    </div>
+                                    <span class="text-xs bg-slate-700 text-slate-300 px-2 py-1 rounded">نرم‌افزار</span>
+                                </div>
+                                
+                                <div class="flex items-center text-slate-400 text-sm mb-4">
+                                    <i class="fas fa-user ml-2"></i>
+                                    <span class="ml-1">تیم داده‌کاوی</span>
+                                    <i class="fas fa-calendar mr-3 ml-4"></i>
+                                    <span>۱۴۰۲/۰۶/۲۰</span>
+                                </div>
+                                
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center ml-2">
+                                            <i class="fas fa-database text-sm text-slate-300"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-xs text-slate-400">پشتیبانی داده</p>
+                                            <p class="text-sm font-bold text-white">بی‌نهایت</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-xs text-slate-400">قیمت</p>
+                                        <p class="text-xl font-bold text-white">۲۰۰,۰۰۰ <span class="text-sm">تومان</span></p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex space-x-2 space-x-reverse">
+                                    <button class="flex-1 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-all duration-300 flex items-center justify-center">
+                                        <i class="fas fa-chart-bar ml-2"></i>
+                                        آنالیز داده
+                                    </button>
+                                    <button class="w-10 h-10 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 flex items-center justify-center">
+                                        <i class="fas fa-info"></i>
+                                    </button>
+                                    <button class="w-10 h-10 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 flex items-center justify-center">
+                                        <i class="fas fa-cog"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- صفحه‌بندی -->
+                    <div class="flex flex-col md:flex-row justify-between items-center mt-8 pt-6 border-t border-slate-800">
+                        <p class="text-slate-400 text-sm mb-4 md:mb-0">نمایش ۶ از ۴۸ خرید</p>
+                        <div class="flex items-center space-x-2 space-x-reverse">
+                            <button class="w-10 h-10 bg-slate-800 hover:bg-slate-700 text-white rounded-lg flex items-center justify-center">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                            <button class="w-10 h-10 bg-indigo-600 text-white rounded-lg flex items-center justify-center">1</button>
+                            <button class="w-10 h-10 bg-slate-800 hover:bg-slate-700 text-white rounded-lg flex items-center justify-center">2</button>
+                            <button class="w-10 h-10 bg-slate-800 hover:bg-slate-700 text-white rounded-lg flex items-center justify-center">3</button>
+                            <span class="text-slate-400 px-2">...</span>
+                            <button class="w-10 h-10 bg-slate-800 hover:bg-slate-700 text-white rounded-lg flex items-center justify-center">8</button>
+                            <button class="w-10 h-10 bg-slate-800 hover:bg-slate-700 text-white rounded-lg flex items-center justify-center">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
                 <!-- صفحه پروفایل -->
                 <div id="profile" class="page-content">
                     <div class="mb-8">
