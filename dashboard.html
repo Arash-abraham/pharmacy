@@ -1896,16 +1896,168 @@
                 <!-- صفحه اعلان‌ها -->
                 <div id="notifications" class="page-content">
                     <div class="mb-8">
-                        <h1 class="text-2xl font-bold text-white mb-2">اعلان‌ها</h1>
-                        <p class="text-slate-400">مدیریت و مشاهده اعلان‌های سیستم</p>
+                        <h1 class="text-2xl font-bold text-white mb-2">اعلان‌ها و پیام‌ها</h1>
+                        <p class="text-slate-400">مدیریت اعلان‌ها، تیکت‌های پشتیبانی و پیام‌های سیستم</p>
+                    </div>
+                    
+                    <!-- تب‌های اصلی -->
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <button class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-all duration-300 flex items-center">
+                            <i class="fas fa-bell ml-2"></i>
+                            همه اعلان‌ها
+                        </button>
+                        <button class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 flex items-center">
+                            <i class="fas fa-ticket-alt ml-2"></i>
+                            تیکت‌های پشتیبانی
+                        </button>
+                        <button class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 flex items-center">
+                            <i class="fas fa-comments ml-2"></i>
+                            پیام‌ها
+                        </button>
+                        <button class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 flex items-center">
+                            <i class="fas fa-exclamation-circle ml-2"></i>
+                            هشدارها
+                        </button>
                     </div>
                     
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                         <div class="lg:col-span-2">
+                            <!-- بخش تیکت‌های پشتیبانی -->
+                            <div class="stat-card rounded-xl p-6 mb-6">
+                                <div class="flex justify-between items-center mb-6">
+                                    <h2 class="text-xl font-bold text-white">تیکت‌های پشتیبانی</h2>
+                                    <button class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-all duration-300 flex items-center">
+                                        <i class="fas fa-plus ml-2"></i>
+                                        تیکت جدید
+                                    </button>
+                                </div>
+                                
+                                <div class="space-y-4">
+                                    <!-- تیکت باز -->
+                                    <div class="bg-slate-800/50 rounded-lg p-4 border-r-4 border-blue-500">
+                                        <div class="flex items-start justify-between">
+                                            <div class="flex items-start flex-1">
+                                                <div class="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center ml-3 flex-shrink-0">
+                                                    <i class="fas fa-question-circle text-blue-500"></i>
+                                                </div>
+                                                <div class="flex-1">
+                                                    <div class="flex items-center mb-1">
+                                                        <p class="font-medium text-white">مشکل در آپلود فایل‌های بزرگ</p>
+                                                        <span class="text-xs bg-blue-500/30 text-blue-400 px-2 py-1 rounded mr-3">باز</span>
+                                                    </div>
+                                                    <p class="text-sm text-slate-400 mb-2">آپلود فایل‌های بزرگتر از ۲۰۰ مگابایت با خطا مواجه می‌شود...</p>
+                                                    <div class="flex items-center text-xs text-slate-500">
+                                                        <span class="flex items-center">
+                                                            <i class="fas fa-user ml-1"></i>
+                                                            پشتیبانی فنی
+                                                        </span>
+                                                        <span class="mr-4 ml-4">|</span>
+                                                        <span class="flex items-center">
+                                                            <i class="fas fa-calendar ml-1"></i>
+                                                            امروز ۱۱:۴۵
+                                                        </span>
+                                                        <span class="mr-4 ml-4">|</span>
+                                                        <span class="flex items-center">
+                                                            <i class="fas fa-comment ml-1"></i>
+                                                            ۳ پاسخ
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button class="text-slate-400 hover:text-white">
+                                                <i class="fas fa-chevron-left"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- تیکت در حال بررسی -->
+                                    <div class="bg-slate-800/50 rounded-lg p-4 border-r-4 border-amber-500">
+                                        <div class="flex items-start justify-between">
+                                            <div class="flex items-start flex-1">
+                                                <div class="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center ml-3 flex-shrink-0">
+                                                    <i class="fas fa-cog text-amber-500"></i>
+                                                </div>
+                                                <div class="flex-1">
+                                                    <div class="flex items-center mb-1">
+                                                        <p class="font-medium text-white">درخواست افزایش فضای ذخیره‌سازی</p>
+                                                        <span class="text-xs bg-amber-500/30 text-amber-400 px-2 py-1 rounded mr-3">در حال بررسی</span>
+                                                    </div>
+                                                    <p class="text-sm text-slate-400 mb-2">لطفاً فضای ذخیره‌سازی حساب من را به ۱۰ گیگ افزایش دهید...</p>
+                                                    <div class="flex items-center text-xs text-slate-500">
+                                                        <span class="flex items-center">
+                                                            <i class="fas fa-user ml-1"></i>
+                                                            مدیریت
+                                                        </span>
+                                                        <span class="mr-4 ml-4">|</span>
+                                                        <span class="flex items-center">
+                                                            <i class="fas fa-calendar ml-1"></i>
+                                                            دیروز ۱۴:۲۰
+                                                        </span>
+                                                        <span class="mr-4 ml-4">|</span>
+                                                        <span class="flex items-center">
+                                                            <i class="fas fa-comment ml-1"></i>
+                                                            ۲ پاسخ
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button class="text-slate-400 hover:text-white">
+                                                <i class="fas fa-chevron-left"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- تیکت بسته شده -->
+                                    <div class="bg-slate-800/50 rounded-lg p-4 border-r-4 border-emerald-500">
+                                        <div class="flex items-start justify-between">
+                                            <div class="flex items-start flex-1">
+                                                <div class="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center ml-3 flex-shrink-0">
+                                                    <i class="fas fa-check-circle text-emerald-500"></i>
+                                                </div>
+                                                <div class="flex-1">
+                                                    <div class="flex items-center mb-1">
+                                                        <p class="font-medium text-white">مشکل پرداخت درگاه بانکی</p>
+                                                        <span class="text-xs bg-emerald-500/30 text-emerald-400 px-2 py-1 rounded mr-3">حل شده</span>
+                                                    </div>
+                                                    <p class="text-sm text-slate-400 mb-2">درگاه پرداخت بانک ملی با خطا مواجه می‌شود...</p>
+                                                    <div class="flex items-center text-xs text-slate-500">
+                                                        <span class="flex items-center">
+                                                            <i class="fas fa-user ml-1"></i>
+                                                            پشتیبانی مالی
+                                                        </span>
+                                                        <span class="mr-4 ml-4">|</span>
+                                                        <span class="flex items-center">
+                                                            <i class="fas fa-calendar ml-1"></i>
+                                                            ۲ روز پیش
+                                                        </span>
+                                                        <span class="mr-4 ml-4">|</span>
+                                                        <span class="flex items-center">
+                                                            <i class="fas fa-comment ml-1"></i>
+                                                            ۵ پاسخ
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button class="text-slate-400 hover:text-white">
+                                                <i class="fas fa-chevron-left"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="text-center mt-6">
+                                    <button class="text-indigo-400 hover:text-indigo-300 text-sm flex items-center justify-center mx-auto">
+                                        مشاهده همه تیکت‌ها
+                                        <i class="fas fa-chevron-left mr-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- بخش اعلان‌های سیستم -->
                             <div class="stat-card rounded-xl p-6">
                                 <div class="flex justify-between items-center mb-6">
-                                    <h2 class="text-xl font-bold text-white">همه اعلان‌ها</h2>
-                                    <button class="text-sm text-indigo-400 hover:text-indigo-300">
+                                    <h2 class="text-xl font-bold text-white">آخرین اعلان‌ها</h2>
+                                    <button class="text-sm text-indigo-400 hover:text-indigo-300 flex items-center">
                                         <i class="fas fa-check-circle ml-1"></i>
                                         علامت‌خوانده‌شدن همه
                                     </button>
@@ -1919,13 +2071,21 @@
                                                 <i class="fas fa-download text-indigo-500"></i>
                                             </div>
                                             <div class="flex-1">
-                                                <p class="font-medium text-white">دانلود فایل شما تکمیل شد</p>
-                                                <p class="text-sm text-slate-400 mt-1">فایل "گزارش مالی.pdf" با موفقیت دانلود شد.</p>
-                                                <p class="text-xs text-slate-500 mt-2">امروز ۱۰:۳۰</p>
+                                                <div class="flex items-center mb-1">
+                                                    <p class="font-medium text-white">دانلود فایل شما تکمیل شد</p>
+                                                    <span class="text-xs bg-indigo-500/30 text-indigo-400 px-2 py-1 rounded mr-auto">سیستم</span>
+                                                </div>
+                                                <p class="text-sm text-slate-400 mb-2">فایل "گزارش مالی.pdf" با موفقیت دانلود شد.</p>
+                                                <p class="text-xs text-slate-500">امروز ۱۰:۳۰</p>
                                             </div>
-                                            <button class="text-slate-400 hover:text-white">
-                                                <i class="fas fa-times"></i>
-                                            </button>
+                                            <div class="flex flex-col space-y-2">
+                                                <button class="text-slate-400 hover:text-white">
+                                                    <i class="fas fa-check"></i>
+                                                </button>
+                                                <button class="text-slate-400 hover:text-red-400">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                     
@@ -1936,13 +2096,21 @@
                                                 <i class="fas fa-shopping-cart text-green-500"></i>
                                             </div>
                                             <div class="flex-1">
-                                                <p class="font-medium text-white">خرید جدید از فروشگاه شما</p>
-                                                <p class="text-sm text-slate-400 mt-1">کاربر "مریم احمدی" قالب وبسایت شما را خریداری کرد.</p>
-                                                <p class="text-xs text-slate-500 mt-2">دیروز ۱۴:۲۰</p>
+                                                <div class="flex items-center mb-1">
+                                                    <p class="font-medium text-white">خرید جدید از فروشگاه شما</p>
+                                                    <span class="text-xs bg-green-500/30 text-green-400 px-2 py-1 rounded mr-auto">فروش</span>
+                                                </div>
+                                                <p class="text-sm text-slate-400 mb-2">کاربر "مریم احمدی" قالب وبسایت شما را خریداری کرد.</p>
+                                                <p class="text-xs text-slate-500">دیروز ۱۴:۲۰</p>
                                             </div>
-                                            <button class="text-slate-400 hover:text-white">
-                                                <i class="fas fa-times"></i>
-                                            </button>
+                                            <div class="flex flex-col space-y-2">
+                                                <button class="text-slate-400 hover:text-white">
+                                                    <i class="fas fa-check"></i>
+                                                </button>
+                                                <button class="text-slate-400 hover:text-red-400">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                     
@@ -1953,13 +2121,46 @@
                                                 <i class="fas fa-exclamation-triangle text-amber-500"></i>
                                             </div>
                                             <div class="flex-1">
-                                                <p class="font-medium text-white">فضای ذخیره‌سازی شما در حال پر شدن است</p>
-                                                <p class="text-sm text-slate-400 mt-1">۶۰٪ از فضای ذخیره‌سازی شما استفاده شده است.</p>
-                                                <p class="text-xs text-slate-500 mt-2">۲ روز پیش ۰۹:۱۵</p>
+                                                <div class="flex items-center mb-1">
+                                                    <p class="font-medium text-white">فضای ذخیره‌سازی شما در حال پر شدن است</p>
+                                                    <span class="text-xs bg-amber-500/30 text-amber-400 px-2 py-1 rounded mr-auto">هشدار</span>
+                                                </div>
+                                                <p class="text-sm text-slate-400 mb-2">۶۰٪ از فضای ذخیره‌سازی شما استفاده شده است.</p>
+                                                <p class="text-xs text-slate-500">۲ روز پیش ۰۹:۱۵</p>
                                             </div>
-                                            <button class="text-slate-400 hover:text-white">
-                                                <i class="fas fa-times"></i>
-                                            </button>
+                                            <div class="flex flex-col space-y-2">
+                                                <button class="text-slate-400 hover:text-white">
+                                                    <i class="fas fa-check"></i>
+                                                </button>
+                                                <button class="text-slate-400 hover:text-red-400">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- اعلان پیام جدید -->
+                                    <div class="notification-item unread rounded-lg p-4">
+                                        <div class="flex items-start">
+                                            <div class="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center ml-3 flex-shrink-0">
+                                                <i class="fas fa-envelope text-purple-500"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="flex items-center mb-1">
+                                                    <p class="font-medium text-white">پیام جدید از پشتیبانی</p>
+                                                    <span class="text-xs bg-purple-500/30 text-purple-400 px-2 py-1 rounded mr-auto">پیام</span>
+                                                </div>
+                                                <p class="text-sm text-slate-400 mb-2">پاسخ تیم پشتیبانی به تیکت شماره #۴۵۶۷ دریافت شد.</p>
+                                                <p class="text-xs text-slate-500">۳ روز پیش ۱۶:۴۰</p>
+                                            </div>
+                                            <div class="flex flex-col space-y-2">
+                                                <button class="text-slate-400 hover:text-white">
+                                                    <i class="fas fa-check"></i>
+                                                </button>
+                                                <button class="text-slate-400 hover:text-red-400">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1967,12 +2168,86 @@
                         </div>
                         
                         <div>
+                            <!-- آمار کلی -->
+                            <div class="stat-card rounded-xl p-6 mb-6">
+                                <h3 class="font-bold text-lg mb-4">آمار اعلان‌ها</h3>
+                                <div class="space-y-4">
+                                    <div class="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 rounded-lg bg-indigo-500/20 flex items-center justify-center ml-3">
+                                                <i class="fas fa-bell text-indigo-500"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-white">کل اعلان‌ها</p>
+                                                <p class="text-sm text-slate-400">خوانده شده/نشده</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="text-2xl font-bold text-white">۱۲۴</p>
+                                            <p class="text-xs text-emerald-400">۱۱۸ <span class="text-slate-400">|</span> <span class="text-red-400">۶</span></p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center ml-3">
+                                                <i class="fas fa-ticket-alt text-blue-500"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-white">تیکت‌های فعال</p>
+                                                <p class="text-sm text-slate-400">باز/در حال بررسی</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="text-2xl font-bold text-white">۵</p>
+                                            <p class="text-xs text-blue-400">۳ <span class="text-slate-400">|</span> <span class="text-amber-400">۲</span></p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center ml-3">
+                                                <i class="fas fa-comments text-green-500"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-white">پیام‌های جدید</p>
+                                                <p class="text-sm text-slate-400">خوانده شده/نشده</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="text-2xl font-bold text-white">۲۳</p>
+                                            <p class="text-xs text-emerald-400">۱۸ <span class="text-slate-400">|</span> <span class="text-purple-400">۵</span></p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 rounded-lg bg-red-500/20 flex items-center justify-center ml-3">
+                                                <i class="fas fa-exclamation-triangle text-red-500"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-white">هشدارها</p>
+                                                <p class="text-sm text-slate-400">این ماه</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="text-2xl font-bold text-white">۷</p>
+                                            <p class="text-xs text-red-400">همه بررسی شده</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- تنظیمات اعلان‌ها -->
                             <div class="stat-card rounded-xl p-6 mb-6">
                                 <h3 class="font-bold text-lg mb-4">تنظیمات اعلان‌ها</h3>
                                 
                                 <div class="space-y-4">
                                     <div class="flex items-center justify-between">
-                                        <span class="text-slate-300">اعلان‌های خرید</span>
+                                        <div>
+                                            <span class="text-slate-300">اعلان‌های خرید</span>
+                                            <p class="text-xs text-slate-500">خریدهای موفق و ناموفق</p>
+                                        </div>
                                         <label class="relative inline-flex items-center cursor-pointer">
                                             <input type="checkbox" class="sr-only peer" checked>
                                             <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
@@ -1980,7 +2255,10 @@
                                     </div>
                                     
                                     <div class="flex items-center justify-between">
-                                        <span class="text-slate-300">اعلان‌های فروش</span>
+                                        <div>
+                                            <span class="text-slate-300">اعلان‌های فروش</span>
+                                            <p class="text-xs text-slate-500">فروش محصولات شما</p>
+                                        </div>
                                         <label class="relative inline-flex items-center cursor-pointer">
                                             <input type="checkbox" class="sr-only peer" checked>
                                             <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
@@ -1988,7 +2266,10 @@
                                     </div>
                                     
                                     <div class="flex items-center justify-between">
-                                        <span class="text-slate-300">اعلان‌های سیستم</span>
+                                        <div>
+                                            <span class="text-slate-300">اعلان‌های تیکت</span>
+                                            <p class="text-xs text-slate-500">پاسخ به تیکت‌های پشتیبانی</p>
+                                        </div>
                                         <label class="relative inline-flex items-center cursor-pointer">
                                             <input type="checkbox" class="sr-only peer" checked>
                                             <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
@@ -1996,7 +2277,10 @@
                                     </div>
                                     
                                     <div class="flex items-center justify-between">
-                                        <span class="text-slate-300">اعلان‌های امنیتی</span>
+                                        <div>
+                                            <span class="text-slate-300">اعلان‌های امنیتی</span>
+                                            <p class="text-xs text-slate-500">ورودهای جدید و فعالیت‌های مشکوک</p>
+                                        </div>
                                         <label class="relative inline-flex items-center cursor-pointer">
                                             <input type="checkbox" class="sr-only peer" checked>
                                             <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
@@ -2004,7 +2288,10 @@
                                     </div>
                                     
                                     <div class="flex items-center justify-between">
-                                        <span class="text-slate-300">اعلان‌های تبلیغاتی</span>
+                                        <div>
+                                            <span class="text-slate-300">اعلان‌های تبلیغاتی</span>
+                                            <p class="text-xs text-slate-500">تخفیف‌ها و پیشنهادات ویژه</p>
+                                        </div>
                                         <label class="relative inline-flex items-center cursor-pointer">
                                             <input type="checkbox" class="sr-only peer">
                                             <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
@@ -2012,39 +2299,44 @@
                                     </div>
                                     
                                     <div class="flex items-center justify-between">
-                                        <span class="text-slate-300">اعلان‌های ایمیل</span>
+                                        <div>
+                                            <span class="text-slate-300">اعلان‌های ایمیل</span>
+                                            <p class="text-xs text-slate-500">ارسال کپی اعلان‌ها به ایمیل</p>
+                                        </div>
                                         <label class="relative inline-flex items-center cursor-pointer">
                                             <input type="checkbox" class="sr-only peer" checked>
                                             <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
                                         </label>
                                     </div>
                                 </div>
+                                
+                                <div class="mt-6 pt-4 border-t border-slate-800">
+                                    <button class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 flex items-center justify-center">
+                                        <i class="fas fa-trash-alt ml-2"></i>
+                                        حذف همه اعلان‌های خوانده شده
+                                    </button>
+                                </div>
                             </div>
                             
+                            <!-- دکمه‌های سریع -->
                             <div class="stat-card rounded-xl p-6">
-                                <h3 class="font-bold text-lg mb-4">آمار اعلان‌ها</h3>
+                                <h3 class="font-bold text-lg mb-4">عملیات سریع</h3>
                                 <div class="space-y-3">
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-slate-300">کل اعلان‌ها:</span>
-                                        <span class="font-bold">۱۲۴</span>
-                                    </div>
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-slate-300">خوانده شده:</span>
-                                        <span class="font-bold">۱۱۸</span>
-                                    </div>
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-slate-300">خوانده نشده:</span>
-                                        <span class="font-bold text-red-400">۶</span>
-                                    </div>
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-slate-300">این ماه:</span>
-                                        <span class="font-bold">۲۳</span>
-                                    </div>
+                                    <button class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-all duration-300 flex items-center justify-center">
+                                        <i class="fas fa-ticket-alt ml-2"></i>
+                                        ایجاد تیکت جدید
+                                    </button>
+                                    
+                                    <button class="w-full py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 flex items-center justify-center">
+                                        <i class="fas fa-envelope ml-2"></i>
+                                        ارسال پیام به پشتیبانی
+                                    </button>
+                                    
+                                    <button class="w-full py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300 flex items-center justify-center">
+                                        <i class="fas fa-cog ml-2"></i>
+                                        تنظیمات پیشرفته
+                                    </button>
                                 </div>
-                                
-                                <button class="w-full mt-6 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-all duration-300">
-                                    حذف همه اعلان‌ها
-                                </button>
                             </div>
                         </div>
                     </div>
