@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فایل استور | افزودن ادمین جدید</title>
+    <title>افزودن ادمین جدید</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts/dist/apexcharts.css">
     <style>
         * {
             font-family: 'Vazirmatn', sans-serif;
@@ -18,178 +16,27 @@
             --primary: #7c3aed;
             --primary-dark: #5b21b6;
             --secondary: #10b981;
-            --accent: #f59e0b;
             --danger: #ef4444;
-            --warning: #f59e0b;
-            --info: #3b82f6;
-            --dark: #0f172a;
-            --darker: #020617;
-            --light: #f8fafc;
         }
         
         body {
-            background-color: var(--darker);
-            color: var(--light);
-            overflow-x: hidden;
-        }
-        
-        .gradient-bg {
-            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 50%, #1e293b 100%);
-        }
-        
-        .admin-gradient {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-        }
-        
-        .dashboard-gradient {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-        }
-        
-        .card-hover {
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        
-        .card-hover:hover {
-            transform: translateY(-5px);
-            border-color: rgba(124, 58, 237, 0.3);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-        }
-        
-        .sidebar-item {
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .sidebar-item::before {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: 0;
-            height: 100%;
-            width: 3px;
-            background: var(--primary);
-            transform: translateX(10px);
-            opacity: 0;
-            transition: all 0.3s ease;
-        }
-        
-        .sidebar-item:hover::before {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        
-        .sidebar-item.active {
-            background-color: rgba(124, 58, 237, 0.15);
-        }
-        
-        .sidebar-item.active::before {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 280px 1fr;
+            color: #f8fafc;
             min-height: 100vh;
         }
         
-        @media (max-width: 1024px) {
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .sidebar {
-                position: fixed;
-                right: -100%;
-                top: 0;
-                height: 100%;
-                width: 280px;
-                z-index: 1000;
-                transition: right 0.3s ease;
-            }
-            
-            .sidebar.active {
-                right: 0;
-            }
-            
-            .sidebar-overlay {
-                position: fixed;
-                top: 0;
-                right: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.7);
-                z-index: 999;
-                opacity: 0;
-                visibility: hidden;
-                transition: all 0.3s ease;
-            }
-            
-            .sidebar-overlay.active {
-                opacity: 1;
-                visibility: visible;
-            }
+        .card {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
         }
         
-        .progress-bar {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 0%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            z-index: 1000;
-            transition: width 0.3s ease;
-        }
-        
-        .page-content {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        .page-content.active {
-            display: block;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .status-badge {
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .status-success {
-            background-color: rgba(16, 185, 129, 0.2);
-            color: #10b981;
-            border: 1px solid rgba(16, 185, 129, 0.3);
-        }
-        
-        .status-pending {
-            background-color: rgba(245, 158, 11, 0.2);
-            color: #f59e0b;
-            border: 1px solid rgba(245, 158, 11, 0.3);
-        }
-        
-        .status-failed {
-            background-color: rgba(239, 68, 68, 0.2);
-            color: #ef4444;
-            border: 1px solid rgba(239, 68, 68, 0.3);
-        }
-        
-        .status-warning {
-            background-color: rgba(245, 158, 11, 0.2);
-            color: #f59e0b;
-            border: 1px solid rgba(245, 158, 11, 0.3);
+        .card:hover {
+            border-color: rgba(124, 58, 237, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
         
         .form-input {
@@ -267,272 +114,6 @@
             border-color: rgba(124, 58, 237, 0.3);
         }
         
-        .btn-danger {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 10px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        
-        .btn-danger:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(239, 68, 68, 0.3);
-        }
-        
-        .card {
-            background: rgba(30, 41, 59, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 24px;
-            transition: all 0.3s ease;
-        }
-        
-        .card-header {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            padding-bottom: 16px;
-            margin-bottom: 20px;
-        }
-        
-        .card-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .stat-card {
-            background: rgba(30, 41, 59, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 24px;
-            transition: all 0.3s ease;
-        }
-        
-        .stat-card:hover {
-            border-color: rgba(124, 58, 237, 0.3);
-            transform: translateY(-5px);
-        }
-        
-        .notification-badge {
-            position: absolute;
-            top: -5px;
-            left: -5px;
-            background: var(--danger);
-            color: white;
-            font-size: 10px;
-            font-weight: 700;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-            font-size: 16px;
-        }
-        
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 9999;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        
-        .modal-overlay.active {
-            display: flex;
-            animation: fadeIn 0.3s ease;
-        }
-        
-        .modal {
-            background: rgba(15, 23, 42, 0.95);
-            border: 1px solid rgba(124, 58, 237, 0.3);
-            border-radius: 20px;
-            width: 100%;
-            max-width: 600px;
-            max-height: 90vh;
-            overflow-y: auto;
-            animation: slideUp 0.3s ease;
-        }
-        
-        @keyframes slideUp {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        
-        .modal-header {
-            padding: 24px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .modal-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: white;
-        }
-        
-        .modal-close {
-            background: none;
-            border: none;
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 24px;
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
-        
-        .modal-close:hover {
-            color: white;
-        }
-        
-        .modal-body {
-            padding: 24px;
-        }
-        
-        .modal-footer {
-            padding: 24px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 12px;
-        }
-        
-        .search-box {
-            position: relative;
-            width: 100%;
-            max-width: 400px;
-        }
-        
-        .search-input {
-            width: 100%;
-            padding: 12px 16px 12px 48px;
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            color: white;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-        
-        .search-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
-        }
-        
-        .search-icon {
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: rgba(255, 255, 255, 0.5);
-        }
-        
-        .dropdown {
-            position: relative;
-        }
-        
-        .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: rgba(15, 23, 42, 0.95);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 8px;
-            min-width: 200px;
-            display: none;
-            z-index: 1000;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-        }
-        
-        .dropdown-menu.active {
-            display: block;
-            animation: fadeIn 0.2s ease;
-        }
-        
-        .dropdown-item {
-            padding: 12px 16px;
-            color: rgba(255, 255, 255, 0.8);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .dropdown-item:hover {
-            background: rgba(124, 58, 237, 0.1);
-            color: white;
-        }
-        
-        .dropdown-divider {
-            height: 1px;
-            background: rgba(255, 255, 255, 0.05);
-            margin: 8px 0;
-        }
-        
-        .pagination {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 24px;
-        }
-        
-        .page-link {
-            padding: 8px 16px;
-            background: rgba(30, 41, 59, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            color: rgba(255, 255, 255, 0.8);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 14px;
-        }
-        
-        .page-link:hover {
-            background: rgba(124, 58, 237, 0.1);
-            color: white;
-        }
-        
-        .page-link.active {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            border-color: transparent;
-        }
-        
         .badge {
             padding: 4px 10px;
             border-radius: 20px;
@@ -568,56 +149,146 @@
             color: #8b5cf6;
         }
         
-        .loading-spinner {
-            border: 3px solid rgba(255, 255, 255, 0.1);
+        .user-avatar {
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            border-top: 3px solid var(--primary);
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .empty-state {
-            text-align: center;
-            padding: 48px 24px;
-            color: rgba(255, 255, 255, 0.5);
-        }
-        
-        .tabs {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             display: flex;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            margin-bottom: 24px;
-            gap: 4px;
-        }
-        
-        .tab {
-            padding: 12px 24px;
-            color: rgba(255, 255, 255, 0.6);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-bottom: 2px solid transparent;
+            align-items: center;
+            justify-content: center;
+            color: white;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 18px;
         }
         
-        .tab:hover {
+        .user-detail-item {
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            margin-bottom: 8px;
+        }
+        
+        .user-detail-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 4px;
+        }
+        
+        .user-detail-value {
+            font-size: 14px;
+            font-weight: 600;
             color: white;
         }
         
-        .tab.active {
-            color: var(--primary);
-            border-bottom-color: var(--primary);
+        .role-option {
+            padding: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .role-option:hover {
+            border-color: var(--primary);
+            background: rgba(124, 58, 237, 0.1);
+        }
+        
+        .role-option.selected {
+            border-color: var(--primary);
+            background: rgba(124, 58, 237, 0.2);
+        }
+        
+        .permission-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(15, 23, 42, 0.7);
+        }
+        
+        .table-container table {
+            width: 100%;
+            min-width: 800px;
+            border-collapse: collapse;
+        }
+        
+        .table-container th {
+            background-color: rgba(30, 41, 59, 0.8);
+            padding: 16px 20px;
+            text-align: right;
+            font-weight: 600;
+            color: #cbd5e1;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .table-container td {
+            padding: 16px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .table-container tr:hover {
+            background-color: rgba(124, 58, 237, 0.05);
+        }
+        
+        .search-box {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 12px 16px 12px 48px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: white;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            max-width: 400px;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
         
         .alert {
             padding: 16px;
             border-radius: 12px;
-            margin-bottom: 20px;
             display: flex;
             align-items: flex-start;
             gap: 12px;
@@ -641,380 +312,20 @@
             color: #ef4444;
         }
         
-        .alert-info {
-            background: rgba(59, 130, 246, 0.1);
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            color: #3b82f6;
-        }
-        
-        .alert-icon {
-            font-size: 20px;
-            flex-shrink: 0;
-        }
-        
-        .alert-content {
-            flex: 1;
-        }
-        
-        .alert-title {
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-        
-        .alert-message {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-        
-        .alert-close {
-            background: none;
-            border: none;
-            color: currentColor;
-            opacity: 0.5;
-            cursor: pointer;
-            transition: opacity 0.3s ease;
-            font-size: 18px;
-        }
-        
-        .alert-close:hover {
-            opacity: 1;
-        }
-        
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 50px;
-            height: 26px;
-        }
-        
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        
-        .slider {
-            position: absolute;
-            cursor: pointer;
+        .page-header {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            position: sticky;
             top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(255, 255, 255, 0.1);
-            transition: .4s;
-            border-radius: 34px;
-        }
-        
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 18px;
-            width: 18px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-        
-        input:checked + .slider {
-            background-color: var(--primary);
-        }
-        
-        input:checked + .slider:before {
-            transform: translateX(24px);
-        }
-        
-        .tooltip {
-            position: relative;
-        }
-        
-        .tooltip-text {
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(15, 23, 42, 0.95);
-            color: white;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 12px;
-            white-space: nowrap;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            z-index: 1000;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        
-        .tooltip:hover .tooltip-text {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) translateY(-5px);
-        }
-        
-        .grid-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .filter-bar {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 24px;
-            flex-wrap: wrap;
-        }
-        
-        .filter-group {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .filter-label {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 14px;
-        }
-        
-        .action-buttons {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .action-btn {
-            padding: 8px 16px;
-            background: rgba(30, 41, 59, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            color: rgba(255, 255, 255, 0.8);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        
-        .action-btn:hover {
-            background: rgba(124, 58, 237, 0.1);
-            color: white;
-        }
-        
-        .action-btn-danger {
-            background: rgba(239, 68, 68, 0.1);
-            color: #ef4444;
-            border-color: rgba(239, 68, 68, 0.2);
-        }
-        
-        .action-btn-danger:hover {
-            background: rgba(239, 68, 68, 0.2);
-            color: #fca5a5;
-        }
-        
-        .action-btn-success {
-            background: rgba(16, 185, 129, 0.1);
-            color: #10b981;
-            border-color: rgba(16, 185, 129, 0.2);
-        }
-        
-        .action-btn-success:hover {
-            background: rgba(16, 185, 129, 0.2);
-            color: #5eead4;
-        }
-        
-        .notification-popup {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 9999;
-            max-width: 400px;
-            display: none;
-        }
-        
-        .notification-popup.show {
-            display: block;
-            animation: slideInLeft 0.3s ease;
-        }
-        
-        @keyframes slideInLeft {
-            from { transform: translateX(-100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        
-        /* استایل‌های جدید برای صفحه افزودن ادمین */
-        .profile-avatar-lg {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 4px solid var(--primary);
-            object-fit: cover;
-        }
-        
-        .profile-avatar-md {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 3px solid var(--primary);
-            object-fit: cover;
-        }
-        
-        .profile-avatar-sm {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: 2px solid var(--primary);
-            object-fit: cover;
-        }
-        
-        .user-detail-card {
-            background: rgba(30, 41, 59, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 24px;
-            transition: all 0.3s ease;
-            height: 100%;
-        }
-        
-        .user-detail-card:hover {
-            border-color: rgba(124, 58, 237, 0.3);
-            transform: translateY(-5px);
-        }
-        
-        .user-detail-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin-top: 20px;
-        }
-        
-        .user-detail-item {
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 10px;
-        }
-        
-        .user-detail-label {
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.5);
-            margin-bottom: 4px;
-        }
-        
-        .user-detail-value {
-            font-size: 14px;
-            font-weight: 600;
-            color: white;
-        }
-        
-        .admin-role-badge {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
-        
-        .role-super-admin {
-            background-color: rgba(139, 92, 246, 0.2);
-            color: #8b5cf6;
-            border: 1px solid rgba(139, 92, 246, 0.3);
-        }
-        
-        .role-admin {
-            background-color: rgba(59, 130, 246, 0.2);
-            color: #3b82f6;
-            border: 1px solid rgba(59, 130, 246, 0.3);
-        }
-        
-        .role-moderator {
-            background-color: rgba(16, 185, 129, 0.2);
-            color: #10b981;
-            border: 1px solid rgba(16, 185, 129, 0.3);
-        }
-        
-        .role-support {
-            background-color: rgba(245, 158, 11, 0.2);
-            color: #f59e0b;
-            border: 1px solid rgba(245, 158, 11, 0.3);
-        }
-        
-        .role-user {
-            background-color: rgba(107, 114, 128, 0.2);
-            color: #6b7280;
-            border: 1px solid rgba(107, 114, 128, 0.3);
-        }
-        
-        .activity-chart {
-            height: 200px;
-            width: 100%;
-        }
-        
-        .user-stats-card {
-            background: rgba(30, 41, 59, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 16px;
-            text-align: center;
-        }
-        
-        .user-stats-value {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-        
-        .user-stats-label {
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.5);
-        }
-        
-        .quick-add-btn {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
             z-index: 100;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 10px 25px rgba(124, 58, 237, 0.4);
-            transition: all 0.3s ease;
         }
         
-        .quick-add-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 15px 30px rgba(124, 58, 237, 0.5);
-        }
-        
-        .selection-counter {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: linear-gradient(135deg, var(--secondary) 0%, #0d9488 100%);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 50px;
-            font-weight: 600;
-            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
-            z-index: 100;
-            display: none;
-        }
-        
-        .user-selected {
-            background: rgba(124, 58, 237, 0.1) !important;
-            border-color: rgba(124, 58, 237, 0.3) !important;
+        .content-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
         }
         
         .user-list-item {
@@ -1026,1698 +337,783 @@
             background: rgba(124, 58, 237, 0.05);
         }
         
-        .role-selector {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 10px;
-            margin-top: 15px;
+        .user-selected {
+            background: rgba(124, 58, 237, 0.1) !important;
+            border-color: rgba(124, 58, 237, 0.3) !important;
         }
         
-        .role-option {
-            padding: 12px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .step-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
         }
         
-        .role-option:hover {
-            border-color: var(--primary);
-            background: rgba(124, 58, 237, 0.1);
-        }
-        
-        .role-option.selected {
-            border-color: var(--primary);
-            background: rgba(124, 58, 237, 0.2);
-        }
-        
-        .permission-checkbox {
+        .step {
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 8px 12px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 8px;
-            margin-bottom: 8px;
         }
         
-        .hover-lift {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .hover-lift:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
-        
-        .glass-effect {
-            background: rgba(30, 41, 59, 0.4);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .animate-float {
-            animation: float 3s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        .animate-pulse-glow {
-            animation: pulse-glow 2s ease-in-out infinite;
-        }
-        
-        @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 10px rgba(124, 58, 237, 0.3); }
-            50% { box-shadow: 0 0 20px rgba(124, 58, 237, 0.6); }
-        }
-        
-        .table-container-no-scroll {
-            overflow-x: visible !important;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            background: rgba(15, 23, 42, 0.7);
-        }
-        
-        .table-container-no-scroll table {
-            width: 100%;
-            min-width: auto;
-        }
-        
-        .responsive-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        .responsive-table th {
-            white-space: nowrap;
-            background-color: rgba(30, 41, 59, 0.8);
-            padding: 16px 20px;
-            text-align: right;
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-weight: 600;
-            color: #cbd5e1;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
         }
         
-        .responsive-table td {
-            padding: 16px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        .step-active {
+            background: var(--primary);
+            color: white;
         }
         
-        .responsive-table tr:hover {
-            background-color: rgba(124, 58, 237, 0.05);
+        .step-inactive {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .step-line {
+            width: 50px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
         }
     </style>
 </head>
-<body class="gradient-bg">
-    <!-- نوار پیشرفت -->
-    <div class="progress-bar" id="progressBar"></div>
-    
-    <!-- اعلان‌ها -->
-    <div class="notification-popup" id="notificationPopup">
+<body>
+
+
+    <!-- مراحل -->
+    <div class="content-wrapper">
+        <div class="step-indicator">
+            <div class="step">
+                <div class="step-number step-active">۱</div>
+                <div class="text-white font-medium">انتخاب کاربر</div>
+            </div>
+            <div class="step-line"></div>
+            <div class="step">
+                <div class="step-number step-inactive">۲</div>
+                <div class="text-slate-400">تعیین نقش</div>
+            </div>
+            <div class="step-line"></div>
+            <div class="step">
+                <div class="step-number step-inactive">۳</div>
+                <div class="text-slate-400">تایید نهایی</div>
+            </div>
+        </div>
+
+        <!-- جستجو و فیلتر -->
+        <div class="card mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label class="block text-slate-300 mb-2">جستجوی کاربر</label>
+                    <div class="search-box">
+                        <input type="text" placeholder="نام، ایمیل یا شماره کاربری..." class="search-input" id="searchInput" onkeyup="filterUsers()">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-slate-300 mb-2">وضعیت حساب</label>
+                    <select class="form-select" id="statusFilter" onchange="filterUsers()">
+                        <option value="all">همه وضعیت‌ها</option>
+                        <option value="active">فعال</option>
+                        <option value="inactive">غیرفعال</option>
+                        <option value="blocked">مسدود</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-slate-300 mb-2">مرتب‌سازی</label>
+                    <select class="form-select" id="sortBy" onchange="sortUsers()">
+                        <option value="name">نام الفبایی</option>
+                        <option value="newest">جدیدترین</option>
+                        <option value="oldest">قدیمی‌ترین</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-8">
+            <!-- لیست کاربران -->
+            <div class="card">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+                    <div class="card-title">
+                        <i class="fas fa-users text-blue-500"></i>
+                        <span class="text-lg font-bold text-white">لیست کاربران</span>
+                    </div>
+                    <div class="flex items-center gap-2 mt-2 md:mt-0">
+                        <span class="text-sm text-slate-400" id="userCount">۱۲۴ کاربر</span>
+                        <span class="text-sm text-primary font-bold" id="selectedCount">۰ انتخاب شده</span>
+                    </div>
+                </div>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 50px;">انتخاب</th>
+                                <th>کاربر</th>
+                                <th>اطلاعات تماس</th>
+                                <th>اطلاعات شخصی</th>
+                                <th>وضعیت حساب</th>
+                                <th>تاریخ عضویت</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTable">
+                            <!-- کاربر ۱ -->
+                            <tr class="user-list-item">
+                                <td>
+                                    <input type="checkbox" class="user-checkbox" data-user-id="USR-001" onchange="toggleUserSelection('USR-001')">
+                                </td>
+                                <td>
+                                    <div class="flex items-center gap-3">
+                                        <div class="user-avatar">ع.م</div>
+                                        <div>
+                                            <p class="font-bold text-white">علی محمدی</p>
+                                            <p class="text-xs text-slate-400">کد: USR-001</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="space-y-1">
+                                        <p class="text-sm text-white">
+                                            <i class="fas fa-envelope text-slate-400 ml-2"></i>
+                                            ali.mohammadi@example.com
+                                        </p>
+                                        <p class="text-sm text-white">
+                                            <i class="fas fa-phone text-slate-400 ml-2"></i>
+                                            ۰۹۱۲۱۲۳۴۵۶۷
+                                        </p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="space-y-1">
+                                        <p class="text-sm text-white">
+                                            <i class="fas fa-id-card text-slate-400 ml-2"></i>
+                                            کد ملی: ۰۰۱۲۳۴۵۶۷۸
+                                        </p>
+                                        <p class="text-sm text-white">
+                                            <i class="fas fa-calendar text-slate-400 ml-2"></i>
+                                            تولد: ۱۳۷۰/۰۵/۲۰
+                                        </p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge badge-success">فعال</span>
+                                    <span class="badge badge-purple mt-1">تایید شده</span>
+                                </td>
+                                <td>
+                                    <p class="text-sm text-white">۱۴۰۲/۰۶/۱۵</p>
+                                    <p class="text-xs text-slate-400">۱ سال و ۲ ماه</p>
+                                </td>
+                                <td>
+                                    <button class="btn-secondary text-sm px-3 py-1" onclick="selectUser('USR-001')">
+                                        <i class="fas fa-plus"></i>
+                                        انتخاب
+                                    </button>
+                                </td>
+                            </tr>
+                            
+                            <!-- کاربر ۲ -->
+                            <tr class="user-list-item">
+                                <td>
+                                    <input type="checkbox" class="user-checkbox" data-user-id="USR-002" onchange="toggleUserSelection('USR-002')">
+                                </td>
+                                <td>
+                                    <div class="flex items-center gap-3">
+                                        <div class="user-avatar">م.ح</div>
+                                        <div>
+                                            <p class="font-bold text-white">مریم حسینی</p>
+                                            <p class="text-xs text-slate-400">کد: USR-002</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="space-y-1">
+                                        <p class="text-sm text-white">
+                                            <i class="fas fa-envelope text-slate-400 ml-2"></i>
+                                            maryam.hosseini@example.com
+                                        </p>
+                                        <p class="text-sm text-white">
+                                            <i class="fas fa-phone text-slate-400 ml-2"></i>
+                                            ۰۹۱۳۱۲۳۴۵۶۸
+                                        </p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="space-y-1">
+                                        <p class="text-sm text-white">
+                                            <i class="fas fa-id-card text-slate-400 ml-2"></i>
+                                            کد ملی: ۰۰۲۳۴۵۶۷۸۹
+                                        </p>
+                                        <p class="text-sm text-white">
+                                            <i class="fas fa-calendar text-slate-400 ml-2"></i>
+                                            تولد: ۱۳۷۵/۰۸/۱۲
+                                        </p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge badge-success">فعال</span>
+                                    <span class="badge badge-purple mt-1">تایید شده</span>
+                                </td>
+                                <td>
+                                    <p class="text-sm text-white">۱۴۰۲/۰۷/۰۲</p>
+                                    <p class="text-xs text-slate-400">۱ سال و ۱ ماه</p>
+                                </td>
+                                <td>
+                                    <button class="btn-secondary text-sm px-3 py-1" onclick="selectUser('USR-002')">
+                                        <i class="fas fa-plus"></i>
+                                        انتخاب
+                                    </button>
+                                </td>
+                            </tr>
+                            
+                            <!-- کاربر ۳ -->
+                            <tr class="user-list-item">
+                                <td>
+                                    <input type="checkbox" class="user-checkbox" data-user-id="USR-003" onchange="toggleUserSelection('USR-003')">
+                                </td>
+                                <td>
+                                    <div class="flex items-center gap-3">
+                                        <div class="user-avatar">ر.ک</div>
+                                        <div>
+                                            <p class="font-bold text-white">رضا کریمی</p>
+                                            <p class="text-xs text-slate-400">کد: USR-003</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="space-y-1">
+                                        <p class="text-sm text-white">
+                                            <i class="fas fa-envelope text-slate-400 ml-2"></i>
+                                            reza.karimi@example.com
+                                        </p>
+                                        <p class="text-sm text-white">
+                                            <i class="fas fa-phone text-slate-400 ml-2"></i>
+                                            ۰۹۱۴۱۲۳۴۵۶۹
+                                        </p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="space-y-1">
+                                        <p class="text-sm text-white">
+                                            <i class="fas fa-id-card text-slate-400 ml-2"></i>
+                                            کد ملی: ۰۰۳۴۵۶۷۸۹۰
+                                        </p>
+                                        <p class="text-sm text-white">
+                                            <i class="fas fa-calendar text-slate-400 ml-2"></i>
+                                            تولد: ۱۳۶۸/۱۱/۰۵
+                                        </p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge badge-warning">غیرفعال</span>
+                                    <span class="badge badge-purple mt-1">تایید شده</span>
+                                </td>
+                                <td>
+                                    <p class="text-sm text-white">۱۴۰۲/۰۷/۲۰</p>
+                                    <p class="text-xs text-slate-400">۱ سال و ۱ ماه</p>
+                                </td>
+                                <td>
+                                    <button class="btn-secondary text-sm px-3 py-1" onclick="selectUser('USR-003')">
+                                        <i class="fas fa-plus"></i>
+                                        انتخاب
+                                    </button>
+                                </td>
+                            </tr>
+                            
+                            <!-- کاربر ۴ -->
+                            <tr class="user-list-item">
+                                <td>
+                                    <input type="checkbox" class="user-checkbox" data-user-id="USR-004" onchange="toggleUserSelection('USR-004')">
+                                </td>
+                                <td>
+                                    <div class="flex items-center gap-3">
+                                        <div class="user-avatar">س.ر</div>
+                                        <div>
+                                            <p class="font-bold text-white">سارا رضایی</p>
+                                            <p class="text-xs text-slate-400">کد: USR-004</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="space-y-1">
+                                        <p class="text-sm text-white">
+                                            <i class="fas fa-envelope text-slate-400 ml-2"></i>
+                                            sara.rezaei@example.com
+                                        </p>
+                                        <p class="text-sm text-white">
+                                            <i class="fas fa-phone text-slate-400 ml-2"></i>
+                                            ۰۹۱۵۱۲۳۴۵۷۰
+                                        </p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="space-y-1">
+                                        <p class="text-sm text-white">
+                                            <i class="fas fa-id-card text-slate-400 ml-2"></i>
+                                            کد ملی: ۰۰۴۵۶۷۸۹۰۱
+                                        </p>
+                                        <p class="text-sm text-white">
+                                            <i class="fas fa-calendar text-slate-400 ml-2"></i>
+                                            تولد: ۱۳۷۲/۰۳/۱۵
+                                        </p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge badge-success">فعال</span>
+                                    <span class="badge badge-info mt-1">در انتظار تایید</span>
+                                </td>
+                                <td>
+                                    <p class="text-sm text-white">۱۴۰۲/۰۸/۰۵</p>
+                                    <p class="text-xs text-slate-400">۴ ماه</p>
+                                </td>
+                                <td>
+                                    <button class="btn-secondary text-sm px-3 py-1" onclick="selectUser('USR-004')">
+                                        <i class="fas fa-plus"></i>
+                                        انتخاب
+                                    </button>
+                                </td>
+                            </tr>
+                            
+                            <!-- کاربر ۵ -->
+                            <tr class="user-list-item">
+                                <td>
+                                    <input type="checkbox" class="user-checkbox" data-user-id="USR-005" onchange="toggleUserSelection('USR-005')">
+                                </td>
+                                <td>
+                                    <div class="flex items-center gap-3">
+                                        <div class="user-avatar">م.ع</div>
+                                        <div>
+                                            <p class="font-bold text-white">محمد علیزاده</p>
+                                            <p class="text-xs text-slate-400">کد: USR-005</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="space-y-1">
+                                        <p class="text-sm text-white">
+                                            <i class="fas fa-envelope text-slate-400 ml-2"></i>
+                                            mohammad.alizadeh@example.com
+                                        </p>
+                                        <p class="text-sm text-white">
+                                            <i class="fas fa-phone text-slate-400 ml-2"></i>
+                                            ۰۹۱۶۱۲۳۴۵۷۱
+                                        </p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="space-y-1">
+                                        <p class="text-sm text-white">
+                                            <i class="fas fa-id-card text-slate-400 ml-2"></i>
+                                            کد ملی: ۰۰۵۶۷۸۹۰۱۲
+                                        </p>
+                                        <p class="text-sm text-white">
+                                            <i class="fas fa-calendar text-slate-400 ml-2"></i>
+                                            تولد: ۱۳۶۵/۰۹/۲۸
+                                        </p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge badge-danger">مسدود</span>
+                                    <span class="badge badge-purple mt-1">تایید شده</span>
+                                </td>
+                                <td>
+                                    <p class="text-sm text-white">۱۴۰۲/۰۸/۱۰</p>
+                                    <p class="text-xs text-slate-400">۴ ماه</p>
+                                </td>
+                                <td>
+                                    <button class="btn-secondary text-sm px-3 py-1" onclick="selectUser('USR-005')">
+                                        <i class="fas fa-plus"></i>
+                                        انتخاب
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- دکمه‌های عملیات -->
+                <div class="flex flex-wrap gap-4 mt-6">
+                    <button class="btn-primary" onclick="proceedToRoleSelection()">
+                        <i class="fas fa-arrow-left"></i>
+                        ادامه به مرحله بعد
+                    </button>
+                    <button class="btn-secondary" onclick="clearSelection()">
+                        <i class="fas fa-times"></i>
+                        پاک کردن انتخاب‌ها
+                    </button>
+                    <button class="btn-secondary" onclick="selectAllUsers()">
+                        <i class="fas fa-check-double"></i>
+                        انتخاب همه
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- مدال انتخاب نقش -->
+    <div id="roleModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50 hidden">
+        <div class="card w-full max-w-2xl">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold text-white">تعیین نقش و دسترسی</h2>
+                <button class="text-slate-400 hover:text-white text-xl" onclick="closeRoleModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-6">
+                <!-- کاربران انتخاب شده -->
+                <div>
+                    <h3 class="font-bold text-white mb-3">کاربران انتخاب شده</h3>
+                    <div class="space-y-2 max-h-40 overflow-y-auto">
+                        <div class="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg">
+                            <div class="flex items-center gap-3">
+                                <div class="user-avatar text-sm">ع.م</div>
+                                <div>
+                                    <p class="font-medium text-white">علی محمدی</p>
+                                    <p class="text-xs text-slate-400">ali.mohammadi@example.com</p>
+                                </div>
+                            </div>
+                            <button class="text-red-400 hover:text-red-300" onclick="removeUserFromSelection('USR-001')">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- انتخاب نقش -->
+                <div>
+                    <h3 class="font-bold text-white mb-3">نقش ادمین</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="role-option" data-role="support" onclick="selectRole(this)">
+                            <i class="fas fa-headset text-amber-500 text-3xl mb-3"></i>
+                            <p class="font-bold text-white">پشتیبانی</p>
+                            <p class="text-sm text-slate-400 mt-1">دسترسی محدود به پنل کاربران و تیکت‌ها</p>
+                        </div>
+                        <div class="role-option" data-role="moderator" onclick="selectRole(this)">
+                            <i class="fas fa-edit text-blue-500 text-3xl mb-3"></i>
+                            <p class="font-bold text-white">مدیر محتوا</p>
+                            <p class="text-sm text-slate-400 mt-1">دسترسی به مدیریت محصولات و محتوا</p>
+                        </div>
+                        <div class="role-option selected" data-role="admin" onclick="selectRole(this)">
+                            <i class="fas fa-user-shield text-emerald-500 text-3xl mb-3"></i>
+                            <p class="font-bold text-white">ادمین</p>
+                            <p class="text-sm text-slate-400 mt-1">دسترسی کامل به همه بخش‌های سیستم</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- دسترسی‌ها -->
+                <div>
+                    <h3 class="font-bold text-white mb-3">سطح دسترسی</h3>
+                    <div class="space-y-3 max-h-60 overflow-y-auto">
+                        <label class="permission-checkbox">
+                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary" checked>
+                            <span class="text-slate-300">مشاهده داشبورد</span>
+                        </label>
+                        <label class="permission-checkbox">
+                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary" checked>
+                            <span class="text-slate-300">مدیریت کاربران</span>
+                        </label>
+                        <label class="permission-checkbox">
+                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary">
+                            <span class="text-slate-300">مدیریت محصولات</span>
+                        </label>
+                        <label class="permission-checkbox">
+                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary">
+                            <span class="text-slate-300">مدیریت مالی</span>
+                        </label>
+                        <label class="permission-checkbox">
+                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary">
+                            <span class="text-slate-300">تنظیمات سیستم</span>
+                        </label>
+                        <label class="permission-checkbox">
+                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary" checked>
+                            <span class="text-slate-300">پاسخ به تیکت‌ها</span>
+                        </label>
+                        <label class="permission-checkbox">
+                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary" checked>
+                            <span class="text-slate-300">ایجاد گزارش</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- توضیحات -->
+                <div>
+                    <label class="block text-slate-300 mb-2">توضیحات (اختیاری)</label>
+                    <textarea class="form-input" rows="3" placeholder="توضیحات دلخواه درباره ادمین جدید..."></textarea>
+                </div>
+                
+                <!-- دکمه‌های مدال -->
+                <div class="flex justify-end gap-3 pt-4 border-t border-slate-700">
+                    <button class="btn-secondary" onclick="closeRoleModal()">انصراف</button>
+                    <button class="btn-primary" onclick="confirmAdminCreation()">تایید و ایجاد</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- اعلان -->
+    <div id="notification" class="notification hidden">
         <div class="alert alert-success">
-            <div class="alert-icon">
-                <i class="fas fa-check-circle"></i>
+            <div class="flex-1">
+                <div class="font-bold" id="notificationTitle">موفقیت آمیز</div>
+                <div class="text-sm" id="notificationMessage">عملیات با موفقیت انجام شد.</div>
             </div>
-            <div class="alert-content">
-                <div class="alert-title" id="notificationTitle">موفقیت آمیز</div>
-                <div class="alert-message" id="notificationMessage">عملیات با موفقیت انجام شد.</div>
-            </div>
-            <button class="alert-close" id="closeNotification">
+            <button class="text-current opacity-50 hover:opacity-100" onclick="hideNotification()">
                 <i class="fas fa-times"></i>
             </button>
         </div>
     </div>
-    
-    <!-- مدال‌ها -->
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal">
-            <div class="modal-header">
-                <div class="modal-title" id="modalTitle">عنوان مدال</div>
-                <button class="modal-close" id="modalClose">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body" id="modalBody">
-                محتوای مدال
-            </div>
-            <div class="modal-footer">
-                <button class="btn-secondary" id="modalCancel">انصراف</button>
-                <button class="btn-primary" id="modalConfirm">تایید</button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- ساختار پنل -->
-    <div class="dashboard-grid">
-        <!-- سایدبار -->
-        <aside class="sidebar bg-dark border-l border-slate-800 p-6 overflow-y-auto">
-            <!-- لوگو -->
-            <div class="flex items-center justify-between mb-10">
-                <div class="flex items-center gap-3">
-                    <div class="admin-gradient p-3 rounded-xl animate-pulse-glow">
-                        <i class="fas fa-crown text-white text-xl"></i>
-                    </div>
-                    <div>
-                        <h1 class="text-xl font-bold text-white">پنل مدیریت</h1>
-                        <p class="text-xs text-slate-400">فایل استور</p>
-                    </div>
-                </div>
-                <button class="lg:hidden text-xl text-slate-400 hover:text-white" id="closeSidebar">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            
-            <!-- اطلاعات ادمین -->
-            <div class="bg-slate-800/50 rounded-xl p-4 mb-8 glass-effect">
-                <div class="flex items-center gap-3 mb-3">
-                    <div class="relative">
-                        <img class="profile-avatar-sm" src="https://avatars.githubusercontent.com/u/82562395?v=4" alt="admin">
-                        <span class="absolute bottom-0 left-0 w-3 h-3 bg-emerald-500 border-2 border-slate-900 rounded-full"></span>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-white">مدیر کل</h3>
-                        <p class="text-xs text-slate-400">سطح دسترسی: کامل</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <button class="btn-secondary w-full py-2 hover-lift" id="profileBtn">
-                        <i class="fas fa-user-cog"></i>
-                        پروفایل ادمین
-                    </button>
-                </div>
-            </div>
-            
-            <!-- منوی اصلی -->
-            <nav class="space-y-2 mb-8">
-                <h3 class="text-slate-500 text-xs font-bold mb-3 px-3">داشبورد</h3>
-                <a href="#" class="sidebar-item flex items-center p-3 rounded-xl text-slate-300 hover:text-white" data-page="adminDashboard">
-                    <i class="fas fa-chart-pie ml-3 text-slate-400"></i>
-                    <span>داشبورد کلی</span>
-                </a>
-                
-                <h3 class="text-slate-500 text-xs font-bold mb-3 px-3 mt-8">مدیریت کاربران</h3>
-                <a href="#" class="sidebar-item flex items-center p-3 rounded-xl text-slate-300 hover:text-white" data-page="users">
-                    <i class="fas fa-users ml-3 text-slate-400"></i>
-                    <span>کاربران</span>
-                    <span class="mr-auto bg-blue-500 text-white text-xs px-2 py-1 rounded-full animate-pulse-glow">۱۲۴</span>
-                </a>
-                <a href="#" class="sidebar-item flex items-center p-3 rounded-xl text-slate-300 hover:text-white" data-page="sellers">
-                    <i class="fas fa-store ml-3 text-slate-400"></i>
-                    <span>فروشندگان</span>
-                    <span class="mr-auto bg-emerald-500 text-white text-xs px-2 py-1 rounded-full animate-pulse-glow">۴۸</span>
-                </a>
-                
-                <h3 class="text-slate-500 text-xs font-bold mb-3 px-3 mt-8">مدیریت ادمین‌ها</h3>
-                <a href="#" class="sidebar-item flex items-center p-3 rounded-xl text-slate-300 hover:text-white" data-page="adminProfile">
-                    <i class="fas fa-user-shield ml-3 text-slate-400"></i>
-                    <span>پروفایل ادمین</span>
-                </a>
-                <a href="#" class="sidebar-item active flex items-center p-3 rounded-xl text-white" data-page="admins">
-                    <i class="fas fa-users-cog ml-3 text-slate-400"></i>
-                    <span>ادمین‌های سیستم</span>
-                    <span class="mr-auto bg-amber-500 text-white text-xs px-2 py-1 rounded-full animate-pulse-glow">۸</span>
-                </a>
-                <a href="#" class="sidebar-item flex items-center p-3 rounded-xl text-slate-300 hover:text-white" data-page="addAdmin">
-                    <i class="fas fa-user-plus ml-3 text-slate-400"></i>
-                    <span>افزودن ادمین جدید</span>
-                    <span class="mr-auto bg-green-500 text-white text-xs px-2 py-1 rounded-full animate-pulse-glow">جدید</span>
-                </a>
-                
-                <h3 class="text-slate-500 text-xs font-bold mb-3 px-3 mt-8">مدیریت محتوا</h3>
-                <a href="#" class="sidebar-item flex items-center p-3 rounded-xl text-slate-300 hover:text-white" data-page="products">
-                    <i class="fas fa-box ml-3 text-slate-400"></i>
-                    <span>محصولات</span>
-                    <span class="mr-auto bg-purple-500 text-white text-xs px-2 py-1 rounded-full animate-pulse-glow">۳۲۴</span>
-                </a>
-                
-                <h3 class="text-slate-500 text-xs font-bold mb-3 px-3 mt-8">تنظیمات سیستم</h3>
-                <a href="#" class="sidebar-item flex items-center p-3 rounded-xl text-slate-300 hover:text-white" data-page="settings">
-                    <i class="fas fa-cog ml-3 text-slate-400"></i>
-                    <span>تنظیمات</span>
-                </a>
-            </nav>
-            
-            <!-- آمار سریع -->
-            <div class="bg-slate-800/50 rounded-xl p-4 mb-8 glass-effect">
-                <h4 class="text-sm font-bold text-white mb-3">آمار امروز</h4>
-                <div class="space-y-3">
-                    <div class="flex justify-between items-center">
-                        <span class="text-xs text-slate-400">کاربران جدید:</span>
-                        <span class="text-sm font-bold text-blue-400">۲۴</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <span class="text-xs text-slate-400">ادمین‌های آنلاین:</span>
-                        <span class="text-sm font-bold text-amber-400">۳</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <span class="text-xs text-slate-400">در انتظار تایید:</span>
-                        <span class="text-sm font-bold text-red-400">۵</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- خروج -->
-            <button class="sidebar-item flex items-center p-3 rounded-xl text-red-400 hover:text-red-300 hover:bg-red-900/20 w-full hover-lift" id="logoutBtn">
-                <i class="fas fa-sign-out-alt ml-3"></i>
-                <span>خروج از پنل</span>
-            </button>
-        </aside>
-        
-        <!-- محتوای اصلی -->
-        <main class="overflow-y-auto">
-            <!-- هدر -->
-            <header class="bg-slate-900/90 backdrop-blur border-b border-slate-800 p-4 sticky top-0 z-50 glass-effect">
-                <div class="flex items-center justify-between">
-                    <!-- منوی موبایل -->
-                    <button class="lg:hidden text-xl bg-slate-800 w-10 h-10 rounded-xl flex items-center justify-center hover-lift" id="menuToggle">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                    
-                    <!-- جستجو -->
-                    <div class="search-box">
-                        <h1 class="text-xl font-bold text-white">افزودن ادمین جدید</h1>
-                    </div>
-                    
-                    <!-- اعلان‌ها و پروفایل -->
-                    <div class="flex items-center gap-4">
-                        <div class="dropdown">
-                            <button class="relative bg-slate-800 w-10 h-10 rounded-xl flex items-center justify-center hover-lift" id="notificationsBtn">
-                                <i class="fas fa-bell text-slate-300"></i>
-                                <span class="notification-badge">۳</span>
-                            </button>
-                        </div>
-                        
-                        <div class="dropdown">
-                            <button class="flex items-center gap-3 bg-slate-800 rounded-xl p-2 hover:bg-slate-700 transition-all hover-lift" id="userMenuBtn">
-                                <div class="relative">
-                                    <img class="w-9 h-9 rounded-full" src="https://avatars.githubusercontent.com/u/82562395?v=4" alt="admin">
-                                    <span class="absolute bottom-0 left-0 w-3 h-3 bg-emerald-500 border-2 border-slate-900 rounded-full"></span>
-                                </div>
-                                <div class="text-right hidden md:block">
-                                    <p class="text-sm font-medium text-white">مدیر کل</p>
-                                    <p class="text-xs text-slate-400">ادمین اصلی</p>
-                                </div>
-                                <i class="fas fa-chevron-down text-slate-400 text-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </header>
-            
-            <!-- محتوای صفحات -->
-            <div class="p-6">
-                <!-- صفحه افزودن ادمین جدید -->
-                <div id="addAdmin" class="page-content active">
-                    <!-- هدر صفحه -->
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
-                        <div>
-                            <h1 class="text-2xl font-bold text-white mb-2">افزودن ادمین جدید</h1>
-                            <p class="text-slate-400">انتخاب کاربران و تعیین سطح دسترسی برای ادمین جدید</p>
-                        </div>
-                        <div class="flex items-center gap-3 mt-4 md:mt-0">
-                            <button class="btn-secondary hover-lift" id="backToAdminsBtn">
-                                <i class="fas fa-arrow-right"></i>
-                                بازگشت به لیست ادمین‌ها
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- مراحل -->
-                    <div class="card mb-8 hover-lift">
-                        <div class="flex items-center justify-center md:justify-between flex-wrap gap-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
-                                    <span class="text-white font-bold">۱</span>
-                                </div>
-                                <div>
-                                    <p class="font-bold text-white">انتخاب کاربران</p>
-                                    <p class="text-sm text-slate-400">انتخاب از لیست کاربران</p>
-                                </div>
-                            </div>
-                            
-                            <div class="hidden md:block">
-                                <i class="fas fa-chevron-left text-slate-500 text-xl"></i>
-                            </div>
-                            
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center">
-                                    <span class="text-slate-400 font-bold">۲</span>
-                                </div>
-                                <div>
-                                    <p class="font-medium text-slate-400">تعیین نقش</p>
-                                    <p class="text-sm text-slate-500">تعیین سطح دسترسی</p>
-                                </div>
-                            </div>
-                            
-                            <div class="hidden md:block">
-                                <i class="fas fa-chevron-left text-slate-500 text-xl"></i>
-                            </div>
-                            
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center">
-                                    <span class="text-slate-400 font-bold">۳</span>
-                                </div>
-                                <div>
-                                    <p class="font-medium text-slate-400">تایید نهایی</p>
-                                    <p class="text-sm text-slate-500">بررسی و تایید نهایی</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- جستجو و فیلتر -->
-                    <div class="card mb-8 hover-lift">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div>
-                                <label class="block text-slate-300 mb-2">جستجوی کاربر</label>
-                                <div class="search-box">
-                                    <input type="text" placeholder="نام، ایمیل یا شماره کاربری..." class="search-input" id="userSearchInput">
-                                    <i class="fas fa-search search-icon"></i>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <label class="block text-slate-300 mb-2">نوع کاربر</label>
-                                <select class="form-select" id="userTypeFilter">
-                                    <option value="all">همه کاربران</option>
-                                    <option value="regular">کاربران عادی</option>
-                                    <option value="seller">فروشندگان</option>
-                                    <option value="verified">تایید شده</option>
-                                    <option value="active">فعال</option>
-                                </select>
-                            </div>
-                            
-                            <div>
-                                <label class="block text-slate-300 mb-2">مرتب‌سازی</label>
-                                <select class="form-select" id="userSortBy">
-                                    <option value="newest">جدیدترین</option>
-                                    <option value="oldest">قدیمی‌ترین</option>
-                                    <option value="name">نام الفبایی</option>
-                                    <option value="activity">فعالیت بیشتر</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <!-- دکمه‌های فیلتر -->
-                        <div class="flex flex-wrap gap-3 mt-6">
-                            <button class="action-btn hover-lift" data-filter="all">
-                                <i class="fas fa-users"></i>
-                                همه
-                            </button>
-                            <button class="action-btn hover-lift" data-filter="active">
-                                <i class="fas fa-check-circle"></i>
-                                فعال
-                            </button>
-                            <button class="action-btn hover-lift" data-filter="verified">
-                                <i class="fas fa-shield-alt"></i>
-                                تایید شده
-                            </button>
-                            <button class="action-btn hover-lift" data-filter="premium">
-                                <i class="fas fa-crown"></i>
-                                ویژه
-                            </button>
-                            <button class="action-btn hover-lift" data-filter="seller">
-                                <i class="fas fa-store"></i>
-                                فروشنده
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        <!-- لیست کاربران -->
-                        <div class="lg:col-span-2">
-                            <!-- تعداد انتخاب شده -->
-                            <div class="selection-counter" id="selectionCounter">
-                                <i class="fas fa-check-circle ml-2"></i>
-                                <span id="selectedCount">۰</span> کاربر انتخاب شده
-                            </div>
-                            
-                            <!-- لیست کاربران -->
-                            <div class="card mb-6 hover-lift">
-                                <div class="card-header">
-                                    <div class="card-title">
-                                        <i class="fas fa-users text-blue-500"></i>
-                                        لیست کاربران
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <span class="text-sm text-slate-400" id="totalUsersCount">۱۲۴ کاربر</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="space-y-4 max-h-[600px] overflow-y-auto p-2" id="usersListContainer">
-                                    <!-- کاربران به صورت داینامیک لود می‌شوند -->
-                                </div>
-                                
-                                <!-- صفحه‌بندی -->
-                                <div class="pagination mt-4">
-                                    <button class="page-link hover-lift" id="prevPage">
-                                        <i class="fas fa-chevron-right"></i>
-                                    </button>
-                                    <button class="page-link active hover-lift">۱</button>
-                                    <button class="page-link hover-lift">۲</button>
-                                    <button class="page-link hover-lift">۳</button>
-                                    <button class="page-link hover-lift">۴</button>
-                                    <button class="page-link hover-lift" id="nextPage">
-                                        <i class="fas fa-chevron-left"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            
-                            <!-- دکمه‌های عملیات -->
-                            <div class="flex flex-wrap gap-4 mb-8">
-                                <button class="btn-primary hover-lift" id="proceedToRolesBtn">
-                                    <i class="fas fa-arrow-left"></i>
-                                    ادامه به مرحله بعد
-                                    <span class="bg-white/20 px-2 py-1 rounded text-xs" id="selectedCountBadge">۰</span>
-                                </button>
-                                
-                                <button class="btn-secondary hover-lift" id="clearSelectionBtn">
-                                    <i class="fas fa-times"></i>
-                                    پاک کردن انتخاب‌ها
-                                </button>
-                                
-                                <button class="btn-secondary hover-lift" id="selectAllBtn">
-                                    <i class="fas fa-check-double"></i>
-                                    انتخاب همه
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <!-- پنل کاربر انتخاب شده -->
-                        <div class="space-y-6">
-                            <!-- کاربر منتخب -->
-                            <div class="card hover-lift" id="selectedUserPanel">
-                                <div class="card-header">
-                                    <div class="card-title">
-                                        <i class="fas fa-user-check text-emerald-500"></i>
-                                        کاربر منتخب
-                                    </div>
-                                </div>
-                                <div class="text-center py-8" id="noUserSelected">
-                                    <div class="w-20 h-20 mx-auto mb-4 bg-slate-800 rounded-full flex items-center justify-center">
-                                        <i class="fas fa-user text-slate-500 text-2xl"></i>
-                                    </div>
-                                    <p class="text-slate-400">هیچ کاربری انتخاب نشده است</p>
-                                    <p class="text-sm text-slate-500 mt-2">برای مشاهده جزئیات، کاربری را از لیست انتخاب کنید</p>
-                                </div>
-                                
-                                <!-- اطلاعات کاربر منتخب -->
-                                <div id="selectedUserInfo" style="display: none;">
-                                    <div class="text-center mb-6">
-                                        <img class="profile-avatar-lg mx-auto mb-4" id="selectedUserAvatar" src="" alt="user">
-                                        <h3 class="font-bold text-white text-lg mb-1" id="selectedUserName"></h3>
-                                        <p class="text-slate-400 text-sm mb-3" id="selectedUserEmail"></p>
-                                        <div class="flex justify-center gap-2 mb-4">
-                                            <span class="badge badge-success" id="selectedUserStatus"></span>
-                                            <span class="badge badge-purple" id="selectedUserType"></span>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="user-detail-grid">
-                                        <div class="user-detail-item">
-                                            <div class="user-detail-label">کد کاربری</div>
-                                            <div class="user-detail-value" id="selectedUserId"></div>
-                                        </div>
-                                        <div class="user-detail-item">
-                                            <div class="user-detail-label">تاریخ عضویت</div>
-                                            <div class="user-detail-value" id="selectedUserJoinDate"></div>
-                                        </div>
-                                        <div class="user-detail-item">
-                                            <div class="user-detail-label">آخرین ورود</div>
-                                            <div class="user-detail-value" id="selectedUserLastLogin"></div>
-                                        </div>
-                                        <div class="user-detail-item">
-                                            <div class="user-detail-label">محصولات</div>
-                                            <div class="user-detail-value" id="selectedUserProducts"></div>
-                                        </div>
-                                        <div class="user-detail-item">
-                                            <div class="user-detail-label">فروش</div>
-                                            <div class="user-detail-value" id="selectedUserSales"></div>
-                                        </div>
-                                        <div class="user-detail-item">
-                                            <div class="user-detail-label">امتیاز</div>
-                                            <div class="user-detail-value" id="selectedUserRating"></div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="mt-6">
-                                        <button class="btn-secondary w-full hover-lift" id="deselectUserBtn">
-                                            <i class="fas fa-times"></i>
-                                            حذف از انتخاب
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- آمار کاربران -->
-                            <div class="card hover-lift">
-                                <div class="card-header">
-                                    <div class="card-title">
-                                        <i class="fas fa-chart-bar text-amber-500"></i>
-                                        آمار کاربران
-                                    </div>
-                                </div>
-                                <div class="grid grid-cols-2 gap-4">
-                                    <div class="user-stats-card">
-                                        <div class="user-stats-value text-blue-400" id="totalUsersStat">۱۲۴</div>
-                                        <div class="user-stats-label">کل کاربران</div>
-                                    </div>
-                                    <div class="user-stats-card">
-                                        <div class="user-stats-value text-emerald-400" id="activeUsersStat">۱۰۸</div>
-                                        <div class="user-stats-label">کاربران فعال</div>
-                                    </div>
-                                    <div class="user-stats-card">
-                                        <div class="user-stats-value text-purple-400" id="sellersStat">۴۸</div>
-                                        <div class="user-stats-label">فروشندگان</div>
-                                    </div>
-                                    <div class="user-stats-card">
-                                        <div class="user-stats-value text-amber-400" id="verifiedUsersStat">۹۲</div>
-                                        <div class="user-stats-label">تایید شده</div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- راهنما -->
-                            <div class="card hover-lift">
-                                <div class="card-header">
-                                    <div class="card-title">
-                                        <i class="fas fa-info-circle text-blue-500"></i>
-                                        راهنمای انتخاب
-                                    </div>
-                                </div>
-                                <div class="space-y-3">
-                                    <div class="flex items-start gap-3">
-                                        <i class="fas fa-check-circle text-emerald-500 mt-1"></i>
-                                        <div>
-                                            <p class="text-sm text-white">کاربران فعال و قابل اعتماد را انتخاب کنید</p>
-                                            <p class="text-xs text-slate-400">کاربرانی که سابقه فعالیت خوبی دارند</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-start gap-3">
-                                        <i class="fas fa-shield-alt text-amber-500 mt-1"></i>
-                                        <div>
-                                            <p class="text-sm text-white">فقط کاربران تایید شده</p>
-                                            <p class="text-xs text-slate-400">کاربرانی که احراز هویت شده‌اند</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-start gap-3">
-                                        <i class="fas fa-clock text-blue-500 mt-1"></i>
-                                        <div>
-                                            <p class="text-sm text-white">مدت عضویت مناسب</p>
-                                            <p class="text-xs text-slate-400">کاربرانی که حداقل ۳ ماه عضویت دارند</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- سایر صفحات... -->
-                <div id="admins" class="page-content">
-                    <!-- محتوای مدیریت ادمین‌ها -->
-                </div>
-                
-                <div id="adminProfile" class="page-content">
-                    <!-- محتوای پروفایل ادمین -->
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <!-- Overlay منوی موبایل -->
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-    <!-- دکمه سریع افزودن -->
-    <div class="quick-add-btn animate-float" id="quickAddBtn" title="افزودن سریع ادمین">
-        <i class="fas fa-plus"></i>
-    </div>
 
     <script>
-        // داده‌های نمونه کاربران
-        const usersData = {
-            totalUsers: 124,
-            activeUsers: 108,
-            sellers: 48,
-            verifiedUsers: 92,
-            selectedUsers: new Set(),
-            currentPage: 1,
-            usersPerPage: 10,
-            currentFilter: 'all',
-            currentSort: 'newest',
-            searchQuery: '',
-            
-            users: [
-                {
-                    id: 'USR-001',
-                    name: 'علی محمدی',
-                    email: 'ali.mohammadi@example.com',
-                    phone: '۰۹۱۲۱۲۳۴۵۶۷',
-                    avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
-                    type: 'seller',
-                    status: 'active',
-                    joinDate: '۱۴۰۲/۰۶/۱۵',
-                    lastLogin: 'امروز - ۱۰:۳۰',
-                    products: 48,
-                    sales: 245,
-                    rating: 4.8,
-                    isVerified: true,
-                    isPremium: true,
-                    activityLevel: 'high'
-                },
-                {
-                    id: 'USR-002',
-                    name: 'مریم حسینی',
-                    email: 'maryam.hosseini@example.com',
-                    phone: '۰۹۱۳۱۲۳۴۵۶۸',
-                    avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
-                    type: 'regular',
-                    status: 'active',
-                    joinDate: '۱۴۰۲/۰۷/۰۲',
-                    lastLogin: 'دیروز - ۱۵:۴۵',
-                    products: 0,
-                    sales: 12,
-                    rating: 4.5,
-                    isVerified: true,
-                    isPremium: false,
-                    activityLevel: 'medium'
-                },
-                {
-                    id: 'USR-003',
-                    name: 'رضا کریمی',
-                    email: 'reza.karimi@example.com',
-                    phone: '۰۹۱۴۱۲۳۴۵۶۹',
-                    avatar: 'https://randomuser.me/api/portraits/men/67.jpg',
-                    type: 'seller',
-                    status: 'active',
-                    joinDate: '۱۴۰۲/۰۷/۲۰',
-                    lastLogin: '۲ روز پیش - ۱۱:۲۰',
-                    products: 32,
-                    sales: 128,
-                    rating: 4.2,
-                    isVerified: true,
-                    isPremium: true,
-                    activityLevel: 'high'
-                },
-                {
-                    id: 'USR-004',
-                    name: 'سارا رضایی',
-                    email: 'sara.rezaei@example.com',
-                    phone: '۰۹۱۵۱۲۳۴۵۷۰',
-                    avatar: 'https://randomuser.me/api/portraits/women/68.jpg',
-                    type: 'regular',
-                    status: 'active',
-                    joinDate: '۱۴۰۲/۰۸/۰۵',
-                    lastLogin: 'امروز - ۰۹:۱۵',
-                    products: 0,
-                    sales: 8,
-                    rating: 4.7,
-                    isVerified: true,
-                    isPremium: false,
-                    activityLevel: 'medium'
-                },
-                {
-                    id: 'USR-005',
-                    name: 'محمد علیزاده',
-                    email: 'mohammad.alizadeh@example.com',
-                    phone: '۰۹۱۶۱۲۳۴۵۷۱',
-                    avatar: 'https://randomuser.me/api/portraits/men/75.jpg',
-                    type: 'seller',
-                    status: 'inactive',
-                    joinDate: '۱۴۰۲/۰۸/۱۰',
-                    lastLogin: '۱ هفته پیش - ۱۴:۱۰',
-                    products: 24,
-                    sales: 89,
-                    rating: 4.0,
-                    isVerified: false,
-                    isPremium: false,
-                    activityLevel: 'low'
-                },
-                {
-                    id: 'USR-006',
-                    name: 'فاطمه احمدی',
-                    email: 'fatemeh.ahmadi@example.com',
-                    phone: '۰۹۱۷۱۲۳۴۵۷۲',
-                    avatar: 'https://randomuser.me/api/portraits/women/26.jpg',
-                    type: 'regular',
-                    status: 'active',
-                    joinDate: '۱۴۰۲/۰۸/۱۲',
-                    lastLogin: '۳ روز پیش - ۱۶:۳۰',
-                    products: 0,
-                    sales: 5,
-                    rating: 4.9,
-                    isVerified: true,
-                    isPremium: true,
-                    activityLevel: 'medium'
-                },
-                {
-                    id: 'USR-007',
-                    name: 'حسین نظری',
-                    email: 'hossein.nazari@example.com',
-                    phone: '۰۹۱۸۱۲۳۴۵۷۳',
-                    avatar: 'https://randomuser.me/api/portraits/men/22.jpg',
-                    type: 'seller',
-                    status: 'active',
-                    joinDate: '۱۴۰۲/۰۷/۲۵',
-                    lastLogin: 'امروز - ۰۸:۴۵',
-                    products: 56,
-                    sales: 312,
-                    rating: 4.6,
-                    isVerified: true,
-                    isPremium: true,
-                    activityLevel: 'high'
-                },
-                {
-                    id: 'USR-008',
-                    name: 'نازنین جعفری',
-                    email: 'nazanin.jafari@example.com',
-                    phone: '۰۹۱۹۱۲۳۴۵۷۴',
-                    avatar: 'https://randomuser.me/api/portraits/women/33.jpg',
-                    type: 'regular',
-                    status: 'pending',
-                    joinDate: '۱۴۰۲/۰۸/۱۸',
-                    lastLogin: '۴ روز پیش - ۱۲:۲۰',
-                    products: 0,
-                    sales: 0,
-                    rating: 0,
-                    isVerified: false,
-                    isPremium: false,
-                    activityLevel: 'low'
-                },
-                {
-                    id: 'USR-009',
-                    name: 'امیررضا کمالی',
-                    email: 'amirreza.kamali@example.com',
-                    phone: '۰۹۲۰۱۲۳۴۵۷۵',
-                    avatar: 'https://randomuser.me/api/portraits/men/55.jpg',
-                    type: 'seller',
-                    status: 'active',
-                    joinDate: '۱۴۰۲/۰۶/۲۸',
-                    lastLogin: 'دیروز - ۱۷:۴۵',
-                    products: 42,
-                    sales: 198,
-                    rating: 4.3,
-                    isVerified: true,
-                    isPremium: false,
-                    activityLevel: 'high'
-                },
-                {
-                    id: 'USR-010',
-                    name: 'لیلا محمودی',
-                    email: 'leila.mahmoudi@example.com',
-                    phone: '۰۹۲۱۱۲۳۴۵۷۶',
-                    avatar: 'https://randomuser.me/api/portraits/women/65.jpg',
-                    type: 'regular',
-                    status: 'active',
-                    joinDate: '۱۴۰۲/۰۸/۰۱',
-                    lastLogin: 'امروز - ۱۱:۱۰',
-                    products: 0,
-                    sales: 3,
-                    rating: 4.8,
-                    isVerified: true,
-                    isPremium: false,
-                    activityLevel: 'medium'
-                }
-            ]
-        };
-
-        // DOM Ready
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeAddAdminPage();
-            setupEventListeners();
-            loadUsersList();
-            updateStats();
-        });
-
-        // مقداردهی اولیه صفحه افزودن ادمین
-        function initializeAddAdminPage() {
-            // تنظیم نوار پیشرفت
-            setupProgressBar();
-            
-            // به‌روزرسانی شمارنده
-            updateSelectionCounter();
-        }
-
-        // تنظیم رویدادها
-        function setupEventListeners() {
-            // منوی موبایل
-            const menuToggle = document.getElementById('menuToggle');
-            const closeSidebar = document.getElementById('closeSidebar');
-            const sidebarOverlay = document.getElementById('sidebarOverlay');
-            const sidebar = document.querySelector('.sidebar');
-
-            menuToggle?.addEventListener('click', () => {
-                sidebar.classList.add('active');
-                sidebarOverlay.classList.add('active');
-            });
-
-            closeSidebar?.addEventListener('click', closeMobileMenu);
-            sidebarOverlay?.addEventListener('click', closeMobileMenu);
-
-            function closeMobileMenu() {
-                sidebar.classList.remove('active');
-                sidebarOverlay.classList.remove('active');
-            }
-
-            // تغییر صفحات
-            document.querySelectorAll('.sidebar-item[data-page]').forEach(item => {
-                item.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const pageId = this.getAttribute('data-page');
-                    showPage(pageId);
-                    closeMobileMenu();
-                    
-                    // به‌روزرسانی منوی فعال
-                    document.querySelectorAll('.sidebar-item').forEach(item => {
-                        item.classList.remove('active');
-                    });
-                    this.classList.add('active');
-                });
-            });
-
-            // بازگشت به لیست ادمین‌ها
-            document.getElementById('backToAdminsBtn')?.addEventListener('click', function() {
-                showPage('admins');
-            });
-
-            // جستجوی کاربران
-            document.getElementById('userSearchInput')?.addEventListener('input', function() {
-                usersData.searchQuery = this.value.toLowerCase();
-                loadUsersList();
-            });
-
-            // فیلتر نوع کاربر
-            document.getElementById('userTypeFilter')?.addEventListener('change', function() {
-                usersData.currentFilter = this.value;
-                loadUsersList();
-            });
-
-            // مرتب‌سازی
-            document.getElementById('userSortBy')?.addEventListener('change', function() {
-                usersData.currentSort = this.value;
-                loadUsersList();
-            });
-
-            // فیلتر سریع
-            document.querySelectorAll('[data-filter]').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const filter = this.getAttribute('data-filter');
-                    usersData.currentFilter = filter;
-                    loadUsersList();
-                    
-                    // به‌روزرسانی دکمه‌های فعال
-                    document.querySelectorAll('[data-filter]').forEach(b => {
-                        b.classList.remove('action-btn-success');
-                    });
-                    this.classList.add('action-btn-success');
-                });
-            });
-
-            // ادامه به مرحله بعد
-            document.getElementById('proceedToRolesBtn')?.addEventListener('click', function() {
-                if (usersData.selectedUsers.size === 0) {
-                    showNotification('خطا', 'لطفاً حداقل یک کاربر را انتخاب کنید.', 'warning');
-                    return;
-                }
-                proceedToRoleSelection();
-            });
-
-            // پاک کردن انتخاب‌ها
-            document.getElementById('clearSelectionBtn')?.addEventListener('click', function() {
-                clearSelection();
-            });
-
-            // انتخاب همه
-            document.getElementById('selectAllBtn')?.addEventListener('click', function() {
-                selectAllUsers();
-            });
-
-            // حذف کاربر منتخب
-            document.getElementById('deselectUserBtn')?.addEventListener('click', function() {
-                const userId = document.getElementById('selectedUserInfo').getAttribute('data-user-id');
-                if (userId) {
-                    toggleUserSelection(userId);
-                }
-            });
-
-            // صفحه‌بندی
-            document.getElementById('prevPage')?.addEventListener('click', function() {
-                if (usersData.currentPage > 1) {
-                    usersData.currentPage--;
-                    loadUsersList();
-                }
-            });
-
-            document.getElementById('nextPage')?.addEventListener('click', function() {
-                const totalPages = Math.ceil(getFilteredUsers().length / usersData.usersPerPage);
-                if (usersData.currentPage < totalPages) {
-                    usersData.currentPage++;
-                    loadUsersList();
-                }
-            });
-
-            // دکمه سریع افزودن
-            document.getElementById('quickAddBtn')?.addEventListener('click', function() {
-                showQuickAddModal();
-            });
-
-            // دکمه خروج
-            document.getElementById('logoutBtn')?.addEventListener('click', function() {
-                showConfirmModal('خروج از سیستم', 'آیا از خروج از پنل مدیریت مطمئن هستید؟', function() {
-                    showNotification('خروج موفق', 'شما با موفقیت از پنل خارج شدید.', 'success');
-                });
-            });
-        }
-
-        // نمایش صفحه
-        function showPage(pageId) {
-            // نمایش صفحه انتخاب شده
-            document.querySelectorAll('.page-content').forEach(page => {
-                page.classList.remove('active');
-            });
-            
-            const targetPage = document.getElementById(pageId);
-            if (targetPage) {
-                targetPage.classList.add('active');
-                
-                // اسکرول به بالا
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                
-                // اگر صفحه افزودن ادمین بود، اطلاعات را به‌روزرسانی کن
-                if (pageId === 'addAdmin') {
-                    loadUsersList();
-                    updateStats();
-                }
-            }
-        }
-
-        // بارگذاری لیست کاربران
-        function loadUsersList() {
-            const container = document.getElementById('usersListContainer');
-            if (!container) return;
-            
-            // فیلتر و مرتب‌سازی کاربران
-            const filteredUsers = getFilteredUsers();
-            const sortedUsers = sortUsers(filteredUsers);
-            
-            // محاسبه صفحه‌بندی
-            const startIndex = (usersData.currentPage - 1) * usersData.usersPerPage;
-            const endIndex = startIndex + usersData.usersPerPage;
-            const paginatedUsers = sortedUsers.slice(startIndex, endIndex);
-            
-            // به‌روزرسانی شمارنده کل کاربران
-            document.getElementById('totalUsersCount').textContent = `${filteredUsers.length} کاربر`;
-            
-            // خالی کردن کانتینر
-            container.innerHTML = '';
-            
-            // اگر کاربری وجود نداشت
-            if (paginatedUsers.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-users text-4xl text-slate-600 mb-4"></i>
-                        <p class="text-slate-400">کاربری یافت نشد</p>
-                        <p class="text-sm text-slate-500 mt-2">لطفاً فیلترهای جستجو را تغییر دهید</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            // ایجاد کارت‌های کاربر
-            paginatedUsers.forEach(user => {
-                const isSelected = usersData.selectedUsers.has(user.id);
-                const userCard = createUserCard(user, isSelected);
-                container.appendChild(userCard);
-            });
-            
-            // به‌روزرسانی صفحه‌بندی
-            updatePagination(filteredUsers.length);
-        }
-
-        // فیلتر کردن کاربران
-        function getFilteredUsers() {
-            let filtered = [...usersData.users];
-            
-            // فیلتر بر اساس جستجو
-            if (usersData.searchQuery) {
-                filtered = filtered.filter(user => 
-                    user.name.toLowerCase().includes(usersData.searchQuery) ||
-                    user.email.toLowerCase().includes(usersData.searchQuery) ||
-                    user.id.toLowerCase().includes(usersData.searchQuery) ||
-                    user.phone.includes(usersData.searchQuery)
-                );
-            }
-            
-            // فیلتر بر اساس نوع
-            switch(usersData.currentFilter) {
-                case 'active':
-                    filtered = filtered.filter(user => user.status === 'active');
-                    break;
-                case 'verified':
-                    filtered = filtered.filter(user => user.isVerified);
-                    break;
-                case 'seller':
-                    filtered = filtered.filter(user => user.type === 'seller');
-                    break;
-                case 'premium':
-                    filtered = filtered.filter(user => user.isPremium);
-                    break;
-                case 'regular':
-                    filtered = filtered.filter(user => user.type === 'regular');
-                    break;
-                // 'all' - همه کاربران
-            }
-            
-            return filtered;
-        }
-
-        // مرتب‌سازی کاربران
-        function sortUsers(users) {
-            const sorted = [...users];
-            
-            switch(usersData.currentSort) {
-                case 'newest':
-                    // بر اساس تاریخ عضویت (جدیدترین)
-                    sorted.sort((a, b) => new Date(b.joinDate) - new Date(a.joinDate));
-                    break;
-                case 'oldest':
-                    // بر اساس تاریخ عضویت (قدیمی‌ترین)
-                    sorted.sort((a, b) => new Date(a.joinDate) - new Date(b.joinDate));
-                    break;
-                case 'name':
-                    // بر اساس نام
-                    sorted.sort((a, b) => a.name.localeCompare(b.name));
-                    break;
-                case 'activity':
-                    // بر اساس سطح فعالیت
-                    const activityLevels = { 'high': 3, 'medium': 2, 'low': 1 };
-                    sorted.sort((a, b) => activityLevels[b.activityLevel] - activityLevels[a.activityLevel]);
-                    break;
-            }
-            
-            return sorted;
-        }
-
-        // ایجاد کارت کاربر
-        function createUserCard(user, isSelected) {
-            const card = document.createElement('div');
-            card.className = `user-list-item bg-slate-800/50 rounded-xl p-4 border ${isSelected ? 'user-selected border-primary' : 'border-transparent'}`;
-            card.setAttribute('data-user-id', user.id);
-            
-            // تعیین بج وضعیت
-            let statusBadge = '';
-            if (user.status === 'active') {
-                statusBadge = '<span class="badge badge-success">فعال</span>';
-            } else if (user.status === 'inactive') {
-                statusBadge = '<span class="badge badge-warning">غیرفعال</span>';
-            } else {
-                statusBadge = '<span class="badge badge-danger">مسدود</span>';
-            }
-            
-            // تعیین بج نوع کاربر
-            let typeBadge = '';
-            if (user.type === 'seller') {
-                typeBadge = '<span class="badge badge-purple">فروشنده</span>';
-            } else {
-                typeBadge = '<span class="badge badge-info">کاربر عادی</span>';
-            }
-            
-            // تعیین بج ویژه
-            let premiumBadge = '';
-            if (user.isPremium) {
-                premiumBadge = '<span class="badge badge-warning"><i class="fas fa-crown ml-1"></i>ویژه</span>';
-            }
-            
-            // تعیین بج تایید شده
-            let verifiedBadge = '';
-            if (user.isVerified) {
-                verifiedBadge = '<span class="badge badge-success"><i class="fas fa-shield-alt ml-1"></i>تایید شده</span>';
-            }
-            
-            card.innerHTML = `
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-3">
-                        <div class="relative">
-                            <img class="w-12 h-12 rounded-full object-cover" src="${user.avatar}" alt="${user.name}">
-                            ${user.isVerified ? '<span class="absolute bottom-0 left-0 w-3 h-3 bg-emerald-500 border-2 border-slate-900 rounded-full"></span>' : ''}
-                        </div>
-                        <div>
-                            <div class="flex items-center gap-2 mb-1">
-                                <h4 class="font-bold text-white">${user.name}</h4>
-                                ${premiumBadge}
-                            </div>
-                            <p class="text-sm text-slate-400">${user.email}</p>
-                        </div>
-                    </div>
-                    
-                    <div class="flex items-center gap-3">
-                        <div class="text-right hidden md:block">
-                            <div class="flex gap-2 mb-1">
-                                ${statusBadge}
-                                ${typeBadge}
-                                ${verifiedBadge}
-                            </div>
-                            <p class="text-xs text-slate-500">عضویت: ${user.joinDate}</p>
-                        </div>
-                        
-                        <button class="action-btn ${isSelected ? 'action-btn-success' : ''} select-user-btn hover-lift" data-user-id="${user.id}">
-                            <i class="fas ${isSelected ? 'fa-check' : 'fa-plus'}"></i>
-                            ${isSelected ? 'انتخاب شده' : 'افزودن'}
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-                    <div class="text-center">
-                        <div class="text-lg font-bold text-white">${user.products}</div>
-                        <div class="text-xs text-slate-400">محصول</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-lg font-bold text-emerald-400">${user.sales}</div>
-                        <div class="text-xs text-slate-400">فروش</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-lg font-bold text-amber-400">${user.rating.toFixed(1)}</div>
-                        <div class="text-xs text-slate-400">امتیاز</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-lg font-bold ${user.activityLevel === 'high' ? 'text-green-400' : user.activityLevel === 'medium' ? 'text-amber-400' : 'text-red-400'}">
-                            ${user.activityLevel === 'high' ? 'بالا' : user.activityLevel === 'medium' ? 'متوسط' : 'کم'}
-                        </div>
-                        <div class="text-xs text-slate-400">فعالیت</div>
-                    </div>
-                </div>
-            `;
-            
-            // اضافه کردن رویداد کلیک به کارت
-            card.addEventListener('click', function(e) {
-                if (!e.target.closest('.select-user-btn')) {
-                    showUserDetails(user);
-                }
-            });
-            
-            // اضافه کردن رویداد به دکمه انتخاب
-            const selectBtn = card.querySelector('.select-user-btn');
-            selectBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                toggleUserSelection(user.id);
-            });
-            
-            return card;
-        }
-
-        // نمایش جزئیات کاربر
-        function showUserDetails(user) {
-            const panel = document.getElementById('selectedUserInfo');
-            const noUserPanel = document.getElementById('noUserSelected');
-            
-            // مخفی کردن پنل "هیچ کاربری انتخاب نشده"
-            noUserPanel.style.display = 'none';
-            
-            // نمایش پنل اطلاعات کاربر
-            panel.style.display = 'block';
-            panel.setAttribute('data-user-id', user.id);
-            
-            // پر کردن اطلاعات کاربر
-            document.getElementById('selectedUserAvatar').src = user.avatar;
-            document.getElementById('selectedUserName').textContent = user.name;
-            document.getElementById('selectedUserEmail').textContent = user.email;
-            document.getElementById('selectedUserId').textContent = user.id;
-            document.getElementById('selectedUserJoinDate').textContent = user.joinDate;
-            document.getElementById('selectedUserLastLogin').textContent = user.lastLogin;
-            document.getElementById('selectedUserProducts').textContent = user.products;
-            document.getElementById('selectedUserSales').textContent = user.sales;
-            document.getElementById('selectedUserRating').textContent = user.rating.toFixed(1);
-            
-            // به‌روزرسانی وضعیت
-            const statusElement = document.getElementById('selectedUserStatus');
-            statusElement.textContent = user.status === 'active' ? 'فعال' : user.status === 'inactive' ? 'غیرفعال' : 'مسدود';
-            statusElement.className = `badge ${user.status === 'active' ? 'badge-success' : user.status === 'inactive' ? 'badge-warning' : 'badge-danger'}`;
-            
-            // به‌روزرسانی نوع کاربر
-            const typeElement = document.getElementById('selectedUserType');
-            typeElement.textContent = user.type === 'seller' ? 'فروشنده' : 'کاربر عادی';
-            typeElement.className = `badge ${user.type === 'seller' ? 'badge-purple' : 'badge-info'}`;
-        }
-
-        // تغییر انتخاب کاربر
-        function toggleUserSelection(userId) {
-            if (usersData.selectedUsers.has(userId)) {
-                usersData.selectedUsers.delete(userId);
-            } else {
-                usersData.selectedUsers.add(userId);
-            }
-            
-            // به‌روزرسانی نمایش
-            updateUserSelectionUI(userId);
-            updateSelectionCounter();
-            
-            // اگر کاربر حذف شده همان کاربر نمایش داده شده است، پنل جزئیات را مخفی کن
-            const selectedPanel = document.getElementById('selectedUserInfo');
-            if (selectedPanel.getAttribute('data-user-id') === userId && !usersData.selectedUsers.has(userId)) {
-                document.getElementById('noUserSelected').style.display = 'block';
-                selectedPanel.style.display = 'none';
-            }
-        }
-
-        // به‌روزرسانی UI انتخاب کاربر
-        function updateUserSelectionUI(userId) {
-            const isSelected = usersData.selectedUsers.has(userId);
-            
-            // به‌روزرسانی کارت کاربر
-            const userCard = document.querySelector(`[data-user-id="${userId}"]`);
-            if (userCard) {
-                if (isSelected) {
-                    userCard.classList.add('user-selected');
-                    userCard.classList.add('border-primary');
-                    const btn = userCard.querySelector('.select-user-btn');
-                    btn.classList.add('action-btn-success');
-                    btn.innerHTML = '<i class="fas fa-check"></i> انتخاب شده';
-                } else {
-                    userCard.classList.remove('user-selected');
-                    userCard.classList.remove('border-primary');
-                    const btn = userCard.querySelector('.select-user-btn');
-                    btn.classList.remove('action-btn-success');
-                    btn.innerHTML = '<i class="fas fa-plus"></i> افزودن';
-                }
-            }
-            
-            // به‌روزرسانی دکمه در پنل جزئیات
-            const deselectBtn = document.getElementById('deselectUserBtn');
-            if (deselectBtn) {
-                if (isSelected) {
-                    deselectBtn.innerHTML = '<i class="fas fa-times"></i> حذف از انتخاب';
-                }
-            }
-        }
-
-        // به‌روزرسانی شمارنده انتخاب
-        function updateSelectionCounter() {
-            const count = usersData.selectedUsers.size;
-            const counter = document.getElementById('selectionCounter');
-            const badge = document.getElementById('selectedCountBadge');
-            const countSpan = document.getElementById('selectedCount');
-            
-            if (count > 0) {
-                counter.style.display = 'block';
-                badge.textContent = count;
-                countSpan.textContent = count;
-            } else {
-                counter.style.display = 'none';
-                badge.textContent = '۰';
-                countSpan.textContent = '۰';
-            }
-        }
-
-        // پاک کردن همه انتخاب‌ها
-        function clearSelection() {
-            if (usersData.selectedUsers.size === 0) return;
-            
-            usersData.selectedUsers.clear();
-            updateSelectionCounter();
-            loadUsersList(); // بارگذاری مجدد لیست برای به‌روزرسانی UI
-            
-            // مخفی کردن پنل جزئیات
-            document.getElementById('noUserSelected').style.display = 'block';
-            document.getElementById('selectedUserInfo').style.display = 'none';
-            
-            showNotification('پاکسازی انتخاب‌ها', 'تمامی انتخاب‌ها پاک شدند.', 'info');
-        }
-
-        // انتخاب همه کاربران
-        function selectAllUsers() {
-            const filteredUsers = getFilteredUsers();
-            filteredUsers.forEach(user => {
-                usersData.selectedUsers.add(user.id);
-            });
-            
-            updateSelectionCounter();
-            loadUsersList(); // بارگذاری مجدد لیست برای به‌روزرسانی UI
-            
-            showNotification('انتخاب همه', `${filteredUsers.length} کاربر انتخاب شدند.`, 'success');
-        }
-
-        // به‌روزرسانی آمار
-        function updateStats() {
-            document.getElementById('totalUsersStat').textContent = usersData.totalUsers;
-            document.getElementById('activeUsersStat').textContent = usersData.activeUsers;
-            document.getElementById('sellersStat').textContent = usersData.sellers;
-            document.getElementById('verifiedUsersStat').textContent = usersData.verifiedUsers;
-        }
-
-        // به‌روزرسانی صفحه‌بندی
-        function updatePagination(totalUsers) {
-            const totalPages = Math.ceil(totalUsers / usersData.usersPerPage);
-            const pagination = document.querySelector('.pagination');
-            
-            // پاک کردن صفحه‌بندی فعلی (به جز دکمه‌های قبلی و بعدی)
-            const prevBtn = document.getElementById('prevPage');
-            const nextBtn = document.getElementById('nextPage');
-            pagination.innerHTML = '';
-            pagination.appendChild(prevBtn.cloneNode(true));
-            
-            // ایجاد دکمه‌های صفحه
-            for (let i = 1; i <= totalPages; i++) {
-                const pageBtn = document.createElement('button');
-                pageBtn.className = `page-link hover-lift ${i === usersData.currentPage ? 'active' : ''}`;
-                pageBtn.textContent = i;
-                pageBtn.addEventListener('click', () => {
-                    usersData.currentPage = i;
-                    loadUsersList();
-                });
-                pagination.appendChild(pageBtn);
-            }
-            
-            pagination.appendChild(nextBtn.cloneNode(true));
-            
-            // به‌روزرسانی دکمه‌های قبلی و بعدی
-            const newPrevBtn = pagination.querySelector('#prevPage');
-            const newNextBtn = pagination.querySelector('#nextPage');
-            
-            newPrevBtn.addEventListener('click', function() {
-                if (usersData.currentPage > 1) {
-                    usersData.currentPage--;
-                    loadUsersList();
-                }
-            });
-            
-            newNextBtn.addEventListener('click', function() {
-                if (usersData.currentPage < totalPages) {
-                    usersData.currentPage++;
-                    loadUsersList();
-                }
-            });
-        }
-
-        // ادامه به مرحله انتخاب نقش
-        function proceedToRoleSelection() {
-            // ذخیره کاربران انتخاب شده در localStorage
-            const selectedUsersArray = Array.from(usersData.selectedUsers);
-            const selectedUsersData = usersData.users.filter(user => 
-                selectedUsersArray.includes(user.id)
-            );
-            
-            localStorage.setItem('selectedUsersForAdmin', JSON.stringify(selectedUsersData));
-            
-            // نمایش مدال انتخاب نقش
-            showRoleSelectionModal();
-        }
-
-        // نمایش مدال انتخاب نقش
-        function showRoleSelectionModal() {
-            const selectedUsers = JSON.parse(localStorage.getItem('selectedUsersForAdmin') || '[]');
-            
-            let userListHTML = '';
-            selectedUsers.forEach(user => {
-                userListHTML += `
-                    <div class="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg mb-2">
-                        <div class="flex items-center gap-3">
-                            <img class="w-10 h-10 rounded-full" src="${user.avatar}" alt="${user.name}">
-                            <div>
-                                <p class="font-medium text-white">${user.name}</p>
-                                <p class="text-xs text-slate-400">${user.email}</p>
-                            </div>
-                        </div>
-                        <span class="badge ${user.type === 'seller' ? 'badge-purple' : 'badge-info'}">
-                            ${user.type === 'seller' ? 'فروشنده' : 'کاربر عادی'}
-                        </span>
-                    </div>
-                `;
-            });
-            
-            const content = `
-                <div class="space-y-6">
-                    <div>
-                        <h4 class="font-bold text-white mb-3">کاربران انتخاب شده (${selectedUsers.length} نفر)</h4>
-                        <div class="max-h-60 overflow-y-auto">
-                            ${userListHTML}
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <label class="block text-slate-300 mb-3">نقش ادمین</label>
-                        <div class="role-selector">
-                            <div class="role-option" data-role="support">
-                                <i class="fas fa-headset text-amber-500 text-2xl mb-2"></i>
-                                <p class="font-medium text-white">پشتیبانی</p>
-                                <p class="text-xs text-slate-400">دسترسی محدود</p>
-                            </div>
-                            <div class="role-option" data-role="moderator">
-                                <i class="fas fa-edit text-blue-500 text-2xl mb-2"></i>
-                                <p class="font-medium text-white">مدیر محتوا</p>
-                                <p class="text-xs text-slate-400">دسترسی متوسط</p>
-                            </div>
-                            <div class="role-option" data-role="admin">
-                                <i class="fas fa-user-shield text-emerald-500 text-2xl mb-2"></i>
-                                <p class="font-medium text-white">ادمین</p>
-                                <p class="text-xs text-slate-400">دسترسی گسترده</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <label class="block text-slate-300 mb-3">سطح دسترسی</label>
-                        <div class="space-y-3 max-h-40 overflow-y-auto">
-                            <label class="permission-checkbox">
-                                <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary" checked>
-                                <span class="text-slate-300 text-sm">مشاهده داشبورد</span>
-                            </label>
-                            <label class="permission-checkbox">
-                                <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary" checked>
-                                <span class="text-slate-300 text-sm">مدیریت کاربران</span>
-                            </label>
-                            <label class="permission-checkbox">
-                                <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary">
-                                <span class="text-slate-300 text-sm">مدیریت محصولات</span>
-                            </label>
-                            <label class="permission-checkbox">
-                                <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary">
-                                <span class="text-slate-300 text-sm">مدیریت مالی</span>
-                            </label>
-                            <label class="permission-checkbox">
-                                <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary">
-                                <span class="text-slate-300 text-sm">تنظیمات سیستم</span>
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <label class="block text-slate-300 mb-2">توضیحات اضافی</label>
-                        <textarea class="form-input" rows="3" placeholder="توضیحات دلخواه درباره ادمین جدید..."></textarea>
-                    </div>
-                </div>
-            `;
-            
-            showModal('تعیین نقش و دسترسی', content, function() {
-                const selectedRole = document.querySelector('.role-option.selected')?.getAttribute('data-role') || 'support';
-                createNewAdmins(selectedUsers, selectedRole);
-            });
-            
-            // اضافه کردن رویداد به گزینه‌های نقش
-            setTimeout(() => {
-                document.querySelectorAll('.role-option').forEach(option => {
-                    option.addEventListener('click', function() {
-                        document.querySelectorAll('.role-option').forEach(opt => {
-                            opt.classList.remove('selected');
-                        });
-                        this.classList.add('selected');
-                    });
-                });
-                
-                // انتخاب پیش‌فرض
-                document.querySelector('.role-option[data-role="support"]').classList.add('selected');
-            }, 100);
-        }
-
-        // ایجاد ادمین‌های جدید
-        function createNewAdmins(users, role) {
-            // در اینجا می‌توانید اطلاعات را به سرور ارسال کنید
-            
-            // شبیه‌سازی ایجاد ادمین
-            setTimeout(() => {
-                showNotification('افزودن ادمین', `${users.length} ادمین جدید با موفقیت اضافه شدند.`, 'success');
-                
-                // پاک کردن انتخاب‌ها
-                usersData.selectedUsers.clear();
-                updateSelectionCounter();
-                loadUsersList();
-                
-                // پاک کردن localStorage
-                localStorage.removeItem('selectedUsersForAdmin');
-                
-                // هدایت به صفحه ادمین‌ها
-                setTimeout(() => {
-                    showPage('admins');
-                }, 2000);
-            }, 1500);
-        }
-
-        // نمایش مدال سریع افزودن
-        function showQuickAddModal() {
-            const content = `
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-slate-300 mb-2">ایمیل کاربر</label>
-                        <input type="email" class="form-input" placeholder="example@email.com" id="quickAddEmail">
-                    </div>
-                    
-                    <div>
-                        <label class="block text-slate-300 mb-2">نقش</label>
-                        <select class="form-select" id="quickAddRole">
-                            <option value="support">پشتیبانی</option>
-                            <option value="moderator">مدیر محتوا</option>
-                            <option value="admin">ادمین</option>
-                        </select>
-                    </div>
-                    
-                    <div class="bg-slate-800/50 rounded-xl p-3">
-                        <div class="flex items-center gap-3">
-                            <i class="fas fa-info-circle text-blue-500"></i>
-                            <p class="text-sm text-slate-300">
-                                کاربر باید قبلاً در سیستم ثبت‌نام کرده باشد. 
-                                پس از افزودن، ایمیل تایید به کاربر ارسال می‌شود.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            showModal('افزودن سریع ادمین', content, function() {
-                const email = document.getElementById('quickAddEmail').value;
-                const role = document.getElementById('quickAddRole').value;
-                
-                if (!email) {
-                    showNotification('خطا', 'لطفاً ایمیل کاربر را وارد کنید.', 'warning');
-                    return;
-                }
-                
-                // شبیه‌سازی افزودن ادمین
-                setTimeout(() => {
-                    showNotification('افزودن سریع', `درخواست افزودن ادمین برای ${email} ثبت شد.`, 'success');
-                }, 1000);
-            });
-        }
-
-        // تنظیم نوار پیشرفت
-        function setupProgressBar() {
-            const progressBar = document.getElementById('progressBar');
-            
-            window.addEventListener('scroll', function() {
-                const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                const scrolled = (window.scrollY / windowHeight) * 100;
-                
-                if (progressBar) {
-                    progressBar.style.width = scrolled + '%';
-                }
-            });
-        }
-
+        // متغیرهای سراسری
+        let selectedUsers = new Set();
+        let currentRole = 'admin';
+        
         // نمایش اعلان
-        function showNotification(title, message, type = 'info') {
-            const notificationPopup = document.getElementById('notificationPopup');
-            const notificationTitle = document.getElementById('notificationTitle');
-            const notificationMessage = document.getElementById('notificationMessage');
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            const title = document.getElementById('notificationTitle');
+            const messageEl = document.getElementById('notificationMessage');
+            const alert = notification.querySelector('.alert');
             
-            if (!notificationPopup || !notificationTitle || !notificationMessage) return;
-
             // تنظیم نوع اعلان
-            const alert = notificationPopup.querySelector('.alert');
             alert.className = 'alert';
-            
             switch(type) {
                 case 'success':
                     alert.classList.add('alert-success');
+                    title.textContent = 'موفقیت آمیز';
                     break;
                 case 'warning':
                     alert.classList.add('alert-warning');
+                    title.textContent = 'هشدار';
                     break;
                 case 'danger':
                     alert.classList.add('alert-danger');
+                    title.textContent = 'خطا';
                     break;
-                default:
-                    alert.classList.add('alert-info');
             }
-
-            // تنظیم محتوا
-            notificationTitle.textContent = title;
-            notificationMessage.textContent = message;
-
-            // نمایش اعلان
-            notificationPopup.classList.add('show');
-
+            
+            messageEl.textContent = message;
+            notification.classList.remove('hidden');
+            
             // بستن خودکار بعد از 5 ثانیه
             setTimeout(() => {
-                notificationPopup.classList.remove('show');
+                notification.classList.add('hidden');
             }, 5000);
         }
-
-        // تنظیم مدال
-        function setupModal() {
-            const modalOverlay = document.getElementById('modalOverlay');
-            const modalClose = document.getElementById('modalClose');
-            const modalCancel = document.getElementById('modalCancel');
-
-            modalClose?.addEventListener('click', hideModal);
-            modalCancel?.addEventListener('click', hideModal);
-            modalOverlay?.addEventListener('click', function(e) {
-                if (e.target === modalOverlay) {
-                    hideModal();
+        
+        // مخفی کردن اعلان
+        function hideNotification() {
+            document.getElementById('notification').classList.add('hidden');
+        }
+        
+        // انتخاب کاربر
+        function selectUser(userId) {
+            toggleUserSelection(userId);
+        }
+        
+        // تغییر انتخاب کاربر
+        function toggleUserSelection(userId) {
+            const checkbox = document.querySelector(`.user-checkbox[data-user-id="${userId}"]`);
+            const row = checkbox.closest('tr');
+            
+            if (selectedUsers.has(userId)) {
+                selectedUsers.delete(userId);
+                checkbox.checked = false;
+                row.classList.remove('user-selected');
+            } else {
+                selectedUsers.add(userId);
+                checkbox.checked = true;
+                row.classList.add('user-selected');
+            }
+            
+            updateSelectionCount();
+        }
+        
+        // به‌روزرسانی شمارش انتخاب‌ها
+        function updateSelectionCount() {
+            const countElement = document.getElementById('selectedCount');
+            countElement.textContent = `${selectedUsers.size} انتخاب شده`;
+            
+            // به‌روزرسانی لیست کاربران در مدال
+            updateRoleModalUsers();
+        }
+        
+        // پاک کردن همه انتخاب‌ها
+        function clearSelection() {
+            document.querySelectorAll('.user-checkbox:checked').forEach(checkbox => {
+                checkbox.checked = false;
+                const row = checkbox.closest('tr');
+                row.classList.remove('user-selected');
+            });
+            
+            selectedUsers.clear();
+            updateSelectionCount();
+            showNotification('تمامی انتخاب‌ها پاک شدند.', 'success');
+        }
+        
+        // انتخاب همه کاربران
+        function selectAllUsers() {
+            document.querySelectorAll('.user-checkbox').forEach(checkbox => {
+                const userId = checkbox.getAttribute('data-user-id');
+                checkbox.checked = true;
+                selectedUsers.add(userId);
+                const row = checkbox.closest('tr');
+                row.classList.add('user-selected');
+            });
+            
+            updateSelectionCount();
+            showNotification('همه کاربران انتخاب شدند.', 'success');
+        }
+        
+        // فیلتر کاربران
+        function filterUsers() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const statusFilter = document.getElementById('statusFilter').value;
+            
+            document.querySelectorAll('#usersTable tr').forEach(row => {
+                const name = row.querySelector('td:nth-child(2) .font-bold').textContent.toLowerCase();
+                const email = row.querySelector('td:nth-child(3) p:nth-child(1)').textContent.toLowerCase();
+                const statusBadge = row.querySelector('td:nth-child(5) .badge:first-child');
+                const status = statusBadge.textContent;
+                
+                let showRow = true;
+                
+                // فیلتر جستجو
+                if (searchInput && !name.includes(searchInput) && !email.includes(searchInput)) {
+                    showRow = false;
+                }
+                
+                // فیلتر وضعیت
+                if (statusFilter !== 'all') {
+                    if (statusFilter === 'active' && status !== 'فعال') showRow = false;
+                    if (statusFilter === 'inactive' && status !== 'غیرفعال') showRow = false;
+                    if (statusFilter === 'blocked' && status !== 'مسدود') showRow = false;
+                }
+                
+                row.style.display = showRow ? '' : 'none';
+            });
+            
+            updateUserCount();
+        }
+        
+        // مرتب‌سازی کاربران
+        function sortUsers() {
+            const sortBy = document.getElementById('sortBy').value;
+            const tbody = document.getElementById('usersTable');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            
+            rows.sort((a, b) => {
+                const nameA = a.querySelector('td:nth-child(2) .font-bold').textContent;
+                const nameB = b.querySelector('td:nth-child(2) .font-bold').textContent;
+                const dateA = a.querySelector('td:nth-child(6) p:nth-child(1)').textContent;
+                const dateB = b.querySelector('td:nth-child(6) p:nth-child(1)').textContent;
+                
+                switch(sortBy) {
+                    case 'name':
+                        return nameA.localeCompare(nameB);
+                    case 'newest':
+                        return dateB.localeCompare(dateA);
+                    case 'oldest':
+                        return dateA.localeCompare(dateB);
+                    default:
+                        return 0;
                 }
             });
-        }
-
-        // نمایش مدال
-        function showModal(title, content, onConfirm = null) {
-            const modalOverlay = document.getElementById('modalOverlay');
-            const modalTitle = document.getElementById('modalTitle');
-            const modalBody = document.getElementById('modalBody');
-            const modalConfirm = document.getElementById('modalConfirm');
-
-            if (!modalOverlay || !modalTitle || !modalBody || !modalConfirm) return;
-
-            modalTitle.textContent = title;
-            modalBody.innerHTML = content;
             
-            if (onConfirm) {
-                modalConfirm.onclick = function() {
-                    onConfirm();
-                    hideModal();
-                };
+            // پاک کردن و اضافه کردن ردیف‌های مرتب شده
+            rows.forEach(row => tbody.appendChild(row));
+        }
+        
+        // به‌روزرسانی شمارش کاربران
+        function updateUserCount() {
+            const visibleRows = document.querySelectorAll('#usersTable tr:not([style*="display: none"])').length;
+            document.getElementById('userCount').textContent = `${visibleRows} کاربر`;
+        }
+        
+        // ادامه به مرحله انتخاب نقش
+        function proceedToRoleSelection() {
+            if (selectedUsers.size === 0) {
+                showNotification('لطفاً حداقل یک کاربر را انتخاب کنید.', 'warning');
+                return;
             }
-
-            modalOverlay.classList.add('active');
-        }
-
-        // پنهان کردن مدال
-        function hideModal() {
-            const modalOverlay = document.getElementById('modalOverlay');
-            modalOverlay?.classList.remove('active');
-        }
-
-        // نمایش مدال تایید
-        function showConfirmModal(title, message, onConfirm) {
-            const content = `
-                <div class="text-center py-4">
-                    <i class="fas fa-question-circle text-4xl text-amber-500 mb-4"></i>
-                    <p class="text-lg text-white mb-2">${title}</p>
-                    <p class="text-slate-300">${message}</p>
-                </div>
-            `;
             
-            showModal(title, content, onConfirm);
+            document.getElementById('roleModal').classList.remove('hidden');
         }
-
-        // بستن اعلان
-        document.getElementById('closeNotification')?.addEventListener('click', function() {
-            document.getElementById('notificationPopup').classList.remove('show');
+        
+        // بستن مدال نقش
+        function closeRoleModal() {
+            document.getElementById('roleModal').classList.add('hidden');
+        }
+        
+        // انتخاب نقش
+        function selectRole(element) {
+            document.querySelectorAll('.role-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            currentRole = element.getAttribute('data-role');
+        }
+        
+        // حذف کاربر از لیست انتخاب شده
+        function removeUserFromSelection(userId) {
+            selectedUsers.delete(userId);
+            
+            // به‌روزرسانی چک‌باکس
+            const checkbox = document.querySelector(`.user-checkbox[data-user-id="${userId}"]`);
+            if (checkbox) {
+                checkbox.checked = false;
+                const row = checkbox.closest('tr');
+                row.classList.remove('user-selected');
+            }
+            
+            updateSelectionCount();
+            
+            // اگر هیچ کاربری انتخاب نشده بود، مدال بسته شود
+            if (selectedUsers.size === 0) {
+                closeRoleModal();
+            }
+        }
+        
+        // به‌روزرسانی لیست کاربران در مدال
+        function updateRoleModalUsers() {
+            // این تابع می‌تواند کاربران انتخاب شده را در مدال نمایش دهد
+            console.log('کاربران انتخاب شده:', Array.from(selectedUsers));
+        }
+        
+        // تایید و ایجاد ادمین
+        function confirmAdminCreation() {
+            const roleText = document.querySelector('.role-option.selected .font-bold').textContent;
+            showNotification(`ادمین جدید با نقش "${roleText}" ایجاد شد.`, 'success');
+            closeRoleModal();
+            
+            // پاک کردن انتخاب‌ها
+            clearSelection();
+        }
+        
+        // افزودن کاربر انتخاب شده به عنوان ادمین
+        function addSelectedUserAsAdmin() {
+            if (selectedUsers.size === 0) {
+                showNotification('لطفاً حداقل یک کاربر را انتخاب کنید.', 'warning');
+                return;
+            }
+            
+            proceedToRoleSelection();
+        }
+        
+        // مقداردهی اولیه
+        document.addEventListener('DOMContentLoaded', function() {
+            updateUserCount();
+            updateSelectionCount();
         });
-
-        // بارگذاری اولیه لیست کاربران
-        loadUsersList();
     </script>
 </body>
 </html>
