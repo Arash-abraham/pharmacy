@@ -12,17 +12,11 @@
             font-family: 'Vazirmatn', sans-serif;
         }
         
-        :root {
-            --primary: #7c3aed;
-            --primary-dark: #5b21b6;
-            --secondary: #10b981;
-            --danger: #ef4444;
-        }
-        
         body {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             color: #f8fafc;
             min-height: 100vh;
+            padding: 20px;
         }
         
         .card {
@@ -33,85 +27,51 @@
             transition: all 0.3s ease;
         }
         
-        .card:hover {
-            border-color: rgba(124, 58, 237, 0.3);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
-        
         .form-input {
             background: rgba(15, 23, 42, 0.8);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 10px;
-            padding: 14px 16px;
+            padding: 12px 16px;
             color: white;
             width: 100%;
-            transition: all 0.3s ease;
             font-size: 14px;
         }
         
         .form-input:focus {
             outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
-        }
-        
-        .form-select {
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 14px 16px;
-            color: white;
-            width: 100%;
-            transition: all 0.3s ease;
-            font-size: 14px;
-            cursor: pointer;
-        }
-        
-        .form-select:focus {
-            outline: none;
-            border-color: var(--primary);
+            border-color: #7c3aed;
             box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
             color: white;
-            padding: 12px 24px;
+            padding: 10px 20px;
             border-radius: 10px;
             font-weight: 600;
-            transition: all 0.3s ease;
             border: none;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            justify-content: center;
             gap: 8px;
+            transition: transform 0.3s ease;
         }
         
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(124, 58, 237, 0.3);
         }
         
         .btn-secondary {
             background: rgba(30, 41, 59, 0.8);
             color: white;
-            padding: 12px 24px;
+            padding: 10px 20px;
             border-radius: 10px;
             font-weight: 600;
-            transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.1);
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            justify-content: center;
             gap: 8px;
-        }
-        
-        .btn-secondary:hover {
-            background: rgba(45, 55, 72, 0.8);
-            border-color: rgba(124, 58, 237, 0.3);
         }
         
         .badge {
@@ -139,75 +99,9 @@
             color: #ef4444;
         }
         
-        .badge-info {
-            background-color: rgba(59, 130, 246, 0.2);
-            color: #3b82f6;
-        }
-        
         .badge-purple {
             background-color: rgba(124, 58, 237, 0.2);
             color: #8b5cf6;
-        }
-        
-        .user-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-            font-size: 18px;
-        }
-        
-        .user-detail-item {
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 10px;
-            margin-bottom: 8px;
-        }
-        
-        .user-detail-label {
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.5);
-            margin-bottom: 4px;
-        }
-        
-        .user-detail-value {
-            font-size: 14px;
-            font-weight: 600;
-            color: white;
-        }
-        
-        .role-option {
-            padding: 16px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .role-option:hover {
-            border-color: var(--primary);
-            background: rgba(124, 58, 237, 0.1);
-        }
-        
-        .role-option.selected {
-            border-color: var(--primary);
-            background: rgba(124, 58, 237, 0.2);
-        }
-        
-        .permission-checkbox {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 12px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 8px;
-            margin-bottom: 8px;
         }
         
         .table-container {
@@ -217,13 +111,12 @@
             background: rgba(15, 23, 42, 0.7);
         }
         
-        .table-container table {
+        table {
             width: 100%;
-            min-width: 800px;
             border-collapse: collapse;
         }
         
-        .table-container th {
+        th {
             background-color: rgba(30, 41, 59, 0.8);
             padding: 16px 20px;
             text-align: right;
@@ -232,44 +125,41 @@
             border-bottom: 2px solid rgba(255, 255, 255, 0.1);
         }
         
-        .table-container td {
+        td {
             padding: 16px 20px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
         
-        .table-container tr:hover {
+        tr:hover {
             background-color: rgba(124, 58, 237, 0.05);
         }
         
-        .search-box {
-            position: relative;
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            right: 0;
             width: 100%;
-            max-width: 400px;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1000;
         }
         
-        .search-input {
+        .modal {
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 20px;
             width: 100%;
-            padding: 12px 16px 12px 48px;
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            color: white;
-            font-size: 14px;
-            transition: all 0.3s ease;
+            max-width: 500px;
+            animation: slideUp 0.3s ease;
         }
         
-        .search-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
-        }
-        
-        .search-icon {
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: rgba(255, 255, 255, 0.5);
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
         
         .notification {
@@ -279,6 +169,7 @@
             z-index: 1000;
             max-width: 400px;
             animation: slideIn 0.3s ease;
+            display: none;
         }
         
         @keyframes slideIn {
@@ -305,562 +196,381 @@
             border: 1px solid rgba(245, 158, 11, 0.2);
             color: #f59e0b;
         }
-        
-        .alert-danger {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.2);
-            color: #ef4444;
+
+        .search-box {
+            position: relative;
+            width: 300px;
         }
         
-        .page-header {
-            background: rgba(30, 41, 59, 0.4);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+        .search-input {
+            width: 300px;
+            padding: 12px 16px 12px 48px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: white;
+            font-size: 14px;
+            padding-right: 40px;
         }
         
-        .content-wrapper {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
+        .search-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.5);
+            padding-left: 50px;
         }
         
-        .user-list-item {
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .user-list-item:hover {
-            background: rgba(124, 58, 237, 0.05);
-        }
-        
-        .user-selected {
-            background: rgba(124, 58, 237, 0.1) !important;
-            border-color: rgba(124, 58, 237, 0.3) !important;
-        }
-        
-        .step-indicator {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .step {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .step-number {
+        .user-avatar {
             width: 40px;
             height: 40px;
             border-radius: 50%;
+            background: linear-gradient(135deg, #7c3aed 0%, #10b981 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 600;
-        }
-        
-        .step-active {
-            background: var(--primary);
             color: white;
+            font-weight: 600;
+            font-size: 14px;
         }
-        
-        .step-inactive {
-            background: rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.5);
-        }
-        
-        .step-line {
-            width: 50px;
-            height: 2px;
-            background: rgba(255, 255, 255, 0.1);
-        }
+
     </style>
 </head>
 <body>
-
-
-    <!-- مراحل -->
-    <div class="content-wrapper">
-        <div class="step-indicator">
-            <div class="step">
-                <div class="step-number step-active">۱</div>
-                <div class="text-white font-medium">انتخاب کاربر</div>
+    <!-- هدر -->
+    <div class="card mb-6">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
+            <div>
+                <h1 class="text-2xl font-bold text-white mb-2">افزودن ادمین جدید</h1>
+                <p class="text-slate-400">انتخاب کاربر از لیست و افزودن به ادمین‌ها</p>
             </div>
-            <div class="step-line"></div>
-            <div class="step">
-                <div class="step-number step-inactive">۲</div>
-                <div class="text-slate-400">تعیین نقش</div>
-            </div>
-            <div class="step-line"></div>
-            <div class="step">
-                <div class="step-number step-inactive">۳</div>
-                <div class="text-slate-400">تایید نهایی</div>
-            </div>
-        </div>
-
-        <!-- جستجو و فیلتر -->
-        <div class="card mb-6">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
-                    <label class="block text-slate-300 mb-2">جستجوی کاربر</label>
-                    <div class="search-box">
-                        <input type="text" placeholder="نام، ایمیل یا شماره کاربری..." class="search-input" id="searchInput" onkeyup="filterUsers()">
-                        <i class="fas fa-search search-icon"></i>
-                    </div>
-                </div>
-                
-                <div>
-                    <label class="block text-slate-300 mb-2">وضعیت حساب</label>
-                    <select class="form-select" id="statusFilter" onchange="filterUsers()">
-                        <option value="all">همه وضعیت‌ها</option>
-                        <option value="active">فعال</option>
-                        <option value="inactive">غیرفعال</option>
-                        <option value="blocked">مسدود</option>
-                    </select>
-                </div>
-                
-                <div>
-                    <label class="block text-slate-300 mb-2">مرتب‌سازی</label>
-                    <select class="form-select" id="sortBy" onchange="sortUsers()">
-                        <option value="name">نام الفبایی</option>
-                        <option value="newest">جدیدترین</option>
-                        <option value="oldest">قدیمی‌ترین</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 gap-8">
-            <!-- لیست کاربران -->
-            <div class="card">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
-                    <div class="card-title">
-                        <i class="fas fa-users text-blue-500"></i>
-                        <span class="text-lg font-bold text-white">لیست کاربران</span>
-                    </div>
-                    <div class="flex items-center gap-2 mt-2 md:mt-0">
-                        <span class="text-sm text-slate-400" id="userCount">۱۲۴ کاربر</span>
-                        <span class="text-sm text-primary font-bold" id="selectedCount">۰ انتخاب شده</span>
-                    </div>
-                </div>
-                
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th style="width: 50px;">انتخاب</th>
-                                <th>کاربر</th>
-                                <th>اطلاعات تماس</th>
-                                <th>اطلاعات شخصی</th>
-                                <th>وضعیت حساب</th>
-                                <th>تاریخ عضویت</th>
-                                <th>عملیات</th>
-                            </tr>
-                        </thead>
-                        <tbody id="usersTable">
-                            <!-- کاربر ۱ -->
-                            <tr class="user-list-item">
-                                <td>
-                                    <input type="checkbox" class="user-checkbox" data-user-id="USR-001" onchange="toggleUserSelection('USR-001')">
-                                </td>
-                                <td>
-                                    <div class="flex items-center gap-3">
-                                        <div class="user-avatar">ع.م</div>
-                                        <div>
-                                            <p class="font-bold text-white">علی محمدی</p>
-                                            <p class="text-xs text-slate-400">کد: USR-001</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="space-y-1">
-                                        <p class="text-sm text-white">
-                                            <i class="fas fa-envelope text-slate-400 ml-2"></i>
-                                            ali.mohammadi@example.com
-                                        </p>
-                                        <p class="text-sm text-white">
-                                            <i class="fas fa-phone text-slate-400 ml-2"></i>
-                                            ۰۹۱۲۱۲۳۴۵۶۷
-                                        </p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="space-y-1">
-                                        <p class="text-sm text-white">
-                                            <i class="fas fa-id-card text-slate-400 ml-2"></i>
-                                            کد ملی: ۰۰۱۲۳۴۵۶۷۸
-                                        </p>
-                                        <p class="text-sm text-white">
-                                            <i class="fas fa-calendar text-slate-400 ml-2"></i>
-                                            تولد: ۱۳۷۰/۰۵/۲۰
-                                        </p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="badge badge-success">فعال</span>
-                                    <span class="badge badge-purple mt-1">تایید شده</span>
-                                </td>
-                                <td>
-                                    <p class="text-sm text-white">۱۴۰۲/۰۶/۱۵</p>
-                                    <p class="text-xs text-slate-400">۱ سال و ۲ ماه</p>
-                                </td>
-                                <td>
-                                    <button class="btn-secondary text-sm px-3 py-1" onclick="selectUser('USR-001')">
-                                        <i class="fas fa-plus"></i>
-                                        انتخاب
-                                    </button>
-                                </td>
-                            </tr>
-                            
-                            <!-- کاربر ۲ -->
-                            <tr class="user-list-item">
-                                <td>
-                                    <input type="checkbox" class="user-checkbox" data-user-id="USR-002" onchange="toggleUserSelection('USR-002')">
-                                </td>
-                                <td>
-                                    <div class="flex items-center gap-3">
-                                        <div class="user-avatar">م.ح</div>
-                                        <div>
-                                            <p class="font-bold text-white">مریم حسینی</p>
-                                            <p class="text-xs text-slate-400">کد: USR-002</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="space-y-1">
-                                        <p class="text-sm text-white">
-                                            <i class="fas fa-envelope text-slate-400 ml-2"></i>
-                                            maryam.hosseini@example.com
-                                        </p>
-                                        <p class="text-sm text-white">
-                                            <i class="fas fa-phone text-slate-400 ml-2"></i>
-                                            ۰۹۱۳۱۲۳۴۵۶۸
-                                        </p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="space-y-1">
-                                        <p class="text-sm text-white">
-                                            <i class="fas fa-id-card text-slate-400 ml-2"></i>
-                                            کد ملی: ۰۰۲۳۴۵۶۷۸۹
-                                        </p>
-                                        <p class="text-sm text-white">
-                                            <i class="fas fa-calendar text-slate-400 ml-2"></i>
-                                            تولد: ۱۳۷۵/۰۸/۱۲
-                                        </p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="badge badge-success">فعال</span>
-                                    <span class="badge badge-purple mt-1">تایید شده</span>
-                                </td>
-                                <td>
-                                    <p class="text-sm text-white">۱۴۰۲/۰۷/۰۲</p>
-                                    <p class="text-xs text-slate-400">۱ سال و ۱ ماه</p>
-                                </td>
-                                <td>
-                                    <button class="btn-secondary text-sm px-3 py-1" onclick="selectUser('USR-002')">
-                                        <i class="fas fa-plus"></i>
-                                        انتخاب
-                                    </button>
-                                </td>
-                            </tr>
-                            
-                            <!-- کاربر ۳ -->
-                            <tr class="user-list-item">
-                                <td>
-                                    <input type="checkbox" class="user-checkbox" data-user-id="USR-003" onchange="toggleUserSelection('USR-003')">
-                                </td>
-                                <td>
-                                    <div class="flex items-center gap-3">
-                                        <div class="user-avatar">ر.ک</div>
-                                        <div>
-                                            <p class="font-bold text-white">رضا کریمی</p>
-                                            <p class="text-xs text-slate-400">کد: USR-003</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="space-y-1">
-                                        <p class="text-sm text-white">
-                                            <i class="fas fa-envelope text-slate-400 ml-2"></i>
-                                            reza.karimi@example.com
-                                        </p>
-                                        <p class="text-sm text-white">
-                                            <i class="fas fa-phone text-slate-400 ml-2"></i>
-                                            ۰۹۱۴۱۲۳۴۵۶۹
-                                        </p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="space-y-1">
-                                        <p class="text-sm text-white">
-                                            <i class="fas fa-id-card text-slate-400 ml-2"></i>
-                                            کد ملی: ۰۰۳۴۵۶۷۸۹۰
-                                        </p>
-                                        <p class="text-sm text-white">
-                                            <i class="fas fa-calendar text-slate-400 ml-2"></i>
-                                            تولد: ۱۳۶۸/۱۱/۰۵
-                                        </p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="badge badge-warning">غیرفعال</span>
-                                    <span class="badge badge-purple mt-1">تایید شده</span>
-                                </td>
-                                <td>
-                                    <p class="text-sm text-white">۱۴۰۲/۰۷/۲۰</p>
-                                    <p class="text-xs text-slate-400">۱ سال و ۱ ماه</p>
-                                </td>
-                                <td>
-                                    <button class="btn-secondary text-sm px-3 py-1" onclick="selectUser('USR-003')">
-                                        <i class="fas fa-plus"></i>
-                                        انتخاب
-                                    </button>
-                                </td>
-                            </tr>
-                            
-                            <!-- کاربر ۴ -->
-                            <tr class="user-list-item">
-                                <td>
-                                    <input type="checkbox" class="user-checkbox" data-user-id="USR-004" onchange="toggleUserSelection('USR-004')">
-                                </td>
-                                <td>
-                                    <div class="flex items-center gap-3">
-                                        <div class="user-avatar">س.ر</div>
-                                        <div>
-                                            <p class="font-bold text-white">سارا رضایی</p>
-                                            <p class="text-xs text-slate-400">کد: USR-004</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="space-y-1">
-                                        <p class="text-sm text-white">
-                                            <i class="fas fa-envelope text-slate-400 ml-2"></i>
-                                            sara.rezaei@example.com
-                                        </p>
-                                        <p class="text-sm text-white">
-                                            <i class="fas fa-phone text-slate-400 ml-2"></i>
-                                            ۰۹۱۵۱۲۳۴۵۷۰
-                                        </p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="space-y-1">
-                                        <p class="text-sm text-white">
-                                            <i class="fas fa-id-card text-slate-400 ml-2"></i>
-                                            کد ملی: ۰۰۴۵۶۷۸۹۰۱
-                                        </p>
-                                        <p class="text-sm text-white">
-                                            <i class="fas fa-calendar text-slate-400 ml-2"></i>
-                                            تولد: ۱۳۷۲/۰۳/۱۵
-                                        </p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="badge badge-success">فعال</span>
-                                    <span class="badge badge-info mt-1">در انتظار تایید</span>
-                                </td>
-                                <td>
-                                    <p class="text-sm text-white">۱۴۰۲/۰۸/۰۵</p>
-                                    <p class="text-xs text-slate-400">۴ ماه</p>
-                                </td>
-                                <td>
-                                    <button class="btn-secondary text-sm px-3 py-1" onclick="selectUser('USR-004')">
-                                        <i class="fas fa-plus"></i>
-                                        انتخاب
-                                    </button>
-                                </td>
-                            </tr>
-                            
-                            <!-- کاربر ۵ -->
-                            <tr class="user-list-item">
-                                <td>
-                                    <input type="checkbox" class="user-checkbox" data-user-id="USR-005" onchange="toggleUserSelection('USR-005')">
-                                </td>
-                                <td>
-                                    <div class="flex items-center gap-3">
-                                        <div class="user-avatar">م.ع</div>
-                                        <div>
-                                            <p class="font-bold text-white">محمد علیزاده</p>
-                                            <p class="text-xs text-slate-400">کد: USR-005</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="space-y-1">
-                                        <p class="text-sm text-white">
-                                            <i class="fas fa-envelope text-slate-400 ml-2"></i>
-                                            mohammad.alizadeh@example.com
-                                        </p>
-                                        <p class="text-sm text-white">
-                                            <i class="fas fa-phone text-slate-400 ml-2"></i>
-                                            ۰۹۱۶۱۲۳۴۵۷۱
-                                        </p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="space-y-1">
-                                        <p class="text-sm text-white">
-                                            <i class="fas fa-id-card text-slate-400 ml-2"></i>
-                                            کد ملی: ۰۰۵۶۷۸۹۰۱۲
-                                        </p>
-                                        <p class="text-sm text-white">
-                                            <i class="fas fa-calendar text-slate-400 ml-2"></i>
-                                            تولد: ۱۳۶۵/۰۹/۲۸
-                                        </p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="badge badge-danger">مسدود</span>
-                                    <span class="badge badge-purple mt-1">تایید شده</span>
-                                </td>
-                                <td>
-                                    <p class="text-sm text-white">۱۴۰۲/۰۸/۱۰</p>
-                                    <p class="text-xs text-slate-400">۴ ماه</p>
-                                </td>
-                                <td>
-                                    <button class="btn-secondary text-sm px-3 py-1" onclick="selectUser('USR-005')">
-                                        <i class="fas fa-plus"></i>
-                                        انتخاب
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                
-                <!-- دکمه‌های عملیات -->
-                <div class="flex flex-wrap gap-4 mt-6">
-                    <button class="btn-primary" onclick="proceedToRoleSelection()">
-                        <i class="fas fa-arrow-left"></i>
-                        ادامه به مرحله بعد
-                    </button>
-                    <button class="btn-secondary" onclick="clearSelection()">
-                        <i class="fas fa-times"></i>
-                        پاک کردن انتخاب‌ها
-                    </button>
-                    <button class="btn-secondary" onclick="selectAllUsers()">
-                        <i class="fas fa-check-double"></i>
-                        انتخاب همه
-                    </button>
+            <div class="flex items-center gap-3 mt-4 md:mt-0">
+                <div class="search-box">
+                    <input type="text" placeholder="جستجوی کاربر..." class="search-input" id="searchInput" onkeyup="searchUsers()">
+                    <i id="searchIcon" class="fas fa-search search-icon"></i>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- مدال انتخاب نقش -->
-    <div id="roleModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50 hidden">
-        <div class="card w-full max-w-2xl">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-xl font-bold text-white">تعیین نقش و دسترسی</h2>
-                <button class="text-slate-400 hover:text-white text-xl" onclick="closeRoleModal()">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            
-            <div class="space-y-6">
-                <!-- کاربران انتخاب شده -->
-                <div>
-                    <h3 class="font-bold text-white mb-3">کاربران انتخاب شده</h3>
-                    <div class="space-y-2 max-h-40 overflow-y-auto">
-                        <div class="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg">
+    <!-- لیست کاربران -->
+    <div class="card">
+        <div class="mb-6">
+            <h2 class="text-lg font-bold text-white mb-2">لیست کاربران</h2>
+            <p class="text-slate-400 text-sm">برای افزودن کاربر به ادمین‌ها، روی دکمه "افزودن به ادمین" کلیک کنید</p>
+        </div>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>کاربر</th>
+                        <th>اطلاعات تماس</th>
+                        <th>وضعیت حساب</th>
+                        <th>تاریخ عضویت</th>
+                        <th>عملیات</th>
+                    </tr>
+                </thead>
+                <tbody id="usersTable">
+                    <!-- کاربر ۱ -->
+                    <tr>
+                        <td>
                             <div class="flex items-center gap-3">
-                                <div class="user-avatar text-sm">ع.م</div>
+                                <div class="user-avatar">ع.م</div>
                                 <div>
-                                    <p class="font-medium text-white">علی محمدی</p>
-                                    <p class="text-xs text-slate-400">ali.mohammadi@example.com</p>
+                                    <p class="font-bold text-white">علی محمدی</p>
+                                    <p class="text-xs text-slate-400">کد کاربری: USR-001</p>
                                 </div>
                             </div>
-                            <button class="text-red-400 hover:text-red-300" onclick="removeUserFromSelection('USR-001')">
-                                <i class="fas fa-times"></i>
+                        </td>
+                        <td>
+                            <div class="space-y-1">
+                                <p class="text-sm text-white">
+                                    <i class="fas fa-envelope text-slate-400 ml-2"></i>
+                                    ali.mohammadi@example.com
+                                </p>
+                                <p class="text-sm text-white">
+                                    <i class="fas fa-phone text-slate-400 ml-2"></i>
+                                    ۰۹۱۲۱۲۳۴۵۶۷
+                                </p>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge badge-success">فعال</span>
+                            <span class="badge badge-purple block mt-1">تایید شده</span>
+                        </td>
+                        <td>
+                            <p class="text-sm text-white">۱۴۰۲/۰۶/۱۵</p>
+                            <p class="text-xs text-slate-400">۱ سال و ۲ ماه پیش</p>
+                        </td>
+                        <td>
+                            <button class="btn-primary" onclick="showAddAdminModal('USR-001', 'علی محمدی')">
+                                <i class="fas fa-user-plus"></i>
+                                افزودن به ادمین
                             </button>
-                        </div>
+                        </td>
+                    </tr>
+                    
+                    <!-- کاربر ۲ -->
+                    <tr>
+                        <td>
+                            <div class="flex items-center gap-3">
+                                <div class="user-avatar">م.ح</div>
+                                <div>
+                                    <p class="font-bold text-white">مریم حسینی</p>
+                                    <p class="text-xs text-slate-400">کد کاربری: USR-002</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="space-y-1">
+                                <p class="text-sm text-white">
+                                    <i class="fas fa-envelope text-slate-400 ml-2"></i>
+                                    maryam.hosseini@example.com
+                                </p>
+                                <p class="text-sm text-white">
+                                    <i class="fas fa-phone text-slate-400 ml-2"></i>
+                                    ۰۹۱۳۱۲۳۴۵۶۸
+                                </p>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge badge-success">فعال</span>
+                            <span class="badge badge-purple block mt-1">تایید شده</span>
+                        </td>
+                        <td>
+                            <p class="text-sm text-white">۱۴۰۲/۰۷/۰۲</p>
+                            <p class="text-xs text-slate-400">۱ سال و ۱ ماه پیش</p>
+                        </td>
+                        <td>
+                            <button class="btn-primary" onclick="showAddAdminModal('USR-002', 'مریم حسینی')">
+                                <i class="fas fa-user-plus"></i>
+                                افزودن به ادمین
+                            </button>
+                        </td>
+                    </tr>
+                    
+                    <!-- کاربر ۳ -->
+                    <tr>
+                        <td>
+                            <div class="flex items-center gap-3">
+                                <div class="user-avatar">ر.ک</div>
+                                <div>
+                                    <p class="font-bold text-white">رضا کریمی</p>
+                                    <p class="text-xs text-slate-400">کد کاربری: USR-003</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="space-y-1">
+                                <p class="text-sm text-white">
+                                    <i class="fas fa-envelope text-slate-400 ml-2"></i>
+                                    reza.karimi@example.com
+                                </p>
+                                <p class="text-sm text-white">
+                                    <i class="fas fa-phone text-slate-400 ml-2"></i>
+                                    ۰۹۱۴۱۲۳۴۵۶۹
+                                </p>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge badge-warning">غیرفعال</span>
+                            <span class="badge badge-purple block mt-1">تایید شده</span>
+                        </td>
+                        <td>
+                            <p class="text-sm text-white">۱۴۰۲/۰۷/۲۰</p>
+                            <p class="text-xs text-slate-400">۱ سال و ۱ ماه پیش</p>
+                        </td>
+                        <td>
+                            <button class="btn-primary" onclick="showAddAdminModal('USR-003', 'رضا کریمی')">
+                                <i class="fas fa-user-plus"></i>
+                                افزودن به ادمین
+                            </button>
+                        </td>
+                    </tr>
+                    
+                    <!-- کاربر ۴ -->
+                    <tr>
+                        <td>
+                            <div class="flex items-center gap-3">
+                                <div class="user-avatar">س.ر</div>
+                                <div>
+                                    <p class="font-bold text-white">سارا رضایی</p>
+                                    <p class="text-xs text-slate-400">کد کاربری: USR-004</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="space-y-1">
+                                <p class="text-sm text-white">
+                                    <i class="fas fa-envelope text-slate-400 ml-2"></i>
+                                    sara.rezaei@example.com
+                                </p>
+                                <p class="text-sm text-white">
+                                    <i class="fas fa-phone text-slate-400 ml-2"></i>
+                                    ۰۹۱۵۱۲۳۴۵۷۰
+                                </p>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge badge-success">فعال</span>
+                            <span class="badge badge-purple block mt-1">تایید شده</span>
+                        </td>
+                        <td>
+                            <p class="text-sm text-white">۱۴۰۲/۰۸/۰۵</p>
+                            <p class="text-xs text-slate-400">۴ ماه پیش</p>
+                        </td>
+                        <td>
+                            <button class="btn-primary" onclick="showAddAdminModal('USR-004', 'سارا رضایی')">
+                                <i class="fas fa-user-plus"></i>
+                                افزودن به ادمین
+                            </button>
+                        </td>
+                    </tr>
+                    
+                    <!-- کاربر ۵ -->
+                    <tr>
+                        <td>
+                            <div class="flex items-center gap-3">
+                                <div class="user-avatar">م.ع</div>
+                                <div>
+                                    <p class="font-bold text-white">محمد علیزاده</p>
+                                    <p class="text-xs text-slate-400">کد کاربری: USR-005</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="space-y-1">
+                                <p class="text-sm text-white">
+                                    <i class="fas fa-envelope text-slate-400 ml-2"></i>
+                                    mohammad.alizadeh@example.com
+                                </p>
+                                <p class="text-sm text-white">
+                                    <i class="fas fa-phone text-slate-400 ml-2"></i>
+                                    ۰۹۱۶۱۲۳۴۵۷۱
+                                </p>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge badge-danger">مسدود</span>
+                            <span class="badge badge-purple block mt-1">تایید شده</span>
+                        </td>
+                        <td>
+                            <p class="text-sm text-white">۱۴۰۲/۰۸/۱۰</p>
+                            <p class="text-xs text-slate-400">۴ ماه پیش</p>
+                        </td>
+                        <td>
+                            <button class="btn-primary" onclick="showAddAdminModal('USR-005', 'محمد علیزاده')">
+                                <i class="fas fa-user-plus"></i>
+                                افزودن به ادمین
+                            </button>
+                        </td>
+                    </tr>
+                    
+                    <!-- کاربر ۶ -->
+                    <tr>
+                        <td>
+                            <div class="flex items-center gap-3">
+                                <div class="user-avatar">ف.ا</div>
+                                <div>
+                                    <p class="font-bold text-white">فاطمه احمدی</p>
+                                    <p class="text-xs text-slate-400">کد کاربری: USR-006</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="space-y-1">
+                                <p class="text-sm text-white">
+                                    <i class="fas fa-envelope text-slate-400 ml-2"></i>
+                                    fatemeh.ahmadi@example.com
+                                </p>
+                                <p class="text-sm text-white">
+                                    <i class="fas fa-phone text-slate-400 ml-2"></i>
+                                    ۰۹۱۷۱۲۳۴۵۷۲
+                                </p>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge badge-success">فعال</span>
+                            <span class="badge badge-purple block mt-1">تایید شده</span>
+                        </td>
+                        <td>
+                            <p class="text-sm text-white">۱۴۰۲/۰۸/۱۲</p>
+                            <p class="text-xs text-slate-400">۴ ماه پیش</p>
+                        </td>
+                        <td>
+                            <button class="btn-primary" onclick="showAddAdminModal('USR-006', 'فاطمه احمدی')">
+                                <i class="fas fa-user-plus"></i>
+                                افزودن به ادمین
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- مدال تایید افزودن ادمین -->
+    <div class="modal-overlay" id="addAdminModal">
+        <div class="modal">
+            <div class="p-6">
+                <div class="text-center mb-6">
+                    <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 flex items-center justify-center">
+                        <i class="fas fa-user-shield text-white text-2xl"></i>
                     </div>
+                    <h2 class="text-xl font-bold text-white mb-2" id="modalUserName"></h2>
+                    <p class="text-slate-400">کد کاربری: <span id="modalUserId" class="text-white font-medium"></span></p>
                 </div>
                 
-                <!-- انتخاب نقش -->
-                <div>
-                    <h3 class="font-bold text-white mb-3">نقش ادمین</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="role-option" data-role="support" onclick="selectRole(this)">
-                            <i class="fas fa-headset text-amber-500 text-3xl mb-3"></i>
-                            <p class="font-bold text-white">پشتیبانی</p>
-                            <p class="text-sm text-slate-400 mt-1">دسترسی محدود به پنل کاربران و تیکت‌ها</p>
-                        </div>
-                        <div class="role-option" data-role="moderator" onclick="selectRole(this)">
-                            <i class="fas fa-edit text-blue-500 text-3xl mb-3"></i>
-                            <p class="font-bold text-white">مدیر محتوا</p>
-                            <p class="text-sm text-slate-400 mt-1">دسترسی به مدیریت محصولات و محتوا</p>
-                        </div>
-                        <div class="role-option selected" data-role="admin" onclick="selectRole(this)">
-                            <i class="fas fa-user-shield text-emerald-500 text-3xl mb-3"></i>
-                            <p class="font-bold text-white">ادمین</p>
-                            <p class="text-sm text-slate-400 mt-1">دسترسی کامل به همه بخش‌های سیستم</p>
-                        </div>
-                    </div>
+                <div class="mb-6">
+                    <label class="block text-slate-300 mb-3">نقش ادمین</label>
+                    <select class="form-input" id="adminRole">
+                        <option value="support">پشتیبانی - دسترسی محدود</option>
+                        <option value="moderator">مدیر محتوا - دسترسی متوسط</option>
+                        <option value="admin">ادمین - دسترسی کامل</option>
+                        <option value="supervisor">ناظر سیستم - دسترسی نظارتی</option>
+                    </select>
                 </div>
                 
-                <!-- دسترسی‌ها -->
-                <div>
-                    <h3 class="font-bold text-white mb-3">سطح دسترسی</h3>
-                    <div class="space-y-3 max-h-60 overflow-y-auto">
-                        <label class="permission-checkbox">
-                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary" checked>
-                            <span class="text-slate-300">مشاهده داشبورد</span>
-                        </label>
-                        <label class="permission-checkbox">
-                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary" checked>
+                <div class="mb-6">
+                    <label class="block text-slate-300 mb-3">دسترسی‌ها</label>
+                    <div class="space-y-2">
+                        <label class="flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg">
+                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-purple-600" checked>
                             <span class="text-slate-300">مدیریت کاربران</span>
                         </label>
-                        <label class="permission-checkbox">
-                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary">
-                            <span class="text-slate-300">مدیریت محصولات</span>
+                        <label class="flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg">
+                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-purple-600" checked>
+                            <span class="text-slate-300">مدیریت محتوا</span>
                         </label>
-                        <label class="permission-checkbox">
-                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary">
+                        <label class="flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg">
+                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-purple-600">
                             <span class="text-slate-300">مدیریت مالی</span>
                         </label>
-                        <label class="permission-checkbox">
-                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary">
+                        <label class="flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg">
+                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-purple-600">
                             <span class="text-slate-300">تنظیمات سیستم</span>
-                        </label>
-                        <label class="permission-checkbox">
-                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary" checked>
-                            <span class="text-slate-300">پاسخ به تیکت‌ها</span>
-                        </label>
-                        <label class="permission-checkbox">
-                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary" checked>
-                            <span class="text-slate-300">ایجاد گزارش</span>
                         </label>
                     </div>
                 </div>
                 
-                <!-- توضیحات -->
-                <div>
-                    <label class="block text-slate-300 mb-2">توضیحات (اختیاری)</label>
-                    <textarea class="form-input" rows="3" placeholder="توضیحات دلخواه درباره ادمین جدید..."></textarea>
-                </div>
-                
-                <!-- دکمه‌های مدال -->
-                <div class="flex justify-end gap-3 pt-4 border-t border-slate-700">
-                    <button class="btn-secondary" onclick="closeRoleModal()">انصراف</button>
-                    <button class="btn-primary" onclick="confirmAdminCreation()">تایید و ایجاد</button>
+                <div class="flex justify-end gap-3 pt-6 border-t border-slate-700">
+                    <button class="btn-secondary" onclick="closeAddAdminModal()">
+                        <i class="fas fa-times"></i>
+                        انصراف
+                    </button>
+                    <button class="btn-primary" onclick="addAsAdmin()">
+                        <i class="fas fa-check"></i>
+                        تایید و افزودن
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- اعلان -->
-    <div id="notification" class="notification hidden">
+    <div class="notification" id="notification">
         <div class="alert alert-success">
             <div class="flex-1">
                 <div class="font-bold" id="notificationTitle">موفقیت آمیز</div>
@@ -874,13 +584,95 @@
 
     <script>
         // متغیرهای سراسری
-        let selectedUsers = new Set();
-        let currentRole = 'admin';
+        let selectedUserId = '';
+        let selectedUserName = '';
+        
+        // نمایش مدال افزودن ادمین
+        function showAddAdminModal(userId, userName) {
+            selectedUserId = userId;
+            selectedUserName = userName;
+            
+            // پر کردن اطلاعات مدال
+            document.getElementById('modalUserName').textContent = userName;
+            document.getElementById('modalUserId').textContent = userId;
+            
+            // نمایش مدال
+            document.getElementById('addAdminModal').style.display = 'flex';
+        }
+        
+        // بستن مدال
+        function closeAddAdminModal() {
+            document.getElementById('addAdminModal').style.display = 'none';
+        }
+        
+        // افزودن کاربر به ادمین‌ها
+        function addAsAdmin() {
+            const role = document.getElementById('adminRole').value;
+            let roleText = '';
+            
+            switch(role) {
+                case 'support':
+                    roleText = 'پشتیبانی';
+                    break;
+                case 'moderator':
+                    roleText = 'مدیر محتوا';
+                    break;
+                case 'admin':
+                    roleText = 'ادمین';
+                    break;
+                case 'supervisor':
+                    roleText = 'ناظر سیستم';
+                    break;
+            }
+            
+            // نمایش اعلان موفقیت
+            showNotification(
+                'افزودن ادمین',
+                `کاربر ${selectedUserName} با نقش ${roleText} به ادمین‌ها اضافه شد.`,
+                'success'
+            );
+            
+            // بستن مدال
+            closeAddAdminModal();
+            
+            // در اینجا می‌توانید اطلاعات را به سرور ارسال کنید
+            // مثلاً: sendToServer({ userId: selectedUserId, role: role });
+            
+            // نمایش تغییر در UI (مثلاً تغییر دکمه)
+            setTimeout(() => {
+                const buttons = document.querySelectorAll(`button[onclick*="${selectedUserId}"]`);
+                buttons.forEach(button => {
+                    button.innerHTML = '<i class="fas fa-check"></i> اضافه شده';
+                    button.classList.remove('btn-primary');
+                    button.classList.add('btn-secondary');
+                    button.disabled = true;
+                    button.onclick = null;
+                });
+            }, 500);
+        }
+        
+        // جستجوی کاربران
+        function searchUsers() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const rows = document.querySelectorAll('#usersTable tr');
+            
+            rows.forEach(row => {
+                const name = row.querySelector('td:nth-child(1) .font-bold').textContent.toLowerCase();
+                const email = row.querySelector('td:nth-child(2) p:nth-child(1)').textContent.toLowerCase();
+                const userId = row.querySelector('td:nth-child(1) .text-xs').textContent.toLowerCase();
+                
+                if (name.includes(searchTerm) || email.includes(searchTerm) || userId.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
         
         // نمایش اعلان
-        function showNotification(message, type = 'success') {
+        function showNotification(title, message, type = 'success') {
             const notification = document.getElementById('notification');
-            const title = document.getElementById('notificationTitle');
+            const titleEl = document.getElementById('notificationTitle');
             const messageEl = document.getElementById('notificationMessage');
             const alert = notification.querySelector('.alert');
             
@@ -889,230 +681,37 @@
             switch(type) {
                 case 'success':
                     alert.classList.add('alert-success');
-                    title.textContent = 'موفقیت آمیز';
+                    titleEl.textContent = 'موفقیت آمیز';
                     break;
                 case 'warning':
                     alert.classList.add('alert-warning');
-                    title.textContent = 'هشدار';
+                    titleEl.textContent = 'هشدار';
                     break;
-                case 'danger':
+                case 'error':
                     alert.classList.add('alert-danger');
-                    title.textContent = 'خطا';
+                    titleEl.textContent = 'خطا';
                     break;
             }
             
             messageEl.textContent = message;
-            notification.classList.remove('hidden');
+            notification.style.display = 'block';
             
             // بستن خودکار بعد از 5 ثانیه
             setTimeout(() => {
-                notification.classList.add('hidden');
+                notification.style.display = 'none';
             }, 5000);
         }
         
         // مخفی کردن اعلان
         function hideNotification() {
-            document.getElementById('notification').classList.add('hidden');
+            document.getElementById('notification').style.display = 'none';
         }
         
-        // انتخاب کاربر
-        function selectUser(userId) {
-            toggleUserSelection(userId);
-        }
-        
-        // تغییر انتخاب کاربر
-        function toggleUserSelection(userId) {
-            const checkbox = document.querySelector(`.user-checkbox[data-user-id="${userId}"]`);
-            const row = checkbox.closest('tr');
-            
-            if (selectedUsers.has(userId)) {
-                selectedUsers.delete(userId);
-                checkbox.checked = false;
-                row.classList.remove('user-selected');
-            } else {
-                selectedUsers.add(userId);
-                checkbox.checked = true;
-                row.classList.add('user-selected');
+        // بستن مدال با کلیک خارج از آن
+        document.getElementById('addAdminModal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeAddAdminModal();
             }
-            
-            updateSelectionCount();
-        }
-        
-        // به‌روزرسانی شمارش انتخاب‌ها
-        function updateSelectionCount() {
-            const countElement = document.getElementById('selectedCount');
-            countElement.textContent = `${selectedUsers.size} انتخاب شده`;
-            
-            // به‌روزرسانی لیست کاربران در مدال
-            updateRoleModalUsers();
-        }
-        
-        // پاک کردن همه انتخاب‌ها
-        function clearSelection() {
-            document.querySelectorAll('.user-checkbox:checked').forEach(checkbox => {
-                checkbox.checked = false;
-                const row = checkbox.closest('tr');
-                row.classList.remove('user-selected');
-            });
-            
-            selectedUsers.clear();
-            updateSelectionCount();
-            showNotification('تمامی انتخاب‌ها پاک شدند.', 'success');
-        }
-        
-        // انتخاب همه کاربران
-        function selectAllUsers() {
-            document.querySelectorAll('.user-checkbox').forEach(checkbox => {
-                const userId = checkbox.getAttribute('data-user-id');
-                checkbox.checked = true;
-                selectedUsers.add(userId);
-                const row = checkbox.closest('tr');
-                row.classList.add('user-selected');
-            });
-            
-            updateSelectionCount();
-            showNotification('همه کاربران انتخاب شدند.', 'success');
-        }
-        
-        // فیلتر کاربران
-        function filterUsers() {
-            const searchInput = document.getElementById('searchInput').value.toLowerCase();
-            const statusFilter = document.getElementById('statusFilter').value;
-            
-            document.querySelectorAll('#usersTable tr').forEach(row => {
-                const name = row.querySelector('td:nth-child(2) .font-bold').textContent.toLowerCase();
-                const email = row.querySelector('td:nth-child(3) p:nth-child(1)').textContent.toLowerCase();
-                const statusBadge = row.querySelector('td:nth-child(5) .badge:first-child');
-                const status = statusBadge.textContent;
-                
-                let showRow = true;
-                
-                // فیلتر جستجو
-                if (searchInput && !name.includes(searchInput) && !email.includes(searchInput)) {
-                    showRow = false;
-                }
-                
-                // فیلتر وضعیت
-                if (statusFilter !== 'all') {
-                    if (statusFilter === 'active' && status !== 'فعال') showRow = false;
-                    if (statusFilter === 'inactive' && status !== 'غیرفعال') showRow = false;
-                    if (statusFilter === 'blocked' && status !== 'مسدود') showRow = false;
-                }
-                
-                row.style.display = showRow ? '' : 'none';
-            });
-            
-            updateUserCount();
-        }
-        
-        // مرتب‌سازی کاربران
-        function sortUsers() {
-            const sortBy = document.getElementById('sortBy').value;
-            const tbody = document.getElementById('usersTable');
-            const rows = Array.from(tbody.querySelectorAll('tr'));
-            
-            rows.sort((a, b) => {
-                const nameA = a.querySelector('td:nth-child(2) .font-bold').textContent;
-                const nameB = b.querySelector('td:nth-child(2) .font-bold').textContent;
-                const dateA = a.querySelector('td:nth-child(6) p:nth-child(1)').textContent;
-                const dateB = b.querySelector('td:nth-child(6) p:nth-child(1)').textContent;
-                
-                switch(sortBy) {
-                    case 'name':
-                        return nameA.localeCompare(nameB);
-                    case 'newest':
-                        return dateB.localeCompare(dateA);
-                    case 'oldest':
-                        return dateA.localeCompare(dateB);
-                    default:
-                        return 0;
-                }
-            });
-            
-            // پاک کردن و اضافه کردن ردیف‌های مرتب شده
-            rows.forEach(row => tbody.appendChild(row));
-        }
-        
-        // به‌روزرسانی شمارش کاربران
-        function updateUserCount() {
-            const visibleRows = document.querySelectorAll('#usersTable tr:not([style*="display: none"])').length;
-            document.getElementById('userCount').textContent = `${visibleRows} کاربر`;
-        }
-        
-        // ادامه به مرحله انتخاب نقش
-        function proceedToRoleSelection() {
-            if (selectedUsers.size === 0) {
-                showNotification('لطفاً حداقل یک کاربر را انتخاب کنید.', 'warning');
-                return;
-            }
-            
-            document.getElementById('roleModal').classList.remove('hidden');
-        }
-        
-        // بستن مدال نقش
-        function closeRoleModal() {
-            document.getElementById('roleModal').classList.add('hidden');
-        }
-        
-        // انتخاب نقش
-        function selectRole(element) {
-            document.querySelectorAll('.role-option').forEach(opt => {
-                opt.classList.remove('selected');
-            });
-            element.classList.add('selected');
-            currentRole = element.getAttribute('data-role');
-        }
-        
-        // حذف کاربر از لیست انتخاب شده
-        function removeUserFromSelection(userId) {
-            selectedUsers.delete(userId);
-            
-            // به‌روزرسانی چک‌باکس
-            const checkbox = document.querySelector(`.user-checkbox[data-user-id="${userId}"]`);
-            if (checkbox) {
-                checkbox.checked = false;
-                const row = checkbox.closest('tr');
-                row.classList.remove('user-selected');
-            }
-            
-            updateSelectionCount();
-            
-            // اگر هیچ کاربری انتخاب نشده بود، مدال بسته شود
-            if (selectedUsers.size === 0) {
-                closeRoleModal();
-            }
-        }
-        
-        // به‌روزرسانی لیست کاربران در مدال
-        function updateRoleModalUsers() {
-            // این تابع می‌تواند کاربران انتخاب شده را در مدال نمایش دهد
-            console.log('کاربران انتخاب شده:', Array.from(selectedUsers));
-        }
-        
-        // تایید و ایجاد ادمین
-        function confirmAdminCreation() {
-            const roleText = document.querySelector('.role-option.selected .font-bold').textContent;
-            showNotification(`ادمین جدید با نقش "${roleText}" ایجاد شد.`, 'success');
-            closeRoleModal();
-            
-            // پاک کردن انتخاب‌ها
-            clearSelection();
-        }
-        
-        // افزودن کاربر انتخاب شده به عنوان ادمین
-        function addSelectedUserAsAdmin() {
-            if (selectedUsers.size === 0) {
-                showNotification('لطفاً حداقل یک کاربر را انتخاب کنید.', 'warning');
-                return;
-            }
-            
-            proceedToRoleSelection();
-        }
-        
-        // مقداردهی اولیه
-        document.addEventListener('DOMContentLoaded', function() {
-            updateUserCount();
-            updateSelectionCount();
         });
     </script>
 </body>
