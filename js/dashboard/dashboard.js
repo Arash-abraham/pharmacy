@@ -1,4 +1,3 @@
-<script>
 document.addEventListener('DOMContentLoaded', function() {
     // نوار پیشرفت اسکرول
     window.addEventListener('scroll', function() {
@@ -250,4 +249,3 @@ document.addEventListener('DOMContentLoaded', function() {
     // مقداردهی اولیه
     console.log('پنل کاربری فایل استور با تمام صفحات آماده است!');
 });
-</script>
