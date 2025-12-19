@@ -1,0 +1,475 @@
+* {
+    font-family: 'Vazirmatn', sans-serif;
+}
+
+:root {
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --secondary: #10b981;
+    --accent: #f59e0b;
+    --dark: #0f172a;
+    --darker: #020617;
+    --light: #f8fafc;
+}
+
+body {
+    background-color: var(--darker);
+    color: var(--light);
+    overflow-x: hidden;
+}
+
+.glass {
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gradient-bg {
+    background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 50%, #1e293b 100%);
+}
+
+.primary-gradient {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+}
+
+.secondary-gradient {
+    background: linear-gradient(135deg, var(--secondary) 0%, #059669 100%);
+}
+
+.accent-gradient {
+    background: linear-gradient(135deg, var(--accent) 0%, #d97706 100%);
+}
+
+.card-hover {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.shine-effect {
+    position: relative;
+    overflow: hidden;
+}
+
+.shine-effect::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(45deg);
+    transition: all 0.6s;
+    opacity: 0;
+}
+
+.shine-effect:hover::before {
+    opacity: 1;
+    top: -30%;
+    left: -30%;
+}
+
+.stagger-animation > * {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.6s forwards;
+}
+
+.stagger-animation > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger-animation > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger-animation > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger-animation > *:nth-child(4) { animation-delay: 0.4s; }
+.stagger-animation > *:nth-child(5) { animation-delay: 0.5s; }
+.stagger-animation > *:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.progress-bar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 0%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    z-index: 1000;
+    transition: width 0.3s ease;
+}
+
+/* استایل‌های سبد خرید */
+.cart-dropdown {
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    transform: translateY(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    visibility: hidden;
+}
+
+.cart-dropdown.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* استایل‌های گالری تصاویر */
+.product-gallery {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 15px;
+}
+
+.gallery-thumbs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.gallery-thumb {
+    border: 2px solid transparent;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.gallery-thumb.active {
+    border-color: var(--primary);
+}
+
+.gallery-thumb:hover {
+    transform: scale(1.05);
+}
+
+.gallery-main {
+    border-radius: 15px;
+    overflow: hidden;
+    background: rgba(15, 23, 42, 0.5);
+}
+
+/* استایل‌های تب‌ها */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+.tab-button {
+    position: relative;
+    padding: 15px 25px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7);
+    transition: all 0.3s;
+    border-bottom: 2px solid transparent;
+}
+
+.tab-button:hover {
+    color: white;
+}
+
+.tab-button.active {
+    color: white;
+    border-bottom-color: var(--primary);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* استایل‌های کامنت‌ها */
+.comment-item {
+    position: relative;
+}
+
+.comment-item::before {
+    content: '';
+    position: absolute;
+    right: -30px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.comment-item:last-child::before {
+    display: none;
+}
+
+/* استایل‌های پیش‌نمایش کد */
+.code-preview {
+    background: #1e293b;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.code-header {
+    background: #0f172a;
+    padding: 15px 20px;
+    border-bottom: 1px solid #334155;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.code-body {
+    padding: 20px;
+    overflow-x: auto;
+}
+
+/* استایل‌های ریسپانسیو */
+@media (max-width: 768px) {
+    .product-gallery {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 100px;
+    }
+    
+    .gallery-thumbs {
+        flex-direction: row;
+        order: 2;
+    }
+    
+    .gallery-main {
+        order: 1;
+    }
+}
+
+/* استایل‌های محصولات مرتبط */
+.related-products .swiper-slide {
+    height: auto;
+}
+
+/* استایل‌های سیستم امتیازدهی */
+.rating-stars {
+    direction: ltr;
+}
+
+.rating-star {
+    cursor: pointer;
+    color: #4b5563;
+    transition: color 0.2s;
+}
+
+.rating-star:hover,
+.rating-star.hovered {
+    color: #fbbf24;
+}
+
+.rating-star.active {
+    color: #f59e0b;
+}
+
+/* استایل‌های پشتیبانی آنلاین */
+.support-badge {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+    z-index: 100;
+    transition: all 0.3s;
+}
+
+.support-badge:hover {
+    transform: scale(1.1);
+    box-shadow: 0 15px 30px rgba(99, 102, 241, 0.4);
+}
+
+/* استایل‌های دکمه دانلود */
+.download-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.download-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%);
+    transform-origin: 50% 50%;
+}
+
+.download-btn:focus:not(:active)::after {
+    animation: ripple 1s ease-out;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(20, 20);
+        opacity: 0;
+    }
+}
+
+/* استایل‌های بخش دانلود */
+.download-section {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.8) 100%);
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.download-status {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    transition: all 0.3s;
+}
+
+.download-status.disabled {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.download-status.enabled {
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.download-status.pending {
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.download-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 15px;
+    flex-shrink: 0;
+}
+
+.download-icon.disabled {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+.download-icon.enabled {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+}
+
+.download-icon.pending {
+    background: rgba(245, 158, 11, 0.2);
+    color: #f59e0b;
+}
+
+.download-info {
+    flex-grow: 1;
+}
+
+.download-actions {
+    margin-top: 10px;
+}
+
+/* استایل‌های پیش‌رفت دانلود */
+.download-progress {
+    background: rgba(255, 255, 255, 0.1);
+    height: 6px;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.download-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    width: 0%;
+    transition: width 0.3s ease;
+    border-radius: 3px;
+}
+
+/* استایل‌های فایل‌های قابل دانلود */
+.file-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background: rgba(15, 23, 42, 0.5);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    transition: all 0.3s;
+}
+
+.file-item:hover {
+    background: rgba(15, 23, 42, 0.8);
+}
+
+.file-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 15px;
+    flex-shrink: 0;
+}
+
+.file-icon.zip {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+.file-icon.pdf {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+.file-icon.image {
+    background: rgba(59, 130, 246, 0.2);
+    color: #3b82f6;
+}
+
+.file-icon.code {
+    background: rgba(139, 92, 246, 0.2);
+    color: #8b5cf6;
+}
+
+.file-info {
+    flex-grow: 1;
+}
+
+.file-size {
+    color: #94a3b8;
+    font-size: 0.875rem;
+}
