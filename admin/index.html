@@ -152,6 +152,19 @@
             background: rgba(15, 23, 42, 0.7);
         }
         
+        /* اصلاح اسکرول جداول */
+        .table-container-no-scroll {
+            overflow-x: visible !important;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(15, 23, 42, 0.7);
+        }
+        
+        .table-container-no-scroll table {
+            width: 100%;
+            min-width: auto;
+        }
+        
         .table-container table {
             width: 100%;
             min-width: 1000px;
@@ -1066,6 +1079,50 @@
             animation: shimmer 1.5s infinite;
             border-radius: 8px;
         }
+        
+        /* استایل تصاویر محصولات */
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            transition: transform 0.3s ease;
+        }
+        
+        .product-image:hover {
+            transform: scale(1.05);
+        }
+        
+        .image-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+        
+        /* استایل بهبود یافته برای جداول بدون اسکرول */
+        .responsive-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .responsive-table th {
+            white-space: nowrap;
+            background-color: rgba(30, 41, 59, 0.8);
+            padding: 16px 20px;
+            text-align: right;
+            font-weight: 600;
+            color: #cbd5e1;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .responsive-table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .responsive-table tr:hover {
+            background-color: rgba(124, 58, 237, 0.05);
+        }
     </style>
 </head>
 <body class="gradient-bg">
@@ -1450,12 +1507,12 @@
                     
                     <!-- نمودارها و آمار -->
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-                        <!-- نمودار درآمد -->
+                        <!-- نمودار درآمد سالانه -->
                         <div class="card">
                             <div class="card-header">
                                 <div class="card-title">
                                     <i class="fas fa-chart-line text-emerald-500"></i>
-                                    نمودار درآمد ۳۰ روز گذشته
+                                    نمودار درآمد سال ۱۴۰۲
                                 </div>
                             </div>
                             <div class="chart-container">
@@ -1463,12 +1520,12 @@
                             </div>
                         </div>
                         
-                        <!-- نمودار کاربران -->
+                        <!-- نمودار کاربران سالانه -->
                         <div class="card">
                             <div class="card-header">
                                 <div class="card-title">
                                     <i class="fas fa-users text-blue-500"></i>
-                                    رشد کاربران
+                                    رشد کاربران سال ۱۴۰۲
                                 </div>
                             </div>
                             <div class="chart-container">
@@ -1477,120 +1534,156 @@
                         </div>
                     </div>
                     
-                    <!-- آخرین فعالیت‌ها -->
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        <!-- آخرین تراکنش‌ها -->
-                        <div class="card lg:col-span-2">
-                            <div class="card-header">
-                                <div class="card-title">
-                                    <i class="fas fa-exchange-alt text-purple-500"></i>
-                                    آخرین تراکنش‌ها
-                                </div>
-                                <a href="#" class="text-sm text-primary hover:text-primary-dark">مشاهده همه</a>
+                    <!-- آخرین تراکنش‌ها - بدون اسکرول -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <i class="fas fa-exchange-alt text-purple-500"></i>
+                                آخرین تراکنش‌ها
                             </div>
-                            <div class="table-container">
-                                <table class="interactive-table">
-                                    <thead>
-                                        <tr>
-                                            <th>شماره تراکنش</th>
-                                            <th>کاربر</th>
-                                            <th>مبلغ</th>
-                                            <th>تاریخ</th>
-                                            <th>وضعیت</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><code class="text-xs bg-slate-800 p-1 rounded">TX-789123</code></td>
-                                            <td>
-                                                <div class="flex items-center gap-2">
-                                                    <div class="user-avatar text-xs">ع.م</div>
-                                                    <span>علی محمدی</span>
-                                                </div>
-                                            </td>
-                                            <td class="font-bold text-emerald-400">۱۲۰,۰۰۰ تومان</td>
-                                            <td>۱۴۰۲/۰۸/۱۵</td>
-                                            <td><span class="status-badge status-success">موفق</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><code class="text-xs bg-slate-800 p-1 rounded">TX-456789</code></td>
-                                            <td>
-                                                <div class="flex items-center gap-2">
-                                                    <div class="user-avatar text-xs">م.ح</div>
-                                                    <span>مریم حسینی</span>
-                                                </div>
-                                            </td>
-                                            <td class="font-bold text-emerald-400">۸۵,۰۰۰ تومان</td>
-                                            <td>۱۴۰۲/۰۸/۱۴</td>
-                                            <td><span class="status-badge status-success">موفق</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><code class="text-xs bg-slate-800 p-1 rounded">TX-123456</code></td>
-                                            <td>
-                                                <div class="flex items-center gap-2">
-                                                    <div class="user-avatar text-xs">ر.ک</div>
-                                                    <span>رضا کریمی</span>
-                                                </div>
-                                            </td>
-                                            <td class="font-bold text-amber-400">۶۰,۰۰۰ تومان</td>
-                                            <td>۱۴۰۲/۰۸/۱۳</td>
-                                            <td><span class="status-badge status-pending">در انتظار</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                            <a href="#" class="text-sm text-primary hover:text-primary-dark">مشاهده همه</a>
                         </div>
-                        
-                        <!-- وضعیت سیستم -->
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="card-title">
-                                    <i class="fas fa-server text-blue-500"></i>
-                                    وضعیت سیستم
-                                </div>
-                            </div>
-                            <div class="space-y-4">
-                                <div>
-                                    <div class="flex justify-between items-center mb-2">
-                                        <span class="text-slate-300">استفاده از CPU</span>
-                                        <span class="text-sm font-bold text-emerald-400">۴۲٪</span>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar-inner" style="width: 42%;"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between items-center mb-2">
-                                        <span class="text-slate-300">استفاده از RAM</span>
-                                        <span class="text-sm font-bold text-amber-400">۶۸٪</span>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar-inner" style="width: 68%;"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between items-center mb-2">
-                                        <span class="text-slate-300">فضای ذخیره‌سازی</span>
-                                        <span class="text-sm font-bold text-purple-400">۷۵٪</span>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar-inner" style="width: 75%;"></div>
-                                    </div>
-                                </div>
-                                <div class="pt-4 border-t border-slate-700">
-                                    <h4 class="font-bold text-white mb-3">آخرین خطاها</h4>
-                                    <div class="space-y-2">
-                                        <div class="flex items-center justify-between p-2 bg-red-500/10 rounded-lg hover-lift">
-                                            <span class="text-sm">خطای دیتابیس</span>
-                                            <span class="text-xs text-slate-400">۲ ساعت پیش</span>
-                                        </div>
-                                        <div class="flex items-center justify-between p-2 bg-amber-500/10 rounded-lg hover-lift">
-                                            <span class="text-sm">اتصال به API</span>
-                                            <span class="text-xs text-slate-400">۵ ساعت پیش</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="table-container-no-scroll">
+                            <table class="responsive-table interactive-table">
+                                <thead>
+                                    <tr>
+                                        <th>شماره تراکنش</th>
+                                        <th>کاربر</th>
+                                        <th>محصول</th>
+                                        <th>مبلغ</th>
+                                        <th>تاریخ</th>
+                                        <th>وضعیت</th>
+                                        <th>عملیات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code class="text-xs bg-slate-800 p-1 rounded">TX-789123</code></td>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <div class="user-avatar text-xs">ع.م</div>
+                                                <span>علی محمدی</span>
+                                            </div>
+                                        </td>
+                                        <td class="font-medium">قالب فروشگاهی لوکس</td>
+                                        <td class="font-bold text-emerald-400">۱۲۰,۰۰۰ تومان</td>
+                                        <td>۱۴۰۲/۰۸/۱۵</td>
+                                        <td><span class="status-badge status-success">موفق</span></td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="action-btn tooltip hover-lift">
+                                                    <i class="fas fa-eye"></i>
+                                                    <span class="tooltip-text">مشاهده</span>
+                                                </button>
+                                                <button class="action-btn tooltip hover-lift">
+                                                    <i class="fas fa-print"></i>
+                                                    <span class="tooltip-text">چاپ</span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><code class="text-xs bg-slate-800 p-1 rounded">TX-456789</code></td>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <div class="user-avatar text-xs">م.ح</div>
+                                                <span>مریم حسینی</span>
+                                            </div>
+                                        </td>
+                                        <td class="font-medium">کیت افکت‌های صوتی</td>
+                                        <td class="font-bold text-emerald-400">۸۵,۰۰۰ تومان</td>
+                                        <td>۱۴۰۲/۰۸/۱۴</td>
+                                        <td><span class="status-badge status-success">موفق</span></td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="action-btn tooltip hover-lift">
+                                                    <i class="fas fa-eye"></i>
+                                                    <span class="tooltip-text">مشاهده</span>
+                                                </button>
+                                                <button class="action-btn tooltip hover-lift">
+                                                    <i class="fas fa-print"></i>
+                                                    <span class="tooltip-text">چاپ</span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><code class="text-xs bg-slate-800 p-1 rounded">TX-123456</code></td>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <div class="user-avatar text-xs">ر.ک</div>
+                                                <span>رضا کریمی</span>
+                                            </div>
+                                        </td>
+                                        <td class="font-medium">پک آیکون مدرن</td>
+                                        <td class="font-bold text-amber-400">۶۰,۰۰۰ تومان</td>
+                                        <td>۱۴۰۲/۰۸/۱۳</td>
+                                        <td><span class="status-badge status-pending">در انتظار</span></td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="action-btn tooltip hover-lift">
+                                                    <i class="fas fa-eye"></i>
+                                                    <span class="tooltip-text">مشاهده</span>
+                                                </button>
+                                                <button class="action-btn action-btn-success tooltip hover-lift">
+                                                    <i class="fas fa-check"></i>
+                                                    <span class="tooltip-text">تایید</span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><code class="text-xs bg-slate-800 p-1 rounded">TX-654321</code></td>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <div class="user-avatar text-xs">س.ر</div>
+                                                <span>سارا رضایی</span>
+                                            </div>
+                                        </td>
+                                        <td class="font-medium">موشن گرافیک</td>
+                                        <td class="font-bold text-emerald-400">۱۸۹,۰۰۰ تومان</td>
+                                        <td>۱۴۰۲/۰۸/۱۲</td>
+                                        <td><span class="status-badge status-success">موفق</span></td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="action-btn tooltip hover-lift">
+                                                    <i class="fas fa-eye"></i>
+                                                    <span class="tooltip-text">مشاهده</span>
+                                                </button>
+                                                <button class="action-btn tooltip hover-lift">
+                                                    <i class="fas fa-print"></i>
+                                                    <span class="tooltip-text">چاپ</span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><code class="text-xs bg-slate-800 p-1 rounded">TX-987654</code></td>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <div class="user-avatar text-xs">م.ع</div>
+                                                <span>محمد علیزاده</span>
+                                            </div>
+                                        </td>
+                                        <td class="font-medium">پلاگین ووکامرس</td>
+                                        <td class="font-bold text-red-400">۲۴۹,۰۰۰ تومان</td>
+                                        <td>۱۴۰۲/۰۸/۱۱</td>
+                                        <td><span class="status-badge status-failed">ناموفق</span></td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="action-btn tooltip hover-lift">
+                                                    <i class="fas fa-eye"></i>
+                                                    <span class="tooltip-text">مشاهده</span>
+                                                </button>
+                                                <button class="action-btn action-btn-danger tooltip hover-lift">
+                                                    <i class="fas fa-redo"></i>
+                                                    <span class="tooltip-text">تلاش مجدد</span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -1651,15 +1744,12 @@
                         </div>
                     </div>
                     
-                    <!-- جدول کاربران -->
+                    <!-- جدول کاربران - بدون اسکرول و بدون تیک -->
                     <div class="card">
-                        <div class="table-container">
-                            <table class="interactive-table">
+                        <div class="table-container-no-scroll">
+                            <table class="responsive-table interactive-table">
                                 <thead>
                                     <tr>
-                                        <th>
-                                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary">
-                                        </th>
                                         <th>کاربر</th>
                                         <th>ایمیل</th>
                                         <th>نوع</th>
@@ -1670,9 +1760,6 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>
-                                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary">
-                                        </td>
                                         <td>
                                             <div class="flex items-center gap-3">
                                                 <div class="user-avatar">ع.م</div>
@@ -1705,9 +1792,6 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary">
-                                        </td>
-                                        <td>
                                             <div class="flex items-center gap-3">
                                                 <div class="user-avatar">م.ح</div>
                                                 <div>
@@ -1736,9 +1820,6 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary">
-                                        </td>
-                                        <td>
                                             <div class="flex items-center gap-3">
                                                 <div class="user-avatar">ر.ک</div>
                                                 <div>
@@ -1765,11 +1846,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <!-- داده‌های نمونه بیشتر -->
                                     <tr>
-                                        <td>
-                                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary">
-                                        </td>
                                         <td>
                                             <div class="flex items-center gap-3">
                                                 <div class="user-avatar">س.ر</div>
@@ -1798,9 +1875,6 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>
-                                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary">
-                                        </td>
                                         <td>
                                             <div class="flex items-center gap-3">
                                                 <div class="user-avatar">م.ع</div>
@@ -1908,7 +1982,7 @@
                         </div>
                     </div>
                     
-                    <!-- جدول فروشندگان -->
+                    <!-- جدول فروشندگان - بدون اسکرول -->
                     <div class="card">
                         <div class="card-header">
                             <div class="card-title">
@@ -1920,8 +1994,8 @@
                                 <i class="fas fa-search search-icon"></i>
                             </div>
                         </div>
-                        <div class="table-container">
-                            <table class="interactive-table">
+                        <div class="table-container-no-scroll">
+                            <table class="responsive-table interactive-table">
                                 <thead>
                                     <tr>
                                         <th>نام فروشگاه</th>
@@ -2176,13 +2250,13 @@
                         </div>
                     </div>
                     
-                    <!-- کارت‌های محصول -->
+                    <!-- کارت‌های محصول با تصاویر -->
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <!-- محصول نمونه ۱ -->
                         <div class="card product-card hover-lift">
                             <div class="relative mb-4">
-                                <div class="w-full h-48 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl flex items-center justify-center">
-                                    <i class="fas fa-code text-white text-4xl"></i>
+                                <div class="image-container">
+                                    <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="قالب فروشگاهی لوکس" class="product-image">
                                 </div>
                                 <div class="absolute top-3 left-3">
                                     <span class="badge badge-success">فعال</span>
@@ -2227,8 +2301,8 @@
                         <!-- محصول نمونه ۲ -->
                         <div class="card product-card hover-lift">
                             <div class="relative mb-4">
-                                <div class="w-full h-48 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-xl flex items-center justify-center">
-                                    <i class="fas fa-music text-white text-4xl"></i>
+                                <div class="image-container">
+                                    <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" alt="کیت افکت‌های صوتی" class="product-image">
                                 </div>
                                 <div class="absolute top-3 left-3">
                                     <span class="badge badge-warning">در انتظار</span>
@@ -2273,8 +2347,8 @@
                         <!-- محصول نمونه ۳ -->
                         <div class="card product-card hover-lift">
                             <div class="relative mb-4">
-                                <div class="w-full h-48 bg-gradient-to-r from-green-600 to-emerald-600 rounded-xl flex items-center justify-center">
-                                    <i class="fas fa-palette text-white text-4xl"></i>
+                                <div class="image-container">
+                                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=464&q=80" alt="پک آیکون مدرن" class="product-image">
                                 </div>
                                 <div class="absolute top-3 left-3">
                                     <span class="badge badge-success">فعال</span>
@@ -2314,6 +2388,107 @@
                                     <i class="fas fa-pause"></i>
                                 </button>
                             </div>
+                        </div>
+                        
+                        <!-- محصول نمونه ۴ -->
+                        <div class="card product-card hover-lift">
+                            <div class="relative mb-4">
+                                <div class="image-container">
+                                    <img src="https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=869&q=80" alt="موشن گرافیک" class="product-image">
+                                </div>
+                                <div class="absolute top-3 left-3">
+                                    <span class="badge badge-success">فعال</span>
+                                </div>
+                                <div class="absolute top-3 right-3">
+                                    <span class="badge badge-info">ویدئو</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <h3 class="font-bold text-white text-lg">موشن گرافیک</h3>
+                                    <p class="text-slate-400 text-sm mt-1">انیمیشن و موشن گرافیک</p>
+                                </div>
+                                <div class="text-left">
+                                    <span class="text-2xl font-bold text-emerald-400">۱۸۹,۰۰۰</span>
+                                    <span class="text-slate-400 text-sm block">تومان</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center gap-1">
+                                    <i class="fas fa-star text-amber-400"></i>
+                                    <span class="font-bold">۴.۷</span>
+                                    <span class="text-slate-400 text-sm">(۹۲)</span>
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <i class="fas fa-shopping-cart text-slate-400"></i>
+                                    <span class="font-bold">۱۸۷</span>
+                                    <span class="text-slate-400 text-sm">فروش</span>
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="action-btn flex-1 hover-lift">
+                                    <i class="fas fa-edit"></i>
+                                    ویرایش
+                                </button>
+                                <button class="action-btn action-btn-danger hover-lift">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- محصول نمونه ۵ -->
+                        <div class="card product-card hover-lift">
+                            <div class="relative mb-4">
+                                <div class="image-container">
+                                    <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=871&q=80" alt="پلاگین ووکامرس" class="product-image">
+                                </div>
+                                <div class="absolute top-3 left-3">
+                                    <span class="badge badge-danger">غیرفعال</span>
+                                </div>
+                                <div class="absolute top-3 right-3">
+                                    <span class="badge badge-purple">پلاگین</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <h3 class="font-bold text-white text-lg">پلاگین ووکامرس</h3>
+                                    <p class="text-slate-400 text-sm mt-1">افزونه پیشرفته فروشگاه</p>
+                                </div>
+                                <div class="text-left">
+                                    <span class="text-2xl font-bold text-emerald-400">۲۴۹,۰۰۰</span>
+                                    <span class="text-slate-400 text-sm block">تومان</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center gap-1">
+                                    <i class="fas fa-star text-amber-400"></i>
+                                    <span class="font-bold">۴.۶</span>
+                                    <span class="text-slate-400 text-sm">(۷۴)</span>
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <i class="fas fa-shopping-cart text-slate-400"></i>
+                                    <span class="font-bold">۱۳۲</span>
+                                    <span class="text-slate-400 text-sm">فروش</span>
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="action-btn flex-1 hover-lift">
+                                    <i class="fas fa-play"></i>
+                                    فعال‌سازی
+                                </button>
+                                <button class="action-btn action-btn-danger hover-lift">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- دکمه افزودن محصول -->
+                        <div class="card border-2 border-dashed border-slate-600 hover:border-primary flex flex-col items-center justify-center hover-lift cursor-pointer">
+                            <div class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mb-4">
+                                <i class="fas fa-plus text-2xl text-slate-400"></i>
+                            </div>
+                            <h3 class="font-bold text-white mb-2">افزودن محصول</h3>
+                            <p class="text-slate-400 text-sm text-center">ایجاد محصول جدید برای فروشگاه</p>
                         </div>
                     </div>
                     
@@ -2719,7 +2894,7 @@
                         </div>
                     </div>
                     
-                    <!-- جدول تراکنش‌ها -->
+                    <!-- جدول تراکنش‌ها - بدون اسکرول -->
                     <div class="card">
                         <div class="card-header">
                             <div class="card-title">
@@ -2733,8 +2908,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="table-container">
-                            <table class="interactive-table">
+                        <div class="table-container-no-scroll">
+                            <table class="responsive-table interactive-table">
                                 <thead>
                                     <tr>
                                         <th>شماره تراکنش</th>
@@ -2952,8 +3127,8 @@
                                 درخواست‌های برداشت
                             </div>
                         </div>
-                        <div class="table-container">
-                            <table class="interactive-table">
+                        <div class="table-container-no-scroll">
+                            <table class="responsive-table interactive-table">
                                 <thead>
                                     <tr>
                                         <th>شماره درخواست</th>
@@ -3108,8 +3283,8 @@
                                 تاریخچه کمیسیون‌ها
                             </div>
                         </div>
-                        <div class="table-container">
-                            <table class="interactive-table">
+                        <div class="table-container-no-scroll">
+                            <table class="responsive-table interactive-table">
                                 <thead>
                                     <tr>
                                         <th>فروشنده</th>
@@ -3350,17 +3525,17 @@
                     
                     <!-- گزارش‌های آماری -->
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-                        <!-- گزارش فروش ماهانه -->
+                        <!-- گزارش فروش ماهانه سالانه -->
                         <div class="card">
                             <div class="card-header">
                                 <div class="card-title">
                                     <i class="fas fa-chart-bar text-emerald-500"></i>
-                                    گزارش فروش ماهانه
+                                    گزارش فروش سالانه ۱۴۰۲
                                 </div>
                                 <select class="form-select w-40">
-                                    <option>مهر ۱۴۰۲</option>
-                                    <option selected>آبان ۱۴۰۲</option>
-                                    <option>آذر ۱۴۰۲</option>
+                                    <option>۱۴۰۱</option>
+                                    <option selected>۱۴۰۲</option>
+                                    <option>۱۴۰۳</option>
                                 </select>
                             </div>
                             <div class="chart-container">
@@ -3368,20 +3543,20 @@
                             </div>
                         </div>
                         
-                        <!-- گزارش کاربران -->
+                        <!-- گزارش کاربران سالانه -->
                         <div class="card">
                             <div class="card-header">
                                 <div class="card-title">
                                     <i class="fas fa-users text-blue-500"></i>
-                                    رشد کاربران
+                                    رشد کاربران سالانه
                                 </div>
                             </div>
                             <div class="p-6">
                                 <div class="space-y-4">
                                     <div>
                                         <div class="flex justify-between items-center mb-2">
-                                            <span class="text-slate-300">کاربران جدید این ماه</span>
-                                            <span class="text-lg font-bold text-emerald-400">۳۴۲ نفر</span>
+                                            <span class="text-slate-300">کاربران جدید امسال</span>
+                                            <span class="text-lg font-bold text-emerald-400">۳,۴۲۰ نفر</span>
                                         </div>
                                         <div class="progress">
                                             <div class="progress-bar-inner" style="width: 85%;"></div>
@@ -3390,7 +3565,7 @@
                                     <div>
                                         <div class="flex justify-between items-center mb-2">
                                             <span class="text-slate-300">فروشندگان جدید</span>
-                                            <span class="text-lg font-bold text-blue-400">۲۸ نفر</span>
+                                            <span class="text-lg font-bold text-blue-400">۲۸۰ نفر</span>
                                         </div>
                                         <div class="progress">
                                             <div class="progress-bar-inner" style="width: 70%;"></div>
@@ -3415,7 +3590,7 @@
                         <div class="card-header">
                             <div class="card-title">
                                 <i class="fas fa-chart-pie text-amber-500"></i>
-                                گزارش دسته‌بندی محصولات
+                                گزارش دسته‌بندی محصولات سالانه
                             </div>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-6">
@@ -3459,7 +3634,7 @@
                         <div class="card-header">
                             <div class="card-title">
                                 <i class="fas fa-chart-line text-primary"></i>
-                                گزارش تحلیلی ۶ ماهه
+                                گزارش تحلیلی ۳ ساله
                             </div>
                         </div>
                         <div class="chart-container">
@@ -3953,23 +4128,31 @@
             setInterval(updateDateTime, 60000);
         }
 
-        // تنظیم نمودارها
+        // تنظیم نمودارها - به صورت سالانه
         function setupCharts() {
-            // نمودار درآمد
+            // ماه‌های فارسی
+            const persianMonths = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
+            
+            // نمودار درآمد سالانه
             const revenueCtx = document.getElementById('revenueChart')?.getContext('2d');
             if (revenueCtx) {
                 new Chart(revenueCtx, {
                     type: 'line',
                     data: {
-                        labels: ['۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹', '۱۰', '۱۱', '۱۲', '۱۳', '۱۴', '۱۵', '۱۶', '۱۷', '۱۸', '۱۹', '۲۰', '۲۱', '۲۲', '۲۳', '۲۴', '۲۵', '۲۶', '۲۷', '۲۸', '۲۹', '۳۰'],
+                        labels: persianMonths,
                         datasets: [{
                             label: 'درآمد (میلیون تومان)',
-                            data: [8, 9, 7, 10, 12, 11, 13, 15, 14, 16, 15, 17, 18, 16, 19, 20, 18, 21, 22, 20, 23, 24, 22, 25, 26, 24, 27, 28, 26, 30],
+                            data: [45, 52, 48, 60, 65, 70, 68, 75, 80, 85, 90, 95],
                             borderColor: '#10b981',
                             backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                            borderWidth: 2,
+                            borderWidth: 3,
                             fill: true,
-                            tension: 0.4
+                            tension: 0.4,
+                            pointBackgroundColor: '#10b981',
+                            pointBorderColor: '#ffffff',
+                            pointBorderWidth: 2,
+                            pointRadius: 6,
+                            pointHoverRadius: 8
                         }]
                     },
                     options: {
@@ -3980,7 +4163,21 @@
                                 labels: {
                                     color: '#cbd5e1',
                                     font: {
-                                        family: 'Vazirmatn'
+                                        family: 'Vazirmatn',
+                                        size: 14
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                                titleColor: '#cbd5e1',
+                                bodyColor: '#cbd5e1',
+                                borderColor: '#10b981',
+                                borderWidth: 1,
+                                cornerRadius: 8,
+                                callbacks: {
+                                    label: function(context) {
+                                        return `${context.dataset.label}: ${context.parsed.y}M`;
                                     }
                                 }
                             }
@@ -3995,6 +4192,18 @@
                                     color: '#cbd5e1',
                                     font: {
                                         family: 'Vazirmatn'
+                                    },
+                                    callback: function(value) {
+                                        return value + 'M';
+                                    }
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'میلیون تومان',
+                                    color: '#cbd5e1',
+                                    font: {
+                                        family: 'Vazirmatn',
+                                        size: 12
                                     }
                                 }
                             },
@@ -4007,6 +4216,15 @@
                                     font: {
                                         family: 'Vazirmatn'
                                     }
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'ماه‌های سال ۱۴۰۲',
+                                    color: '#cbd5e1',
+                                    font: {
+                                        family: 'Vazirmatn',
+                                        size: 12
+                                    }
                                 }
                             }
                         }
@@ -4014,19 +4232,21 @@
                 });
             }
 
-            // نمودار کاربران
+            // نمودار کاربران سالانه
             const usersCtx = document.getElementById('usersChart')?.getContext('2d');
             if (usersCtx) {
                 new Chart(usersCtx, {
                     type: 'bar',
                     data: {
-                        labels: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور'],
+                        labels: persianMonths,
                         datasets: [{
                             label: 'کاربران جدید',
-                            data: [120, 150, 180, 210, 240, 280],
+                            data: [320, 380, 420, 480, 520, 580, 620, 680, 720, 780, 820, 880],
                             backgroundColor: 'rgba(59, 130, 246, 0.7)',
                             borderColor: '#3b82f6',
-                            borderWidth: 1
+                            borderWidth: 1,
+                            borderRadius: 6,
+                            borderSkipped: false,
                         }]
                     },
                     options: {
@@ -4040,6 +4260,13 @@
                                         family: 'Vazirmatn'
                                     }
                                 }
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                                titleColor: '#cbd5e1',
+                                bodyColor: '#cbd5e1',
+                                borderColor: '#3b82f6',
+                                borderWidth: 1
                             }
                         },
                         scales: {
@@ -4053,6 +4280,15 @@
                                     font: {
                                         family: 'Vazirmatn'
                                     }
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'تعداد کاربران',
+                                    color: '#cbd5e1',
+                                    font: {
+                                        family: 'Vazirmatn',
+                                        size: 12
+                                    }
                                 }
                             },
                             x: {
@@ -4064,6 +4300,15 @@
                                     font: {
                                         family: 'Vazirmatn'
                                     }
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'ماه‌های سال ۱۴۰۲',
+                                    color: '#cbd5e1',
+                                    font: {
+                                        family: 'Vazirmatn',
+                                        size: 12
+                                    }
                                 }
                             }
                         }
@@ -4071,17 +4316,17 @@
                 });
             }
 
-            // نمودار فروش ماهانه
+            // نمودار فروش ماهانه سالانه
             const monthlySalesCtx = document.getElementById('monthlySalesChart')?.getContext('2d');
             if (monthlySalesCtx) {
                 new Chart(monthlySalesCtx, {
                     type: 'line',
                     data: {
-                        labels: ['هفته ۱', 'هفته ۲', 'هفته ۳', 'هفته ۴'],
+                        labels: persianMonths,
                         datasets: [
                             {
                                 label: 'فروش (میلیون تومان)',
-                                data: [45, 52, 48, 60],
+                                data: [45, 52, 48, 60, 65, 70, 68, 75, 80, 85, 90, 95],
                                 borderColor: '#10b981',
                                 backgroundColor: 'rgba(16, 185, 129, 0.1)',
                                 borderWidth: 2,
@@ -4090,7 +4335,7 @@
                             },
                             {
                                 label: 'درآمد (میلیون تومان)',
-                                data: [38, 45, 42, 52],
+                                data: [38, 45, 42, 52, 58, 62, 60, 68, 72, 78, 82, 88],
                                 borderColor: '#8b5cf6',
                                 backgroundColor: 'rgba(139, 92, 246, 0.1)',
                                 borderWidth: 2,
@@ -4141,26 +4386,34 @@
                 });
             }
 
-            // نمودار تحلیلی
+            // نمودار تحلیلی ۳ ساله
             const analyticsCtx = document.getElementById('analyticsChart')?.getContext('2d');
             if (analyticsCtx) {
+                const years = ['۱۴۰۰', '۱۴۰۱', '۱۴۰۲'];
                 new Chart(analyticsCtx, {
                     type: 'bar',
                     data: {
-                        labels: ['مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی'],
+                        labels: years,
                         datasets: [
                             {
                                 label: 'کاربران جدید',
-                                data: [320, 380, 420, 480, 520, 580],
+                                data: [2840, 3250, 3880],
                                 backgroundColor: 'rgba(59, 130, 246, 0.7)',
                                 borderColor: '#3b82f6',
                                 borderWidth: 1
                             },
                             {
                                 label: 'فروش‌ها',
-                                data: [280, 320, 380, 420, 480, 520],
+                                data: [2450, 2980, 3520],
                                 backgroundColor: 'rgba(16, 185, 129, 0.7)',
                                 borderColor: '#10b981',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'درآمد (میلیون)',
+                                data: [185, 225, 285],
+                                backgroundColor: 'rgba(139, 92, 246, 0.7)',
+                                borderColor: '#8b5cf6',
                                 borderWidth: 1
                             }
                         ]
@@ -4613,6 +4866,10 @@
                                 <option>در انتظار تایید</option>
                             </select>
                         </div>
+                    </div>
+                    <div>
+                        <label class="block text-slate-300 mb-2">آپلود تصویر</label>
+                        <input type="file" class="form-input" accept="image/*">
                     </div>
                 </div>
             `;
