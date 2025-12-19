@@ -1,11 +1,3025 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>فایل استور | مدیریت پروفایل ادمین</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts/dist/apexcharts.css">
+    <style>
+        * {
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        
+        :root {
+            --primary: #7c3aed;
+            --primary-dark: #5b21b6;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+        }
+        
+        body {
+            background-color: var(--darker);
+            color: var(--light);
+            overflow-x: hidden;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 50%, #1e293b 100%);
+        }
+        
+        .admin-gradient {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        }
+        
+        .dashboard-gradient {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            border-color: rgba(124, 58, 237, 0.3);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .sidebar-item {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sidebar-item::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: var(--primary);
+            transform: translateX(10px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-item:hover::before {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        
+        .sidebar-item.active {
+            background-color: rgba(124, 58, 237, 0.15);
+        }
+        
+        .sidebar-item.active::before {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: 100vh;
+        }
+        
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: fixed;
+                right: -100%;
+                top: 0;
+                height: 100%;
+                width: 280px;
+                z-index: 1000;
+                transition: right 0.3s ease;
+            }
+            
+            .sidebar.active {
+                right: 0;
+            }
+            
+            .sidebar-overlay {
+                position: fixed;
+                top: 0;
+                right: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.7);
+                z-index: 999;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            }
+            
+            .sidebar-overlay.active {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+        
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            z-index: 1000;
+            transition: width 0.3s ease;
+        }
+        
+        .page-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .page-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .status-success {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        
+        .status-pending {
+            background-color: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+        
+        .status-failed {
+            background-color: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        
+        .status-warning {
+            background-color: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+        
+        .form-input {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 14px 16px;
+            color: white;
+            width: 100%;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+        }
+        
+        .form-select {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 14px 16px;
+            color: white;
+            width: 100%;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .form-select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(124, 58, 237, 0.3);
+        }
+        
+        .btn-secondary {
+            background: rgba(30, 41, 59, 0.8);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(45, 55, 72, 0.8);
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(239, 68, 68, 0.3);
+        }
+        
+        .card {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+        
+        .card-header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .stat-card {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            border-color: rgba(124, 58, 237, 0.3);
+            transform: translateY(-5px);
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            background: var(--danger);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal {
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .modal-header {
+            padding: 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .modal-close:hover {
+            color: white;
+        }
+        
+        .modal-body {
+            padding: 24px;
+        }
+        
+        .modal-footer {
+            padding: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+        
+        .search-box {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 12px 16px 12px 48px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: white;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .dropdown {
+            position: relative;
+        }
+        
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 8px;
+            min-width: 200px;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .dropdown-menu.active {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+        
+        .dropdown-item {
+            padding: 12px 16px;
+            color: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .dropdown-item:hover {
+            background: rgba(124, 58, 237, 0.1);
+            color: white;
+        }
+        
+        .dropdown-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.05);
+            margin: 8px 0;
+        }
+        
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 24px;
+        }
+        
+        .page-link {
+            padding: 8px 16px;
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .page-link:hover {
+            background: rgba(124, 58, 237, 0.1);
+            color: white;
+        }
+        
+        .page-link.active {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border-color: transparent;
+        }
+        
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .badge-success {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+        
+        .badge-warning {
+            background-color: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+        }
+        
+        .badge-danger {
+            background-color: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+        
+        .badge-info {
+            background-color: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+        }
+        
+        .badge-purple {
+            background-color: rgba(124, 58, 237, 0.2);
+            color: #8b5cf6;
+        }
+        
+        .loading-spinner {
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top: 3px solid var(--primary);
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 48px 24px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 24px;
+            gap: 4px;
+        }
+        
+        .tab {
+            padding: 12px 24px;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .tab:hover {
+            color: white;
+        }
+        
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        
+        .alert {
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        
+        .alert-success {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+        
+        .alert-warning {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+        }
+        
+        .alert-danger {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+        
+        .alert-info {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+        }
+        
+        .alert-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        
+        .alert-content {
+            flex: 1;
+        }
+        
+        .alert-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .alert-message {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .alert-close {
+            background: none;
+            border: none;
+            color: currentColor;
+            opacity: 0.5;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            font-size: 18px;
+        }
+        
+        .alert-close:hover {
+            opacity: 1;
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: var(--primary);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+        
+        .tooltip {
+            position: relative;
+        }
+        
+        .tooltip-text {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .tooltip:hover .tooltip-text {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-5px);
+        }
+        
+        .grid-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .filter-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .filter-label {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .action-btn {
+            padding: 8px 16px;
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .action-btn:hover {
+            background: rgba(124, 58, 237, 0.1);
+            color: white;
+        }
+        
+        .action-btn-danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border-color: rgba(239, 68, 68, 0.2);
+        }
+        
+        .action-btn-danger:hover {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+        }
+        
+        .action-btn-success {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            border-color: rgba(16, 185, 129, 0.2);
+        }
+        
+        .action-btn-success:hover {
+            background: rgba(16, 185, 129, 0.2);
+            color: #5eead4;
+        }
+        
+        .notification-popup {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 9999;
+            max-width: 400px;
+            display: none;
+        }
+        
+        .notification-popup.show {
+            display: block;
+            animation: slideInLeft 0.3s ease;
+        }
+        
+        @keyframes slideInLeft {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        /* استایل‌های جدید برای صفحه پروفایل */
+        .profile-avatar-lg {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid var(--primary);
+            object-fit: cover;
+        }
+        
+        .profile-avatar-md {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid var(--primary);
+            object-fit: cover;
+        }
+        
+        .profile-avatar-sm {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            object-fit: cover;
+        }
+        
+        .profile-header {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(16, 185, 129, 0.2) 100%);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .security-level {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        
+        .security-level-bar {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        .security-weak {
+            background: linear-gradient(90deg, #ef4444 0%, #f97316 100%);
+            width: 30%;
+        }
+        
+        .security-medium {
+            background: linear-gradient(90deg, #f59e0b 0%, #eab308 100%);
+            width: 60%;
+        }
+        
+        .security-strong {
+            background: linear-gradient(90deg, #10b981 0%, #22c55e 100%);
+            width: 90%;
+        }
+        
+        .permission-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .permission-item:hover {
+            background: rgba(124, 58, 237, 0.1);
+        }
+        
+        .permission-group {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .permission-group-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .activity-timeline {
+            position: relative;
+            padding-right: 30px;
+        }
+        
+        .activity-timeline::before {
+            content: '';
+            position: absolute;
+            right: 10px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(124, 58, 237, 0.2);
+        }
+        
+        .activity-item {
+            position: relative;
+            padding-bottom: 20px;
+        }
+        
+        .activity-item:last-child {
+            padding-bottom: 0;
+        }
+        
+        .activity-dot {
+            position: absolute;
+            right: 4px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 2px solid rgba(15, 23, 42, 0.95);
+        }
+        
+        .activity-content {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 12px;
+            padding: 15px;
+            margin-right: 30px;
+        }
+        
+        .activity-time {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 8px;
+        }
+        
+        .role-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .role-super-admin {
+            background-color: rgba(139, 92, 246, 0.2);
+            color: #8b5cf6;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+        
+        .role-admin {
+            background-color: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        
+        .role-moderator {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        
+        .role-support {
+            background-color: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+        
+        .session-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .session-card:hover {
+            border-color: rgba(124, 58, 237, 0.3);
+        }
+        
+        .session-current {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+        
+        .table-container-no-scroll {
+            overflow-x: visible !important;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(15, 23, 42, 0.7);
+        }
+        
+        .table-container-no-scroll table {
+            width: 100%;
+            min-width: auto;
+        }
+        
+        .responsive-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .responsive-table th {
+            white-space: nowrap;
+            background-color: rgba(30, 41, 59, 0.8);
+            padding: 16px 20px;
+            text-align: right;
+            font-weight: 600;
+            color: #cbd5e1;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .responsive-table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .responsive-table tr:hover {
+            background-color: rgba(124, 58, 237, 0.05);
+        }
+        
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .glass-effect {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .animate-pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 10px rgba(124, 58, 237, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(124, 58, 237, 0.6); }
+        }
+    </style>
 </head>
-<body>
+<body class="gradient-bg">
+    <!-- نوار پیشرفت -->
+    <div class="progress-bar" id="progressBar"></div>
     
+    <!-- اعلان‌ها -->
+    <div class="notification-popup" id="notificationPopup">
+        <div class="alert alert-success">
+            <div class="alert-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="alert-content">
+                <div class="alert-title" id="notificationTitle">موفقیت آمیز</div>
+                <div class="alert-message" id="notificationMessage">عملیات با موفقیت انجام شد.</div>
+            </div>
+            <button class="alert-close" id="closeNotification">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- مدال‌ها -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title" id="modalTitle">عنوان مدال</div>
+                <button class="modal-close" id="modalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                محتوای مدال
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="modalCancel">انصراف</button>
+                <button class="btn-primary" id="modalConfirm">تایید</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ساختار پنل -->
+    <div class="dashboard-grid">
+        <!-- سایدبار -->
+        <aside class="sidebar bg-dark border-l border-slate-800 p-6 overflow-y-auto">
+            <!-- لوگو -->
+            <div class="flex items-center justify-between mb-10">
+                <div class="flex items-center gap-3">
+                    <div class="admin-gradient p-3 rounded-xl animate-pulse-glow">
+                        <i class="fas fa-crown text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-white">پنل مدیریت</h1>
+                        <p class="text-xs text-slate-400">فایل استور</p>
+                    </div>
+                </div>
+                <button class="lg:hidden text-xl text-slate-400 hover:text-white" id="closeSidebar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <!-- اطلاعات ادمین -->
+            <div class="bg-slate-800/50 rounded-xl p-4 mb-8 glass-effect">
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="relative">
+                        <img class="profile-avatar-md" src="https://avatars.githubusercontent.com/u/82562395?v=4" alt="admin">
+                        <span class="absolute bottom-0 left-0 w-4 h-4 bg-emerald-500 border-2 border-slate-900 rounded-full"></span>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-white">مدیر کل</h3>
+                        <p class="text-xs text-slate-400">سطح دسترسی: کامل</p>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button class="btn-secondary w-full py-2 hover-lift" id="profileBtn">
+                        <i class="fas fa-user-cog"></i>
+                        تنظیمات پروفایل
+                    </button>
+                </div>
+            </div>
+            
+            <!-- منوی اصلی -->
+            <nav class="space-y-2 mb-8">
+                <h3 class="text-slate-500 text-xs font-bold mb-3 px-3">داشبورد</h3>
+                <a href="#" class="sidebar-item flex items-center p-3 rounded-xl text-slate-300 hover:text-white" data-page="adminDashboard">
+                    <i class="fas fa-chart-pie ml-3 text-slate-400"></i>
+                    <span>داشبورد کلی</span>
+                </a>
+                
+                <h3 class="text-slate-500 text-xs font-bold mb-3 px-3 mt-8">مدیریت کاربران</h3>
+                <a href="#" class="sidebar-item flex items-center p-3 rounded-xl text-slate-300 hover:text-white" data-page="users">
+                    <i class="fas fa-users ml-3 text-slate-400"></i>
+                    <span>کاربران</span>
+                    <span class="mr-auto bg-blue-500 text-white text-xs px-2 py-1 rounded-full animate-pulse-glow">۱۲۴</span>
+                </a>
+                <a href="#" class="sidebar-item flex items-center p-3 rounded-xl text-slate-300 hover:text-white" data-page="sellers">
+                    <i class="fas fa-store ml-3 text-slate-400"></i>
+                    <span>فروشندگان</span>
+                    <span class="mr-auto bg-emerald-500 text-white text-xs px-2 py-1 rounded-full animate-pulse-glow">۴۸</span>
+                </a>
+                
+                <h3 class="text-slate-500 text-xs font-bold mb-3 px-3 mt-8">مدیریت محتوا</h3>
+                <a href="#" class="sidebar-item flex items-center p-3 rounded-xl text-slate-300 hover:text-white" data-page="products">
+                    <i class="fas fa-box ml-3 text-slate-400"></i>
+                    <span>محصولات</span>
+                    <span class="mr-auto bg-purple-500 text-white text-xs px-2 py-1 rounded-full animate-pulse-glow">۳۲۴</span>
+                </a>
+                <a href="#" class="sidebar-item flex items-center p-3 rounded-xl text-slate-300 hover:text-white" data-page="categories">
+                    <i class="fas fa-tags ml-3 text-slate-400"></i>
+                    <span>دسته‌بندی‌ها</span>
+                </a>
+                
+                <h3 class="text-slate-500 text-xs font-bold mb-3 px-3 mt-8">مالی و تراکنش‌ها</h3>
+                <a href="#" class="sidebar-item flex items-center p-3 rounded-xl text-slate-300 hover:text-white" data-page="transactions">
+                    <i class="fas fa-exchange-alt ml-3 text-slate-400"></i>
+                    <span>تراکنش‌ها</span>
+                    <span class="mr-auto bg-indigo-500 text-white text-xs px-2 py-1 rounded-full animate-pulse-glow">۲۴۵</span>
+                </a>
+                
+                <h3 class="text-slate-500 text-xs font-bold mb-3 px-3 mt-8">مدیریت ادمین‌ها</h3>
+                <a href="#" class="sidebar-item active flex items-center p-3 rounded-xl text-white" data-page="adminProfile">
+                    <i class="fas fa-user-shield ml-3 text-slate-400"></i>
+                    <span>پروفایل ادمین</span>
+                </a>
+                <a href="#" class="sidebar-item flex items-center p-3 rounded-xl text-slate-300 hover:text-white" data-page="admins">
+                    <i class="fas fa-users-cog ml-3 text-slate-400"></i>
+                    <span>ادمین‌های سیستم</span>
+                    <span class="mr-auto bg-amber-500 text-white text-xs px-2 py-1 rounded-full animate-pulse-glow">۸</span>
+                </a>
+                
+                <h3 class="text-slate-500 text-xs font-bold mb-3 px-3 mt-8">تنظیمات سیستم</h3>
+                <a href="#" class="sidebar-item flex items-center p-3 rounded-xl text-slate-300 hover:text-white" data-page="settings">
+                    <i class="fas fa-cog ml-3 text-slate-400"></i>
+                    <span>تنظیمات</span>
+                </a>
+                <a href="#" class="sidebar-item flex items-center p-3 rounded-xl text-slate-300 hover:text-white" data-page="logs">
+                    <i class="fas fa-history ml-3 text-slate-400"></i>
+                    <span>لاگ سیستم</span>
+                </a>
+            </nav>
+            
+            <!-- آمار سریع -->
+            <div class="bg-slate-800/50 rounded-xl p-4 mb-8 glass-effect">
+                <h4 class="text-sm font-bold text-white mb-3">آمار امروز</h4>
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-slate-400">فروش امروز:</span>
+                        <span class="text-sm font-bold text-emerald-400">۱۲۵M</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-slate-400">کاربران جدید:</span>
+                        <span class="text-sm font-bold text-blue-400">۲۴</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-slate-400">ادمین‌های آنلاین:</span>
+                        <span class="text-sm font-bold text-amber-400">۳</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- خروج -->
+            <button class="sidebar-item flex items-center p-3 rounded-xl text-red-400 hover:text-red-300 hover:bg-red-900/20 w-full hover-lift" id="logoutBtn">
+                <i class="fas fa-sign-out-alt ml-3"></i>
+                <span>خروج از پنل</span>
+            </button>
+        </aside>
+        
+        <!-- محتوای اصلی -->
+        <main class="overflow-y-auto">
+            <!-- هدر -->
+            <header class="bg-slate-900/90 backdrop-blur border-b border-slate-800 p-4 sticky top-0 z-50 glass-effect">
+                <div class="flex items-center justify-between">
+                    <!-- منوی موبایل -->
+                    <button class="lg:hidden text-xl bg-slate-800 w-10 h-10 rounded-xl flex items-center justify-center hover-lift" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    
+                    <!-- جستجو -->
+                    <div class="search-box">
+                        <h1 class="text-xl font-bold text-white">مدیریت پروفایل ادمین</h1>
+                    </div>
+                    
+                    <!-- اعلان‌ها و پروفایل -->
+                    <div class="flex items-center gap-4">
+                        <button class="relative bg-slate-800 w-10 h-10 rounded-xl flex items-center justify-center hover-lift" id="notificationsBtn">
+                            <i class="fas fa-bell text-slate-300"></i>
+                            <span class="notification-badge">۳</span>
+                        </button>
+                        
+                        <div class="dropdown">
+                            <button class="flex items-center gap-3 bg-slate-800 rounded-xl p-2 hover:bg-slate-700 transition-all hover-lift" id="userMenuBtn">
+                                <div class="relative">
+                                    <img class="w-9 h-9 rounded-full" src="https://avatars.githubusercontent.com/u/82562395?v=4" alt="admin">
+                                    <span class="absolute bottom-0 left-0 w-3 h-3 bg-emerald-500 border-2 border-slate-900 rounded-full"></span>
+                                </div>
+                                <div class="text-right hidden md:block">
+                                    <p class="text-sm font-medium text-white">مدیر کل</p>
+                                    <p class="text-xs text-slate-400">ادمین اصلی</p>
+                                </div>
+                                <i class="fas fa-chevron-down text-slate-400 text-sm"></i>
+                            </button>
+                            
+                            <div class="dropdown-menu" id="userMenu">
+                                <div class="p-3 border-b border-slate-700">
+                                    <p class="text-sm font-medium text-white">مدیر کل</p>
+                                    <p class="text-xs text-slate-400">admin@filestore.ir</p>
+                                </div>
+                                <div class="p-2">
+                                    <a href="#" class="dropdown-item" data-page="adminProfile">
+                                        <i class="fas fa-user-cog"></i>
+                                        پروفایل ادمین
+                                    </a>
+                                    <a href="#" class="dropdown-item">
+                                        <i class="fas fa-cog"></i>
+                                        تنظیمات
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="#" class="dropdown-item">
+                                        <i class="fas fa-sign-out-alt"></i>
+                                        خروج
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- محتوای صفحات -->
+            <div class="p-6">
+                <!-- صفحه پروفایل ادمین -->
+                <div id="adminProfile" class="page-content active">
+                    <!-- هدر پروفایل -->
+                    <div class="profile-header hover-lift">
+                        <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
+                            <div class="relative">
+                                <img class="profile-avatar-lg" src="https://avatars.githubusercontent.com/u/82562395?v=4" alt="admin">
+                                <button class="absolute bottom-0 left-0 bg-primary p-2 rounded-full hover:bg-primary-dark transition-all hover-lift" id="changeAvatarBtn">
+                                    <i class="fas fa-camera text-white text-sm"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="flex-1 text-center md:text-right">
+                                <h1 class="text-2xl font-bold text-white mb-2">مدیر کل سیستم</h1>
+                                <p class="text-slate-300 mb-4">ادمین اصلی و مدیر فنی فایل استور</p>
+                                
+                                <div class="flex flex-wrap justify-center md:justify-start gap-4 mb-4">
+                                    <div class="bg-slate-800/50 rounded-xl px-4 py-2">
+                                        <p class="text-sm text-slate-400">کد کاربری</p>
+                                        <p class="font-bold text-white">ADM-001</p>
+                                    </div>
+                                    <div class="bg-slate-800/50 rounded-xl px-4 py-2">
+                                        <p class="text-sm text-slate-400">تاریخ عضویت</p>
+                                        <p class="font-bold text-white">۱۴۰۱/۰۳/۱۵</p>
+                                    </div>
+                                    <div class="bg-slate-800/50 rounded-xl px-4 py-2">
+                                        <p class="text-sm text-slate-400">آخرین ورود</p>
+                                        <p class="font-bold text-white">امروز - ۱۰:۳۰</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex flex-wrap justify-center md:justify-start gap-2">
+                                    <span class="role-badge role-super-admin">
+                                        <i class="fas fa-crown"></i>
+                                        سوپر ادمین
+                                    </span>
+                                    <span class="badge badge-success">
+                                        <i class="fas fa-check-circle"></i>
+                                        فعال
+                                    </span>
+                                    <span class="badge badge-purple">
+                                        <i class="fas fa-shield-alt"></i>
+                                        سطح کامل
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- تب‌های پروفایل -->
+                    <div class="tabs">
+                        <div class="tab active" data-tab="profile">پروفایل شخصی</div>
+                        <div class="tab" data-tab="security">امنیت و حریم خصوصی</div>
+                        <div class="tab" data-tab="sessions">نشست‌های فعال</div>
+                        <div class="tab" data-tab="activity">فعالیت‌های اخیر</div>
+                    </div>
+                    
+                    <!-- تب پروفایل شخصی -->
+                    <div class="tab-content active" id="profileTab">
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                            <!-- اطلاعات شخصی -->
+                            <div class="lg:col-span-2">
+                                <div class="card mb-6 hover-lift">
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <i class="fas fa-user-edit text-primary"></i>
+                                            اطلاعات شخصی
+                                        </div>
+                                    </div>
+                                    <div class="space-y-6">
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div>
+                                                <label class="block text-slate-300 mb-2">نام کامل</label>
+                                                <input type="text" class="form-input" value="مدیر کل سیستم">
+                                            </div>
+                                            <div>
+                                                <label class="block text-slate-300 mb-2">نام کاربری</label>
+                                                <input type="text" class="form-input" value="admin_master">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div>
+                                                <label class="block text-slate-300 mb-2">ایمیل</label>
+                                                <input type="email" class="form-input" value="admin@filestore.ir">
+                                            </div>
+                                            <div>
+                                                <label class="block text-slate-300 mb-2">شماره موبایل</label>
+                                                <input type="tel" class="form-input" value="۰۹۱۲۱۲۳۴۵۶۷">
+                                            </div>
+                                        </div>
+                                        
+                                        <div>
+                                            <label class="block text-slate-300 mb-2">درباره من</label>
+                                            <textarea class="form-input" rows="4">مدیریت اصلی سیستم فایل استور و توسعه دهنده اصلی پلتفرم</textarea>
+                                        </div>
+                                        
+                                        <div class="flex justify-end">
+                                            <button class="btn-primary hover-lift" id="saveProfileBtn">
+                                                <i class="fas fa-save"></i>
+                                                ذخیره تغییرات
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- تنظیمات اعلان‌ها -->
+                                <div class="card hover-lift">
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <i class="fas fa-bell text-amber-500"></i>
+                                            تنظیمات اعلان‌ها
+                                        </div>
+                                    </div>
+                                    <div class="space-y-4">
+                                        <div class="flex items-center justify-between p-3 bg-slate-800/30 rounded-xl">
+                                            <div>
+                                                <p class="font-medium text-white">اعلان‌های ایمیل</p>
+                                                <p class="text-sm text-slate-400">دریافت اعلان‌ها از طریق ایمیل</p>
+                                            </div>
+                                            <label class="switch">
+                                                <input type="checkbox" checked>
+                                                <span class="slider"></span>
+                                            </label>
+                                        </div>
+                                        
+                                        <div class="flex items-center justify-between p-3 bg-slate-800/30 rounded-xl">
+                                            <div>
+                                                <p class="font-medium text-white">اعلان‌های سیستم</p>
+                                                <p class="text-sm text-slate-400">اعلان‌های داخلی پنل مدیریت</p>
+                                            </div>
+                                            <label class="switch">
+                                                <input type="checkbox" checked>
+                                                <span class="slider"></span>
+                                            </label>
+                                        </div>
+                                        
+                                        <div class="flex items-center justify-between p-3 bg-slate-800/30 rounded-xl">
+                                            <div>
+                                                <p class="font-medium text-white">اعلان‌های امنیتی</p>
+                                                <p class="text-sm text-slate-400">اعلان‌های مربوط به امنیت حساب</p>
+                                            </div>
+                                            <label class="switch">
+                                                <input type="checkbox" checked>
+                                                <span class="slider"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- پنل کناری -->
+                            <div class="space-y-6">
+                                <!-- کارت سطح دسترسی -->
+                                <div class="card hover-lift">
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <i class="fas fa-shield-alt text-emerald-500"></i>
+                                            سطح دسترسی
+                                        </div>
+                                    </div>
+                                    <div class="space-y-4">
+                                        <div class="text-center">
+                                            <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-r from-primary to-secondary mb-4">
+                                                <i class="fas fa-crown text-white text-2xl"></i>
+                                            </div>
+                                            <h3 class="text-lg font-bold text-white mb-2">سوپر ادمین</h3>
+                                            <p class="text-slate-400 text-sm">سطح دسترسی کامل</p>
+                                        </div>
+                                        
+                                        <div class="space-y-3">
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-slate-300">سطح امنیت حساب</span>
+                                                <span class="text-emerald-400 font-bold">عالی</span>
+                                            </div>
+                                            <div class="security-level">
+                                                <div class="security-level-bar security-strong"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- کارت آمار -->
+                                <div class="card hover-lift">
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <i class="fas fa-chart-bar text-blue-500"></i>
+                                            آمار فعالیت
+                                        </div>
+                                    </div>
+                                    <div class="space-y-4">
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-slate-300">مدت زمان فعالیت</span>
+                                            <span class="font-bold text-white">۲ سال</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-slate-300">عملیات امروز</span>
+                                            <span class="font-bold text-white">۴۸</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-slate-300">آخرین بروزرسانی</span>
+                                            <span class="font-bold text-white">۲ ساعت پیش</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-slate-300">گزارش‌های ایجاد شده</span>
+                                            <span class="font-bold text-white">۱۲۴</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- دکمه‌های سریع -->
+                                <div class="card hover-lift">
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <i class="fas fa-bolt text-amber-500"></i>
+                                            عملیات سریع
+                                        </div>
+                                    </div>
+                                    <div class="space-y-3">
+                                        <button class="btn-secondary w-full hover-lift">
+                                            <i class="fas fa-key"></i>
+                                            تغییر رمز عبور
+                                        </button>
+                                        <button class="btn-secondary w-full hover-lift">
+                                            <i class="fas fa-qrcode"></i>
+                                            فعال‌سازی 2FA
+                                        </button>
+                                        <button class="btn-secondary w-full hover-lift">
+                                            <i class="fas fa-download"></i>
+                                            خروجی اطلاعات
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- تب امنیت و حریم خصوصی -->
+                    <div class="tab-content" id="securityTab" style="display: none;">
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                            <div class="lg:col-span-2">
+                                <!-- تغییر رمز عبور -->
+                                <div class="card mb-6 hover-lift">
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <i class="fas fa-key text-primary"></i>
+                                            تغییر رمز عبور
+                                        </div>
+                                    </div>
+                                    <div class="space-y-6">
+                                        <div>
+                                            <label class="block text-slate-300 mb-2">رمز عبور فعلی</label>
+                                            <input type="password" class="form-input" placeholder="رمز عبور فعلی را وارد کنید">
+                                        </div>
+                                        
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div>
+                                                <label class="block text-slate-300 mb-2">رمز عبور جدید</label>
+                                                <input type="password" class="form-input" placeholder="رمز عبور جدید">
+                                            </div>
+                                            <div>
+                                                <label class="block text-slate-300 mb-2">تکرار رمز عبور</label>
+                                                <input type="password" class="form-input" placeholder="تکرار رمز عبور جدید">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="security-level mb-4">
+                                            <div class="security-level-bar security-medium"></div>
+                                        </div>
+                                        
+                                        <div class="flex justify-end">
+                                            <button class="btn-primary hover-lift" id="changePasswordBtn">
+                                                <i class="fas fa-key"></i>
+                                                تغییر رمز عبور
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- احراز هویت دو مرحله‌ای -->
+                                <div class="card hover-lift">
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <i class="fas fa-mobile-alt text-emerald-500"></i>
+                                            احراز هویت دو مرحله‌ای
+                                        </div>
+                                    </div>
+                                    <div class="space-y-6">
+                                        <div class="flex items-center justify-between p-4 bg-slate-800/50 rounded-xl">
+                                            <div class="flex items-center gap-3">
+                                                <div class="w-12 h-12 bg-emerald-500/20 rounded-xl flex items-center justify-center">
+                                                    <i class="fas fa-shield-alt text-emerald-500 text-xl"></i>
+                                                </div>
+                                                <div>
+                                                    <p class="font-bold text-white">احراز هویت دو مرحله‌ای</p>
+                                                    <p class="text-sm text-slate-400">افزایش امنیت حساب کاربری</p>
+                                                </div>
+                                            </div>
+                                            <label class="switch">
+                                                <input type="checkbox">
+                                                <span class="slider"></span>
+                                            </label>
+                                        </div>
+                                        
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div>
+                                                <label class="block text-slate-300 mb-2">روش احراز هویت</label>
+                                                <select class="form-select">
+                                                    <option>اپلیکیشن Authenticator</option>
+                                                    <option>پیامک</option>
+                                                    <option>ایمیل</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label class="block text-slate-300 mb-2">شماره موبایل</label>
+                                                <input type="tel" class="form-input" value="۰۹۱۲۱۲۳۴۵۶۷">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="bg-slate-800/50 rounded-xl p-4">
+                                            <div class="flex items-center gap-3 mb-3">
+                                                <i class="fas fa-info-circle text-blue-500"></i>
+                                                <p class="text-sm text-slate-300">
+                                                    با فعال‌سازی این قابلیت، هر بار که وارد حساب کاربری خود می‌شوید، 
+                                                    علاوه بر رمز عبور به کد تایید ارسال شده نیز نیاز خواهید داشت.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- پنل کناری امنیت -->
+                            <div class="space-y-6">
+                                <!-- وضعیت امنیتی -->
+                                <div class="card hover-lift">
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <i class="fas fa-shield-check text-emerald-500"></i>
+                                            وضعیت امنیتی
+                                        </div>
+                                    </div>
+                                    <div class="space-y-4">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-slate-300">رمز عبور قوی</span>
+                                            <i class="fas fa-check-circle text-emerald-500"></i>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-slate-300">احراز هویت دو مرحله‌ای</span>
+                                            <i class="fas fa-times-circle text-red-500"></i>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-slate-300">ورود‌های مشکوک</span>
+                                            <i class="fas fa-check-circle text-emerald-500"></i>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-slate-300">آخرین بازبینی امنیتی</span>
+                                            <span class="text-xs text-slate-400">۱۴۰۲/۰۷/۱۵</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- جلسات فعال -->
+                                <div class="card hover-lift">
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <i class="fas fa-desktop text-blue-500"></i>
+                                            دستگاه‌های متصل
+                                        </div>
+                                    </div>
+                                    <div class="space-y-3">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-slate-300">دستگاه فعلی</span>
+                                            <span class="badge badge-success">فعال</span>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-slate-300">موبایل (Android)</span>
+                                            <span class="text-xs text-slate-400">۲ روز پیش</span>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-slate-300">تبلت (iPad)</span>
+                                            <span class="text-xs text-slate-400">۱ هفته پیش</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- تاریخچه ورود -->
+                                <div class="card hover-lift">
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <i class="fas fa-history text-amber-500"></i>
+                                            آخرین ورودها
+                                        </div>
+                                    </div>
+                                    <div class="space-y-3">
+                                        <div>
+                                            <p class="text-sm text-white">امروز - ۱۰:۳۰</p>
+                                            <p class="text-xs text-slate-400">تهران، ایران - مرورگر Chrome</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-white">دیروز - ۱۵:۴۵</p>
+                                            <p class="text-xs text-slate-400">تهران، ایران - مرورگر Firefox</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-white">۲ روز پیش - ۰۹:۲۰</p>
+                                            <p class="text-xs text-slate-400">تهران، ایران - اپلیکیشن موبایل</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- تب نشست‌های فعال -->
+                    <div class="tab-content" id="sessionsTab" style="display: none;">
+                        <div class="card mb-6 hover-lift">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <i class="fas fa-laptop-house text-primary"></i>
+                                    نشست‌های فعال
+                                </div>
+                                <button class="btn-secondary hover-lift" id="terminateAllSessionsBtn">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    خاتمه همه نشست‌ها
+                                </button>
+                            </div>
+                            <div class="space-y-4">
+                                <!-- نشست فعلی -->
+                                <div class="session-card session-current">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-emerald-500/20 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-laptop text-emerald-500"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-bold text-white">دستگاه فعلی</p>
+                                                <p class="text-sm text-slate-400">Chrome 118 - Windows 11</p>
+                                            </div>
+                                        </div>
+                                        <span class="badge badge-success">فعال</span>
+                                    </div>
+                                    <div class="mt-3 grid grid-cols-2 md:grid-cols-4 gap-4">
+                                        <div>
+                                            <p class="text-xs text-slate-400">آدرس IP</p>
+                                            <p class="text-sm text-white">192.168.1.100</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-xs text-slate-400">موقعیت</p>
+                                            <p class="text-sm text-white">تهران، ایران</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-xs text-slate-400">زمان شروع</p>
+                                            <p class="text-sm text-white">امروز ۱۰:۳۰</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-xs text-slate-400">آخرین فعالیت</p>
+                                            <p class="text-sm text-white">۲ دقیقه پیش</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- نشست‌های دیگر -->
+                                <div class="session-card">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-mobile-alt text-blue-500"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-bold text-white">Samsung Galaxy S23</p>
+                                                <p class="text-sm text-slate-400">Android 13 - Chrome Mobile</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-3">
+                                            <span class="text-xs text-slate-400">۲ روز پیش</span>
+                                            <button class="action-btn action-btn-danger">
+                                                <i class="fas fa-sign-out-alt"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="session-card">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-tablet-alt text-purple-500"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-bold text-white">iPad Pro</p>
+                                                <p class="text-sm text-slate-400">iOS 17 - Safari</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-3">
+                                            <span class="text-xs text-slate-400">۱ هفته پیش</span>
+                                            <button class="action-btn action-btn-danger">
+                                                <i class="fas fa-sign-out-alt"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- تنظیمات نشست -->
+                        <div class="card hover-lift">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <i class="fas fa-cog text-amber-500"></i>
+                                    تنظیمات نشست
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-slate-300 mb-2">مدت زمان نشست (دقیقه)</label>
+                                    <input type="number" class="form-input" value="120">
+                                    <p class="text-xs text-slate-400 mt-1">زمان بی‌فعالی قبل از خروج خودکار</p>
+                                </div>
+                                <div>
+                                    <label class="block text-slate-300 mb-2">حداکثر نشست‌های همزمان</label>
+                                    <input type="number" class="form-input" value="3">
+                                    <p class="text-xs text-slate-400 mt-1">تعداد دستگاه‌های همزمان متصل</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- تب فعالیت‌های اخیر -->
+                    <div class="tab-content" id="activityTab" style="display: none;">
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                            <div class="lg:col-span-2">
+                                <!-- جدول فعالیت‌ها -->
+                                <div class="card mb-6 hover-lift">
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <i class="fas fa-list-alt text-primary"></i>
+                                            تاریخچه فعالیت‌ها
+                                        </div>
+                                        <button class="btn-secondary hover-lift">
+                                            <i class="fas fa-download"></i>
+                                            خروجی CSV
+                                        </button>
+                                    </div>
+                                    <div class="table-container-no-scroll">
+                                        <table class="responsive-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>زمان</th>
+                                                    <th>عملیات</th>
+                                                    <th>جزئیات</th>
+                                                    <th>IP</th>
+                                                    <th>وضعیت</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>۱۰:۳۰ امروز</td>
+                                                    <td>ورود به سیستم</td>
+                                                    <td>ورود موفق از مرورگر Chrome</td>
+                                                    <td>192.168.1.100</td>
+                                                    <td><span class="badge badge-success">موفق</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>۱۰:۴۵ امروز</td>
+                                                    <td>ویرایش کاربر</td>
+                                                    <td>ویرایش اطلاعات کاربر USR-001</td>
+                                                    <td>192.168.1.100</td>
+                                                    <td><span class="badge badge-success">موفق</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>۱۱:۲۰ امروز</td>
+                                                    <td>تایید تراکنش</td>
+                                                    <td>تایید تراکنش TX-789123</td>
+                                                    <td>192.168.1.100</td>
+                                                    <td><span class="badge badge-success">موفق</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>۱۲:۰۰ امروز</td>
+                                                    <td>ایجاد گزارش</td>
+                                                    <td>ایجاد گزارش ماهانه فروش</td>
+                                                    <td>192.168.1.100</td>
+                                                    <td><span class="badge badge-success">موفق</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>۱۴:۳۰ دیروز</td>
+                                                    <td>ویرایش تنظیمات</td>
+                                                    <td>به‌روزرسانی تنظیمات مالی</td>
+                                                    <td>192.168.1.100</td>
+                                                    <td><span class="badge badge-success">موفق</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    
+                                    <!-- صفحه‌بندی -->
+                                    <div class="pagination mt-4">
+                                        <button class="page-link hover-lift">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </button>
+                                        <button class="page-link active hover-lift">۱</button>
+                                        <button class="page-link hover-lift">۲</button>
+                                        <button class="page-link hover-lift">۳</button>
+                                        <button class="page-link hover-lift">
+                                            <i class="fas fa-chevron-left"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- پنل کناری فعالیت -->
+                            <div class="space-y-6">
+                                <!-- آمار فعالیت -->
+                                <div class="card hover-lift">
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <i class="fas fa-chart-pie text-emerald-500"></i>
+                                            آمار فعالیت
+                                        </div>
+                                    </div>
+                                    <div class="space-y-4">
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-slate-300">فعالیت امروز</span>
+                                            <span class="font-bold text-white">۴۸ عملیات</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-slate-300">فعالیت هفته</span>
+                                            <span class="font-bold text-white">۲۴۵ عملیات</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-slate-300">فعالیت ماه</span>
+                                            <span class="font-bold text-white">۱,۲۴۸ عملیات</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-slate-300">میانگین روزانه</span>
+                                            <span class="font-bold text-white">۴۲ عملیات</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- فیلتر فعالیت -->
+                                <div class="card hover-lift">
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <i class="fas fa-filter text-blue-500"></i>
+                                            فیلتر فعالیت
+                                        </div>
+                                    </div>
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label class="block text-slate-300 mb-2">نوع عملیات</label>
+                                            <select class="form-select">
+                                                <option>همه عملیات‌ها</option>
+                                                <option>ورود/خروج</option>
+                                                <option>ویرایش</option>
+                                                <option>ایجاد</option>
+                                                <option>حذف</option>
+                                                <option>تایید/رد</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="block text-slate-300 mb-2">بازه زمانی</label>
+                                            <select class="form-select">
+                                                <option>امروز</option>
+                                                <option selected>۷ روز گذشته</option>
+                                                <option>۳۰ روز گذشته</option>
+                                                <option>۳ ماه گذشته</option>
+                                            </select>
+                                        </div>
+                                        <button class="btn-primary w-full hover-lift">
+                                            <i class="fas fa-search"></i>
+                                            اعمال فیلتر
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- صفحه مدیریت ادمین‌ها -->
+                <div id="admins" class="page-content">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+                        <div>
+                            <h1 class="text-2xl font-bold text-white mb-2">مدیریت ادمین‌های سیستم</h1>
+                            <p class="text-slate-400">مدیریت و نظارت بر ادمین‌های سیستم</p>
+                        </div>
+                        <div class="flex items-center gap-3 mt-4 md:mt-0">
+                            <button class="btn-primary hover-lift" id="addAdminBtn">
+                                <i class="fas fa-user-plus"></i>
+                                افزودن ادمین
+                            </button>
+                            <button class="btn-secondary hover-lift">
+                                <i class="fas fa-file-export"></i>
+                                خروجی گزارش
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- آمار ادمین‌ها -->
+                    <div class="grid-stats mb-8">
+                        <div class="stat-card">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-400 text-sm">کل ادمین‌ها</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۸</p>
+                                </div>
+                                <i class="fas fa-users-cog text-blue-500 text-2xl animate-float"></i>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-400 text-sm">ادمین‌های آنلاین</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۳</p>
+                                </div>
+                                <i class="fas fa-wifi text-emerald-500 text-2xl animate-float"></i>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-400 text-sm">ادمین‌های فعال</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۷</p>
+                                </div>
+                                <i class="fas fa-user-check text-green-500 text-2xl animate-float"></i>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-slate-400 text-sm">مسدود شده</p>
+                                    <p class="text-2xl font-bold text-white mt-1">۱</p>
+                                </div>
+                                <i class="fas fa-user-slash text-red-500 text-2xl animate-float"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- جدول ادمین‌ها -->
+                    <div class="card mb-8 hover-lift">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <i class="fas fa-user-shield text-primary"></i>
+                                لیست ادمین‌های سیستم
+                            </div>
+                            <div class="search-box w-64">
+                                <input type="text" placeholder="جستجوی ادمین..." class="search-input" id="adminSearch">
+                                <i class="fas fa-search search-icon"></i>
+                            </div>
+                        </div>
+                        <div class="table-container-no-scroll">
+                            <table class="responsive-table">
+                                <thead>
+                                    <tr>
+                                        <th>ادمین</th>
+                                        <th>نقش</th>
+                                        <th>ایمیل</th>
+                                        <th>آخرین ورود</th>
+                                        <th>وضعیت</th>
+                                        <th>عملیات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- ادمین اصلی -->
+                                    <tr>
+                                        <td>
+                                            <div class="flex items-center gap-3">
+                                                <div class="relative">
+                                                    <img class="profile-avatar-sm" src="https://avatars.githubusercontent.com/u/82562395?v=4" alt="admin">
+                                                    <span class="absolute bottom-0 left-0 w-3 h-3 bg-emerald-500 border-2 border-slate-900 rounded-full"></span>
+                                                </div>
+                                                <div>
+                                                    <p class="font-medium text-white">مدیر کل</p>
+                                                    <p class="text-xs text-slate-400">ID: ADM-001</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><span class="role-badge role-super-admin">سوپر ادمین</span></td>
+                                        <td>admin@filestore.ir</td>
+                                        <td>امروز - ۱۰:۳۰</td>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <span class="status-badge status-success">فعال</span>
+                                                <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="action-btn hover-lift">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="action-btn hover-lift">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    
+                                    <!-- ادمین نمونه ۲ -->
+                                    <tr>
+                                        <td>
+                                            <div class="flex items-center gap-3">
+                                                <div class="relative">
+                                                    <div class="user-avatar">م.ح</div>
+                                                    <span class="absolute bottom-0 left-0 w-3 h-3 bg-emerald-500 border-2 border-slate-900 rounded-full"></span>
+                                                </div>
+                                                <div>
+                                                    <p class="font-medium text-white">مریم حسینی</p>
+                                                    <p class="text-xs text-slate-400">ID: ADM-002</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><span class="role-badge role-admin">ادمین مالی</span></td>
+                                        <td>finance@filestore.ir</td>
+                                        <td>امروز - ۰۹:۱۵</td>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <span class="status-badge status-success">فعال</span>
+                                                <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="action-btn hover-lift">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="action-btn hover-lift">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="action-btn action-btn-danger hover-lift">
+                                                    <i class="fas fa-ban"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    
+                                    <!-- ادمین نمونه ۳ -->
+                                    <tr>
+                                        <td>
+                                            <div class="flex items-center gap-3">
+                                                <div class="relative">
+                                                    <div class="user-avatar">ر.ک</div>
+                                                    <span class="absolute bottom-0 left-0 w-3 h-3 bg-slate-500 border-2 border-slate-900 rounded-full"></span>
+                                                </div>
+                                                <div>
+                                                    <p class="font-medium text-white">رضا کریمی</p>
+                                                    <p class="text-xs text-slate-400">ID: ADM-003</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><span class="role-badge role-moderator">مدیر محتوا</span></td>
+                                        <td>content@filestore.ir</td>
+                                        <td>دیروز - ۱۴:۲۰</td>
+                                        <td>
+                                            <div class="flex items-center gap-2">
+                                                <span class="status-badge status-success">فعال</span>
+                                                <span class="w-2 h-2 bg-slate-500 rounded-full"></span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="action-btn hover-lift">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="action-btn hover-lift">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="action-btn action-btn-danger hover-lift">
+                                                    <i class="fas fa-ban"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    
+                                    <!-- ادمین نمونه ۴ -->
+                                    <tr>
+                                        <td>
+                                            <div class="flex items-center gap-3">
+                                                <div class="relative">
+                                                    <div class="user-avatar">س.ر</div>
+                                                </div>
+                                                <div>
+                                                    <p class="font-medium text-white">سارا رضایی</p>
+                                                    <p class="text-xs text-slate-400">ID: ADM-004</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><span class="role-badge role-support">پشتیبانی</span></td>
+                                        <td>support@filestore.ir</td>
+                                        <td>۳ روز پیش - ۱۱:۴۵</td>
+                                        <td><span class="status-badge status-warning">غیرفعال</span></td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="action-btn hover-lift">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="action-btn hover-lift">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="action-btn action-btn-success hover-lift">
+                                                    <i class="fas fa-check"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    
+                                    <!-- ادمین نمونه ۵ -->
+                                    <tr>
+                                        <td>
+                                            <div class="flex items-center gap-3">
+                                                <div class="relative">
+                                                    <div class="user-avatar">م.ع</div>
+                                                </div>
+                                                <div>
+                                                    <p class="font-medium text-white">محمد علیزاده</p>
+                                                    <p class="text-xs text-slate-400">ID: ADM-005</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><span class="role-badge role-support">پشتیبانی</span></td>
+                                        <td>support2@filestore.ir</td>
+                                        <td>۱ هفته پیش - ۰۹:۱۰</td>
+                                        <td><span class="status-badge status-danger">مسدود</span></td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="action-btn hover-lift">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="action-btn hover-lift">
+                                                    <i class="fas fa-unlock"></i>
+                                                </button>
+                                                <button class="action-btn action-btn-danger hover-lift">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- صفحه‌بندی -->
+                        <div class="pagination mt-4">
+                            <button class="page-link hover-lift">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                            <button class="page-link active hover-lift">۱</button>
+                            <button class="page-link hover-lift">۲</button>
+                            <button class="page-link hover-lift">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- نقش‌ها و دسترسی‌ها -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- نقش‌های سیستم -->
+                        <div class="card hover-lift">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <i class="fas fa-user-tag text-purple-500"></i>
+                                    نقش‌های سیستم
+                                </div>
+                                <button class="btn-secondary hover-lift" id="addRoleBtn">
+                                    <i class="fas fa-plus"></i>
+                                    افزودن نقش
+                                </button>
+                            </div>
+                            <div class="space-y-4">
+                                <!-- نقش سوپر ادمین -->
+                                <div class="permission-item">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-crown text-purple-500"></i>
+                                        </div>
+                                        <div>
+                                            <p class="font-bold text-white">سوپر ادمین</p>
+                                            <p class="text-xs text-slate-400">دسترسی کامل به تمام بخش‌ها</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-xs text-slate-400">۳ کاربر</span>
+                                        <button class="action-btn hover-lift">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- نقش ادمین مالی -->
+                                <div class="permission-item">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 bg-emerald-500/20 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-money-bill-wave text-emerald-500"></i>
+                                        </div>
+                                        <div>
+                                            <p class="font-bold text-white">ادمین مالی</p>
+                                            <p class="text-xs text-slate-400">دسترسی به بخش‌های مالی</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-xs text-slate-400">۲ کاربر</span>
+                                        <button class="action-btn hover-lift">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- نقش مدیر محتوا -->
+                                <div class="permission-item">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-edit text-blue-500"></i>
+                                        </div>
+                                        <div>
+                                            <p class="font-bold text-white">مدیر محتوا</p>
+                                            <p class="text-xs text-slate-400">مدیریت محتوا و محصولات</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-xs text-slate-400">۲ کاربر</span>
+                                        <button class="action-btn hover-lift">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- نقش پشتیبانی -->
+                                <div class="permission-item">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 bg-amber-500/20 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-headset text-amber-500"></i>
+                                        </div>
+                                        <div>
+                                            <p class="font-bold text-white">پشتیبانی</p>
+                                            <p class="text-xs text-slate-400">پاسخگویی به تیکت‌ها</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-xs text-slate-400">۱ کاربر</span>
+                                        <button class="action-btn hover-lift">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- دسترسی‌های سطح بالا -->
+                        <div class="card hover-lift">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <i class="fas fa-lock text-red-500"></i>
+                                    دسترسی‌های سطح بالا
+                                </div>
+                            </div>
+                            <div class="space-y-4">
+                                <!-- گروه دسترسی‌ها -->
+                                <div class="permission-group">
+                                    <div class="permission-group-title">مدیریت سیستم</div>
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <label class="flex items-center gap-2">
+                                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary" checked disabled>
+                                            <span class="text-slate-300 text-sm">تنظیمات سیستم</span>
+                                        </label>
+                                        <label class="flex items-center gap-2">
+                                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary" checked disabled>
+                                            <span class="text-slate-300 text-sm">مدیریت ادمین‌ها</span>
+                                        </label>
+                                        <label class="flex items-center gap-2">
+                                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary" checked disabled>
+                                            <span class="text-slate-300 text-sm">دسترسی به لاگ‌ها</span>
+                                        </label>
+                                        <label class="flex items-center gap-2">
+                                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary" checked>
+                                            <span class="text-slate-300 text-sm">پشتیبان‌گیری</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="permission-group">
+                                    <div class="permission-group-title">مدیریت مالی</div>
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <label class="flex items-center gap-2">
+                                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary" checked>
+                                            <span class="text-slate-300 text-sm">مشاهده تراکنش‌ها</span>
+                                        </label>
+                                        <label class="flex items-center gap-2">
+                                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary" checked disabled>
+                                            <span class="text-slate-300 text-sm">تایید برداشت‌ها</span>
+                                        </label>
+                                        <label class="flex items-center gap-2">
+                                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary">
+                                            <span class="text-slate-300 text-sm">تغییر کمیسیون</span>
+                                        </label>
+                                        <label class="flex items-center gap-2">
+                                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary">
+                                            <span class="text-slate-300 text-sm">صدور فاکتور</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="text-center pt-4">
+                                    <button class="btn-primary hover-lift">
+                                        <i class="fas fa-save"></i>
+                                        ذخیره دسترسی‌ها
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- صفحات دیگر (همانند قبل) -->
+                <div id="adminDashboard" class="page-content">
+                    <!-- محتوای داشبورد از قبل -->
+                </div>
+                
+                <!-- سایر صفحات... -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Overlay منوی موبایل -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <script>
+        // داده‌ها و حالت‌ها
+        const adminProfileData = {
+            currentPage: 'adminProfile',
+            currentTab: 'profile',
+            adminStats: {
+                totalAdmins: 8,
+                onlineAdmins: 3,
+                activeAdmins: 7,
+                blockedAdmins: 1
+            },
+            activityLogs: [
+                { id: 1, time: '۱۰:۳۰ امروز', action: 'ورود به سیستم', details: 'ورود موفق از مرورگر Chrome', ip: '192.168.1.100', status: 'success' },
+                { id: 2, time: '۱۰:۴۵ امروز', action: 'ویرایش کاربر', details: 'ویرایش اطلاعات کاربر USR-001', ip: '192.168.1.100', status: 'success' },
+                { id: 3, time: '۱۱:۲۰ امروز', action: 'تایید تراکنش', details: 'تایید تراکنش TX-789123', ip: '192.168.1.100', status: 'success' }
+            ],
+            adminList: [
+                { id: 'ADM-001', name: 'مدیر کل', role: 'سوپر ادمین', email: 'admin@filestore.ir', lastLogin: 'امروز - ۱۰:۳۰', status: 'active', online: true },
+                { id: 'ADM-002', name: 'مریم حسینی', role: 'ادمین مالی', email: 'finance@filestore.ir', lastLogin: 'امروز - ۰۹:۱۵', status: 'active', online: true },
+                { id: 'ADM-003', name: 'رضا کریمی', role: 'مدیر محتوا', email: 'content@filestore.ir', lastLogin: 'دیروز - ۱۴:۲۰', status: 'active', online: false }
+            ]
+        };
+
+        // DOM Ready
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeAdminProfilePanel();
+            setupEventListeners();
+            showPage('adminProfile');
+        });
+
+        // مقداردهی اولیه پنل پروفایل ادمین
+        function initializeAdminProfilePanel() {
+            // تنظیم نوار پیشرفت
+            setupProgressBar();
+            
+            // بارگذاری آمار
+            updateAdminStats();
+            
+            // بارگذاری فعالیت‌های اخیر
+            loadActivityLogs();
+        }
+
+        // تنظیم رویدادها
+        function setupEventListeners() {
+            // منوی موبایل
+            const menuToggle = document.getElementById('menuToggle');
+            const closeSidebar = document.getElementById('closeSidebar');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+            const sidebar = document.querySelector('.sidebar');
+
+            menuToggle?.addEventListener('click', () => {
+                sidebar.classList.add('active');
+                sidebarOverlay.classList.add('active');
+            });
+
+            closeSidebar?.addEventListener('click', closeMobileMenu);
+            sidebarOverlay?.addEventListener('click', closeMobileMenu);
+
+            function closeMobileMenu() {
+                sidebar.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+            }
+
+            // تغییر صفحات
+            document.querySelectorAll('.sidebar-item[data-page]').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const pageId = this.getAttribute('data-page');
+                    showPage(pageId);
+                    closeMobileMenu();
+                    
+                    // به‌روزرسانی منوی فعال
+                    document.querySelectorAll('.sidebar-item').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                });
+            });
+
+            // دکمه پروفایل
+            document.getElementById('profileBtn')?.addEventListener('click', function(e) {
+                e.preventDefault();
+                showPage('adminProfile');
+            });
+
+            // تب‌های پروفایل
+            document.querySelectorAll('#adminProfile .tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    switchProfileTab(tabId);
+                });
+            });
+
+            // ذخیره پروفایل
+            document.getElementById('saveProfileBtn')?.addEventListener('click', function() {
+                showNotification('ذخیره پروفایل', 'اطلاعات پروفایل با موفقیت به‌روزرسانی شد.', 'success');
+            });
+
+            // تغییر رمز عبور
+            document.getElementById('changePasswordBtn')?.addEventListener('click', function() {
+                showNotification('تغییر رمز عبور', 'رمز عبور با موفقیت تغییر کرد.', 'success');
+            });
+
+            // تغییر آواتار
+            document.getElementById('changeAvatarBtn')?.addEventListener('click', function() {
+                showConfirmModal('تغییر آواتار', 'آیا مایل به تغییر تصویر پروفایل هستید؟', function() {
+                    // در اینجا منطق آپلود تصویر پیاده‌سازی می‌شود
+                    showNotification('تغییر آواتار', 'تصویر پروفایل با موفقیت تغییر کرد.', 'success');
+                });
+            });
+
+            // خاتمه همه نشست‌ها
+            document.getElementById('terminateAllSessionsBtn')?.addEventListener('click', function() {
+                showConfirmModal('خاتمه نشست‌ها', 'آیا از خاتمه دادن به همه نشست‌های فعال مطمئن هستید؟', function() {
+                    showNotification('خاتمه نشست‌ها', 'تمام نشست‌های غیرفعلی با موفقیت خاتمه یافتند.', 'success');
+                });
+            });
+
+            // افزودن ادمین جدید
+            document.getElementById('addAdminBtn')?.addEventListener('click', function() {
+                showAdminModal();
+            });
+
+            // افزودن نقش جدید
+            document.getElementById('addRoleBtn')?.addEventListener('click', function() {
+                showRoleModal();
+            });
+
+            // دکمه خروج
+            document.getElementById('logoutBtn')?.addEventListener('click', function() {
+                showConfirmModal('خروج از سیستم', 'آیا از خروج از پنل مدیریت مطمئن هستید؟', function() {
+                    showNotification('خروج موفق', 'شما با موفقیت از پنل خارج شدید.', 'success');
+                    // در اینجا می‌توانید کاربر را به صفحه لاگین هدایت کنید
+                });
+            });
+
+            // Dropdown منوی کاربر
+            setupDropdowns();
+
+            // جستجوی ادمین
+            const adminSearch = document.getElementById('adminSearch');
+            adminSearch?.addEventListener('input', function() {
+                if (this.value.length >= 2) {
+                    searchAdmins(this.value);
+                }
+            });
+
+            // مدال
+            setupModal();
+        }
+
+        // نمایش صفحه
+        function showPage(pageId) {
+            // نمایش صفحه انتخاب شده
+            document.querySelectorAll('.page-content').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+                adminProfileData.currentPage = pageId;
+                
+                // اسکرول به بالا
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                // اگر صفحه ادمین‌ها بود، اطلاعات را به‌روزرسانی کن
+                if (pageId === 'admins') {
+                    updateAdminStats();
+                    loadAdminList();
+                }
+            }
+        }
+
+        // تغییر تب پروفایل
+        function switchProfileTab(tabId) {
+            // به‌روزرسانی تب فعال
+            document.querySelectorAll('#adminProfile .tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.getAttribute('data-tab') === tabId) {
+                    tab.classList.add('active');
+                }
+            });
+
+            // نمایش محتوای تب
+            document.querySelectorAll('#adminProfile .tab-content').forEach(content => {
+                content.style.display = 'none';
+                if (content.id === tabId + 'Tab') {
+                    content.style.display = 'block';
+                }
+            });
+            
+            adminProfileData.currentTab = tabId;
+        }
+
+        // به‌روزرسانی آمار ادمین‌ها
+        function updateAdminStats() {
+            // در اینجا می‌توانید آمار را از سرور دریافت کنید
+            const stats = adminProfileData.adminStats;
+            
+            // به‌روزرسانی عناصر HTML
+            const statElements = {
+                'totalAdmins': document.querySelector('.stat-card:nth-child(1) .text-2xl'),
+                'onlineAdmins': document.querySelector('.stat-card:nth-child(2) .text-2xl'),
+                'activeAdmins': document.querySelector('.stat-card:nth-child(3) .text-2xl'),
+                'blockedAdmins': document.querySelector('.stat-card:nth-child(4) .text-2xl')
+            };
+            
+            for (const [key, element] of Object.entries(statElements)) {
+                if (element && stats[key]) {
+                    element.textContent = stats[key];
+                }
+            }
+        }
+
+        // بارگذاری لاگ فعالیت‌ها
+        function loadActivityLogs() {
+            // در اینجا می‌توانید لاگ‌ها را از سرور دریافت کنید
+            const logs = adminProfileData.activityLogs;
+            
+            // به‌روزرسانی جدول فعالیت‌ها
+            const tbody = document.querySelector('#activityTab tbody');
+            if (tbody) {
+                tbody.innerHTML = '';
+                
+                logs.forEach(log => {
+                    const statusClass = log.status === 'success' ? 'badge-success' : 'badge-danger';
+                    const row = `
+                        <tr>
+                            <td>${log.time}</td>
+                            <td>${log.action}</td>
+                            <td>${log.details}</td>
+                            <td>${log.ip}</td>
+                            <td><span class="badge ${statusClass}">${log.status === 'success' ? 'موفق' : 'ناموفق'}</span></td>
+                        </tr>
+                    `;
+                    tbody.innerHTML += row;
+                });
+            }
+        }
+
+        // بارگذاری لیست ادمین‌ها
+        function loadAdminList() {
+            // در اینجا می‌توانید لیست ادمین‌ها را از سرور دریافت کنید
+            const admins = adminProfileData.adminList;
+            
+            // به‌روزرسانی جدول ادمین‌ها
+            const tbody = document.querySelector('#admins tbody');
+            if (tbody) {
+                tbody.innerHTML = '';
+                
+                admins.forEach(admin => {
+                    const statusClass = admin.status === 'active' ? 'status-success' : 
+                                      admin.status === 'inactive' ? 'status-warning' : 'status-danger';
+                    const onlineDot = admin.online ? 
+                        '<span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>' : 
+                        '<span class="w-2 h-2 bg-slate-500 rounded-full"></span>';
+                    
+                    const roleClass = admin.role === 'سوپر ادمین' ? 'role-super-admin' :
+                                    admin.role === 'ادمین مالی' ? 'role-admin' :
+                                    admin.role === 'مدیر محتوا' ? 'role-moderator' : 'role-support';
+                    
+                    const row = `
+                        <tr>
+                            <td>
+                                <div class="flex items-center gap-3">
+                                    <div class="relative">
+                                        <div class="user-avatar">${admin.name.split(' ').map(n => n[0]).join('')}</div>
+                                        ${admin.online ? '<span class="absolute bottom-0 left-0 w-3 h-3 bg-emerald-500 border-2 border-slate-900 rounded-full"></span>' : ''}
+                                    </div>
+                                    <div>
+                                        <p class="font-medium text-white">${admin.name}</p>
+                                        <p class="text-xs text-slate-400">ID: ${admin.id}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><span class="role-badge ${roleClass}">${admin.role}</span></td>
+                            <td>${admin.email}</td>
+                            <td>${admin.lastLogin}</td>
+                            <td>
+                                <div class="flex items-center gap-2">
+                                    <span class="status-badge ${statusClass}">${admin.status === 'active' ? 'فعال' : 'غیرفعال'}</span>
+                                    ${onlineDot}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="action-btn hover-lift" onclick="viewAdmin('${admin.id}')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="action-btn hover-lift" onclick="editAdmin('${admin.id}')">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="action-btn action-btn-danger hover-lift" onclick="deleteAdmin('${admin.id}')">
+                                        <i class="fas fa-ban"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                    tbody.innerHTML += row;
+                });
+            }
+        }
+
+        // جستجوی ادمین
+        function searchAdmins(query) {
+            console.log('جستجوی ادمین برای:', query);
+            // در اینجا می‌توانید جستجو را پیاده‌سازی کنید
+        }
+
+        // نمایش مدال ادمین جدید
+        function showAdminModal() {
+            const content = `
+                <div class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-slate-300 mb-2">نام</label>
+                            <input type="text" class="form-input" placeholder="نام">
+                        </div>
+                        <div>
+                            <label class="block text-slate-300 mb-2">نام خانوادگی</label>
+                            <input type="text" class="form-input" placeholder="نام خانوادگی">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-slate-300 mb-2">ایمیل</label>
+                        <input type="email" class="form-input" placeholder="example@filestore.ir">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-slate-300 mb-2">نقش</label>
+                        <select class="form-select">
+                            <option>سوپر ادمین</option>
+                            <option>ادمین مالی</option>
+                            <option>مدیر محتوا</option>
+                            <option>پشتیبانی</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-slate-300 mb-2">رمز عبور موقت</label>
+                        <input type="password" class="form-input" placeholder="رمز عبور موقت">
+                        <p class="text-xs text-slate-400 mt-1">ادمین باید پس از اولین ورود رمز عبور را تغییر دهد</p>
+                    </div>
+                </div>
+            `;
+            
+            showModal('افزودن ادمین جدید', content, function() {
+                showNotification('افزودن ادمین', 'ادمین جدید با موفقیت اضافه شد.', 'success');
+            });
+        }
+
+        // نمایش مدال نقش جدید
+        function showRoleModal() {
+            const content = `
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-slate-300 mb-2">نام نقش</label>
+                        <input type="text" class="form-input" placeholder="مثال: مدیر فروش">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-slate-300 mb-2">توضیحات</label>
+                        <textarea class="form-input" rows="3" placeholder="توضیحات نقش"></textarea>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-slate-300 mb-2">دسترسی‌ها</label>
+                        <div class="bg-slate-800/50 rounded-xl p-4 max-h-60 overflow-y-auto">
+                            <div class="space-y-3">
+                                <label class="flex items-center gap-2">
+                                    <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary">
+                                    <span class="text-slate-300 text-sm">مشاهده داشبورد</span>
+                                </label>
+                                <label class="flex items-center gap-2">
+                                    <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary">
+                                    <span class="text-slate-300 text-sm">مدیریت کاربران</span>
+                                </label>
+                                <label class="flex items-center gap-2">
+                                    <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary">
+                                    <span class="text-slate-300 text-sm">مدیریت محصولات</span>
+                                </label>
+                                <label class="flex items-center gap-2">
+                                    <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary">
+                                    <span class="text-slate-300 text-sm">مشاهده تراکنش‌ها</span>
+                                </label>
+                                <label class="flex items-center gap-2">
+                                    <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-primary">
+                                    <span class="text-slate-300 text-sm">پاسخ به تیکت‌ها</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            showModal('افزودن نقش جدید', content, function() {
+                showNotification('افزودن نقش', 'نقش جدید با موفقیت ایجاد شد.', 'success');
+            });
+        }
+
+        // توابع عملیات ادمین
+        function viewAdmin(adminId) {
+            console.log('مشاهده ادمین:', adminId);
+            // در اینجا می‌توانید صفحه مشاهده ادمین را نمایش دهید
+        }
+
+        function editAdmin(adminId) {
+            console.log('ویرایش ادمین:', adminId);
+            // در اینجا می‌توانید صفحه ویرایش ادمین را نمایش دهید
+        }
+
+        function deleteAdmin(adminId) {
+            showConfirmModal('حذف ادمین', `آیا از حذف ادمین ${adminId} مطمئن هستید؟`, function() {
+                showNotification('حذف ادمین', 'ادمین با موفقیت حذف شد.', 'success');
+            });
+        }
+
+        // تنظیم Dropdown ها
+        function setupDropdowns() {
+            // منوی کاربر
+            const userMenuBtn = document.getElementById('userMenuBtn');
+            const userMenu = document.getElementById('userMenu');
+
+            userMenuBtn?.addEventListener('click', function(e) {
+                e.stopPropagation();
+                userMenu.classList.toggle('active');
+            });
+
+            // بستن dropdown ها با کلیک خارج
+            document.addEventListener('click', function() {
+                userMenu?.classList.remove('active');
+            });
+
+            // جلوگیری از بسته شدن dropdown با کلیک داخل
+            userMenu?.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        }
+
+        // تنظیم مدال
+        function setupModal() {
+            const modalOverlay = document.getElementById('modalOverlay');
+            const modalClose = document.getElementById('modalClose');
+            const modalCancel = document.getElementById('modalCancel');
+
+            modalClose?.addEventListener('click', hideModal);
+            modalCancel?.addEventListener('click', hideModal);
+            modalOverlay?.addEventListener('click', function(e) {
+                if (e.target === modalOverlay) {
+                    hideModal();
+                }
+            });
+        }
+
+        // نمایش مدال
+        function showModal(title, content, onConfirm = null) {
+            const modalOverlay = document.getElementById('modalOverlay');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+            const modalConfirm = document.getElementById('modalConfirm');
+
+            if (!modalOverlay || !modalTitle || !modalBody || !modalConfirm) return;
+
+            modalTitle.textContent = title;
+            modalBody.innerHTML = content;
+            
+            if (onConfirm) {
+                modalConfirm.onclick = function() {
+                    onConfirm();
+                    hideModal();
+                };
+            }
+
+            modalOverlay.classList.add('active');
+        }
+
+        // پنهان کردن مدال
+        function hideModal() {
+            const modalOverlay = document.getElementById('modalOverlay');
+            modalOverlay?.classList.remove('active');
+        }
+
+        // نمایش مدال تایید
+        function showConfirmModal(title, message, onConfirm) {
+            const content = `
+                <div class="text-center py-4">
+                    <i class="fas fa-question-circle text-4xl text-amber-500 mb-4"></i>
+                    <p class="text-lg text-white mb-2">${title}</p>
+                    <p class="text-slate-300">${message}</p>
+                </div>
+            `;
+            
+            showModal(title, content, onConfirm);
+        }
+
+        // نمایش اعلان
+        function showNotification(title, message, type = 'info') {
+            const notificationPopup = document.getElementById('notificationPopup');
+            const notificationTitle = document.getElementById('notificationTitle');
+            const notificationMessage = document.getElementById('notificationMessage');
+            
+            if (!notificationPopup || !notificationTitle || !notificationMessage) return;
+
+            // تنظیم نوع اعلان
+            const alert = notificationPopup.querySelector('.alert');
+            alert.className = 'alert';
+            
+            switch(type) {
+                case 'success':
+                    alert.classList.add('alert-success');
+                    break;
+                case 'warning':
+                    alert.classList.add('alert-warning');
+                    break;
+                case 'danger':
+                    alert.classList.add('alert-danger');
+                    break;
+                default:
+                    alert.classList.add('alert-info');
+            }
+
+            // تنظیم محتوا
+            notificationTitle.textContent = title;
+            notificationMessage.textContent = message;
+
+            // نمایش اعلان
+            notificationPopup.classList.add('show');
+
+            // بستن خودکار بعد از 5 ثانیه
+            setTimeout(() => {
+                notificationPopup.classList.remove('show');
+            }, 5000);
+        }
+
+        // تنظیم نوار پیشرفت
+        function setupProgressBar() {
+            const progressBar = document.getElementById('progressBar');
+            
+            window.addEventListener('scroll', function() {
+                const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (window.scrollY / windowHeight) * 100;
+                
+                if (progressBar) {
+                    progressBar.style.width = scrolled + '%';
+                }
+            });
+        }
+
+        // بستن اعلان
+        document.getElementById('closeNotification')?.addEventListener('click', function() {
+            document.getElementById('notificationPopup').classList.remove('show');
+        });
+
+        // نمایش تب پیش‌فرض
+        switchProfileTab('profile');
+    </script>
 </body>
 </html>
