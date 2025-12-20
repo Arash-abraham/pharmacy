@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    @include('layouts.head-tag')
+    @include('app.layouts.head-tag')
 </head>
 <body class="gradient-bg">
     <!-- نوار پیشرفت -->
