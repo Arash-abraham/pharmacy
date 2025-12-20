@@ -5,7 +5,7 @@
 </head>
 <body class="gradient-bg">
 
-
+    @yield('content')
 
     @include('app.layouts.partials.footer')
     
