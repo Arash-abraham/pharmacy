@@ -7,6 +7,9 @@ Route::get('/', function () {
     return view('app.home');
 });
 
+Route::get('/about',function() {
+    return view('app.about');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
