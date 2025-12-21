@@ -231,6 +231,7 @@
                             </div>
                         </section>
                         
+                        <!-- تماس با ما -->
                         <section id="contact" class="content-section">
                             <div class="glass rounded-2xl p-8 legal-card">
                                 <div class="flex items-start mb-4">
