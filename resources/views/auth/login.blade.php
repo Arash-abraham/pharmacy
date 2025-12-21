@@ -97,7 +97,8 @@
                             </div>
                             
                             <!-- فرم ورود -->
-                            <form id="loginForm" class="space-y-6">
+                            <form id="loginForm" action="{{ route('login') }}" method="POST" class="space-y-6">
+                                @csrf
                                 <div>
                                     <label for="loginEmail" class="block text-slate-300 mb-2">ایمیل یا شماره موبایل</label>
                                     <div class="relative">

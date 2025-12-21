@@ -131,15 +131,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         if (isValid) {
-            // شبیه‌سازی ارسال فرم
-            setTimeout(() => {
-                showNotification('ورود با موفقیت انجام شد! در حال انتقال به پنل کاربری...');
-                
-                // انتقال به صفحه اصلی بعد از 2 ثانیه
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 2000);
-            }, 800);
+            this.submit();
         }
     });
     
