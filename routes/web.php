@@ -7,9 +7,13 @@ Route::get('/', function () {
     return view('app.home');
 })->name('home'); // temp
 
-Route::get('/about',function() {
+Route::get('/about', function() {
     return view('app.about');
 }); //temp
+
+Route::get('/rules', function() {
+    return view('app.rules');
+})->name('rules');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
