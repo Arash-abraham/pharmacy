@@ -4,25 +4,8 @@
 
 </head>
 <body class="gradient-bg flex flex-col min-h-screen">
-    <!-- هدر -->
-    <header class="glass py-4 border-b border-white/5">
-        <div class="container mx-auto px-6">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center gap-4">
-                    <a href="index.html" class="flex items-center gap-3">
-                        <div class="primary-gradient p-3 rounded-xl shadow-lg">
-                            <i class="fas fa-cloud-download-alt text-white text-2xl"></i>
-                        </div>
-                        <h1 class="text-2xl font-bold gradient-text">فایل استور</h1>
-                    </a>
-                </div>
-                <a href="{{ route('home') }}" class="text-slate-300 hover:text-white transition">
-                    <i class="fas fa-arrow-right ml-2"></i>
-                    بازگشت به خانه
-                </a>
-            </div>
-        </div>
-    </header>
+
+    @include('auth.layouts.partials.header')
 
     <!-- محتوای اصلی -->
     <main class="flex-1 flex items-center justify-center py-12 relative overflow-hidden">
@@ -177,15 +160,7 @@
         <div class="absolute top-1/4 left-10 w-32 h-32 bg-emerald-500/10 rounded-full pulse-slow" style="animation-delay: 2s;"></div>
     </main>
 
-    <!-- فوتر -->
-    <footer class="glass border-t border-slate-800/50 py-8 mt-12">
-        <div class="container mx-auto px-6">
-            <div class="text-center text-slate-500">
-                <p>© ۲۰۲۵ فایل استور. تمام حقوق محفوظ است.</p>
-                <p class="mt-2 text-sm">ورود و ثبت‌نام در سایت به منزله پذیرش <a href="#" class="text-primary hover:text-indigo-300">قوانین و مقررات</a> است.</p>
-            </div>
-        </div>
-    </footer>
+    @include('auth.layouts.partials.footer')
 
     <script src="{{ asset('js/login.js') }}"></script>
 </body>
