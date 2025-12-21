@@ -19,11 +19,8 @@
                         <div class="absolute -bottom-10 -right-10 w-28 h-28 bg-purple-500/20 rounded-full"></div>
                         
                         <div class="relative z-10">
-                            <!-- تب‌های ورود و ثبت‌نام -->
-                            <div class="flex justify-center mb-8 bg-slate-800/30 rounded-2xl p-1">
-                                <button id="loginTab" class="tab-button active flex-1">ورود</button>
-                                <button id="registerTab" class="tab-button flex-1">ثبت‌نام</button>
-                            </div>
+
+                            @include('auth.layouts.partials.tabs')
                             
                             <!-- فرم ورود -->
                             <form id="loginForm" action="{{ route('login') }}" method="POST" class="space-y-6">
@@ -129,25 +126,7 @@
                                 </button>
                             </form>
                             
-                            <!-- جداکننده -->
-                            <div class="flex items-center my-8">
-                                <div class="flex-1 h-px bg-slate-700"></div>
-                                <div class="px-4 text-slate-500">یا ورود با</div>
-                                <div class="flex-1 h-px bg-slate-700"></div>
-                            </div>
-                            
-                            <!-- دکمه‌های ورود با شبکه‌های اجتماعی -->
-                            <div class="grid grid-cols-3 gap-4">
-                                <button class="social-btn google">
-                                    <i class="fab fa-google text-xl"></i>
-                                </button>
-                                <button class="social-btn github">
-                                    <i class="fab fa-github text-xl"></i>
-                                </button>
-                                <button class="social-btn twitter">
-                                    <i class="fab fa-twitter text-xl"></i>
-                                </button>
-                            </div>
+                            @include('auth.layouts.partials.login-with')
                         </div>
                     </div>
                 </div>
