@@ -114,7 +114,7 @@
                                         <span class="checkmark"></span>
                                     </label>
                                     <span class="text-slate-300 text-sm leading-relaxed">
-                                        با <a href="#" class="text-primary hover:text-indigo-300 underline">قوانین و مقررات</a> فایل استور موافقم
+                                        با <a href="{{ route('rules') }}" class="text-primary hover:text-indigo-300 underline">قوانین و مقررات</a> فایل استور موافقم
                                     </span>
                                 </div>
 
