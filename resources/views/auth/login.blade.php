@@ -54,8 +54,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="{{ asset('css/index.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 </head>
 <body class="gradient-bg flex flex-col min-h-screen">
     <!-- هدر -->
@@ -240,6 +240,6 @@
         </div>
     </footer>
 
-    <script src="js/login.js"></script>
+    <script src="{{ asset('js/login.js') }}"></script>
 </body>
 </html>
