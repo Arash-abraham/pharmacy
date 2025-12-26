@@ -1,17 +1,14 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>شرایط ثبت‌نام فروشنده | فایل استور</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/rule-for-seller.css">
-</head>
-<body class="gradient-bg min-h-screen">
-    <!-- نوار پیشرفت اسکرول -->
+@extends('app.layouts.master')
+
+@section('title', 'قوانین برای فروشندگان')
+
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/index.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/rule-for-seller.css') }}">
+@endsection
+
+@section('content')
+
     <div class="progress-bar" id="progressBar"></div>
 
     <!-- هدر -->
@@ -820,104 +817,9 @@
         </div>
     </main>
 
-    <!-- فوتر -->
-    <footer class="glass border-t border-slate-800/50 py-12">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div>
-                    <div class="flex items-center space-x-3 space-x-reverse mb-6">
-                        <div class="primary-gradient p-2 rounded-lg">
-                            <i class="fas fa-cloud-download-alt text-white"></i>
-                        </div>
-                        <h3 class="text-xl font-bold gradient-text">فایل استور</h3>
-                    </div>
-                    <p class="text-slate-400 mb-6">بازار آنلاین خرید و فروش فایل‌های دیجیتال با کیفیت و قیمت مناسب</p>
-                    <div class="flex space-x-4 space-x-reverse">
-                        <a href="#" class="bg-slate-800 hover:bg-slate-700 w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300">
-                            <i class="fab fa-telegram"></i>
-                        </a>
-                        <a href="#" class="bg-slate-800 hover:bg-slate-700 w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="bg-slate-800 hover:bg-slate-700 w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <div>
-                    <h4 class="font-bold text-lg mb-6">لینک‌های مفید</h4>
-                    <ul class="space-y-3">
-                        <li><a href="index.html" class="text-slate-400 hover:text-white transition-colors duration-300 flex items-center">
-                            <i class="fas fa-chevron-left text-xs ml-2"></i>
-                            صفحه اصلی
-                        </a></li>
-                        <li><a href="sellers.html" class="text-slate-400 hover:text-white transition-colors duration-300 flex items-center">
-                            <i class="fas fa-chevron-left text-xs ml-2"></i>
-                            فروشندگان
-                        </a></li>
-                        <li><a href="seller-requirements.html" class="text-slate-400 hover:text-white transition-colors duration-300 flex items-center">
-                            <i class="fas fa-chevron-left text-xs ml-2"></i>
-                            ثبت‌نام فروشنده
-                        </a></li>
-                        <li><a href="terms.html" class="text-slate-400 hover:text-white transition-colors duration-300 flex items-center">
-                            <i class="fas fa-chevron-left text-xs ml-2"></i>
-                            قوانین و مقررات
-                        </a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="font-bold text-lg mb-6">برای فروشندگان</h4>
-                    <ul class="space-y-3">
-                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors duration-300 flex items-center">
-                            <i class="fas fa-chevron-left text-xs ml-2"></i>
-                            راهنمای آپلود محصول
-                        </a></li>
-                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors duration-300 flex items-center">
-                            <i class="fas fa-chevron-left text-xs ml-2"></i>
-                            پنل مدیریت فروشنده
-                        </a></li>
-                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors duration-300 flex items-center">
-                            <i class="fas fa-chevron-left text-xs ml-2"></i>
-                            برنامه‌های تشویقی
-                        </a></li>
-                        <li><a href="#" class="text-slate-400 hover:text-white transition-colors duration-300 flex items-center">
-                            <i class="fas fa-chevron-left text-xs ml-2"></i>
-                            پشتیبانی فروشندگان
-                        </a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="font-bold text-lg mb-6">تماس با واحد فروشندگان</h4>
-                    <ul class="space-y-4">
-                        <li class="flex items-center">
-                            <i class="fas fa-phone text-indigo-500 ml-3"></i>
-                            <span class="text-slate-400">۰۲۱-۱۲۳۴۵۶۷۸</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-envelope text-indigo-500 ml-3"></i>
-                            <span class="text-slate-400">seller-support@filestore.ir</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-clock text-indigo-500 ml-3"></i>
-                            <span class="text-slate-400">شنبه تا چهارشنبه ۹-۱۸</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-map-marker-alt text-indigo-500 ml-3"></i>
-                            <span class="text-slate-400">تهران، خیابان ولیعصر</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="border-t border-slate-800/50 mt-12 pt-8 text-center text-slate-500">
-                <p>© ۱۴۰۴ فایل استور. تمام حقوق محفوظ است.</p>
-                <p class="text-sm mt-2">این صفحه آخرین بار در تاریخ ۱۵ فروردین ۱۴۰۴ به‌روزرسانی شده است.</p>
-            </div>
-        </div>
-    </footer>
-    <script src="js/rule-for-seller.js"></script>
-</body>
-</html>
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('js/rule-for-seller.js') }}"></script>
+@endsection
+    
