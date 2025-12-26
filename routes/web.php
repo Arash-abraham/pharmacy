@@ -11,8 +11,12 @@ Route::get('/about', function() {
     return view('app.about');
 }); //temp
 
-Route::get('/rules', function() {
+Route::get('rules', function() {
     return view('app.rules');
 })->name('rules');
+
+Route::get('rule-for-seller',function() {
+    return view('app.rule-for-seller');
+});
 
 require __DIR__.'/auth.php';
